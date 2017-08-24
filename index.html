@@ -26,226 +26,439 @@
 
 </head>
 
-<body>
-    
+<body style="background-image:url(images/arch-bg.png)">
+
+    <style>
+        .card-columns {
+            column-count: 3;
+        }
+        
+        .card {
+            display: inline-block;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+    </style>
     <!-- Page Content -->
-    <div class="container">
-
-        <!-- Portfolio Item Heading -->
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Welcome
-                    <small>About Me</small>
-                </h1>
-            </div>
+            <ul class="nav nav-tabs nav-fill nav-justified">
+                <li class="active">
+                    <a data-toggle="tab" href="#home">Home</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#projects">Projects</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#blog">Blogs</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#achievements">Achievements</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#interests">Interests</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#contact">Contact</a>
+                </li>
+            </ul>
         </div>
-        <!-- /.row -->
+        <div class="container text-success text-center">
+            <div class="tab-content">
+                <div id="home" class="tab-pane fade in active">
 
-        <!-- Portfolio Item Row -->
-        <div class="row">
+                    <!-- Portfolio Item Row -->
+                    <div class="row">
 
-            <div class="col-md-8">
-                <img class="img-responsive" src="images/myself.png" alt="">
-            </div>
+                        <h3 class="text-primary">Hello there, visitor!</h3>
+                        <hr/>
 
-            <div class="col-md-4">
-                <h3>Hello there, visitor!</h3>
-                <p>My name is Adithya Bhat. I am currently studying as an undergradute in 
-                    National Institute of Technology Karnataka (<a href="http://www.nitk.ac.in">NITK</a>), one of India's leading technical institute.
-                    I am currently in my final year of my four year Bachelor of Technology (B.Tech) Programme specializing in <i>Information Technology</i>. I am very passionate about computers. I have been hacking around with softwares ever since I got my first computer(during the era of dial tone). 
-                </p>     
-                <p>
-                    The picture on the left tells a bit about myself. The program used to generate it can be found <a href="#">here</a>. My favorite OS, after a lot of distro hopping is <b>Arch Linux</b>. (Sorry, Windows; You had a good run until Windows 10). I use Deepin Desktop and KDE interchangingly depending on my mood. 
-                </p>
-            </div>
-            <!-- col-md-4-->
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="col-lg-6">
-                <h3>Courses[GPA out of 10.0]</h3>
-                <ul>
-                    <li>Engineering Mathematics-I [10.0]</li>
-                    <li>Professional Communication [10.0]</li>
-                    <li>Engineering Mathematics-II [9.0]</li>
-                    <li>Computer Programming [10.0]</li>
-                    <li>Computer Programming Lab [9.0]</li>
-                    <li>Mathematical Foundations of Information Technology [10.0]</li>
-                    <li>Data Structures and Algorithms [10.0]</li>
-                    <li>Digital Design and Computer Organization [10.0]</li>
-                    <li>Unix Programming and Practice [10.0]</li>
-                    <li>Computer System Organization Lab [7.0]</li>
-                    <li>Data Structures and Algorithms Lab [9.0]</li>
-                    <li>Paradigms of Programming-I [10.0]</li>
-                    <li>Operating Systems [10.0]</li>
-                    <li>Computer Communication and Networking [8.0]</li>
-                    <li>Design and Analysis of Algorithms [9.0]</li>
-                    <li>Information Systems [9.0]</li>
-                    <li>Paradigms of Programming-II [10.0]</li>
-                    <li>Object Oriented Analysis and Design [9.0]</li>
-                    <li>Parallel Computing [10.0]</li>
-                    <li>Database Systems [9.0]</li>
-                    <li>Web Technologies and Application [8.0]</li>
-                    <li>Automata and Compiler Design [10.0]</li>
-                    <li>Distributed Computing Systems [10.0]</li>
-                    <li>Time Series Analysis [9.0]</li>
-                    <li>Semantic Web Technologies [10.0]</li>
-                    <li>Soft Computing [9.0]</li>
-                    <li>Information Assurance and Security [10.0]</li>
-                    <li>Software Engineering [10.0]</li>
-                    <li>Human Computer Interaction [10.0]</li>
-                    <li>Information Retrieval [10.0]</li>
-                    <li>Linear Algebra and Matrices [9.0]</li>
-                    <li>Minor Project [10.0]</li>
-                </ul>
-            </div>
-            <div class="col-lg-6">
-                <div class="row">
-                    <h3>Interests</h3>
-                    <ul>
-                        <li>Operating Systems</li>
-                        <li>Distributed Systems</li>
-                        <li>Virtualization</li>
-                        <li>High Performance Computing</li>
-                        <li>Internet of Things</li>
-                        <li>Networking</li>
-                        <li>Cryptography</li>
-                        <li>System Security</li>
-                    </ul>
+                        <img class="img-responsive center-block" src="images/myself.png" alt="">
+
+                        <hr/>
+
+
+                        <p>My name is Adithya Bhat. I am currently studying as an undergradute in National Institute of Technology Karnataka (
+                            <a href="http://www.nitk.ac.in">NITK</a>), one of India's leading technical institute. I am currently in my final year(fourth year) of my Bachelor of Technology (B.Tech) Course specializing in <i>Information Technology</i>.
+                        </p>
+                        <p>
+                            I am very passionate about computers. I have been hacking around with softwares ever since I got my first computer(during the era of dial tone, back in 2006). My first hack was to exploit a bug in the game called
+                            <a href="https://www.gamepressure.com/download.asp?ID=10227">Fate</a>. The game is a demo version that lets you play twice (two wild coins). However, the demo version only has 4 levels. Adding the bonus pack extends the game
+                            to unlock all the levels. We are still limited by two game trials. Exploring further, I realized that uninstalling the game from the root installation directory and not the wild tangent uninstaller, did not delete the saved
+                            game files. When I re-installed the game from the installer, I got two more trials to continue the game, and the process continued. LO and BEHOLD! I was very excited and I have been super curious about computers ever since.
+                            [ I was so mad about this game that I upgraded the system to it's max (8GB RAM, Intel core2 duo and 1GB dedicated graphics card). I was unable to buy the game because back then obtaining a credit cards was almost impossible.
+                            ]
+                        </p>
+                        <p>
+                            The picture on the left tells a bit about myself. The program used to generate it can be found
+                            <a href="https://github.com/adithyabhatkajake/PrettyPrint">here</a>. My favorite OS, after a lot of distro hopping is <b>Arch Linux</b>. (Sorry, Windows; You had a good run until Windows 10). I use
+                            <strike>Deepin Desktop</strike> and KDE interchangingly depending on my mood. I installed my first linux (Ubuntu and OpenSuse) system when I was 15. I installed my first OS (Windows 98) when I was 10. I wrote my first C program
+                            when I was 12 using TurboC. I play Table Tennis as a serious hobby. I like to read books(Last book: The Count of Monte Cristo by Alexander Dumas), watch TV series(Rick and Morty, Game of Thrones, ...) and go on treks in my
+                            free time.
+                        </p>
+
+                    </div>
                 </div>
-                <hr/>
-                <div class="row">
-                    <h3>Projects</h3>
-                    <ul>
-                        <li>K-Rack</li>
-                        <li>SQL Layer Implementation for LevelDB</li>
-                        <li>Analysis of Group order methods for factorizing bi-composites and tri-composites</li>
-                        <li>Benchmark Module</li>
-                        <li>Android Malware Detection using Deep Learning</li>
-                        <li>Implementation of Spiking Neural Networks</li>
-                        <li>Smart Mirror</li>
-                        <li>Time Line</li>
-                        <li>Semantic Graph generator for Paragraphs</li>
-                        <li>fMRI Analysis using GLM</li>
-                        <li>GPU vs CPU FFT overhead analysis</li>
-                        <li>Implementing a stateful HTTP protocol</li>
-                        <li>Online Code Judge</li>
-                        <li>Complex CAPTCHA generator tool</li>
-                        <li>RTSP based Media Streaming Application</li>
-                        <li>Multiplayer Augumented Reality Air Hockey</li>
-                        <li>Implementation of <i>20 years of attacks on RSA</i> by <b>Dan Boneh</b></li>
-                        <li>
-                            <ol>
-                            Implementations of:
-                                <li>Perceptron Learning model</li>
-                                <li>Neural Network Simulation</li>
-                                <li>Naive bayes classifier</li>
-                                <li>Genetic Algorithm</li>
-                                <li>K-nearest neighbor algorithm</li>
-                                <li>Fuzzy C means Algorithm</li>
-                            </ol>
-                        </li>
-                        <!--Coming soon:-->
-                        <!--Major Project-->
-                        <!--Ramstore Project-->
+                <div id="projects" class="tab-pane fade">
+                    <!--Make cards of each project, technology, interests and Programming Languages-->
+                    <div class="card-columns" style="padding-top:10px; padding-bottom:10px;">
 
-                    </ul>
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-header btn-success btn-lg disabled">
+                                Publication in Progress
+                            </div>
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">K-Rack</h4>
+                                <p class="card-text">
+                                    K-rack is a high performance encrypted filesystem that is several times faster than existing cryptographic file systems. The full project source code will be released soon.
+                                </p>
+                                <a href="https://github.com/adithyabhatkajake/K-rack" class="btn btn-primary">View on Github</a>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-inverse " style="padding:25px;border: 1px solid;">
+                            <div class="card-header btn-success btn-lg disabled">
+                                Internship in Morgan Stanley
+                            </div>
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">Exploring ElasticSearch to query LevelDB</h4>
+                                <p class="card-text">
+                                    ElasticSearch was setup on a levelDB cache, in order to better view and query objects.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-inverse " style="padding:25px;border: 1px solid;">
+                            <div class="card-header btn-success btn-lg disabled">
+                                Internship in Indian Institute of Science, Bangalore
+                            </div>
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">Analysis of Group order methods for factorizing bi-composites and tri-composites</h4>
+                                <p class="card-text">
+                                    A research experiment to optimize factoring of bi-composites and tri-composites whose factor's bitsize is approximately known, with various group order methods such as Pollard's Rho method, P-1, P+1 and ECM methods during the sieving stage of large prime
+                                    factorization.
+                                </p>
+                                <a href="https://github.com/adithyabhatkajake/CSAIFL" class="btn btn-primary">View on Github</a>
+                                <a href="https://github.com/adithyabhatkajake/CSAIFL/blob/master/Project%20Report.pdf" class="btn btn-primary">View Project Report</a>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-header btn-success btn-lg disabled">
+                                Publication in Progress
+                            </div>
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">Advancement of Computer Architecture with changing Memory Technology</h4>
+                                <p class="card-text">
+                                    With improving memory, and assuming at some point in the future, memory systems turn ideal enough, how can we modify existing computer architecture in order to improve performance of the system? Is the technology today close enough? How far is the current
+                                    technology from an ideal system whose memory can be accessed in one clock cycle? A linux kernel module that measures some critical memory operation times is built for this purpose.
+                                </p>
+                                <a href="https://github.com/adithyabhatkajake/IOBenchmark" class="btn btn-primary">View on Github</a>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">Malware detection in Android using Deep Learning</h4>
+                                <p class="card-text">
+                                    Benign and malicious android apks were run on an android emulator and their system call behavior was collected. The collected was analyzed using genetic algorithm, naive bayes, SVM and a custom classifiers considering different parameters.
+                                </p>
+                                <a href="https://github.com/adithyabhatkajake/Notox" class="btn btn-primary">View on Github</a>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-header btn-success btn-lg disabled">
+                                Publication in Progress
+                            </div>
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">Smart Device Ecosystem with Smart Mirror</h4>
+                                <p class="card-text">
+                                    A cost-effective and secure smart mirror with weather updates, integrated feed, facial recognition, knock code based unlocking, plug and play support and active user notification was developed. The full code will be pushed to Github soon.
+                                </p>
+                                <a href="https://github.com/BlackPheonix/Smart-Mirror" class="btn btn-primary">View on Github</a>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-header btn-success btn-lg disabled">
+                                Publication in Progress
+                            </div>
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">A contextual timeline generation by processing news articles and astrophysical modelling</h4>
+                                <p class="card-text">
+                                    Given that you click a news article, how convenient would it be if you could view a timeline of all the news articles that lead to the event? This problem can be solved by treating every news as an physical object in space. After the modelling phase,
+                                    natural laws of physics take over to determine significant events from the timeline, merge related articles and fine tuning the event space. The full code will be pushed to github soon.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">TextWalker: A Semantic RDF graph generator for text</h4>
+                                <p class="card-text">
+                                    A project to explore the possibilities of modelling sentences as 3D graphs to generate and simulate understanding of natural language. The text is broken down into words using the nltk POStagger. The components were looked up online for RDF definitions
+                                    for better understanding. Anaphoras were resolved to improve the graph. Check out the <a href="https://github.com/adithyabhatkajake/TextGraphWalker/tree/master/Results">results</a>                                    for a better understanding.
+                                </p>
+                                <a href="https://github.com/adithyabhatkajake/TextGraphWalker/" class="btn btn-primary">View on Github</a>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-block text-left">
+                                <h4 class="card-text btn-lg disabled btn-warning">Identification of brain region responsible for responding to a stimulus using GLM on fMRI data</h4>
+                                <p class="card-text">
+                                    Humans responding to stimulus is a well known fact. However, detecting which region in the brain is responsible for producing the response is hard task. At any given time the brain will be always be functioning to carry out the basic metabolic activities
+                                    such as breathing, digestion, controlling the heart-rate and body temperature. fMRI scans provides scientists with valuable information of which region in the brain is active by indirectly measuring the magnetic properties
+                                    of oxygen in fresh oxygenated blood and deoxygenated blood. Using GLM, attempts are made to remove the noise of background active neurons and detect the regions of the brain. Standard fMRI data sets were used.
+                                </p>
+                                <a href="https://github.com/adithyabhatkajake/fMRI-analysis-R" class="btn btn-primary">View on Github</a>
+                                <a href="https://www.researchgate.net/profile/H_Liu9/publication/303407688_A_Space_Affine_Matching_Approach_to_fMRI_Time_Series_Analysis/links/5742621108ae9f741b37590c/A-Space-Affine-Matching-Approach-to-fMRI-Time-Series-Analysis.pdf" class="btn btn-primary">Original Paper</a>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">A 1D fast fourier tranform on CPU vs GPU: Who will win?</h4>
+                                <p class="card-text">
+                                    It is known that GPUs are massive parallel computing machines that can perform matrix operations on a large data very efficiently. CUDA from Nvidia provides libraries for performing FFT on the GPU and OpenCL also provides the FFT libraries. With the GPU
+                                    disabled and it's drivers removed from the system, the FFT is performed on the CPU. However, the results show that the FFT applied on an image matrix transformed into 1D matrix is faster on a CPU than on the GPU. The
+                                    results suggest that Linux needs to improve it's DMA support for the GPU because the data transfer between the CPU and GPU is found to be responsible for this poor performance of GPUs.
+                                </p>
+                                <a href="https://github.com/adithyabhatkajake/FFT/" class="btn btn-primary">View on Github</a>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">Implementing a stateful HTTP protocol</h4>
+                                <p class="card-text">
+                                    HTTP is a known stateless protocol. A simple HTTP web server was implemented trying to store the state of each connection. The HTTP server developed was complete with all the HTTP verbs being implemented. Directory listing was also implemented.
+                                </p>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">A secure Online Code Judge without sandbox</h4>
+                                <p class="card-text">
+                                    A sandbox for running code received as input seems to be a critical component in many online code judges. However, it is possible to bypass the need for sandboxes in compiled languages such as C/C++ and some interpreted languages such as Python by copying
+                                    the library files into a chroot jail. The chroot jail has two components. The first is that it only contains the basic libraries that are needed for a program to run. The second innovative component is to edit the header
+                                    files for functions that are not needed by the program. This breaks the connection that the interface provides between the runtime and the program. The program cannot find the function definition in the interface and
+                                    thus, is not able to call the function present in the runtime library. This method is very efficient when compared to emulating a sandbox.
+                                </p>
+                                <a href="https://github.com/adithyabhatkajake/kompile/" class="btn btn-primary">View on Github</a>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">Pikcha: A command line CAPTCHA generator tool</h4>
+                                <p class="card-text">
+                                    A linux command line tool was generated that generated a random string/accepts user input strings and generates CAPTCHA images with various image processing techniques applied on them such as fish eye filter, gaussian noise, rotation and bloating.
+                                </p>
+                                <a href="https://github.com/adithyabhatkajake/pikcha/" class="btn btn-primary">View on Github</a>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">MStream: Stream and Share media on any device</h4>
+                                <p class="card-text">
+                                    To be able to play music on multiple devices at the same, thus increasing the audio output was one of the objectives achieved through this project. It is also possible to play videos simultaneously thus allowing people to watch the same content at the
+                                    same time on their personal devices. An ideal use case is watching movies in the hostels. Pausing the media on the server pauses it for everyone. The client can be a desktop, phone or any device that supports rtsp://
+                                    urls.
+                                </p>
+                                <a href="https://github.com/adithyabhatkajake/MStream" class="btn btn-primary">View on Github</a>
+                            </div>
+                        </div>
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">AiR Hockey</h4>
+                                <p class="card-text">
+                                    Augmented Reality Hockey(AiR Hockey) is the classic air hockey game with a twist. Choose an object lying around, tune 3 paramters(or use auto-tune) till the object is detected, and Game on! The game is played by two people over a common network and supports
+                                    timed mode and first to score modes. Every user is able to customize the game elements such as the mallet color, ball color, etc.
+                                </p>
+                                <a href="https://github.com/BlackPheonix/AiR-Hockey" class="btn btn-primary">View on Github</a>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">Daedalus: A CTF utility tool to crack open RSA puzzles</h4>
+                                <p class="card-text">
+                                    Dan Boneh's
+                                    <emph>20 years of attacks on RSA</emph> was implemented partially in a tool called daedalus that takes in the attack method and the parameters as inputs and decrypts/factors the input.
+                                </p>
+                                <a href="https://github.com/IEEE-NITK/Daedalus" class="btn btn-primary">View on Github</a>
+                            </div>
+                        </div>
+
+
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-block text-left">
+                                <h4 class="card-title btn-lg disabled btn-warning">Implementation of Soft Computing Algorithms</h4>
+                                <p class="card-text">
+                                    Classifiers such as Neural Networks, Naive Bayes, K-means and others mentioned below were implemented and used on standard datasets such as IRIS, SpeCTF and Glass.
+                                </p>
+                                <ul class="list-group">
+                                    <li class="btn disabled btn-primary-outline">Perceptron Learning model</li>
+                                    <li class="btn disabled btn-primary-outline">Neural Network Simulation</li>
+                                    <li class="btn disabled btn-primary-outline">Naive bayes classifier</li><br/>
+                                    <li class="btn disabled btn-primary-outline">Genetic Algorithm</li>
+                                    <li class="btn disabled btn-primary-outline">K-nearest neighbor algorithm</li>
+                                    <li class="btn disabled btn-primary-outline">Fuzzy C means Algorithm</li>
+                                </ul>
+                                <a href="https://github.com/IEEE-NITK/Daedalus" class="btn btn-primary">View on Github</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div id="blog" class="tab-pane fade">
+                    <!--Convert to cards-->
+                    <div class="row" style="padding-top:15px;">
+                        <div class="card-columns text-primary">
+                            <div class="card card-inverse">
+                                <img class="img-responsive card-img-top center-block" style="border:1px solid aqua;" src="images/hworld.png" alt="">
+                                <div class="card-block">
+                                    <h4 class="card-title">Internals of Compiling</h4>
+                                    <p class="card-text">
+                                        (Almost) Everyone knows how to write a hello world program in C. But this article explores every step taken by GCC to get to the final a.out.
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="http://ieeenitk.org/blog/Hello-World/" class="btn btn-primary">View the article</a>
+                                </div>
+                            </div>
+                            <div class="card card-inverse">
+                                <img class="img-responsive card-img-top center-block" style="border:1px solid aqua;" src="images/numbthry.png" alt="">
+                                <div class="card-block">
+                                    <h4 class="card-title">The Mathematics of 1,2,3</h4>
+                                    <p class="card-text">
+                                        Let us explore the beauty of number theory and try to understand some of the basic concepts of Number theory.
+                                    </p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="https://ieeenitk.org/blog/NumberTheory/" class="btn btn-primary">View the article</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="achievements" class="tab-pane fade">
+                    <div class="row">
+
+                    </div>
+                </div>
+                <div id="contact" class="tab-pane fade">
+                    <div class="row">
+                        <p><span class="glyphicon glyphicon-envelope"><space/>dth.bht@gmail.com</span> </p>
+                        <p><span class="fa fa-github">adithyabhatkajake</span></p>
+                        <p>Address: Department of IT, NITK Surathkal, Mangalore - 575025</p>
+                    </div>
+                </div>
+                <div id="interests" class="tab-pane fade">
+                    <div class="card-group" style="padding-top:10px; padding-bottom:10px;">
+                        <h2 class="text-info text-center">Interests</h2>
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-header btn-danger btn-lg disabled">
+                                Operating Systems
+                            </div>
+                        </div>
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-header btn-danger btn-lg disabled">
+                                Distributed Systems
+                            </div>
+                        </div>
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-header btn-danger btn-lg disabled">
+                                Virtualization
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-group">
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-header btn-danger btn-lg disabled">
+                                High Performance Computing
+                            </div>
+                        </div>
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-header btn-danger btn-lg disabled">
+                                Internet of Things
+                            </div>
+                        </div>
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-header btn-danger btn-lg disabled">
+                                Networking
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-group">
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-header btn-danger btn-lg disabled">
+                                Cryptography
+                            </div>
+                        </div>
+                        <div class="card card-inverse " style="padding:25px;border:1px solid">
+                            <div class="card-header btn-danger btn-lg disabled">
+                                System Security
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <hr/>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-lg-6">
-                <h3>Technologies/Frameworks/Libraries</h3>
-                <ol>
-                    <li>Django Web Framework</li>
-                    <li>Elastic Search</li>
-                    <li>LevelDB</li>
-                    <li>Java Spring</li>
-                    <li>Apache Maven</li>
-                    <li>Ivy</li>
-                    <li>Unity</li>
-                    <li>OpenCV</li>
-                    <li>GNU Multi Precision (GMP)</li>
-                    <li>Xen</li>
-                    <li>Linux Kernel and Kernel Module Programming</li>
-                    <li>GMP - ECM, Yafu, GGNFS, CadoNFS and MSieve</li>
-                    <li>LaTeX</li>
-                    <li>CUDA</li>
-                </ol>
-            </div>
-
-            <div class="col-lg-6">
-                <h3>Programming Lanuages</h3>
-                <ol>
-                    <li>C</li>
-                    <li>Java</li>
-                    <li>C++</li>
-                    <li>Python</li>
-                    <li>BASH scripting</li>
-                    <li>NASM</li>
-                    <li>R</li>
-                </ol>
-                <h3>Other not so important languages</h3>
-                <ol>
-                    <li>Javascript</li>
-                    <li>HTML and all it's cousins(XML, CSS, etc)</li>
-                    <li>Perl</li>
-
-                </ol>
-            </div>
-        </div>
-        <hr/>
-
-
-
-        <!-- Related Projects Row -->
-        <div class="row">
-
-            <div class="col-lg-12">
-                <h3 class="page-header">Blogs</h3>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="http://ieeenitk.org/blog/Hello-World/">
-                    <img class="img-responsive portfolio-item" src="images/hworld.png" alt="">
-                </a>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="images/cusoon.jpg" alt="">
-                </a>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="images/cusoon.jpg" alt="">
-                </a>
-            </div>
-
-            <div class="col-sm-3 col-xs-6">
-                <a href="#">
-                    <img class="img-responsive portfolio-item" src="images/cusoon.jpg" alt="">
-                </a>
-            </div>
-
-        </div>
-        <!-- /.row -->
-
-        <hr>
-
         <!-- Footer -->
-        <footer>
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy; Adithya Bhat 2017</p>
+        <div class="row">
+            <footer>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p class="text-info text-center">Copyright &copy; Adithya Bhat 2017</p>
+                    </div>
                 </div>
-            </div>
-            <!-- /.row -->
-        </footer>
-
+                <!-- /.row -->
+            </footer>
+        </div>
     </div>
     <!-- /.container -->
 
@@ -261,4 +474,4 @@
 
 
 <!--TODO: -->
-    <!-- Blogs, Languages/Frameworks, Publications, Achievements -->
+<!-- Blogs, Languages/Frameworks, Publications, Achievements -->
