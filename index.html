@@ -29,8 +29,28 @@
 <body style="background-image:url(images/arch-bg.png)">
 
     <style>
-        .card-columns {
-            column-count: 3;
+        @media (min-width: 34em) {
+            .card-columns {
+                -webkit-column-count: 2;
+                -moz-column-count: 2;
+                column-count: 2;
+            }
+        }
+        
+        @media (min-width: 48em) {
+            .card-columns {
+                -webkit-column-count: 3;
+                -moz-column-count: 3;
+                column-count: 3;
+            }
+        }
+        
+        @media (min-width: 62em) {
+            .card-columns {
+                -webkit-column-count: 4;
+                -moz-column-count: 4;
+                column-count: 4;
+            }
         }
         
         .card {
@@ -391,10 +411,33 @@
                     </div>
                 </div>
                 <div id="contact" class="tab-pane fade">
-                    <div class="row">
-                        <p><span class="glyphicon glyphicon-envelope"><space/>dth.bht@gmail.com</span> </p>
-                        <p><span class="fa fa-github">adithyabhatkajake</span></p>
-                        <p>Address: Department of IT, NITK Surathkal, Mangalore - 575025</p>
+                    <div class="container">
+                        <div class="row" style="padding-top:15px;">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <img class="img-circle img-responsive" src="images/me.jpg" style="border:1px solid aqua" />
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+
+                            </div>
+                            <div class="col-md-7">
+                                <div class="row">
+                                    <div class="card card-inverse pull-left" style="padding:15px;border:1px solid aqua;width:100%;">
+                                        <a href="mailto:dth.bht@gmail.com" class="card-header btn btn-danger" style="color:white;width:100%;">
+                                Email  <span class="glyphicon glyphicon-envelope"></span> 
+                            </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="card card-inverse pull-left" style="padding:15px;border:1px solid aqua; width:100%">
+                                        <a href="https://github.com/adithyabhatkajake" class="card-header btn btn-danger" style="color:white; width:100%">
+                                Github Profile
+                            </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="interests" class="tab-pane fade">
