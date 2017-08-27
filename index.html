@@ -37,20 +37,16 @@
             }
         }
         
-        @media (min-width: 48em) {
-            .card-columns {
-                -webkit-column-count: 3;
-                -moz-column-count: 3;
-                column-count: 3;
-            }
-        }
-        
         @media (min-width: 62em) {
             .card-columns {
                 -webkit-column-count: 4;
                 -moz-column-count: 4;
                 column-count: 4;
             }
+        }
+        
+        .text-white {
+            color: white;
         }
         
         .card {
@@ -98,10 +94,10 @@
                         <hr/>
 
 
-                        <p>My name is Adithya Bhat. I am currently studying as an undergradute in National Institute of Technology Karnataka (
+                        <p class="text-white">My name is Adithya Bhat. I am currently studying as an undergradute in National Institute of Technology Karnataka (
                             <a href="http://www.nitk.ac.in">NITK</a>), one of India's leading technical institute. I am currently in my final year(fourth year) of my Bachelor of Technology (B.Tech) Course specializing in <i>Information Technology</i>.
                         </p>
-                        <p>
+                        <p class="text-white">
                             I am very passionate about computers. I have been hacking around with softwares ever since I got my first computer(during the era of dial tone, back in 2006). My first hack was to exploit a bug in the game called
                             <a href="https://www.gamepressure.com/download.asp?ID=10227">Fate</a>. The game is a demo version that lets you play twice (two wild coins). However, the demo version only has 4 levels. Adding the bonus pack extends the game
                             to unlock all the levels. We are still limited by two game trials. Exploring further, I realized that uninstalling the game from the root installation directory and not the wild tangent uninstaller, did not delete the saved
@@ -109,7 +105,7 @@
                             [ I was so mad about this game that I upgraded the system to it's max (8GB RAM, Intel core2 duo and 1GB dedicated graphics card). I was unable to buy the game because back then obtaining a credit cards was almost impossible.
                             ]
                         </p>
-                        <p>
+                        <p class="text-white">
                             The picture on the left tells a bit about myself. The program used to generate it can be found
                             <a href="https://github.com/adithyabhatkajake/PrettyPrint">here</a>. My favorite OS, after a lot of distro hopping is <b>Arch Linux</b>. (Sorry, Windows; You had a good run until Windows 10). I use
                             <strike>Deepin Desktop</strike> and KDE interchangingly depending on my mood. I installed my first linux (Ubuntu and OpenSuse) system when I was 15. I installed my first OS (Windows 98) when I was 10. I wrote my first C program
@@ -122,22 +118,18 @@
                 <div id="projects" class="tab-pane fade">
                     <!--Make cards of each project, technology, interests and Programming Languages-->
                     <div class="card-columns" style="padding-top:10px; padding-bottom:10px;">
-
-
-
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
                             <div class="card-header btn-success btn-lg disabled">
                                 Publication in Progress
                             </div>
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">K-Rack</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     K-rack is a high performance encrypted filesystem that is several times faster than existing cryptographic file systems. The full project source code will be released soon.
                                 </p>
                                 <a href="https://github.com/adithyabhatkajake/K-rack" class="btn btn-primary">View on Github</a>
                             </div>
                         </div>
-
 
                         <div class="card card-inverse " style="padding:25px;border: 1px solid;">
                             <div class="card-header btn-success btn-lg disabled">
@@ -145,12 +137,11 @@
                             </div>
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">Exploring ElasticSearch to query LevelDB</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     ElasticSearch was setup on a levelDB cache, in order to better view and query objects.
                                 </p>
                             </div>
                         </div>
-
 
                         <div class="card card-inverse " style="padding:25px;border: 1px solid;">
                             <div class="card-header btn-success btn-lg disabled">
@@ -158,7 +149,7 @@
                             </div>
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">Analysis of Group order methods for factorizing bi-composites and tri-composites</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     A research experiment to optimize factoring of bi-composites and tri-composites whose factor's bitsize is approximately known, with various group order methods such as Pollard's Rho method, P-1, P+1 and ECM methods during the sieving stage of large prime
                                     factorization.
                                 </p>
@@ -167,18 +158,13 @@
                             </div>
                         </div>
 
-
-
-
-
-
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
                             <div class="card-header btn-success btn-lg disabled">
                                 Publication in Progress
                             </div>
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">Advancement of Computer Architecture with changing Memory Technology</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     With improving memory, and assuming at some point in the future, memory systems turn ideal enough, how can we modify existing computer architecture in order to improve performance of the system? Is the technology today close enough? How far is the current
                                     technology from an ideal system whose memory can be accessed in one clock cycle? A linux kernel module that measures some critical memory operation times is built for this purpose.
                                 </p>
@@ -186,17 +172,15 @@
                             </div>
                         </div>
 
-
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">Malware detection in Android using Deep Learning</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     Benign and malicious android apks were run on an android emulator and their system call behavior was collected. The collected was analyzed using genetic algorithm, naive bayes, SVM and a custom classifiers considering different parameters.
                                 </p>
                                 <a href="https://github.com/adithyabhatkajake/Notox" class="btn btn-primary">View on Github</a>
                             </div>
                         </div>
-
 
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
                             <div class="card-header btn-success btn-lg disabled">
@@ -204,17 +188,12 @@
                             </div>
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">Smart Device Ecosystem with Smart Mirror</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     A cost-effective and secure smart mirror with weather updates, integrated feed, facial recognition, knock code based unlocking, plug and play support and active user notification was developed. The full code will be pushed to Github soon.
                                 </p>
                                 <a href="https://github.com/BlackPheonix/Smart-Mirror" class="btn btn-primary">View on Github</a>
                             </div>
                         </div>
-
-
-
-
-
 
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
                             <div class="card-header btn-success btn-lg disabled">
@@ -222,18 +201,17 @@
                             </div>
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">A contextual timeline generation by processing news articles and astrophysical modelling</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     Given that you click a news article, how convenient would it be if you could view a timeline of all the news articles that lead to the event? This problem can be solved by treating every news as an physical object in space. After the modelling phase,
                                     natural laws of physics take over to determine significant events from the timeline, merge related articles and fine tuning the event space. The full code will be pushed to github soon.
                                 </p>
                             </div>
                         </div>
 
-
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">TextWalker: A Semantic RDF graph generator for text</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     A project to explore the possibilities of modelling sentences as 3D graphs to generate and simulate understanding of natural language. The text is broken down into words using the nltk POStagger. The components were looked up online for RDF definitions
                                     for better understanding. Anaphoras were resolved to improve the graph. Check out the <a href="https://github.com/adithyabhatkajake/TextGraphWalker/tree/master/Results">results</a>                                    for a better understanding.
                                 </p>
@@ -241,11 +219,10 @@
                             </div>
                         </div>
 
-
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
                             <div class="card-block text-left">
                                 <h4 class="card-text btn-lg disabled btn-warning">Identification of brain region responsible for responding to a stimulus using GLM on fMRI data</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     Humans responding to stimulus is a well known fact. However, detecting which region in the brain is responsible for producing the response is hard task. At any given time the brain will be always be functioning to carry out the basic metabolic activities
                                     such as breathing, digestion, controlling the heart-rate and body temperature. fMRI scans provides scientists with valuable information of which region in the brain is active by indirectly measuring the magnetic properties
                                     of oxygen in fresh oxygenated blood and deoxygenated blood. Using GLM, attempts are made to remove the noise of background active neurons and detect the regions of the brain. Standard fMRI data sets were used.
@@ -255,16 +232,11 @@
                             </div>
                         </div>
 
-
-
-
-
-
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
 
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">A 1D fast fourier tranform on CPU vs GPU: Who will win?</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     It is known that GPUs are massive parallel computing machines that can perform matrix operations on a large data very efficiently. CUDA from Nvidia provides libraries for performing FFT on the GPU and OpenCL also provides the FFT libraries. With the GPU
                                     disabled and it's drivers removed from the system, the FFT is performed on the CPU. However, the results show that the FFT applied on an image matrix transformed into 1D matrix is faster on a CPU than on the GPU. The
                                     results suggest that Linux needs to improve it's DMA support for the GPU because the data transfer between the CPU and GPU is found to be responsible for this poor performance of GPUs.
@@ -273,23 +245,21 @@
                             </div>
                         </div>
 
-
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
 
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">Implementing a stateful HTTP protocol</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     HTTP is a known stateless protocol. A simple HTTP web server was implemented trying to store the state of each connection. The HTTP server developed was complete with all the HTTP verbs being implemented. Directory listing was also implemented.
                                 </p>
                             </div>
                         </div>
 
-
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
 
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">A secure Online Code Judge without sandbox</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     A sandbox for running code received as input seems to be a critical component in many online code judges. However, it is possible to bypass the need for sandboxes in compiled languages such as C/C++ and some interpreted languages such as Python by copying
                                     the library files into a chroot jail. The chroot jail has two components. The first is that it only contains the basic libraries that are needed for a program to run. The second innovative component is to edit the header
                                     files for functions that are not needed by the program. This breaks the connection that the interface provides between the runtime and the program. The program cannot find the function definition in the interface and
@@ -299,25 +269,20 @@
                             </div>
                         </div>
 
-
-
-
-
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">Pikcha: A command line CAPTCHA generator tool</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     A linux command line tool was generated that generated a random string/accepts user input strings and generates CAPTCHA images with various image processing techniques applied on them such as fish eye filter, gaussian noise, rotation and bloating.
                                 </p>
                                 <a href="https://github.com/adithyabhatkajake/pikcha/" class="btn btn-primary">View on Github</a>
                             </div>
                         </div>
 
-
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">MStream: Stream and Share media on any device</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     To be able to play music on multiple devices at the same, thus increasing the audio output was one of the objectives achieved through this project. It is also possible to play videos simultaneously thus allowing people to watch the same content at the
                                     same time on their personal devices. An ideal use case is watching movies in the hostels. Pausing the media on the server pauses it for everyone. The client can be a desktop, phone or any device that supports rtsp://
                                     urls.
@@ -329,7 +294,7 @@
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">AiR Hockey</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     Augmented Reality Hockey(AiR Hockey) is the classic air hockey game with a twist. Choose an object lying around, tune 3 paramters(or use auto-tune) till the object is detected, and Game on! The game is played by two people over a common network and supports
                                     timed mode and first to score modes. Every user is able to customize the game elements such as the mallet color, ball color, etc.
                                 </p>
@@ -337,14 +302,10 @@
                             </div>
                         </div>
 
-
-
-
-
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">Daedalus: A CTF utility tool to crack open RSA puzzles</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     Dan Boneh's
                                     <emph>20 years of attacks on RSA</emph> was implemented partially in a tool called daedalus that takes in the attack method and the parameters as inputs and decrypts/factors the input.
                                 </p>
@@ -352,14 +313,13 @@
                             </div>
                         </div>
 
-
                         <div class="card card-inverse " style="padding:25px;border:1px solid">
                             <div class="card-block text-left">
                                 <h4 class="card-title btn-lg disabled btn-warning">Implementation of Soft Computing Algorithms</h4>
-                                <p class="card-text">
+                                <p class="card-text" style="color:white;">
                                     Classifiers such as Neural Networks, Naive Bayes, K-means and others mentioned below were implemented and used on standard datasets such as IRIS, SpeCTF and Glass.
                                 </p>
-                                <ul class="list-group">
+                                <ul class="list-group" style="color:white;">
                                     <li class="btn disabled btn-primary-outline">Perceptron Learning model</li>
                                     <li class="btn disabled btn-primary-outline">Neural Network Simulation</li>
                                     <li class="btn disabled btn-primary-outline">Naive bayes classifier</li><br/>
@@ -370,10 +330,9 @@
                                 <a href="https://github.com/IEEE-NITK/Daedalus" class="btn btn-primary">View on Github</a>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
+
                 <div id="blog" class="tab-pane fade">
                     <!--Convert to cards-->
                     <div class="row" style="padding-top:15px;">
@@ -382,7 +341,7 @@
                                 <img class="img-responsive card-img-top center-block" style="border:1px solid aqua;" src="images/hworld.png" alt="">
                                 <div class="card-block">
                                     <h4 class="card-title">Internals of Compiling</h4>
-                                    <p class="card-text">
+                                    <p class="card-text text-white">
                                         (Almost) Everyone knows how to write a hello world program in C. But this article explores every step taken by GCC to get to the final a.out.
                                     </p>
                                 </div>
@@ -394,7 +353,7 @@
                                 <img class="img-responsive card-img-top center-block" style="border:1px solid aqua;" src="images/numbthry.png" alt="">
                                 <div class="card-block">
                                     <h4 class="card-title">The Mathematics of 1,2,3</h4>
-                                    <p class="card-text">
+                                    <p class="card-text text-white">
                                         Let us explore the beauty of number theory and try to understand some of the basic concepts of Number theory.
                                     </p>
                                 </div>
