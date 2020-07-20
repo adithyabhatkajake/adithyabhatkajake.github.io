@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Adithya Bhat</title>
+ <link href="http://localhost:4000/atom.xml" rel="self"/>
+ <link href="http://localhost:4000/"/>
+ <updated>2020-07-20T17:30:05-04:00</updated>
+ <id>http://localhost:4000</id>
+ <author>
+   <name>Adithya Bhat</name>
+   <email>dth.bht@gmail.com</email>
+ </author>
+
+ 
+ <entry>
+   <title>My Academic Doom Emacs Config</title>
+   <link href="http://localhost:4000/2020/07/20/doom-config/"/>
+   <updated>2020-07-20T00:00:00-04:00</updated>
+   <id>http://localhost:4000/2020/07/20/doom-config</id>
+   <content type="html">&lt;p&gt;TODO: Add config here&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;For comments and suggestions please feel free to drop an &lt;a href=&quot;mailto:dth.bht@gmail.com&quot;&gt;email&lt;/a&gt; to me.&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+ </entry>
+ 
+
+</feed>

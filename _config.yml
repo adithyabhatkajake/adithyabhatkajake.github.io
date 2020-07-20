@@ -1,0 +1,21 @@
+# Setup
+title:               Adithya Bhat
+tagline:             'Musings of a PhD student'
+description:         ''
+url:                 'https://adithyabhatkajake.github.io'
+baseurl:             ''
+paginate:            3
+permalink:           pretty
+
+# About/contact
+author:
+  name:              Adithya Bhat
+  url:               https://twitter.com/hermitsage
+  email:             dth.bht@gmail.com
+
+# Gems
+plugins:
+  - jekyll-paginate
+
+# Custom vars
+version:             0.0.1

@@ -1,101 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
+---
+layout: default
+title: Home
+---
 
-<head>
+<div class="posts">
+  {% for post in paginator.posts %}
+  <div class="post">
+    <h1 class="post-title">
+      <a href="{{ post.url | absolute_url }}">
+        {{ post.title }}
+      </a>
+    </h1>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <span class="post-date">{{ post.date | date_to_string }}</span>
 
-    <title>Adithya Bhat :: HermitSage</title>
+    {{ post.content }}
+  </div>
+  {% endfor %}
+</div>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/portfolio-item.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body style="background-image:url(images/arch-bg.png)">
-
-    <!-- Page Content -->
-    <div class="container-fluid">
-        <div class="row">
-            <ul class="nav nav-tabs nav-fill nav-justified">
-                <li class="active">
-                    <a href="/index.html">Home</a>
-                </li>
-                <li>
-                    <a href="/projects.html">Projects</a>
-                </li>
-                <li>
-                    <a href="/blogs.html">Blogs</a>
-                </li>
-                <li>
-                    <a href="/achievements.html">Achievements</a>
-                </li>
-                <li>
-                    <a href="/interests.html">Interests</a>
-                </li>
-                <li>
-                    <a href="/contact.html">Contact</a>
-                </li>
-            </ul>
-        </div>
-        <div class="container text-success text-center">
-            <div class="tab-content">
-                <div id="home" class="tab-pane fade in active">
-
-                    <!-- Portfolio Item Row -->
-                    <div class="row">
-
-                        <h3 class="text-primary">Hello there, visitor!</h3>
-                        <hr/>
-
-                        <img class="img-responsive center-block" src="images/terminal.gif" alt="">
-
-                        <hr/>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <!-- Footer -->
-        <div class="row">
-            <footer>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <p class="text-info text-center">Copyright &copy; Adithya Bhat 2017</p>
-                    </div>
-                </div>
-                <!-- /.row -->
-            </footer>
-        </div>
-    </div>
-    <!-- /.container -->
-
-    <!-- jQuery -->
-    <script src="js/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
-</body>
-
-</html>
-
-
-<!--TODO: -->
-<!-- Blogs, Languages/Frameworks, Publications, Achievements -->
+<div class="pagination">
+  {% if paginator.next_page %}
+    <a class="pagination-item older" href="{{ paginator.next_page_path | absolute_url }}">Older</a>
+  {% else %}
+    <span class="pagination-item older">Older</span>
+  {% endif %}
+  {% if paginator.previous_page %}
+    {% if paginator.page == 2 %}
+      <a class="pagination-item newer" href="{{ '/' | absolute_url }}">Newer</a>
+    {% else %}
+      <a class="pagination-item newer" href="{{ paginator.previous_page_path | absolute_url }}">Newer</a>
+    {% endif %}
+  {% else %}
+    <span class="pagination-item newer">Newer</span>
+  {% endif %}
+</div>
