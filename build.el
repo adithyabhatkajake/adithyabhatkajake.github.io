@@ -126,7 +126,7 @@ EXCLUDE-DIRS."
     (with-temp-file nav-file
       (insert "*Links*: @@html:")
       (insert "<a href=\"/\">Home</a> ")
-      (insert "<a href=\"/CV.html\">CV</a>")
+      (insert "<a href=\"/cv.html\">CV</a>")
       (dolist (dir filtered-dirs)
         (let ((dir-name (file-name-nondirectory dir)))
           (insert (format " <a href=\"/%s\">%s</a>" dir-name dir-name))))
