@@ -1,0 +1,14 @@
+* Rust Performance Speed-up Tricks
+Published: 2023-12-03 Sun
+
+[[file:rust-perf.org][Read More...]]
+-----
+* Setting Up Doom Emacs
+Published: 2023-12-02 Sat
+
+[[file:setting-up-doom-emacs.org][Read More...]]
+-----
+#+OPTIONS: title: t
+#+TITLE: All blogs
+#+AUTHOR: Adithya Bhat
+#+EMAIL: haxolotl.research@gmail.com

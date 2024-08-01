@@ -1,0 +1,8 @@
+#+title: Setting Up Doom Emacs
+#+date: June 10, 2023
+
+#+INCLUDE: "~/.config/doom/config.org"
+
+#+begin_src emacs-lisp
+(insert-file-contents "~/.config/doom/config.org")
+#+end_src

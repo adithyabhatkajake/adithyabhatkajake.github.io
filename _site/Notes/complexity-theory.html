@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-07-31 Wed 21:51 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Complexity Theory Notes</title>
+<meta name="author" content="Adithya Bhat" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" href="/assets/styles.css"/>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Complexity Theory Notes</h1>
+<p>
+<b>Links</b>: <a href="/">Home</a> <a href="/CV.html">CV</a> <a href="/Notes">Notes</a> <a href="/Blogs">Blogs</a>
+</p>
+
+<p>
+ $$ 
+\newcommand{\bl}{\sqcup}
+\newcommand{\M}{M}
+\newcommand{\TM}{\text{Turing machine}}
+\newcommand{\bin}{\{0,1\}}
+\newcommand{\nn}{\mathbb{N}}
+\newcommand{\npc}{\text{NP-Complete}}
+\newcommand{\nph}{\text{NP-Hard}}
+\newcommand{\pc}{\text{PSPACE-Complete}}
+\newcommand{\pp}{$\mathbf{P}/poly$~}
+\newcommand{\ppm}{\mathbf{P}/poly}
+\newcommand{\cfam}{\(\left\{C_n\right\}_{n\in\nn}\)}
+\newcommand{\bpp}{\(\mathbf{BPP}\)}
+\newcommand{\bppm}{\mathbf{BPP}}
+ $$ 
+</p>
+
+<div id="outline-container-org5380472" class="outline-2">
+<h2 id="org5380472">Theorems</h2>
+<div class="outline-text-2" id="text-org5380472">
+<ul class="org-ul">
+<li>Every mutli-tape Turing Machine has a one-tape equivalent.</li>
+<li>Universal Turing Machine: For any \(k\), there exist a \(k+1\) tape Turing Machine \(U_k\), that given as input a description of a $k-$tape Turing Machine \(M\) as well as input \(x\) simulates \(M\) on input \(x\) in \(O(time_M(x))\) steps, where
+the constant in the \(O(.)\) notation depends on \(M\).</li>
+<li>For every non-deterministic TM there is an equivalent deterministic one.</li>
+<li>\(A_{TM}\) is undecidable.</li>
+<li>There exist languages that are not Turing Recognizable.</li>
+<li>A language is decidable if and only if both the language and its complement are Turing-Recognizable.</li>
+<li>The complement of \(A_{TM}\) is not Turing Recognizable.</li>
+<li>The language \(Empty_{TM} = \left\{ \langle M\rangle | M \text{ is a TM and } L(M) = \emptyset \right\}\) is not decidable.</li>
+<li>The language \(Halt_{TM} = \left\{ \langle M, w\rangle | M \text{ halts on input }w \right\}\) is not decidable.</li>
+<li>The language \(EQ_{TM} = \left\{ \langle M_1, M_2\rangle | M_1,M_2 \text{ are TMs and } L(M_1) = L(M_2)\right\}\) is not decidable.</li>
+<li>The language \[A_{LBA} = \left\{ \langle B,w \rangle | B \text{ is an LBA and B accepts }w \right\} \] is decidable.</li>
+<li>Suppose \(B\) is an LBA with \(q\) states and a tape alphabet of size \(m\). Then the number of configurations that \(B\) can have on input \(w\) of length \(n\) is \(q\cdot n\cdot m^n\).</li>
+<li>The language \[E_{LBA} = \left\{ \langle B \rangle | B \text{ is an LBA and }L(B) = \emptyset \right\} \] is undecidable.</li>
+<li>If \(A \le_m B\) and \(B\) is decidable, then \(A\) is decidable.</li>
+<li>If \(A \le_m B\) and \(A\) is undecidable, then \(B\) is undecidable.</li>
+<li>If \(A \le_m B\) and \(A\) is Turing-Recognizable, then \(B\) is Turing-Recognizable.</li>
+<li>If \(A \le_m B\) and \(A\) is not Turing-Recognizable, then \(B\) is not Turing-Recognizable.</li>
+<li>There exists a constant \(c > 0\) such that for any string \(x, K(x) \le |x| + c\).</li>
+<li>There exists a constant \(c>0\) such that \(K(xx) \le K(x)+c\).</li>
+<li>There exists a constant \(c>0\) such that for any strings \(x,y, K(xy) \le 2K(x)+K(y)+c\)</li>
+<li>There exists a constant \(c>0\) such that for any strings \(x,y, K(xy) \le 2\log{K(x)} + K(y) + c\)</li>
+<li>Incompressible strings of every length exist.</li>
+<li>At least \(2^n - 2^{n-c+1} + 1\) strings of length \(n\) are incompressible by \(c\).</li>
+<li>Let \(f\) be a computable property that holds for almost all strings. Then for any \(b>0\), every sufficiently long string \(x\) that fails to have the property are compressible by \(b\).</li>
+<li>For every \(n\) and every \(c\), the probability that an $n-$bit string \(x\) chosen uniformly at random has Kolmogorov Complexity \(\ge n-c\) is more than \(1 - 1/2^c\).</li>
+<li>\(R = \left\{ x | K(x) \ge \left|x\right| \right\}\) be the set of incompressible strings. - Let \(t:\mathbb{N}\rightarrow \mathbb{N}\) be some function. Every \(t(n)\) time multi tape \(\TM\) has an equivalent \(O(t^2(n))\) time single-tape \(\TM\).</li>
+<li>Let \(t:\mathbb{N}\rightarrow \mathbb{R}^+\) be a function, where \(t(n) \ge n\). Then every \(t(n)\) non-deterministic machine (with one tape) has an equivalent \(2^{O(t(n))}\) time deterministic machine.</li>
+<li>\(PATH \in P\)</li>
+<li>\[P \subseteq NP \subseteq EXP \subseteq NEXP\]</li>
+<li>If \(A \le_p B\) and \(B \in P\), then \(A \in P\).</li>
+<li>\(2SAT\) is polynomial time reducible to \(CLIQUE\).</li>
+<li>There exists a polynomial time algorithm that takes a CNF formula and converts it to a 3CNF formula.</li>
+<li>\(CLIQUE\) is polynomial time reducible to \(SAT\).</li>
+<li>\(2SAT\) is solvable in polynomial time.
+<ul class="org-ul">
+<li>If a graph \(G\) contains a directed path from \(a\) to \(b\), then it also contains a path from \(\overline{b}\) to \(\overline{a}\).</li>
+<li>The \(2CNF\) formula \(\phi\) is unsatisfiable if and only if there exists a variable \(x\) such that the following two conditions are met in the graph \(G\):
+<ul class="org-ul">
+<li>there is a path from \(x\) to \(\overline{x}\).</li>
+<li>there is a path from \(\overline{x}\) to \(x\).</li>
+</ul></li>
+</ul></li>
+<li>If a language \(A\) is \(\npc\) and \(A \in P\), then \(P=NP\).</li>
+<li>If a language \(A\) is \(\npc\) and \(A \le_p B\) for \(B \in NP\), then \(B\) is \(\npc\).</li>
+<li>\(SAT\) is \(\npc\).</li>
+<li>\(3SAT\) is \(\npc\).</li>
+<li>\(Clique\) is \(\npc\).</li>
+<li>\(Vertex-Cover\) is \(\npc\).</li>
+<li>For any space bounded \(\TM\) \(\M\) using space \(s(n)\), where \(s(n)\) is at least \(\log{n}\) and space constructible we can construct \(M' \in DSPACE\left(O\left(s\left(n\right)\right)\right)\) such that \(L(M') = L(M)\) and machine \(M'\) halts on all inputs.</li>
+<li>Space Hierarchy Theorem: For any space-constructible \(s_2:\nn \rightarrow \nn\) and every at least logarithmic function \(s_1: \nn \rightarrow \nn\) so that \(s_1(n) = o\left(s_2\left(n\right)\right)\), the class \(DSPACE\left( s_1(n) \right)\) is strictly contained in \(DSPACE(s_2(n))\).</li>
+<li>For any function \(s:\nn \rightarrow \nn\) with the property that \(s(n) \ge \log{n}, DSPACE\left(s\left(n\right)\right) \subseteq DTIME\left(2^{O\left( s\left(n\right) \right)}\right)\)</li>
+<li>Let \(\M\) be an \(f(n)\) space \(\TM\). If \(f\) is space constructible, then there exists an \(O(f(n))\) space \(\TM\) \(M'\) such that \(M'\) is a decider and \(L(M')=L(M)\).</li>
+<li>Savitch's Theorem: For any function \(f: \nn \rightarrow \mathbb{R}^+\), where
+\(f(n) \ge \log{n}\),
+\[ NSPACE\left(f(n)\right) \subseteq DSPACE\left(f^2(n)\right) \]</li>
+<li>\(PSPACE = NSPACE\)</li>
+<li>\(TQBF\) is PSPACE-Complete</li>
+<li>Formula-Game is PSPACE complete.</li>
+<li>Generalized-Geography is PSPACE-complete.</li>
+<li>\(PATH \in NL\).</li>
+<li>\(L \subseteq NL \subseteq P\).</li>
+<li>Transitivity of log-space reductions:
+<ul class="org-ul">
+<li>If \(B \le_L C\) and \(C \le_L D\), then \(B \le_L D\).</li>
+<li>If \(B \le_L C\) and \(C \in L\), then \(B \in L\).</li>
+</ul></li>
+<li>\(PATH\) is NL-complete.</li>
+<li>(Immerman-Szelepcseny): \(NL = coNL\).</li>
+<li>Theorem for polynomial hierarchy collapse:
+<ul class="org-ul">
+<li>For every \(i \ge 1\), if \(\Sigma_i^p = \Pi_i^p\) then \(PH = \Sigma_i^p\) (i.e., the hierarchy collapses to the \(i^{th}\) level).</li>
+<li>If \(P = NP\) then \(PH = P\) (i.e., the hierarchy collapses to \(P\)).</li>
+</ul></li>
+<li>Suppose there exists a language \(L\) that is \(PH-complete\), then there exists an \(i\) such that \(PH = \Sigma_i^p\) (and hence collapses to its \(i^{th}\) level).</li>
+<li>For every \(i \ge 1\), the class \(\Sigma_i^p\) has the following complete problem involving quantified boolean expression with limited number of alterations: \[\Sigma_iSAT = \exists u_1\forall u_2 \exists \dots Q_iu_i \varphi(u_1,u_2,\dots,u_i) = 1 \] where \(\varphi\) is a boolean formula, each \(u_i\) is a vector of boolean variables, and \(Q_i\) is \(\forall\) or \(\exists\) depending on whether \(i\) is odd or even.</li>
+<li>A language has logspace uniform circuits of polynomial size iff it is in \(\mathbf{P}\).</li>
+<li>This implies \(P \in \ppm\).</li>
+<li>For \(c>0\), let \(\bppm_{n^{-c}}\) denote the class of languages \(L\) for which there is a polynomial time PTM \(\M\) satisfying \(\Pr\left[M\left(x\right) = L\left(x\right)\right] \ge \frac{1}{2} + \left|x\right|^{-c}\) for every \(x \in {\bin}^*\). Then \(\bppm_{n^{-c}} = \bppm\).</li>
+<li>Error Reduction: Let \(L \subseteq \bin^*\) be a language and suppose that there exists a polynomial time PTM \(\M\) such that for every \(x \in \bin^*, \Pr\left[ M\left(x\right) = L\left(x\right) \right] \ge \frac{1}{2} + \left|x\right|^{-c}\). Then for every constant \(d>0\) there exists a polynomial time PTM \(M'\) such that for every \(x\in \bin^*, \Pr\left[ M\left(x\right) = L\left(x\right) \right] \ge 1 -  2^{-\left|x\right|^{d}}\).</li>
+<li>Adleman Theorem: \(\bppm \subseteq \ppm\)</li>
+<li>Relativization:
+<ul class="org-ul">
+<li>An oracle \(A\) exists whereby \(P^A \neq NP^A\)</li>
+<li>An oracle \(B\) exists whereby \(P^B = NP^B\)</li>
+</ul></li>
+<li>For every \(i \ge 2\), \(\Sigma_i^p = NP^{\Sigma_i^p}\), where the latter class denotes the set of languages decided by the polynomial-time NTM ’s with access to the oracle \(\Sigma_{i-1}\).</li>
+<li>Karp-Lipton Theorem: If \(NP\) is contained in \pp, then the polynomial hierarchy collapses to the second level,i.e.\(\Sigma_2^p = \Pi_2^p\)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6f1061c" class="outline-2">
+<h2 id="org6f1061c">Definitions</h2>
+<div class="outline-text-2" id="text-org6f1061c">
+<ul class="org-ul">
+<li>Turing Machine: It is defined by
+<ul class="org-ul">
+<li>\(Q\) is the set of states</li>
+<li>\(\Sigma\) is the input alphabet (not containing the blank symbol \(\bl\))</li>
+<li>\(\Gamma\) is the tape alphabet, with \(\bl\) \(\in \Gamma, \Sigma \in \tau\).</li>
+<li>\(\delta: Q \times \Gamma \rightarrow Q \times \Gamma \times \{L,R\}\) is the transition function.</li>
+<li>\(s \in Q\): Start State</li>
+<li>\(Q_{accept} \in Q\): Accept State</li>
+<li>\(Q_{reject} \in Q\): Reject State</li>
+</ul></li>
+<li><i>Configuration</i>: A configuration of a Turing Machine \(M\) is a setting consisting of current state, the current tape content, and the head location. It is denoted by a tuple \(uqv\) where \(u\) is the tape content to the left of the head, \(q\) is the current state, \(v\) is the tape content to the right of \(v\), and the head is positioned on the first letter of \(v\).</li>
+<li>Turing Recognizable Languages: A language \(A\) is Turing-Recognizable if some Turing Machine \(M\) recognizes it (i.e $L(M) = A). [aka recursive enumerable language]</li>
+<li>Deciders: A machine can fail to accept a string in two ways: actually end in a rejecting configuration, or loop. A Turing machine that always halts is called a decider.</li>
+<li>Turing Decidable Languages: A language \(A\) is (Turing)-decidable if some Turing Machine \(M\) decides it (i.e \(L(M) = A\) and \(M\) always halts). [aka recrusive language]</li>
+<li>Undecidable Problem: We say a yes/no problem is undecidable if there is no Turing machine that always halts with a correct yes/no answer (similar to decidable).</li>
+<li>Time Complexity: We denote by \(time_M(x) =\) \# steps that \(M\) takes to halt on input \(x\).</li>
+<li>Multi-tape Turing Machine: It is defined by
+<ul class="org-ul">
+<li>\(Q\) is the set of states</li>
+<li>\(\Sigma\) is the input alphabet (not containing the blank symbol \(\bl\))</li>
+<li>\(\Gamma\) is the tape alphabet, with \(\bl\) \(\in \Gamma, \Sigma \in \tau\).</li>
+<li>\(\delta: Q \times \Gamma^k \rightarrow Q \times \Gamma^k \times \{L,R\}^k\) is the transition function.</li>
+<li>\(s \in Q\): Start State</li>
+<li>\(Q_{accept} \in Q\): Accept State</li>
+<li>\(Q_{reject} \in Q\): Reject State</li>
+</ul></li>
+<li>Non-deterministic Turing Machine: It is defined by
+<ul class="org-ul">
+<li>\(Q\) is the set of states</li>
+<li>\(\Sigma\) is the input alphabet (not containing the blank symbol \(\bl\))</li>
+<li>\(\Gamma\) is the tape alphabet, with \(\bl\) \(\in \Gamma, \Sigma \in \tau\).</li>
+<li>\(\delta: Q \times \Gamma \rightarrow \mathcal P (Q \times \Gamma^k \times \{L,R\}^k)\) is the transition function. \(\mathcal P(X)\) is the power set of \(X\).</li>
+<li>\(s \in Q\): Start State</li>
+<li>\(Q_{accept} \in Q\): Accept State</li>
+<li>\(Q_{reject} \in Q\): Reject State</li>
+</ul></li>
+<li>Decider for NTMs: A non-deterministic TM is a decider if it halts on all branches of its computation.</li>
+<li>Bijective Functions aka Correspondances: A function \(f:A\rightarrow B\) is injective (or 1-1) if for all \(a\neq b\), \(f(A)\neq f(B)\). The function \(f\) is surjective (or onto) if for all \(b \in B\), there is \(a \in A\) such that \(f(a)=b\). If \(f\) satisfies both conditions, it is called a bijection or correspondance.</li>
+<li>Same size: Two sets \(A\) and \(B\) have the same size if there is a correspondance \(f:A\rightarrow B\).</li>
+<li>Countable Set: A set \(A\) is countable if it is finite or has the same size as \(\mathbb{N}\).</li>
+<li>Let \(M\) be a Turing Machine and \(w\) an input string. An accepting computation history of \(M\) on \(w\) is a sequence of configurations \(C_1, C_2, \dots C_k\) such that \(C_1\) is the starting configuration of \(M\) on input \(w\), \(C_k\) is an accepting configuration, and each configuration \(C_j\) yields \(C_{j+1}\). A rejecting computation history for \(M\) on input \(w\) is similarly defined, except that \(C_k\) is a rejecting configuration.</li>
+<li>A linear bounded automation is a Turing Machine where the tape head is not allowed to move off the portion of the tape that contains the input.</li>
+<li>Computable Function: A function \(f:\Sigma^* \rightarrow \Sigma^*\) is a computable function if there exists a Turing Machine M that on every input \(w\) halts with \(f(w)\) on the tape.</li>
+<li>Mapping Reducibility: A language \(A\) is mapping reducible to a language \(B\), written \(A \le_m B\), if there exists a computable function \(f:\Sigma^*\rightarrow \Sigma^*\), where for every \(w \in \Sigma^*\), we have \(w
+  \in A \iff f(w) \in B\). The function \(f\) is called the reduction of \(A\) to $B.$</li>
+<li>Compressible: A string \(x\) is said to be compressible if \(K(x) \le \left|x\right| -c\).</li>
+<li>Incompressible, Kolmogorov Random: A string \(x\) is said to be incompressible or Kolmogorov random if \(K(x) \ge \left|x\right|\). Additionally, \(x\) is said to be incompressible by \(c\) if \(x\) is not compressible by \(c\).</li>
+<li>Let \(M\) be a deterministic Turing machine that halts on all inputs. The running time (time complexity) of \(\M\) is the function \(f:\mathbb{N}\rightarrow \mathbb{N}\), where \(f(n)\) is the maximum number of steps that \(\M\) takes on input of length \(n\). We say that \(\M\) runs in time \(f(n)\) and \(\M\) is an \(f(n)\) time \(\TM\).</li>
+<li>Let \(f,g:\mathbb{N}\rightarrow\mathbb{R}^+\). We say that \(f(n) = O(g(n))\) if there exist \(c,n_0 \in N\) such that for all \(n \ge n_0\), we have \(f(n) \le c\cdot g(n)\). In this case the function \(g\) is said to be an asymptotic upper bound on \(f\).</li>
+<li>Let \(f,g:\mathbb{N}\rightarrow \mathbb{B}\). We say that \(f(n) = o(g(n))\) if \[\lim\limits_{n \rightarrow \infty} \frac{f(n)}{g(n)} = 0 \] That is, for every \(c>0\) there exists \(n_0\) such that \(f(n)<c\cdot g(n)\) for all \(n \ge n_0\).</li>
+<li>\(DTIME\): Let \(f:\mathbb{N}\rightarrow \mathbb{N}\) be a function. A language \(L\) is in \(DTIME(t(n))\) if there exists a \(\TM\) running in \(O(t(n))\) steps and decides \(L\).</li>
+<li>Let \(N\) be a non-deterministic \(\TM\) that halts on all branches of computation (i.e a decider). The runtime of \(N\) is the function \(f:\mathbb{N}\rightarrow \mathbb{N}\), where \(f(n)\) is the maximum number of steps that \(N\) uses on any branch of its computation on an input of length \(n\).</li>
+<li>Class P: \(P\) is the class of languages decidable in polynomial time (on deterministic, one-tape) \(\TM\) s: \[P = \bigcup\limits_kDTIME(n^k)\]</li>
+<li>Verifier: A verifier for a language L is an algorithm V that takes inputs of the form \(\langle w, u \rangle\) and \[w \in L \iff \text{there exists } u \text{ such that V accepts } \langle w,u \rangle
+  \] The string \(u\) with this property is called a certificate (or witness) for \(w\). That is,
+\[L = \left\{ w | \text{ V accepts } \left&lang; w,u \right&rang; \text{ for some</li>
+</ul>
+<p>
+string } u \right\} \]
+</p>
+<ul class="org-ul">
+<li>Polynomial-time verifier: A polynomial-time verifier for a language \(L\) is an algorithm V that takes as input of the form \(\langle w,u \rangle\) and runs in time \(p\left(\left|w\right|\right)\) for some polynomial \(p:\mathbb{N}\rightarrow \mathbb{N}\), such that \[w \in L \iff \text{there exists } u \text{ such that V accepts } \langle w,u \rangle\]</li>
+<li>The class NP: NP is the class of languages \(L \in \bin^*\) that have polynomial time verifiers.</li>
+<li>The class NTIME: For every function \(t:\nn \rightarrow \nn\) and \(L \in NP\) if and only if there is a non-deterministic polynomial time \(\TM\) \(N\) that decides \(L\). That is, \(NP = \bigcup\limits_{k \in \nn}NTIME(n^k)\).</li>
+<li>The class EXP: \[EXP = \bigcup\limits_{k>0}DTIME\left( 2^{n^k} \right)\]</li>
+<li>The class NEXP: \[NEXP = \bigcup\limits_{k>0}NTIME\left( 2^{n^k} \right)\]</li>
+<li>Polynomial time computable function: A function \(f:\bin^* \rightarrow \bin^*\) is a polynomial time computable function if there exists a polynomial time \(\TM\) \(\M\) that halts with just \(f(w)\) on the tape when started on input \(w\).</li>
+<li>Polynomial time mapping reducible; aka polynomial time many-one reducible: A language \(A\) is polynomial time (mapping) reducible to language \(B\), written \(A \le_p B\), if there exists a polynomial time computable function \(f:\bin^* \rightarrow \bin^*\), such that for every \(x \in \bin^*\) we have that \[x \in A \iff f(x) \in B \] The function \(f\) is called the polynomial time reduction of \(A\) to \(B\).</li>
+<li>Satisfiability Problem: The Satisfiability problem (SAT) consists of determining if a given formula is satisfiable \[SAT = \left\{ \left\langle \phi \right\rangle | \phi \text{ is a satisfiable CNF-formula } \right\} \]</li>
+<li>NP-Complete: A language \(L\) is NP-Complete if
+<ul class="org-ul">
+<li>\(L \in NP\)</li>
+<li>Every language \(A \in NP\) is polynomial time reducible to \(L\).</li>
+</ul></li>
+<li>NP-Hard: A language \(L\) is \(\nph\) if every language \(A \in NP\) is polynomial time reducible to it.</li>
+<li>Space Complexity: The space complexity of a
+<ul class="org-ul">
+<li>deterministic TM that halts on all inputs is given by the function \(s:\nn \rightarrow \nn\), where \(s(n)\) is the maximum number of work-tape cells scanned by \(\M\) given an input of length \(n\). We say that \(\M\) is an \(s(n)\) space machine.</li>
+<li>non-deterministic TM \(N\) that halts on all inputs (on all branches of computations) is given by the function \(s:\nn \rightarrow \nn\), where \(s(n)\) is the maximum number of work-tape cells scanned by \(N\) on any branch of computation for any input of length \(n\).</li>
+</ul></li>
+<li>DSPACE and NSPACE: Let \(s:\nn \rightarrow \nn\) be a function. The space complexity classes \(DSPACE(s(n))\) and \(NSPACE(s(n))\) are defined by:
+<ul class="org-ul">
+<li>\(DSPACE\left(s\left(n\right)\right) = \{ L | L\) is a language decided by  \(O(s(n))\) space deterministic Turing machine \(\}\).</li>
+<li>\(NSPACE\left(s\left(n\right)\right) = \{ L | L\) is a language decided by  \(O(s(n))\) space non-deterministic Turing machine \(\}\).</li>
+</ul></li>
+<li>An alternate definition for \(PSPACE\) and \(NSPACE\).
+<ul class="org-ul">
+<li>\(PSPACE\): It is the class of languages decidable in polynomial space on a deterministic \(\TM\): \[PSPACE = \bigcup\limits_kDSPACE(n^k)\]</li>
+<li>\(NSPACE\): It is the class of languages decidable in polynomial space on a non-deterministic \(\TM\): \[NSPACE = \bigcup\limits_kNSPACE(n^k) \]</li>
+</ul></li>
+<li>Configuration: A configuration of a machine \(\M\) is an instantaneous representation of the computation carried by \(\M\) on an input \(x\). Thus if \(|x| = n\), the configuration consists of:
+<ul class="org-ul">
+<li>state of \(\M\) (\(O(1)\) bits, since it is given by some \(q \in Q\), where \(Q\) is the set of states).</li>
+<li>contents of the work tape ( \(s(n)\) bits ).</li>
+<li>head position on the input tape ( \(\log{n}\) bits ).</li>
+<li>head position on the work tape ( \(\log{s(n)}\) bits ).</li>
+</ul></li>
+<li>Space Constructible function: A space constructible function is a function \(s:\nn \rightarrow \nn\), where \(s \ge \log{n}\) which maps the string \(1^n\) to the binary representation of \(s(n)\) is computable in space \(O(s(n))\).</li>
+<li>\pc: A language \(B\) is \pc if
+<ul class="org-ul">
+<li>\(B \in PSPACE\)</li>
+<li>Every language \(A\) in PSPACE is polynomial time reducible to \(B\).</li>
+</ul></li>
+<li>TQBF (True Quantifiable Boolean Formula): \[TQBF = \left\{ \left\langle \phi
+  \right\rangle | \phi \text{ is a true fully quantifiable formula} \right\} \]</li>
+<li>Formula Game: \(Formula-Game = \{\phi |\) Bob has a winning stratergy in the game associated with formula \(\phi\}\).</li>
+<li>\(Generalized-Geography = \{\left\langle G \right\rangle , |\) Alice has a winning stratergy in the generalized geography game played on graph \(G\) starting at node \(b\}\).</li>
+<li>L: L is the class of languages decidable in logarthmic space on a deterministic \(\TM\):
+\[L = DSPACE(\log{n}) \]</li>
+<li>NL: NL is the class of languages decidable in logarthmic space on a non-deterministic \(\TM\): \[NL = NSPACE(\log{n}) \]</li>
+<li>Logspace Computable Function: A function \(f:\bin^* \rightarrow \bin^*\) is logspace computable if there exists a log-space TM \(\M\) that on input \(x\) halts with \(f(x)\) on the input tape.</li>
+<li>Log-space Reduction: A language \(A\) is log space reducible to language \(B\), written \(A \le_L B\), if \(A\) is mapping reducible to \(B\) by means of a log-space computable function \(f\).</li>
+<li>NL-Complete: A language \(B\) is NL-complete if
+<ul class="org-ul">
+<li>\(B \in NL\)</li>
+<li>Every language \(A\) in NL is log-space reducible to \(B\): that is, there exists a function \(f\) such that \(x \in A \iff f(x) in B\) and \(f\) is computable in log-space. The function \(f\) is the reduction.</li>
+</ul></li>
+<li>Alternative definition of log-space reduction: A function \(f:\bin^* \rightarrow \bin^*\) is (implicitly) log-space computable if there exists constant \(c > 0\) such that \(\left|f(x)\right| \le \left|x\right|^c\) for every \(x \in \bin^*\) and the languages \[L_f = \left\{\left\langle x,r \right\rangle | f(x)_i = 1\right\} \] and \[L'_f = \left\{\left\langle x,r \right\rangle | i \le \left|f(x)\right| \right\} \] are in \(L\).</li>
+<li>coNP: \[coNP = \left\{L | \overline{L} \in NP\right\}. \]</li>
+<li>Certificate based definition of coNP: For every language \(L\) over \(\bin^*\), \(L \in coNP\) if there exists a polynomial \(p:\nn \rightarrow \nn\) and polynomial time TM \(\M\) (the verifier) such that for all \(x \in \bin^*\), \begin{align*}</li>
+</ul>
+<p>
+x &isin; L \iff &forall; u &isin; \bin<sup>p\left(\left| x\right|\right)</sup>, M(x,u) = 1.
+\end{align*}
+</p>
+<ul class="org-ul">
+<li>coNL: \[coNL = \left\{A | \overline{A} \in NL \right\}. \]</li>
+<li>The class \(\Sigma^p_2\) is defined to be the set of all languages \(L\) for which there exists a polynomial-time TM \(\M\) and a polynomial \(q\) such that \[x \in L \iff \exists u \in \bin^{q\left(\left|x\right|\right)} \forall v \in \bin^{q\left(\left|x\right|\right)} M(x,u,v) = 1 \] for every \(x \in \bin^*\).</li>
+<li>Polynomial Hierarchy:
+<ul class="org-ul">
+<li>For every \(i \ge 1\), a language \(L\) is in \(\Sigma^p_i\) if there exists a polynomial time TM \(\M\) and a polynomial \(q\) such that \[x \in L \iff \exists u_1 \in \bin^{q\left(\left|x\right|\right)} \forall u_2 \in \bin^{q\left(\left|x\right|\right)} \dots Q_iu_i \in \bin^{q\left(\left|x\right|\right)}M(x,u_1,\dots , u_i) = 1 \] where \(Q_i\) denotes \(\forall\) or \(\exists\) depending on whether \(i\) is even or odd respectively.</li>
+<li>We say that \(L\) is in \(\Pi^p_i\) if there exists a polynomial time TM \(\M\) and a polynomial \(q\) such that \[x \in L \iff \forall u_1 \in \bin^{q\left(\left|x\right|\right)} \exists u_2 \in \bin^{q\left(\left|x\right|\right)} \dots Q_iu_i \in \bin^{q\left(\left|x\right|\right)}M(x,u_1,\dots , u_i) = 1 \] where \(Q_i\) denotes \(\exists\) or \(\forall\) depending on whether \(i\) is even or odd respectively.</li>
+<li>The polynomial hierarchy is the set \(PH = \bigcup\limits_i\Sigma_i^p\).</li>
+</ul></li>
+<li>Boolean Circuits: For every \(n,m\in \nn\), a boolean circuit \(C\) with \(n\) inputs and \(m\) outputs is a directed acyclic graph.
+<ul class="org-ul">
+<li>It contains \(n\) nodes with no incoming edges; called the input nodes and \(m\) nodes with no outgoing edges, called the output nodes.</li>
+<li>All other nodes are called gates and are labelled with one of \(\land\), \(\lor\) or \(\not\) (in other words, the logical operations AND, OR and NOT).</li>
+<li>The \(\lor\) and \(\land\) nodes have fanin (i.e., number of incoming edges) of 2 and the \(\not\) nodes have fanin 1.</li>
+<li>The size of \(C\), denoted by \(\left|C\right|\), is the number of nodes in it.</li>
+<li>The circuit is called a boolean circuit if each node has at most one outgoing edge.</li>
+</ul></li>
+<li>Circuit Families and Language Recognition: Let \(T:\nn \rightarrow \nn\) be a function. A $T(N)$-sized circuit family is a sequence \(\left\{C_n\right\}_{n\in \nn}\) of boolean circuits, where \(C_n\) has \(n\) inputs and a single output, such that \(\left|C_n\right|\le T(n)\) for every
+\(n\).</li>
+<li>We say that a language \(L\) is in \(SIZE\left(T\left(n\right)\right)\) if there exists a $T(n)$-size circuit family \(\left\{C_n\right\}_{n\in\nn}\) such that for every \(x \in \bin^n\), \(x \in L \iff C(x)=1\).</li>
+<li>\pp is the class of languages that are decidable by polynomial sized circuit families, in other words, \(\bigcup\limits_c\mathbf{SIZE}\left(n^c\right)\).</li>
+<li>Logspace-uniform Circuit Families: A circuit family \cfam is logspace uniform if there is an implicitly logspace computable function mapping \(1^n\) to the description of the circuit \(C_n\).</li>
+<li>Let \(T,a:\nn \rightarrow \nn\) be functions. The class of languages decidable by \(time-T(n)\) TM's with \(a(n)\) advice, denoted \(\mathbf{DTIME}\left(T\left(n\right)\right)\).</li>
+<li>The classes \(\mathbf{BPTIME}\) and \(\mathbf{BPP}\): For \(T:\nn \rightarrow \nn\) and \(L\subseteq \bin^*\), M halts in \(T\left(\left|x\right|\right)\) steps regardless of its random choices, and
+\(\Pr\left[M\left(x\right)=L\left(x\right)\right] \ge \frac{2}{3}\), where we denote \(L(x=1)\) if \(x \in L\) and \(L(x)=0\) if \(x \not\in L\).</li>
+<li>We let \(\mathbf{BPTIME}\left(T\left(n\right)\right)\) denote the class of languages decided by PTMs in \(O\left(T\left(n\right)\right)\) time.</li>
+<li>\(\mathbf{BPP} = \bigcup\limits_c\mathbf{BPTIME}\left(n^c\right)\).</li>
+<li>Alternative definition for \bpp: \bpp contains a language \(L\) if there exists a polynomial time TM \(\M\) and a polynomial \(p:\nn \rightarrow \nn\) such that for every \(x \in \bin^*, \Pr\limits_{r \in_R \bin^{p\left(\left|x\right|\right)}} \left[ M(x,r) = L(x) \right] \ge \frac{2}{3}\).</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org8b1b30a" class="outline-2">
+<h2 id="org8b1b30a">Notes</h2>
+<div class="outline-text-2" id="text-org8b1b30a">
+<ul class="org-ul">
+<li>Use BFS to simulate a NTM.</li>
+<li>Set \(B\) of infinite binary sequences is uncountable.</li>
+<li>Cook Levin Theorem Proof: \[\phi_{cell}\land \phi_{start}\land \phi_{accept}\land \phi_{move} \]
+<ul class="org-ul">
+<li>\(\phi_{cell}\) means only one variable is set in any cell</li>
+<li>\(\phi_{accept}\) means that at least one of the row is accepting.</li>
+<li>\(\phi_{start}\) means that the first row is the starting configuration.</li>
+<li>\(\phi_{move}\) means that the \(2\times 3\) window is valid.</li>
+</ul></li>
+<li>SAT to VERTEX-COVER
+<ul class="org-ul">
+<li>For every variable \(x\) add \(x\) and \(\overline{x}\) as nodes.</li>
+<li>For every clause add all its variables and connect it to identical variable nodes.</li>
+<li>\(k = m + 2l\); $m =$\# of variables, $l=$\# of clauses.</li>
+</ul></li>
+<li>Savitch's Theorem: Recursively call \(CANYIELD\).</li>
+<li>TQBF is PSPACE-Complete \[\phi_{c_1,c_2,t} = \exists m_1 \forall \left(c_3,c_4\right) \in \left\{\left(c_1,m_1\right),\left(m_1,c_2\right)\right\} \left[\phi_{c_3,c_4,\frac{t}{2}} \right] \]</li>
+<li>Relativization Proof:
+<ul class="org-ul">
+<li>Use \(NP^{TQBF} \subseteq NPSPACE \subseteq PSPACE \subseteq P^{TQBF}\)</li>
+<li>Use \(L_A = \left\{ w| \exists x \in A \left[ \left|x\right| =
+      \left|w\right| \right] \right\}\)</li>
+</ul></li>
+<li>Markov Chains:
+<ul class="org-ul">
+<li>\(\Pr\left[X_{t+1} = j+1 | X_t = j\right] \ge \frac{1}{2}\)</li>
+<li>\(\Pr\left[X_{t+1} = j-1 | X_t = j\right] \le \frac{1}{2}\)</li>
+<li>\(E\left[y_j\right] = \frac{1}{2}\left(1+E\left[y_{j-1}\right]\right) + \frac{1}{2}\left(1+E\left[y_{j+1}\right]\right)\)</li>
+<li>Show \(h_j = \frac{h_{j-1}+h_{j+1}}{2}+1\)</li>
+</ul></li>
+<li>3SAT to CLIQUE
+<ul class="org-ul">
+<li>Given \(\phi\), create triplet nodes for every clause.</li>
+<li>$k =$\# of literals in \(\phi\).</li>
+</ul></li>
+<li>CLIQUE to 3SAT
+<ul class="org-ul">
+<li>For each \(i,j\) there is an \(i^{th}\) vertex in the clique</li>
+<li>The vertices are different</li>
+<li>For each non-edge both of the vertices cannot be in the clique.</li>
+</ul></li>
+<li>2SAT graph construction:
+<ul class="org-ul">
+<li>Create a graph with \(2n\) vertices.</li>
+<li>For each clause \(a \lor b\) add an edge from \(\overline{a}\) to \(b\) and \(\overline{b}\) to \(a\).</li>
+</ul></li>
+<li>CLIQUE to VERTEX-COVER:
+<ul class="org-ul">
+<li>Given \(G,k\) convert it to \(G',n-k\) vertex cover problem.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2023-04-23 Sun 00:00</p>
+<p class="author">Author: Adithya Bhat</p>
+<p class="date">Created: 2024-07-31 Wed 21:51</p>
+</div>
+</body>
+</html>

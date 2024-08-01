@@ -1,0 +1,15 @@
+#+title: Robinhood Gold Math
+#+AUTHOR: Adithya Bhat
+#+date: <2023-12-03 Sun>
+#+TAGS: Finances
+
+Robinhood claims that they offer $5\%$ APY by subscribing to Robinhood Gold at $5 per month.
+Meanwhile, Capital One offers $4.3\%$ APY for free.
+Let us measure how much money we need to deposit in order for Robinhood to be more profitable.
+
+Let $x$ be the amount of money we have.
+By depositing \$X in Capital One, we have $1.043x$ at the end of the year.
+If we deposited the same amount in Robinhood Gold, we will have $1.05x-(12*5)$ at the end of the year.
+Solving for $1.05x-60>1.043x$, we get $x>8571.43$ [[https://www.wolframalpha.com/input?i=1.05x-60%3E1.043x][[1]​]].
+
+So, if you have more than \$8600 in cash hanging around, Robinhood Gold makes more money than Capital One.

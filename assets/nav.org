@@ -1,0 +1,1 @@
+*Links*: @@html:<a href="/">Home</a> <a href="/CV.html">CV</a> <a href="/Notes">Notes</a> <a href="/Blogs">Blogs</a>@@

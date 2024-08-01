@@ -1,0 +1,29 @@
+#+TITLE: CDGK22 Publicly Verifiable Secret Sharing
+#+AUTHOR: Adithya Bhat
+#+DATE:<2023-12-03 Sun>
+
+This scheme is the DHPVSS (Diffie Hellman PVSS) scheme from the following [[https://eprint.iacr.org/2022/242][paper]]:
+"YOLO YOSO: Fast and Simple Encryption and Secret Sharing in the YOSO Model" by Ignacio Cascudo, Bernardo David, Lydia Garms, and Anders Konring.
+
+This scheme is **not homomorphic** across **multiple** dealers but is **homomorphic across single dealer.**
+
+- Secret key: $sk_{i}\in\mathbb{Z}_{p}$
+- Public key: $pk_i = g^{sk_{i}}$
+- Let $\alpha_0$, $\alpha_{1}$, $\ldots$, $\alpha_{n}$ be public evaluation points for party $i$
+- Let $v_i \gets \prod\limits_{j\in[n]\setminus \{i\}} (\alpha_i-\alpha_j)^{-1}$
+	- E.g., $v_1 = \prod\limits_{j\in [n]\setminus \{1\}}\dfrac{1}{(\alpha_1-\alpha_j)} = \dfrac{1}{(\alpha_1-\alpha_2)(\alpha_1-\alpha_3)\ldots(\alpha_1-\alpha_n)}$
+- Distribute
+	- $p(x)$ is a degree $t$ polynomial
+	- $A_i \gets g^{p(\alpha_{i})}$ and the secret is defined as $S = g^{p(\alpha_0)}$
+	- $C_{i} \gets A_{i}\cdot pk_{i}^{sk_{D}} = g^{sk_i\cdot sk_D + p(\alpha_i)}$
+	- ${p^{\perp}}(x) \gets H(pk_{D}, pk_{1},\ldots,pk_{n},C_{1},\ldots,C_{n})$
+	- $v\gets \prod\limits_{i=1}^{n}C_{i}^{v_i\cdot p^{\perp}(\alpha_i)}$
+	- $u \gets \prod\limits_{i=1}^{n}{pk_{i}^{v_i \cdot p^\perp(\alpha_i)}}$
+	- $\pi \gets DLEQ(sk_{D}, g, pk_{D},u, v)$
+	- **Output** $\{C_1,\ldots, C_n, \pi \}$
+- Decrypt Share
+	- $Dec_i \gets \dfrac{C_i}{pk_{D}^{sk_i}} = \dfrac{g^{p(\alpha_i)+sk_{D}sk_i}}{g^{sk_D sk_i}} = {g}^{p(\alpha_i)}$
+	- $$\pi = DLEQ(sk_i, g, pk_i, pk_D,\dfrac{C_i}{Dec_i})$$
+	$$= DLEQ(sk_i;g,pk_i, pk_D, \dfrac{g^{sk_Dsk_i+p(\alpha_i)}}{g^{p(\alpha_i)}})$$
+	$$= DLEQ(sk_i; g, pk_i, pk_D, pk_D^{sk_i})$$
+	- **Output** $Dec_i, \pi$

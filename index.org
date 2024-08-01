@@ -1,0 +1,43 @@
+#+TITLE: Musings of Distributed Systems Practioner
+
+* Bio 🤦🏻
+I am Adithya Bhat, a distributed systems enthusiast while I am on a computer, a travel enthusiast during warmer weathers, and a food enthusiast during winters.
+I am currently working as a Staff Research Scientist at Visa Research.
+I obtained my Ph.D. from Purdue University with Prof. Aniket Kate as my advisor.
+My favorite programming language is Rust, favorite editor is Emacs, and favorite hobby is travelling to local fairs, playing ping pong, pickleball, and reading books.
+* Research Interests 📖
+** Distributed Systems
+- Byzantine Agreement
+- Consensus
+- Byzantine Broadcast
+- Distributed Key Generation
+** Applied Cryptography
+- Computational secret sharing
+- Multi-party computation
+** Blockchain
+- Payment channel
+- State channel
+* Contact ☎️
+- 📧 Email: haxolotl dot research at gmail dot com
+- 🕸️ LinkedIn: adithyabhatkajake
+- 👨🏻‍💻 Github: adithyabhatkajake
+* Index Tasks                                                      :noexport:
+:PROPERTIES:
+:CATEGORY: Work
+:END:
+- Some good resources:
+  - https://systemcrafters.net/publishing-websites-with-org-mode/building-the-site/
+** DONE Add a header
+CLOSED: [2023-05-06 Sat 14:10]
+- State "DONE"       from "NEXT"       [2023-05-06 Sat 14:10]
+Use this for instructions: https://thibaultmarin.github.io/blog/posts/2016-11-13-Personal_website_in_org.html
+** NEXT Add my image
+Like this: https://orgmode.org/manual/Complex-example.html
+** NEXT Add description about self
+Like this:
+** DONE Add auto add CV pdf to the blog web page
+CLOSED: [2023-05-06 Sat 14:10]
+- State "DONE"       from "NEXT"       [2023-05-06 Sat 14:10]
+** NEXT Add code to push the blog to Github
+** PROJ Add blogs
+*** NEXT Add description of how to construct the blog using emacs

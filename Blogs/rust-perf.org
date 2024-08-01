@@ -1,0 +1,47 @@
+#+title: Rust Performance Speed-up Tricks
+#+date: 2023-05-01
+
+These are my notes to optimize Rust performance.
+I generally check this after finishing coding to get some trivial performance gains.
+
++ Loops
+    #+begin_src rust
+let mut elements: Vec<u8> = vec![0; 1024];
+// Do something with the vector
+
+// SLOWER
+for i in 0..1024 {
+    // This forces bounds checking for i every iteration
+    println!("{}", elements[i]);
+}
+
+// FASTER
+// No bounds check here
+elements.iter().map(|e| {
+    println!("{}", e);
+});
+    #+end_src
++ Round-robin leaders
+    #+begin_src rust
+    let mut leader:usize = 0;
+    const num_nodes:usize = 100;
+    // ...
+
+    // SLOWER
+    leader = (leader+1)%num_nodes;
+
+    // FASTER
+    leader = if leader != num_nodes {
+        // The common-case inside the true part to speed-up branch prediction
+        leader + 1
+    } else { 0 };
+    #+end_src
++ Hash Maps
+  #+begin_src rust
+// SLOWER
+use std::collections:HashMap;
+
+// FASTER
+// Use fnv = "*" or fnv = "0" in Cargo.toml
+use fnv::HashMap;
+  #+end_src

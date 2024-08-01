@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-07-31 Wed 21:51 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Curriculum Vitae</title>
+<meta name="author" content="Adithya Bhat" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" href="/assets/styles.css"/>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<p>
+<b>Links</b>: <a href="/">Home</a> <a href="/CV.html">CV</a> <a href="/Notes">Notes</a> <a href="/Blogs">Blogs</a>
+</p>
+
+This is the html version of my CV.
+The PDF version can be found <a href="assets/cv.pdf">here</a>.
+(They are the same.)
+
+<div id="outline-container-orgf95ad5e" class="outline-2">
+<h2 id="orgf95ad5e">Research Interests</h2>
+<div class="outline-text-2" id="text-orgf95ad5e">
+<p>
+My interests are <i>Byzantine fault-tolerant distributed systems</i>, <i>applied cryptography</i> and <i>blockchain protocols</i>.
+My work aims at developing and evaluating cryptographic solutions for secure, fault-tolerant distributed systems.
+My current research focuses on energy-efficient consensus protocols in network settings such as synchronous, asynchronous, and all intermediate models; fault-tolerant cryptographic protocols such as PVSS and Random Beacons, and secure Byzantine fault-tolerant distributed protocols.
+</p>
+</div>
+</div>
+<div id="outline-container-org676ab82" class="outline-2">
+<h2 id="org676ab82">Education</h2>
+<div class="outline-text-2" id="text-org676ab82">
+<p>
+ <b>Purdue University, West Lafayette</b>
+ <i>(2018-2023)</i><br />
+    Advisor: Aniket Kate<br />
+    Ph.D., Department of Computer Science
+</p>
+
+<p>
+ <b>National Institute of Technology Karnataka, Surathkal</b>
+ <i>(2014-2018)</i><br />
+    Bachelor of Technology, Information Technology
+</p>
+</div>
+</div>
+<div id="outline-container-org0284273" class="outline-2">
+<h2 id="org0284273">Work Experience</h2>
+<div class="outline-text-2" id="text-org0284273">
+<p>
+<b>Visa Research, Foster City</b>  (Aug 2023 - Present)<br />
+<i>Staff Research Scientist</i>  <i>(Anderson Nascimento)</i>
+</p>
+
+
+<p>
+<b>Visa Research, Palo Alto</b>  (May 2022 - Aug 2022)<br />
+<i>Ph.D. Research Intern</i>  <i>(Mahdi Zamani)</i>
+</p>
+<p>
+  -  Developed <i>FastSync</i>: an efficient blockchain synchronization protocol  <br> 
+  -  Developed an efficient partially synchronous sharding protocol and implemented Instachain
+</p>
+<p>
+<b>VMware Research, Remote</b>  (May 2021 - Aug 2021)<br />
+<i>Research Intern</i>  <i>(Alin Tomescu, Ittai Abraham)</i>
+</p>
+<p>
+  -  Built a prototype of anonymous token system using Concord-BFT  <br> 
+  -  Developed <i>quick-pay</i>: a one-round trip low-latency payment system  <br> 
+  -  Developed a two-phase lock-free sharding solution using quick-pay
+</p>
+<p>
+<b>Purdue University, West Lafayette</b>  (Aug 2018 - Aug 2023)<br />
+<i>Graduate Research Assistant</i>  <i>(Aniket Kate)</i>
+</p>
+<p>
+  -  Researching energy efficient Byzantine fault tolerant consensus protocols.  <br> 
+  -  Developed mathematical models for protocol optimization to improve energy efficiency.  <br> 
+  -  Implemented, evaluated, and simulated cryptographic and distributed system protocols.
+</p>
+<p>
+<b>Indian Statistical Institute, Kolkata</b>  (July 2017 - December 2017)<br />
+<i>Undergraduate Research Fellow</i>  <i>(Sushmitha Ruj)</i>
+</p>
+<p>
+  -  Designed a storage auditing library based on compact proofs of retrievability.  <br> 
+  -  Implemented new transactions on an Ethereum client to build a publicly verifiable data-storage system.
+</p>
+<p>
+<b>Morgan Stanley, Bangalore</b>  (May 2017 - July 2017)<br />
+<i>Software Analyst</i>
+</p>
+<p>
+  -  Worked on evaluating an elastic-search visualization plugin for the LevelDB database.
+</p>
+<p>
+<b>Indian Institute of Science, Bangalore</b>  (May 2016 - July 2016)<br />
+<i>Indian Academy of Sciences Summer Research Fellow</i>  <i>(C. E. Veni Madhavan)</i>
+</p>
+<p>
+  -  Evaluated Pollard's rho, William's \(p+1\), \(p-1\) factorization, and elliptic curve factorization methods for efficient batch factorization of numbers generated during the sieving phase of GGNFS.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcc6aca8" class="outline-2">
+<h2 id="orgcc6aca8">Publications</h2>
+<div class="outline-text-2" id="text-orgcc6aca8">
+<ol class="org-ol">
+<li><a id="org883648f"></a> <i>SensorBFT: Fault-Tolerant Target Localization using Voronoi Diagrams and Approximate Agreement.</i> <b>ICDCS 2024</b>. Akhil Bandarupalli, Adithya Bhat, Somali Chaterji, Michael K. Reiter, Aniket Kate, Saurabh Bagchi.</li>
+<li><a id="orgc81d524"></a> <i>Delphi: Efficient Asynchronous Approximate Agreement for Distributed Oracles.</i> <b>DSN 2024</b>. Akhil Bandarupalli, Adithya Bhat, Saurabh Bagchi, Aniket Kate, Chen-Da Liu-Zhang, and Michael K. Reiter. <a href="https://arxiv.org/pdf/2405.02431">eprint</a></li>
+<li><a id="org310eaf1"></a> <i>HashRand: Efficient Asynchronous Random Beacon without Threshold Cryptographic Setup.</i> <b>CCS 2024</b>. Akhil Bandarupalli, Adithya Bhat, Saurabh Bagchi, Aniket Kate, and Michael Reiter. <a href="https://eprint.iacr.org/2023/1755.pdf">eprint</a></li>
+<li><a id="org05adc13"></a> <i>Attacking and Improving the Tor Directory Protocol.</i> <b>IEEE S&amp;P 2024</b>. Zhongtang Luo, Adithya Bhat, Kartik Nayak, and Aniket Kate. <a href="https://zhtluo.com/paper/Attacking_and_Improving_the_Tor_Directory_Protocol.pdf">eprint</a></li>
+<li><a id="org68af91b"></a> <i>EESMR - Energy Efficient State Machine Replication.</i> <b>Middleware 2023</b>. Adithya Bhat, Akhil Bandarupalli, Manish Nagaraj, Saurabh Bagchi, Aniket Kate, Michael Reiter. <a href="https://dl.acm.org/doi/10.1145/3590140.3592848">conference</a> <a href="https://arxiv.org/abs/2304.04998">eprint</a></li>
+<li><a id="orgdfaa9be"></a><a id="orgae8b75b"></a> <i>The unique chain rule and its applications.</i> <b>Financial Cryptography 2023</b>. Adithya Bhat, Akhil Bandarupalli, Saurabh Bagchi, Aniket Kate, Michael Reiter. <a href="https://fc23.ifca.ai/preproceedings/138.pdf">pre-conference</a> <a href="https://doi.org/10.1007/978-3-031-47754-6_3">conference</a> <a href="https://eprint.iacr.org/2021/180">eprint</a> <a href="https://github.com/adithyabhatkajake/libchatter-rs">code</a></li>
+<li><a id="org333e3c8"></a> <i>OptRand - Optimistically Responsive Reconfigurable Distributed Randomness.</i> <b>NDSS 2023</b>. Adithya Bhat, Nibesh Shrestha, Aniket Kate, Kartik Nayak. <a href="https://www.ndss-symposium.org/ndss-paper/optrand-optimistically-responsive-reconfigurable-distributed-randomness/">conference</a> <a href="https://eprint.iacr.org/2022/193">eprint</a> <a href="https://github.com/nibeshrestha/optrand">protocol code</a> <a href="https://github.com/libdist-rs/optrand-rs">crypto code</a> <a href="https://www.youtube.com/watch?v=6DH2bGXP3-4">video</a></li>
+<li><i>OpenSquare: Decentralized Repeated Modular Squaring Service.</i> <b>CCS 2021</b>. Sri Aravinda Krishnan Thyagarajan, Tiantian Gong, Adithya Bhat, Aniket Kate, Dominique Schroder. <a href="https://dl.acm.org/doi/10.1145/3460120.3484809">conference</a> <a href="https://eprint.iacr.org/2021/1273">eprint</a> <a href="https://github.com/verifiable-timed-signatures/OpenSquare">code</a></li>
+<li><a id="org6196d78"></a> <i>RandPiper – Reconfiguration Friendly Random Beacons with Quadratic Communication.</i> <b>CCS 2021</b>. Adithya Bhat, Nibesh Shrestha, Aniket Kate, Kartik Nayak. <a href="https://dl.acm.org/doi/abs/10.1145/3460120.3484574">conference</a> <a href="https://eprint.iacr.org/2020/1590.pdf">eprint</a> <a href="https://github.com/zhtluo/randpiper-rs">code</a></li>
+<li><a id="org4266da1"></a> <i>Reparo - Publicly Verifiable Repair Layer for any Blockchain.</i> <b>FC 2021</b>. Sri Aravinda Krishnan Thyagarajan, Adithya Bhat, Bernardo Magri, Daniel Tschudi, Aniket Kate. <a href="https://fc21.ifca.ai/papers/119.pdf">conference</a> <a href="https://arxiv.org/abs/2001.00486">eprint</a></li>
+<li><a id="org8c9d60e"></a> <i>Verifiable Timed Signatures for Blockchains.</i> <b>CCS 2020</b>. Sri Aravinda Krishnan Thyagarajan, Adithya Bhat, Guilio Malavolta, Nico Dottling, Aniket Kate, Dominique Schroder. <a href="https://dl.acm.org/doi/10.1145/3372297.3417263">conference</a> <a href="https://eprint.iacr.org/2020/1563.pdf">eprint</a> <a href="https://github.com/verifiable-timed-signatures/liblhtlp">code</a></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgdb793be" class="outline-2">
+<h2 id="orgdb793be">Tech Reports</h2>
+<div class="outline-text-2" id="text-orgdb793be">
+<ol class="org-ol">
+<li><a id="orgc9ad163"></a> <i>Synchronous Distributed Key Generation without Broadcasts.</i> Nibesh Shrestha, <b>Adithya Bhat</b>, Kartik Nayak, Aniket Kate. <a href="https://eprint.iacr.org/2021/1635">eprint</a></li>
+<li><a id="orge869485"></a> <i>Leto - Partially Synchronous Unique Chains made flexible.</i> <b>Adithya Bhat</b>, Saurabh Bagchi, Aniket Kate, Michael Reiter. <a href="https://github.com/libdist-rs/leto-rs">code</a></li>
+<li><a id="org95ce4e2"></a> <i>Using the future to verify the past.</i> Adithya Bhat, Mohsen Minaei, Mahdi Zamani. Appeared in CESC, 2022. <b>U.S. Patent pending.</b></li>
+<li><a id="orge111a73"></a> <i>UTT: Decentralized Ecash with Accountable Privacy.</i> <b>Science of Blockchain Conference 2023</b>. Alin Tomescu, Adithya Bhat, Benny Applebaum, Ittai Abraham, Guy Gueta, Benny Pinkas, and Avishay Yanai. <a href="https://eprint.iacr.org/2022/452">eprint</a> <a href="https://github.com/definitelyNotFBI/utt">code</a></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org0140365" class="outline-2">
+<h2 id="org0140365">Software Artifacts</h2>
+<div class="outline-text-2" id="text-org0140365">
+<ol class="org-ol">
+<li>Developed a synchronous networking library to implement SMR protocols. <a href="https://github.cowwm/adithyabhatkajake/libchatter-rs">code</a>  (Rust)</li>
+<li>Implemented Apollo [<a href="#orgdfaa9be">6</a>] (protocol node, normal client and special client) using the Rust networking library. <a href="https://github.com/adithyabhatkajake/libchatter-rs">code</a>  (Rust)</li>
+<li>Implemented Sync HotStuff (normal protocol node, round robin protocol node, client) using the Rust networking library. <a href="https://github.com/adithyabhatkajake/libchatter-rs">code</a>  (Rust)</li>
+<li>Developed a plug-and-play framework using libp2p to run and simulate distributed system protocols. The framework provides interfaces to aid faster prototyping of distributed system protocols. <a href="https://github.com/adithyabhatkajake/libchatter/">code</a>  (Go-lang)</li>
+<li>Implemented Sync HotStuff using the go networking library. <a href="https://github.com/adithyabhatkajake/libsynchs">code</a>  (Go-lang)</li>
+<li>Implemented Apollo [<a href="#orgdfaa9be">6</a>] using the go networking library. <a href="https://github.com/adithyabhatkajake/libapollo">code</a>  (Go-lang)</li>
+<li>Implementation of E2C [<a href="#org68af91b">5</a>]. <a href="https://github.com/adithyabhatkajake/libe2c-cpp">code</a>  (C++)</li>
+<li>Developed a linearly homomorphic time-lock puzzle library. <a href="https://github.com/verifiable-timed-signatures/liblhtlp">code</a>  (C)</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgf5344f0" class="outline-2">
+<h2 id="orgf5344f0">Talks</h2>
+<div class="outline-text-2" id="text-orgf5344f0">
+<ol class="org-ol">
+<li>Reconfiguration-friendly Byzantine Fault-tolerant Distributed randomness. <a href="https://adithyabhatkajake.github.io/assets/presentations/KU-Leuven-RandomBeacons.pptx">slides</a>  <i>(KU Leuven)</i></li>
+<li>Unique Chain Rule and its applications. <a href="https://adithyabhatkajake.github.io/assets/presentations/Unique-Chain-Rule-Applications.pptx">slides</a>  <i>(FC 2023)</i></li>
+<li>Reconfiguration-friendly Byzantine Fault-tolerant Distributed randomness. <a href="https://adithyabhatkajake.github.io/assets/presentations/BU-RandomBeacons.pptx">slides</a>  <i>(Boston University)</i></li>
+<li>Flexible State Machine Replication. <a href="https://adithyabhatkajake.github.io/assets/presentations/Midwest-crypto-day-Lightning-Talk.pptx">slides</a>  <i>(Midwest Crypto Day - Lightning session)</i></li>
+<li>OptRand - Optimistically Responsive Reconfigurable Distributed Randomness. <a href="https://www.youtube.com/watch?v=6DH2bGXP3-4">video</a>  <i>(NDSS 2023)</i></li>
+<li>FastSync: Using the future to verify the past. <a href="https://www.youtube.com/watch?v=kCqrd1MQ1no&amp;t=3341s">video</a>  <i>(CESC 2022)</i></li>
+<li>RandPiper - Reconfiguration friendly random beacons with quadratic communication.  <i>(CCS 2021)</i></li>
+<li>Reparo - Publicly Verifiable Repair Layer for any blockchain. <a href="https://youtube.com/watch?v=jV_Pjc17eWY">video</a>  <i>(FC 2021)</i></li>
+<li>Transitive network - A tokenless IOU-based Credit Network. Cryptocurrency Implementers Workshop.  <i>(FC 2019)</i></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org170bd22" class="outline-2">
+<h2 id="org170bd22">Academic Service</h2>
+<div class="outline-text-2" id="text-org170bd22">
+<ul class="org-ul">
+<li>Program Committee:
+<ul class="org-ul">
+<li>CCS 2024</li>
+</ul></li>
+</ul>
+<ul class="org-ul">
+<li>Reviewer for
+<ul class="org-ul">
+<li>2024: ACM TOPS, Journal of Cryptology</li>
+<li>2023: SOSP AEC, IET</li>
+</ul></li>
+<li>External Reviewer for
+<ul class="org-ul">
+<li>2024: IEEE S &amp; P</li>
+<li>2023: CCS, IET, Middleware, IEEE S &amp; P</li>
+<li>2022: CCS, PODC, IEEE S &amp; P, CESC</li>
+<li>2021: AFT, FC, PODC, IEEE S &amp; P</li>
+<li>2020: Usenix Security, IEEE S &amp; P</li>
+<li>2019: NDSS</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Adithya Bhat</p>
+<p class="date">Created: 2024-07-31 Wed 21:51</p>
+</div>
+</body>
+</html>
