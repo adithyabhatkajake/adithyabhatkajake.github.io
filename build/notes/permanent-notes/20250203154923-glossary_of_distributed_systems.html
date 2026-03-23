@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:03 -->
+<!-- 2026-03-22 Sun 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Glossary of distributed systems</title>
@@ -220,9 +220,9 @@
 <p>
 This is an attempted index of terms used in distributed system protocols.
 </p>
-<div id="outline-container-org42d2189" class="outline-2">
-<h2 id="org42d2189">Machines</h2>
-<div class="outline-text-2" id="text-org42d2189">
+<div id="outline-container-org76f94d4" class="outline-2">
+<h2 id="org76f94d4">Machines</h2>
+<div class="outline-text-2" id="text-org76f94d4">
 <ul class="org-ul">
 <li>Node: Any machine in the system.</li>
 <li>Process: Originated from distributed protocols in the shared memory model. A process refers to a OS process. NOTE: Do not use unless in the shared memory model.</li>
@@ -234,9 +234,9 @@ This is an attempted index of terms used in distributed system protocols.
 </ul>
 </div>
 </div>
-<div id="outline-container-orged73a5a" class="outline-2">
-<h2 id="orged73a5a">State</h2>
-<div class="outline-text-2" id="text-orged73a5a">
+<div id="outline-container-org852b335" class="outline-2">
+<h2 id="org852b335">State</h2>
+<div class="outline-text-2" id="text-org852b335">
 <ul class="org-ul">
 <li>Operation: The unit of action on the state of a system. E.g., read, write, pay, readmany, etc.</li>
 <li>Transaction: Originated from the database world. A transaction is a set of operations that a system executes atomically. These operations modify the state. Typically, they are deterministic.</li>
@@ -244,9 +244,9 @@ This is an attempted index of terms used in distributed system protocols.
 </ul>
 </div>
 </div>
-<div id="outline-container-org0dec4e6" class="outline-2">
-<h2 id="org0dec4e6">Faulty Systems</h2>
-<div class="outline-text-2" id="text-org0dec4e6">
+<div id="outline-container-orgbf867a3" class="outline-2">
+<h2 id="orgbf867a3">Faulty Systems</h2>
+<div class="outline-text-2" id="text-orgbf867a3">
 <ul class="org-ul">
 <li>Correct: A node is correct if it follows the protocol specification for a period under discussion. This node may be corrupted by the adversary but since it follows the protocol spec., it is deemed to be correct.</li>
 <li>Honest: A node that is under the influence of the adversary until the period under discussion.</li>
@@ -261,9 +261,9 @@ This is an attempted index of terms used in distributed system protocols.
 </ul>
 </div>
 </div>
-<div id="outline-container-org141750c" class="outline-2">
-<h2 id="org141750c">Protocol Messaging</h2>
-<div class="outline-text-2" id="text-org141750c">
+<div id="outline-container-orgcbf9869" class="outline-2">
+<h2 id="orgcbf9869">Protocol Messaging</h2>
+<div class="outline-text-2" id="text-orgcbf9869">
 <ul class="org-ul">
 <li>Send: A primitive where a message is sent to a neighboring node with a specific name. Implicitly assumes that the sending node knows its neighbors. In a partially connected system, the name must be one of the neighbors, otherwise it is undefined.</li>
 <li>SendAll: A primitive where a message is sent to all neighbors. Implicitly assumes that the sending node knows its neighbors.</li>
@@ -271,9 +271,9 @@ This is an attempted index of terms used in distributed system protocols.
 </ul>
 </div>
 </div>
-<div id="outline-container-org73f0d11" class="outline-2">
-<h2 id="org73f0d11">Protocol Specification</h2>
-<div class="outline-text-2" id="text-org73f0d11">
+<div id="outline-container-orge443635" class="outline-2">
+<h2 id="orge443635">Protocol Specification</h2>
+<div class="outline-text-2" id="text-orge443635">
 <ul class="org-ul">
 <li>Round: Originated from synchronous protocols. A round consists of one send and one wait action by a node. The wait action must terminate when all nodes finish their send action and messages are delivered. In synchronous protocols, a timeout is also a valid wait action.</li>
 <li>Phase: A phase in a protocol changes the way messages are treated. If a message is handled in one way in a phase, in a different phase it should be handled differently. Example: View-change and steady-state phases. The proposals are handled differently in these phases.</li>
@@ -281,17 +281,17 @@ This is an attempted index of terms used in distributed system protocols.
 </ul>
 </div>
 </div>
-<div id="outline-container-orge03fb55" class="outline-2">
-<h2 id="orge03fb55">Protocols</h2>
-<div class="outline-text-2" id="text-orge03fb55">
+<div id="outline-container-orgcb6b9d6" class="outline-2">
+<h2 id="orgcb6b9d6">Protocols</h2>
+<div class="outline-text-2" id="text-orgcb6b9d6">
 <ul class="org-ul">
 <li>Blockchain: Overloaded in the literature. Original meaning is a hash chain of data blocks. Widely used as a reference to cryptocurrency or its underlying agreement protocol. Use SMR, Atomic Broadcast, or the Ledger definitions.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org9629169" class="outline-2">
-<h2 id="org9629169">Notes</h2>
-<div class="outline-text-2" id="text-org9629169">
+<div id="outline-container-org9ad9e75" class="outline-2">
+<h2 id="org9ad9e75">Notes</h2>
+<div class="outline-text-2" id="text-org9ad9e75">
 <ul class="org-ul">
 <li>I have gathered this after reading countless (does not imply large, just that I have lost count) papers with overloaded meanings.</li>
 <li>As of 2024 May, I have lost all hope for standardization of the terminologies. This document serves to be aware.</li>

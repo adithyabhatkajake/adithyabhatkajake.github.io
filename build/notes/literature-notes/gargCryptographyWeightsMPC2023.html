@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:01 -->
+<!-- 2026-03-22 Sun 22:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cryptography with Weights: MPC, Encryption and Signatures</title>
@@ -252,22 +252,22 @@
 <p>
 Paper: <a href="#citeproc_bib_item_1"><i>Cryptography with Weights: MPC, Encryption and Signatures</i>. Sanjam Garg, Abhishek Jain, Pratyay Mukherjee, Rohit Sinha, Mingyuan Wang, and Yinuo Zhang. 2023</a>
 </p>
-<div id="outline-container-org819580b" class="outline-2">
-<h2 id="org819580b">CRT-based (unweighted) sharing</h2>
-<div class="outline-text-2" id="text-org819580b">
+<div id="outline-container-org8e81bb4" class="outline-2">
+<h2 id="org8e81bb4">CRT-based (unweighted) sharing</h2>
+<div class="outline-text-2" id="text-org8e81bb4">
 </div>
-<div id="outline-container-orge9ee51b" class="outline-3">
-<h3 id="orge9ee51b">Setup</h3>
-<div class="outline-text-3" id="text-orge9ee51b">
+<div id="outline-container-orgb649885" class="outline-3">
+<h3 id="orgb649885">Setup</h3>
+<div class="outline-text-3" id="text-orgb649885">
 <ul class="org-ul">
 <li>Assume \(p_0, p_{1}, \ldots, p_n\) are \(n+1\) co-prime integers.</li>
 <li>Let \(L\) be an integer.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org2e49082" class="outline-3">
-<h3 id="org2e49082">Sharing</h3>
-<div class="outline-text-3" id="text-org2e49082">
+<div id="outline-container-orgda1dca2" class="outline-3">
+<h3 id="orgda1dca2">Sharing</h3>
+<div class="outline-text-3" id="text-orgda1dca2">
 <ul class="org-ul">
 <li>Pick a random secret \(s\in \mathbb{F}_{p_0}\).</li>
 <li>Pick \(S = s + u\cdot p_{0}\) where \(u\) is uniform over \(1,2,\ldots,L\).</li>
@@ -275,9 +275,9 @@ Paper: <a href="#citeproc_bib_item_1"><i>Cryptography with Weights: MPC, Encrypt
 </ul>
 </div>
 </div>
-<div id="outline-container-org8bbf504" class="outline-3">
-<h3 id="org8bbf504">Reconstruction</h3>
-<div class="outline-text-3" id="text-org8bbf504">
+<div id="outline-container-org4eff980" class="outline-3">
+<h3 id="org4eff980">Reconstruction</h3>
+<div class="outline-text-3" id="text-org4eff980">
 <ul class="org-ul">
 <li>Let \(A\) be the set of authorized users.</li>
 <li>Define \(P_A = \prod\limits_{i\in A}p_i\).</li>
@@ -292,9 +292,9 @@ Paper: <a href="#citeproc_bib_item_1"><i>Cryptography with Weights: MPC, Encrypt
 </div>
 </div>
 </div>
-<div id="outline-container-orgc0dbceb" class="outline-2">
-<h2 id="orgc0dbceb">Weighted CRT-based sharing</h2>
-<div class="outline-text-2" id="text-orgc0dbceb">
+<div id="outline-container-orgb09ce2b" class="outline-2">
+<h2 id="orgb09ce2b">Weighted CRT-based sharing</h2>
+<div class="outline-text-2" id="text-orgb09ce2b">
 <ul class="org-ul">
 <li>Consider the ramp setting.</li>
 <li>We know that \(\max\limits_{\bar{A}}P_{\bar{A}} \ll L \leq \min\limits_A P_A/2^{\lambda}\) for the unweighted setting.</li>
@@ -310,9 +310,9 @@ Paper: <a href="#citeproc_bib_item_1"><i>Cryptography with Weights: MPC, Encrypt
 </ul>
 </div>
 </div>
-<div id="outline-container-org59a801a" class="outline-2">
-<h2 id="org59a801a">Homomorphism in CRT-based sharing problems</h2>
-<div class="outline-text-2" id="text-org59a801a">
+<div id="outline-container-org8528438" class="outline-2">
+<h2 id="org8528438">Homomorphism in CRT-based sharing problems</h2>
+<div class="outline-text-2" id="text-org8528438">
 <ol class="org-ol">
 <li>Non-linearity: reconstructing \(g^{s}\) is not straight-forward.</li>
 <li>Integer growing problem: Overflow, noise.</li>
@@ -320,18 +320,18 @@ Paper: <a href="#citeproc_bib_item_1"><i>Cryptography with Weights: MPC, Encrypt
 </ol>
 </div>
 </div>
-<div id="outline-container-org0874cdc" class="outline-2">
-<h2 id="org0874cdc">WRSS</h2>
+<div id="outline-container-org589b24f" class="outline-2">
+<h2 id="org589b24f">WRSS</h2>
 </div>
-<div id="outline-container-orgddeaa2e" class="outline-2">
-<h2 id="orgddeaa2e">Weighted MPC</h2>
+<div id="outline-container-org2a46107" class="outline-2">
+<h2 id="org2a46107">Weighted MPC</h2>
 </div>
-<div id="outline-container-org1629eeb" class="outline-2">
-<h2 id="org1629eeb">Weighted Threshold ECDSA</h2>
+<div id="outline-container-orge938f04" class="outline-2">
+<h2 id="orge938f04">Weighted Threshold ECDSA</h2>
 </div>
-<div id="outline-container-orgea66a79" class="outline-2">
-<h2 id="orgea66a79">Questions</h2>
-<div class="outline-text-2" id="text-orgea66a79">
+<div id="outline-container-org529496f" class="outline-2">
+<h2 id="org529496f">Questions</h2>
+<div class="outline-text-2" id="text-org529496f">
 <ul class="org-ul">
 <li class="on"><code>[X]</code> Why is \((p_0+1)L \le P_A-1\)? Should it be \((L+1)p_0 \le P_A-1\)?
 This is a typo.</li>
@@ -340,9 +340,9 @@ This is a typo.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org57ae3bb" class="outline-2">
-<h2 id="org57ae3bb">References</h2>
-<div class="outline-text-2" id="text-org57ae3bb">
+<div id="outline-container-orgefea72c" class="outline-2">
+<h2 id="orgefea72c">References</h2>
+<div class="outline-text-2" id="text-orgefea72c">
 <div class="csl-bib-body">
   <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Sanjam Garg, Abhishek Jain, Pratyay Mukherjee, Rohit Sinha, Mingyuan Wang, and Yinuo Zhang. 2023. “Cryptography with Weights: MPC, Encryption and Signatures.” <a href="https://link.springer.com/10.1007/978-3-031-38557-5_10">https://link.springer.com/10.1007/978-3-031-38557-5_10</a>.</div>
 </div>

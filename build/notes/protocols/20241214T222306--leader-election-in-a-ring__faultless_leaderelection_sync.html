@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:03 -->
+<!-- 2026-03-22 Sun 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>HS Protocol</title>
@@ -351,17 +351,17 @@ while status = null do
       phase := phase + 1
 </pre>
 </div>
-<div id="outline-container-org1319cc2" class="outline-2">
-<h2 id="org1319cc2">Example</h2>
-<div class="outline-text-2" id="text-org1319cc2">
+<div id="outline-container-orge661db1" class="outline-2">
+<h2 id="orge661db1">Example</h2>
+<div class="outline-text-2" id="text-orge661db1">
 <p>
 Below is a step-by-step example to illustrate how the Hirschberg–Sinclair (HS) algorithm works in practice.
 Consider a small ring and let us walk through a few phases to see how processes drop out until only the leader (the node with the largest ID) remains.
 </p>
 </div>
-<div id="outline-container-orgbb550aa" class="outline-3">
-<h3 id="orgbb550aa">Setup:</h3>
-<div class="outline-text-3" id="text-orgbb550aa">
+<div id="outline-container-org1cb4632" class="outline-3">
+<h3 id="org1cb4632">Setup:</h3>
+<div class="outline-text-3" id="text-org1cb4632">
 <p>
 Suppose we have a ring of \(8\) processes arranged in a circle:
 </p>
@@ -403,9 +403,9 @@ Initially, all processes are active candidates.
 </p>
 </div>
 </div>
-<div id="outline-container-orgce17cad" class="outline-3">
-<h3 id="orgce17cad">Overview of the Algorithm’s Structure:</h3>
-<div class="outline-text-3" id="text-orgce17cad">
+<div id="outline-container-org1713b5a" class="outline-3">
+<h3 id="org1713b5a">Overview of the Algorithm’s Structure:</h3>
+<div class="outline-text-3" id="text-org1713b5a">
 <p>
 The HS algorithm runs in phases \(i = 0,1,2,\ldots\). In each phase \(i\):
 </p>
@@ -418,9 +418,9 @@ The HS algorithm runs in phases \(i = 0,1,2,\ldots\). In each phase \(i\):
 Eventually, after \(O(\log{n})\) phases, only the largest ID process remains active and declares itself the leader.
 </p>
 </div>
-<div id="outline-container-orgfb5d4a3" class="outline-4">
-<h4 id="orgfb5d4a3">Phase 0 (i = 0)</h4>
-<div class="outline-text-4" id="text-orgfb5d4a3">
+<div id="outline-container-org0318624" class="outline-4">
+<h4 id="org0318624">Phase 0 (i = 0)</h4>
+<div class="outline-text-4" id="text-org0318624">
 <p>
 Distance: \(2^0=1\) hop.
 </p>
@@ -454,8 +454,8 @@ Let’s consider one process at a time:
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org0ebcb25"></a>P0(3):<br />
-<div class="outline-text-5" id="text-org0ebcb25">
+<li><a id="org42fea23"></a>P0(3):<br />
+<div class="outline-text-5" id="text-org42fea23">
 <ul class="org-ul">
 <li>P0 sent ID(3) to P1 and P7.</li>
 <li>P1 has ID(5), which is greater than 3. Thus, P0 learns there is a process with ID(5) nearby.</li>
@@ -464,8 +464,8 @@ Let’s consider one process at a time:
 </ul>
 </div>
 </li>
-<li><a id="org4a614ab"></a>P1(5):<br />
-<div class="outline-text-5" id="text-org4a614ab">
+<li><a id="org3b46710"></a>P1(5):<br />
+<div class="outline-text-5" id="text-org3b46710">
 <ul class="org-ul">
 <li>P1 sent ID(5) to P0(3) and P2(10).</li>
 <li>P2(10) is greater than 5, so P1 discovers a larger ID to one side.</li>
@@ -473,8 +473,8 @@ Let’s consider one process at a time:
 </ul>
 </div>
 </li>
-<li><a id="orgb0e549e"></a>P2(10):<br />
-<div class="outline-text-5" id="text-orgb0e549e">
+<li><a id="orgb9d23ba"></a>P2(10):<br />
+<div class="outline-text-5" id="text-orgb9d23ba">
 <ul class="org-ul">
 <li>P2 sent ID(10) to P1(5) and P3(2).</li>
 <li>Both neighbors have smaller IDs (5 and 2), so P2 sees no one larger within 1 hop.</li>
@@ -482,8 +482,8 @@ Let’s consider one process at a time:
 </ul>
 </div>
 </li>
-<li><a id="org0a35d8b"></a>P3(2):<br />
-<div class="outline-text-5" id="text-org0a35d8b">
+<li><a id="orgea88214"></a>P3(2):<br />
+<div class="outline-text-5" id="text-orgea88214">
 <ul class="org-ul">
 <li>Sent ID(2) to P2(10) and P4(9).</li>
 <li>P2(10) and P4(9) are both larger than 2.</li>
@@ -491,8 +491,8 @@ Let’s consider one process at a time:
 </ul>
 </div>
 </li>
-<li><a id="org05068b4"></a>P4(9):<br />
-<div class="outline-text-5" id="text-org05068b4">
+<li><a id="orgae4b86a"></a>P4(9):<br />
+<div class="outline-text-5" id="text-orgae4b86a">
 <ul class="org-ul">
 <li>Sent ID(9) to P3(2) and P5(8).</li>
 <li>P3(2) is smaller, P5(8) is smaller. No larger ID found.</li>
@@ -500,8 +500,8 @@ Let’s consider one process at a time:
 </ul>
 </div>
 </li>
-<li><a id="orgbcc4155"></a>P5(8):<br />
-<div class="outline-text-5" id="text-orgbcc4155">
+<li><a id="orgaff9f94"></a>P5(8):<br />
+<div class="outline-text-5" id="text-orgaff9f94">
 <ul class="org-ul">
 <li>Sent ID(8) to P4(9) and P6(4).</li>
 <li>P4(9) is larger than 8.</li>
@@ -509,8 +509,8 @@ Let’s consider one process at a time:
 </ul>
 </div>
 </li>
-<li><a id="org6b4430a"></a>P6(4):<br />
-<div class="outline-text-5" id="text-org6b4430a">
+<li><a id="orgfec019c"></a>P6(4):<br />
+<div class="outline-text-5" id="text-orgfec019c">
 <ul class="org-ul">
 <li>Sent ID(4) to P5(8) and P7(7).</li>
 <li>P5(8) is larger than 4 and P7(7) is also larger.</li>
@@ -518,8 +518,8 @@ Let’s consider one process at a time:
 </ul>
 </div>
 </li>
-<li><a id="orgc907f90"></a>P7(7):<br />
-<div class="outline-text-5" id="text-orgc907f90">
+<li><a id="orgab4ef0c"></a>P7(7):<br />
+<div class="outline-text-5" id="text-orgab4ef0c">
 <ul class="org-ul">
 <li>Sent ID(7) to P6(4) and P0(3).</li>
 <li>Both 4 and 3 are smaller than 7, so P7 sees no larger ID within 1 hop.</li>
@@ -527,8 +527,8 @@ Let’s consider one process at a time:
 </ul>
 </div>
 </li>
-<li><a id="org816f8ef"></a>Result after Phase 0:<br />
-<div class="outline-text-5" id="text-org816f8ef">
+<li><a id="orgd31b161"></a>Result after Phase 0:<br />
+<div class="outline-text-5" id="text-orgd31b161">
 <ul class="org-ul">
 <li>Active: P2(10), P4(9), P7(7)</li>
 <li>Inactive: P0(3), P1(5), P3(2), P5(8), P6(4)</li>
@@ -537,9 +537,9 @@ Let’s consider one process at a time:
 </li>
 </ul>
 </div>
-<div id="outline-container-org0ed9bfa" class="outline-4">
-<h4 id="org0ed9bfa">Phase 1 (i = 1)</h4>
-<div class="outline-text-4" id="text-org0ed9bfa">
+<div id="outline-container-org8ef33c7" class="outline-4">
+<h4 id="org8ef33c7">Phase 1 (i = 1)</h4>
+<div class="outline-text-4" id="text-org8ef33c7">
 <p>
 Distance: \(2^1=2\) hops.
 </p>
@@ -553,8 +553,8 @@ Consider each active node:
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orga8af598"></a>P2(10):<br />
-<div class="outline-text-5" id="text-orga8af598">
+<li><a id="orgf467e90"></a>P2(10):<br />
+<div class="outline-text-5" id="text-orgf467e90">
 <ul class="org-ul">
 <li>Two hops clockwise: P2 → P3 → P4.
 Encounters P3(2) and then P4(9). Among these, P4(9) is large but still smaller than 10.</li>
@@ -564,8 +564,8 @@ Encounters IDs 5 and 3, both smaller than 10.</li>
 </ul>
 </div>
 </li>
-<li><a id="org327b817"></a>P4(9):<br />
-<div class="outline-text-5" id="text-org327b817">
+<li><a id="org6da0b9d"></a>P4(9):<br />
+<div class="outline-text-5" id="text-org6da0b9d">
 <ul class="org-ul">
 <li>Two hops clockwise: P4 → P5 → P6.
 Encounters IDs 8 and 4, both smaller than 9.</li>
@@ -575,8 +575,8 @@ Encounters ID 2 and then ID 10. Uh-oh, P4 finds a larger ID (10) at P2.</li>
 </ul>
 </div>
 </li>
-<li><a id="org4038269"></a>P7(7):<br />
-<div class="outline-text-5" id="text-org4038269">
+<li><a id="orgab938f4"></a>P7(7):<br />
+<div class="outline-text-5" id="text-orgab938f4">
 <ul class="org-ul">
 <li>Two hops clockwise: P7 → P0 → P1.
 Encounters IDs 3 and 5, both smaller than 7.</li>
@@ -586,8 +586,8 @@ Encounters IDs 4 and 8. Here, 8 is actually larger than 7. But wait, P5 was mark
 </ul>
 </div>
 </li>
-<li><a id="orgb5ef061"></a>Result after Phase 1:<br />
-<div class="outline-text-5" id="text-orgb5ef061">
+<li><a id="org592b3d1"></a>Result after Phase 1:<br />
+<div class="outline-text-5" id="text-org592b3d1">
 <ul class="org-ul">
 <li>Active: P2(10)</li>
 <li>Inactive: P0(3), P1(5), P3(2), P4(9), P5(8), P6(4), P7(7)</li>
@@ -600,17 +600,17 @@ Now only P2 with ID=10 remains active.
 </li>
 </ul>
 </div>
-<div id="outline-container-org67ecaba" class="outline-4">
-<h4 id="org67ecaba">Phase 2 (and beyond)</h4>
-<div class="outline-text-4" id="text-org67ecaba">
+<div id="outline-container-orgf67c617" class="outline-4">
+<h4 id="orgf67c617">Phase 2 (and beyond)</h4>
+<div class="outline-text-4" id="text-orgf67c617">
 <p>
 By the start of Phase 2, there is only one active process left: P2(10). Since no other processes are active, P2 automatically becomes the leader. The algorithm typically checks a few more phases or has a termination condition, but effectively, no one will challenge P2 anymore, and P2 knows it’s the largest remaining contender.
 </p>
 </div>
 </div>
-<div id="outline-container-org3dbe9ee" class="outline-4">
-<h4 id="org3dbe9ee">Final Outcome:</h4>
-<div class="outline-text-4" id="text-org3dbe9ee">
+<div id="outline-container-orgcf435f9" class="outline-4">
+<h4 id="orgcf435f9">Final Outcome:</h4>
+<div class="outline-text-4" id="text-orgcf435f9">
 <p>
 P2 (with ID = 10) is the leader.
 </p>
@@ -618,9 +618,9 @@ P2 (with ID = 10) is the leader.
 </div>
 </div>
 </div>
-<div id="outline-container-orgd324bd3" class="outline-2">
-<h2 id="orgd324bd3">Notes</h2>
-<div class="outline-text-2" id="text-orgd324bd3">
+<div id="outline-container-org827b086" class="outline-2">
+<h2 id="org827b086">Notes</h2>
+<div class="outline-text-2" id="text-org827b086">
 <ul class="org-ul">
 <li>This is from <i>Distributed algorithms</i>. Nancy A. Lynch. 1997</li>
 <li>This is also called the HS algorithm (Hirschberg and Sinclair).</li>

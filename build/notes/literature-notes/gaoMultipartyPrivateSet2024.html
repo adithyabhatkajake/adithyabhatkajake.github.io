@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:00 -->
+<!-- 2026-03-22 Sun 22:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Multiparty Private Set Intersection Cardinality and Its Applications</title>
@@ -256,9 +256,9 @@ Paper: <a href="#citeproc_bib_item_1"><i>Multiparty Private Set Intersection Car
 <li>Acknowledgements to Peter</li>
 <li>Implementation: <a href="https://github.com/asu-crypto/mpsica">Github</a></li>
 </ul>
-<div id="outline-container-org66a42ac" class="outline-2">
-<h2 id="org66a42ac">Notation and Settings</h2>
-<div class="outline-text-2" id="text-org66a42ac">
+<div id="outline-container-orgaaeef8c" class="outline-2">
+<h2 id="orgaaeef8c">Notation and Settings</h2>
+<div class="outline-text-2" id="text-orgaaeef8c">
 <ul class="org-ul">
 <li>Assume the existence of a server that is non-colluding and semi-honest.
 <ul class="org-ul">
@@ -271,9 +271,9 @@ Paper: <a href="#citeproc_bib_item_1"><i>Multiparty Private Set Intersection Car
 </ol></li>
 </ul>
 </div>
-<div id="outline-container-orgfd290a4" class="outline-3">
-<h3 id="orgfd290a4">OKVS \(\mathsf{Exp}^{\mathcal{A}}(\mathcal{K} = (k_1,\ldots,k_m))\)</h3>
-<div class="outline-text-3" id="text-orgfd290a4">
+<div id="outline-container-orgd2a323e" class="outline-3">
+<h3 id="orgd2a323e">OKVS \(\mathsf{Exp}^{\mathcal{A}}(\mathcal{K} = (k_1,\ldots,k_m))\)</h3>
+<div class="outline-text-3" id="text-orgd2a323e">
 <p>
 <b><b>Nutshell</b></b>. Two algorithms: Encode takes a set of key-value encryptions as input and returns an encoding. Decode takes an encoding and a key as input and returns a value.
 It consists of two algorithms:
@@ -289,9 +289,9 @@ It consists of two algorithms:
 </blockquote>
 </div>
 </div>
-<div id="outline-container-orgf82a461" class="outline-3">
-<h3 id="orgf82a461">OPRF \(\mathcal{F}^m_{\mathsf{oprf}}\)</h3>
-<div class="outline-text-3" id="text-orgf82a461">
+<div id="outline-container-orgcb095cc" class="outline-3">
+<h3 id="orgcb095cc">OPRF \(\mathcal{F}^m_{\mathsf{oprf}}\)</h3>
+<div class="outline-text-3" id="text-orgcb095cc">
 <p>
 Note, in the OPRF used in this paper the receiver chooses queries first.
 <b><b>Setting.</b></b> There are 2 parties: Sender and Receiver. There is a public bound \(m\) on the number of queries made by the receiver.
@@ -303,9 +303,9 @@ Note, in the OPRF used in this paper the receiver chooses queries first.
 </ol>
 </div>
 </div>
-<div id="outline-container-org62f9771" class="outline-3">
-<h3 id="org62f9771">OPPRF \(\mathcal{F}^{m_1,m_2}_{\mathsf{opprf}}\)</h3>
-<div class="outline-text-3" id="text-org62f9771">
+<div id="outline-container-org6c6a42e" class="outline-3">
+<h3 id="org6c6a42e">OPPRF \(\mathcal{F}^{m_1,m_2}_{\mathsf{opprf}}\)</h3>
+<div class="outline-text-3" id="text-org6c6a42e">
 <p>
 This one is programmable. \(m_1\) is the upper bound on the number of points that can be programmed. \(m_2\) is the bound on the number of queries.
 </p>
@@ -317,9 +317,9 @@ This one is programmable. \(m_1\) is the upper bound on the number of points tha
 </ol>
 </div>
 </div>
-<div id="outline-container-orgd362bf4" class="outline-3">
-<h3 id="orgd362bf4">Unconditional Zero Sharing \(\mathcal{F}_{\mathcal{ZS}}\)</h3>
-<div class="outline-text-3" id="text-orgd362bf4">
+<div id="outline-container-orgca803d5" class="outline-3">
+<h3 id="orgca803d5">Unconditional Zero Sharing \(\mathcal{F}_{\mathcal{ZS}}\)</h3>
+<div class="outline-text-3" id="text-orgca803d5">
 <p>
 The functionality provides all parties
 </p>
@@ -352,9 +352,9 @@ The functionality works as follows:
 </ol>
 </div>
 </div>
-<div id="outline-container-org47d6177" class="outline-3">
-<h3 id="org47d6177">PSI-CA \(\mathcal{F}_{\mathsf{PSI-CA}}\)</h3>
-<div class="outline-text-3" id="text-org47d6177">
+<div id="outline-container-orge836593" class="outline-3">
+<h3 id="orge836593">PSI-CA \(\mathcal{F}_{\mathsf{PSI-CA}}\)</h3>
+<div class="outline-text-3" id="text-orge836593">
 <p>
 Each party holds \(m\) elements.
 The functionality works as follows:
@@ -365,9 +365,9 @@ The functionality works as follows:
 </ol>
 </div>
 </div>
-<div id="outline-container-org8582634" class="outline-3">
-<h3 id="org8582634">Secure Dot Product of Binary Vectors</h3>
-<div class="outline-text-3" id="text-org8582634">
+<div id="outline-container-orgb32f678" class="outline-3">
+<h3 id="orgb32f678">Secure Dot Product of Binary Vectors</h3>
+<div class="outline-text-3" id="text-orgb32f678">
 <p>
 Each party holds an \(m\) element binary vector.
 </p>
@@ -378,13 +378,13 @@ Each party holds an \(m\) element binary vector.
 </div>
 </div>
 </div>
-<div id="outline-container-orge62ecbf" class="outline-2">
-<h2 id="orge62ecbf">Server-aided Shuffled OPRF and OPPRF</h2>
-<div class="outline-text-2" id="text-orge62ecbf">
+<div id="outline-container-orga5603c7" class="outline-2">
+<h2 id="orga5603c7">Server-aided Shuffled OPRF and OPPRF</h2>
+<div class="outline-text-2" id="text-orga5603c7">
 </div>
-<div id="outline-container-org2d1eceb" class="outline-3">
-<h3 id="org2d1eceb">Server-aided Shuffled OPRF \(\mathsf{OPRF}-\Pi^{(m)}_{\mathsf{soprf}}\)</h3>
-<div class="outline-text-3" id="text-org2d1eceb">
+<div id="outline-container-org55ed3e2" class="outline-3">
+<h3 id="org55ed3e2">Server-aided Shuffled OPRF \(\mathsf{OPRF}-\Pi^{(m)}_{\mathsf{soprf}}\)</h3>
+<div class="outline-text-3" id="text-org55ed3e2">
 <ul class="org-ul">
 <li>Sender \(\mathcal{S}\) creates a key \(k = (k_1,k_2)\) where \(k_1\in \{0,1\}^{\kappa}\) and uses it as input.</li>
 <li>Define \(F'(k,x) = F'((k_1,k_2), x) = F(k_2, F(k_1, x))\).</li>
@@ -399,17 +399,17 @@ Each party holds an \(m\) element binary vector.
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc10c9ad" class="outline-3">
-<h3 id="orgc10c9ad">Server-aided OPRF \(\mathsf{OPRF}^{(m)}_{\mathsf{soprf}}\)</h3>
-<div class="outline-text-3" id="text-orgc10c9ad">
+<div id="outline-container-org8264d57" class="outline-3">
+<h3 id="org8264d57">Server-aided OPRF \(\mathsf{OPRF}^{(m)}_{\mathsf{soprf}}\)</h3>
+<div class="outline-text-3" id="text-org8264d57">
 <p>
 Similar to \(\mathsf{OPRF}-\Pi^{(m)}_{\mathsf{soprf}}\), except that there is no shuffling.
 </p>
 </div>
 </div>
-<div id="outline-container-org14765c2" class="outline-3">
-<h3 id="org14765c2">Server-aided OPPRF \(\mathsf{OPPRF}-\Pi^{(m_1,m_2)}_{\mathsf{sopprf}}\)</h3>
-<div class="outline-text-3" id="text-org14765c2">
+<div id="outline-container-orga2cfc47" class="outline-3">
+<h3 id="orga2cfc47">Server-aided OPPRF \(\mathsf{OPPRF}-\Pi^{(m_1,m_2)}_{\mathsf{sopprf}}\)</h3>
+<div class="outline-text-3" id="text-orga2cfc47">
 <div class="org-src-container">
 <pre class="src src-plantuml">Sender -&gt; $`\mathcal{F}^{(m_2)}_{\mathsf{soprf}}`$: $`k := (k_1,k_2) \in \{0,1\}^{2\kappa}`$
 </pre>
@@ -426,21 +426,21 @@ Similar to \(\mathsf{OPRF}-\Pi^{(m)}_{\mathsf{soprf}}\), except that there is no
 </div>
 </div>
 </div>
-<div id="outline-container-org95a9dce" class="outline-2">
-<h2 id="org95a9dce">Security Guarantees</h2>
+<div id="outline-container-org03d21ab" class="outline-2">
+<h2 id="org03d21ab">Security Guarantees</h2>
 </div>
-<div id="outline-container-org7942d69" class="outline-2">
-<h2 id="org7942d69">Notes</h2>
-<div class="outline-text-2" id="text-org7942d69">
+<div id="outline-container-org5cf5b0b" class="outline-2">
+<h2 id="org5cf5b0b">Notes</h2>
+<div class="outline-text-2" id="text-org5cf5b0b">
 <ul class="org-ul">
 <li>Presents helper party based multi-party PSI-CA</li>
 <li>Key idea: Efficiency gains from helper party</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org4dfeccd" class="outline-2">
-<h2 id="org4dfeccd">References</h2>
-<div class="outline-text-2" id="text-org4dfeccd">
+<div id="outline-container-org6ded2f9" class="outline-2">
+<h2 id="org6ded2f9">References</h2>
+<div class="outline-text-2" id="text-org6ded2f9">
 <div class="csl-bib-body">
   <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Jiahui Gao, Ni Trieu, and Avishay Yanai. 2024. “Multiparty Private Set Intersection Cardinality and Its Applications.” <a href="https://petsymposium.org/popets/2024/popets-2024-0041.php">https://petsymposium.org/popets/2024/popets-2024-0041.php</a>.</div>
 </div>

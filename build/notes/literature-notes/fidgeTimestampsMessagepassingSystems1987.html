@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:01 -->
+<!-- 2026-03-22 Sun 22:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Timestamps in Message-Passing Systems That Preserve the Partial Ordering</title>
@@ -252,13 +252,13 @@
 <p>
 Original paper: <a href="#citeproc_bib_item_1"><i>Timestamps in message-passing systems that preserve the partial ordering</i>. Colin J. Fidge. 1987</a>
 </p>
-<div id="outline-container-org4a269e6" class="outline-2">
-<h2 id="org4a269e6">An example timestamping algorithm</h2>
-<div class="outline-text-2" id="text-org4a269e6">
+<div id="outline-container-org0449c3e" class="outline-2">
+<h2 id="org0449c3e">An example timestamping algorithm</h2>
+<div class="outline-text-2" id="text-org0449c3e">
 </div>
-<div id="outline-container-org1ac84ad" class="outline-3">
-<h3 id="org1ac84ad">Asynchronous Timestamping</h3>
-<div class="outline-text-3" id="text-org1ac84ad">
+<div id="outline-container-org9f335da" class="outline-3">
+<h3 id="org9f335da">Asynchronous Timestamping</h3>
+<div class="outline-text-3" id="text-org9f335da">
 <p>
 An example algorithm rules to maintain a timestamp (Lamport Clock) for asynchronous processes:
 </p>
@@ -269,7 +269,7 @@ An example algorithm rules to maintain a timestamp (Lamport Clock) for asynchron
 <li><p>
 Upon receiving a signal, a process sets the value of each entry in the timestamp array to be the maximum of the two corresponding values in the local array, and in the piggybacked array received. The value corresponding to the sender, however, is a special case and is set to be one greater than the value received (to allow for transit time), but only if the local value is not already greater than that received (to allow for signal "overtaking" as described below), i.e.,
 </p>
-<div class="algorithm" id="orgf807c27">
+<div class="algorithm" id="org7d9da38">
 <p>
 q?other<sub>array</sub>; <i>* receive timestamp array from process q *</i>
 if local<sub>array</sub>[q] &le; other<sub>array</sub>[q] then
@@ -283,14 +283,14 @@ for i := 1 to n do
 </ol>
 </div>
 </div>
-<div id="outline-container-orgd353fa3" class="outline-3">
-<h3 id="orgd353fa3">Synchronous Timestamping</h3>
-<div class="outline-text-3" id="text-orgd353fa3">
+<div id="outline-container-org723536f" class="outline-3">
+<h3 id="org723536f">Synchronous Timestamping</h3>
+<div class="outline-text-3" id="text-org723536f">
 <p>
 The asynchronous timestamping does not work for the synchronous case.
 </p>
 
-<div id="org360814b" class="figure">
+<div id="orga89fdc4" class="figure">
 <p><img src="images/_20250202_182524screenshot.png" alt="_20250202_182524screenshot.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>An example where Lamport Clock (the asynchronous timestamping algorithm) fails for the synchronous case. Technically event a occurred before b, but it looks like b occurred before a.</p>
@@ -301,7 +301,7 @@ So the solution is to add a bidirectional timestamp exchange.
 </p>
 
 
-<div id="org4367117" class="figure">
+<div id="org47e7774" class="figure">
 <p><img src="images/_20250202_182330screenshot.png" alt="_20250202_182330screenshot.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>The synchronous timestamping algorithm.</p>
@@ -317,7 +317,7 @@ An example algorithm rules to maintain a timestamp for synchronous processes:
 <li><p>
 During a communication event, the two processes involved exchange timestamp arrays and each element in the local array is set to be the maximum of its old value and the corresponding value in the array received, i.e.,
 </p>
-<div class="algorithm" id="org1f6aa8f">
+<div class="algorithm" id="org698ae6a">
 <p>
 q?other<sub>array</sub>;
 for i := 1 to n do
@@ -333,17 +333,17 @@ for i := 1 to n do
 </p>
 </div>
 </div>
-<div id="outline-container-org9dc4950" class="outline-3">
-<h3 id="org9dc4950">Allowing nodes to be dynamic</h3>
-<div class="outline-text-3" id="text-org9dc4950">
+<div id="outline-container-orga1b16d6" class="outline-3">
+<h3 id="orga1b16d6">Allowing nodes to be dynamic</h3>
+<div class="outline-text-3" id="text-orga1b16d6">
 <p>
 It is easy to extend these algorithms to the case where the number of processes are dynamic. As long as all the nodes have a unique identifier, just extend the timestamp array on discovering new identifiers. A process uses zero if it does not have any timestamp for an identifier.
 </p>
 </div>
 </div>
-<div id="outline-container-org661e25a" class="outline-3">
-<h3 id="org661e25a">Applications</h3>
-<div class="outline-text-3" id="text-org661e25a">
+<div id="outline-container-orgfee6ea6" class="outline-3">
+<h3 id="orgfee6ea6">Applications</h3>
+<div class="outline-text-3" id="text-orgfee6ea6">
 <ul class="org-ul">
 <li>Implement a \(\rightarrow\) relation among events in a distributed system</li>
 <li>This paper talks about an application where users send requests to access data in a distributed database by providing ranges of timestamps. If the servers cross the timestamp in the request the server considers the request as timed out.</li>
@@ -351,17 +351,17 @@ It is easy to extend these algorithms to the case where the number of processes 
 </div>
 </div>
 </div>
-<div id="outline-container-orgfd944f3" class="outline-2">
-<h2 id="orgfd944f3">Notes</h2>
-<div class="outline-text-2" id="text-orgfd944f3">
+<div id="outline-container-org204acae" class="outline-2">
+<h2 id="org204acae">Notes</h2>
+<div class="outline-text-2" id="text-org204acae">
 <ul class="org-ul">
 <li>This is one of the two papers that invented vector clocks.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org696d5b8" class="outline-2">
-<h2 id="org696d5b8">References</h2>
-<div class="outline-text-2" id="text-org696d5b8">
+<div id="outline-container-org0b34f1a" class="outline-2">
+<h2 id="org0b34f1a">References</h2>
+<div class="outline-text-2" id="text-org0b34f1a">
 <div class="csl-bib-body">
   <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Colin J. Fidge. 1987. “Timestamps in message-passing systems that preserve the partial ordering.” <a href="https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=e706b8ae2952740cb95c0182c4c44b0d11cc54c1">https://citeseerx.ist.psu.edu/document?repid=rep1&#38;type=pdf&#38;doi=e706b8ae2952740cb95c0182c4c44b0d11cc54c1</a>.</div>
 </div>

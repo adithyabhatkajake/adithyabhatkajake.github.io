@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:01 -->
+<!-- 2026-03-22 Sun 22:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Distributed Randomness using Weighted VRFs</title>
@@ -257,13 +257,13 @@ Paper: <a href="#citeproc_bib_item_1"><i>Distributed Randomness using Weighted V
 <li>Weighted Secret sharing for <b>Pairing Group Elements</b></li>
 <li>Each party has a weight \(w_i\).</li>
 </ul>
-<div id="outline-container-org14001d5" class="outline-2">
-<h2 id="org14001d5">VUF</h2>
-<div class="outline-text-2" id="text-org14001d5">
+<div id="outline-container-orgf12a9b1" class="outline-2">
+<h2 id="orgf12a9b1">VUF</h2>
+<div class="outline-text-2" id="text-orgf12a9b1">
 </div>
-<div id="outline-container-org27451f0" class="outline-3">
-<h3 id="org27451f0">Single Server VUF</h3>
-<div class="outline-text-3" id="text-org27451f0">
+<div id="outline-container-org51330a7" class="outline-3">
+<h3 id="org51330a7">Single Server VUF</h3>
+<div class="outline-text-3" id="text-org51330a7">
 <ul class="org-ul">
 <li>CRS: \((g_{1}, g_{2})\) generators of two pairing groups \(\mathbb{G}_{1}\) and \(\mathbb{G}_{2}\).</li>
 <li>Key Generation: BLS-like except that even \(g_{1}^{element}\) is a secret.
@@ -307,9 +307,9 @@ Paper: <a href="#citeproc_bib_item_1"><i>Distributed Randomness using Weighted V
 </ul>
 </div>
 </div>
-<div id="outline-container-org17da7cd" class="outline-3">
-<h3 id="org17da7cd">$(n,t)$-Threshold VUF</h3>
-<div class="outline-text-3" id="text-org17da7cd">
+<div id="outline-container-orgf8eaf3d" class="outline-3">
+<h3 id="orgf8eaf3d">$(n,t)$-Threshold VUF</h3>
+<div class="outline-text-3" id="text-orgf8eaf3d">
 <p>
 Mainly secret share \(g_{1}^{a}\) among all the parties.
 </p>
@@ -351,9 +351,9 @@ Mainly secret share \(g_{1}^{a}\) among all the parties.
 </ul>
 </div>
 </div>
-<div id="outline-container-orgcdbc5a3" class="outline-3">
-<h3 id="orgcdbc5a3">Weighted VUF</h3>
-<div class="outline-text-3" id="text-orgcdbc5a3">
+<div id="outline-container-org05f2fbc" class="outline-3">
+<h3 id="org05f2fbc">Weighted VUF</h3>
+<div class="outline-text-3" id="text-org05f2fbc">
 <p>
 This work implements weighting with a weight value \(w_{i}\) per party \(i\).
 This work then performs a \((\sum w_{i}, \sum w^{t}_{j})\) secret sharing.
@@ -362,13 +362,13 @@ The signature share is \(H_2(m)^{1/r_i}\) independent of the weight. Only public
 </div>
 </div>
 </div>
-<div id="outline-container-org71f165c" class="outline-2">
-<h2 id="org71f165c">PVSS</h2>
-<div class="outline-text-2" id="text-org71f165c">
+<div id="outline-container-org1626759" class="outline-2">
+<h2 id="org1626759">PVSS</h2>
+<div class="outline-text-2" id="text-org1626759">
 </div>
-<div id="outline-container-org7758d8f" class="outline-3">
-<h3 id="org7758d8f">Note on Secrecy</h3>
-<div class="outline-text-3" id="text-org7758d8f">
+<div id="outline-container-org555ff41" class="outline-3">
+<h3 id="org555ff41">Note on Secrecy</h3>
+<div class="outline-text-3" id="text-org555ff41">
 <p>
 Uses a different secrecy game. In this game, the view of an honest transcript is indistinguishable from the view of a simulated transcript.
 Note that this is different from traditional secrecy, because in traditional secrecy games, one of the two approaches are used:
@@ -382,9 +382,9 @@ Here, the simulation is not tied to a particular key. But the general transcript
 </p>
 </div>
 </div>
-<div id="outline-container-orgdfdd166" class="outline-3">
-<h3 id="orgdfdd166">$(n,t)$-Scheme</h3>
-<div class="outline-text-3" id="text-orgdfdd166">
+<div id="outline-container-orgda5370f" class="outline-3">
+<h3 id="orgda5370f">$(n,t)$-Scheme</h3>
+<div class="outline-text-3" id="text-orgda5370f">
 <p>
 Let \(g_{1}\), \(h_{1}\), \(g_{2}\) be generators in \(\mathbb{G_{1}}\), \(\mathbb{G_{1}}\), and \(\mathbb{G_{2}}\) respectively.
 Public keys are setup in \(\mathbb{G}_{1}\).
@@ -468,13 +468,13 @@ These are Elgamal encryptions.
 </ul>
 </div>
 </div>
-<div id="outline-container-org17fcc60" class="outline-3">
-<h3 id="org17fcc60"><span class="todo TODO">TODO</span> Weighted PVSS with single public key per participant</h3>
+<div id="outline-container-orgb036e41" class="outline-3">
+<h3 id="orgb036e41"><span class="todo TODO">TODO</span> Weighted PVSS with single public key per participant</h3>
 </div>
 </div>
-<div id="outline-container-org5920a61" class="outline-2">
-<h2 id="org5920a61">Security</h2>
-<div class="outline-text-2" id="text-org5920a61">
+<div id="outline-container-orgd2bfbba" class="outline-2">
+<h2 id="orgd2bfbba">Security</h2>
+<div class="outline-text-2" id="text-orgd2bfbba">
 <p>
 Static security by reduction.
 </p>
@@ -487,17 +487,17 @@ Static security by reduction.
 </ul>
 </div>
 </div>
-<div id="outline-container-orge10b851" class="outline-2">
-<h2 id="orge10b851">Questions</h2>
-<div class="outline-text-2" id="text-orge10b851">
+<div id="outline-container-orgfb4b3dc" class="outline-2">
+<h2 id="orgfb4b3dc">Questions</h2>
+<div class="outline-text-2" id="text-orgfb4b3dc">
 <ul class="org-ul">
 <li>What is the difference between UF-CMA and EUF-CMA?</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfb0fba6" class="outline-2">
-<h2 id="orgfb0fba6">References</h2>
-<div class="outline-text-2" id="text-orgfb0fba6">
+<div id="outline-container-orga134bed" class="outline-2">
+<h2 id="orga134bed">References</h2>
+<div class="outline-text-2" id="text-orga134bed">
 <div class="csl-bib-body">
   <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Sourav Das, Benny Pinkas, Alin Tomescu, and Zhuolun Xiang. 2024. “Distributed Randomness using Weighted VRFs.” <a href="https://eprint.iacr.org/2024/198">https://eprint.iacr.org/2024/198</a>.</div>
 </div>

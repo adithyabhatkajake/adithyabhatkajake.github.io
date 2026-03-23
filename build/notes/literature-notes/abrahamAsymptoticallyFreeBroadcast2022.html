@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:01 -->
+<!-- 2026-03-22 Sun 23:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Asymptotically Free Broadcast in Constant Expected Time via Packed VSS</title>
@@ -197,6 +197,38 @@
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -220,25 +252,384 @@
 <p>
 Paper: <a href="#citeproc_bib_item_1"><i>Asymptotically Free Broadcast in Constant Expected Time via Packed VSS</i>. Ittai Abraham, Gilad Asharov, Shravani Patil, and Arpita Patra. 2022</a>
 </p>
-
+<div id="outline-container-org99386be" class="outline-2">
+<h2 id="org99386be">Model</h2>
+<div class="outline-text-2" id="text-org99386be">
 <ul class="org-ul">
-<li>What protocol? They say broadcast.
-<ul class="org-ul">
-<li>Perfect security</li>
-<li>Balanced</li>
-<li>Optimal resilience</li>
-<li>Private Channels</li>
-<li>Expected constant rounds</li>
 <li>Synchronous network</li>
-</ul></li>
+<li>Private channels</li>
+<li>Perfect security (information-theoretic, no cryptographic assumptions)</li>
+<li>Optimal resilience: \(t < n/3\)</li>
+<li>Static adversary</li>
 </ul>
-<div id="outline-container-org3fc1e07" class="outline-2">
-<h2 id="org3fc1e07">References</h2>
 </div>
+</div>
+<div id="outline-container-org1f2b8cf" class="outline-2">
+<h2 id="org1f2b8cf">Summary</h2>
+<div class="outline-text-2" id="text-org1f2b8cf">
+<p>
+Improves communication complexity of perfectly secure Byzantine broadcast in expected constant rounds. The protocol is balanced and asymptotically free for large messages.
+</p>
 
-<div id="outline-container-orga934642" class="outline-2">
-<h2 id="orga934642">References</h2>
-<div class="outline-text-2" id="text-orga934642">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left">Communication</th>
+<th scope="col" class="org-left">Rounds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Katz-Koo '06</td>
+<td class="org-left">\(O(n^2 L + n^6 \log n)\)</td>
+<td class="org-left">Expected constant</td>
+</tr>
+
+<tr>
+<td class="org-left">This paper</td>
+<td class="org-left">\(O(nL + n^4 \log n)\)</td>
+<td class="org-left">Expected constant</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Asymptotically free when \(L = \Omega(n^3 \log n)\). Also supports parallel broadcast (all \(n\) parties broadcast simultaneously), optimal for \(L = \Omega(n^2 \log n)\).
+</p>
+</div>
+</div>
+<div id="outline-container-org6b2e27b" class="outline-2">
+<h2 id="org6b2e27b">Definitions</h2>
+<div class="outline-text-2" id="text-org6b2e27b">
+</div>
+<div id="outline-container-org857d517" class="outline-3">
+<h3 id="org857d517">Synchronous Network</h3>
+<div class="outline-text-3" id="text-org857d517">
+<p>
+Parties \(\mathcal{P} = \{P_1, \ldots, P_n\}\) connected via pairwise private and authenticated point-to-point channels, and (for some sub-protocols) a broadcast channel.
+</p>
+</div>
+</div>
+<div id="outline-container-orgddddf00" class="outline-3">
+<h3 id="orgddddf00">Perfect Security (Definition 3.1)</h3>
+<div class="outline-text-3" id="text-orgddddf00">
+<p>
+Protocol \(\pi\) is $t$-secure for functionality \(f\) if for every adversary \(\mathcal{A}\) in the real world, there exists a simulator \(\mathcal{SIM}\) in the ideal world such that for every \(\mathcal{C} \subset \mathcal{P}\) with \(|\mathcal{C}| \leq t\):
+</p>
+
+<p>
+\[\{\text{Ideal}^f_{\mathcal{SIM}(z), \mathcal{C}}(\vec{x})\} \equiv \{\text{Real}^\pi_{\mathcal{A}(z), \mathcal{C}}(\vec{x})\}\]
+</p>
+
+<p>
+where \(\vec{x}\) is chosen from \((\{0,1\}^*)^n\) with \(|x_1| = \ldots = |x_n|\). The equivalence is perfect (identical distributions, not statistical or computational).
+</p>
+</div>
+</div>
+<div id="outline-container-org247a12e" class="outline-3">
+<h3 id="org247a12e">Byzantine Agreement (\(\mathcal{F}_{\text{BA}}\), Functionality 8.1)</h3>
+<div class="outline-text-3" id="text-org247a12e">
+<p>
+\(\mathcal{F}_{\text{BA}}\) — Byzantine Agreement
+</p>
+
+<p>
+The functionality is parameterized by the set of corrupted parties \(I\).
+</p>
+
+<ol class="org-ol">
+<li>Receive from each honest party \(P_j\) its input \(b_j \in \{0, 1\}\). Send \((b_j)_{j \notin I}\) to the adversary.</li>
+<li>The adversary sends a bit \(\hat{b}\).</li>
+<li>If there exists a bit \(b\) such that \(b_j = b\) for every \(j \notin I\), then set \(y = b\). Otherwise, set \(y = \hat{b}\).</li>
+<li>Send \(y\) to all parties.</li>
+</ol>
+
+<p>
+Properties:
+</p>
+<ul class="org-ul">
+<li><b>(Agreement)</b> all honest parties output the same value</li>
+<li><b>(Validity)</b> if all honest parties begin with the same input value \(v\), then all the honest parties output \(v\).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgba35940" class="outline-3">
+<h3 id="orgba35940">Gradecast (\(\mathcal{F}_{\text{Gradecast}}\), Functionality 5.1)</h3>
+<div class="outline-text-3" id="text-orgba35940">
+<p>
+A dealer has an input and each party outputs a value and a grade \(\in \{0, 1, 2\}\).
+</p>
+
+<p>
+Properties:
+</p>
+<ul class="org-ul">
+<li><b>(Validity)</b> If the dealer is honest then all honest parties output the dealer's input and grade 2.</li>
+<li><b>(Non-equivocation)</b> If two honest parties each output a grade \(\geq 1\) then they output the same value.</li>
+<li><b>(Agreement)</b> If an honest party outputs grade 2 then all honest parties output the same output and with grade \(\geq 1\).</li>
+</ul>
+
+<p>
+\(\mathcal{F}_{\text{Gradecast}}\)
+</p>
+
+<p>
+The functionality is parameterized by the set of corrupted parties, \(I \subseteq \{1, \ldots, n\}\).
+</p>
+
+<ol class="org-ol">
+<li>If the dealer is honest: the dealer sends \(m\) to the functionality, and all parties receive \((m, 2)\) as output.</li>
+<li>If the dealer is corrupted then it sends some message \(M\) to the functionality.
+<ol class="org-ol">
+<li>If \(M = (\mathsf{ExistsGrade2}, m, (g_j)_{j \notin I})\) for some \(m \in \{0,1\}^*\) and each \(g_j \in \{1, 2\}\), then verify that each \(g_j \geq 1\) and that at least one honest party receives grade 2. Send \((m, g_j)\) to each party \(P_j\).</li>
+<li>If \(M = (\mathsf{NoGrade2}, (m_j, g_j)_{j \notin I})\) where each \(m_j \in \{0,1\}^*\) and \(g_j \in \{0, 1\}\), then verify that for every \(j, k \notin I\) with \(g_j = g_k = 1\) it holds that \(m_j = m_k\). Send \((m_j, g_j)\) to each party \(P_j\).</li>
+</ol></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orga0b7747" class="outline-3">
+<h3 id="orga0b7747">Broadcast (\(\mathcal{F}_{\text{BC}}\), Functionality 8.5)</h3>
+<div class="outline-text-3" id="text-orga0b7747">
+<p>
+A distinguished dealer \(P^* \in \mathcal{P}\) holds an initial input \(M\).
+</p>
+
+<p>
+Properties:
+</p>
+<ul class="org-ul">
+<li><b>(Agreement)</b> All honest parties output the same value.</li>
+<li><b>(Validity)</b> If the dealer is honest, then all honest parties output \(M\).</li>
+</ul>
+
+<p>
+\(\mathcal{F}_{\text{BC}}\)
+</p>
+
+<p>
+The functionality is parametrized with a parameter \(L\).
+</p>
+
+<ol class="org-ol">
+<li>The dealer (sender) \(P^*\) sends the functionality its message \(M \in \{0, 1\}^L\).</li>
+<li>The functionality sends to all parties the message \(M\).</li>
+</ol>
+
+<p>
+<b>Asymptotically free broadcast:</b> a balanced broadcast protocol running in expected constant rounds with expected communication \(O(nL)\). Achieved when \(L = \Omega(n^3 \log n)\).
+</p>
+</div>
+</div>
+<div id="outline-container-orge4989f8" class="outline-3">
+<h3 id="orge4989f8">Verifiable Secret Sharing (\(\mathcal{F}_{\text{VSS}}\), Functionality 4.1)</h3>
+<div class="outline-text-3" id="text-orge4989f8">
+<p>
+The dealer holds a $(2t, t)$-bivariate polynomial \(S(x,y)\). The functionality:
+</p>
+<ol class="org-ol">
+<li>Receives \(S(x,y)\) from the dealer.</li>
+<li>If \(S(x,y)\) is of degree at most \(2t\) in \(x\) and at most \(t\) in \(y\), sends each party \(P_i\) the univariate polynomials \(f_i(x) = S(x, i)\) and \(g_i(y) = S(i, y)\). Otherwise, sends \(\bot\) to all parties.</li>
+</ol>
+
+<p>
+Properties:
+</p>
+<ul class="org-ul">
+<li><b>(Privacy)</b> no set of \(t\) shares reveals information about the secret</li>
+<li><b>(Binding)</b> reconstruction always succeeds, i.e., the honest parties' shares uniquely determine \(S(x,y)\) regardless of the dealer's behavior.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org0007690" class="outline-3">
+<h3 id="org0007690">Packed VSS (Protocol 4.2)</h3>
+<div class="outline-text-3" id="text-org0007690">
+<p>
+Generates Shamir sharing of \(t+1\) secrets \(s_{-t}, \ldots, s_0\) at the cost of \(O(n^2 \log n)\) bits P2P and broadcast. The dealer holds a $(2t, t)$-bivariate polynomial \(S(x,y)\) with \(S(l, 0) = s_l\) for \(l \in \{-t, \ldots, 0\}\).
+</p>
+
+<ol class="org-ol">
+<li><b>(Sharing)</b> Dealer sends \((f_i(x), g_i(y))\) to \(P_i\) where \(f_i(x) = S(x, i)\), \(g_i(y) = S(i, y)\).</li>
+<li><b>(Pairwise Consistency Checks)</b> Each \(P_i\) sends \((f_i(j), g_i(j))\) to every \(P_j\). If \(f_{ji} \neq g_i(j)\) or \(g_{ji} \neq f_i(j)\), \(P_i\) broadcasts \(\mathsf{complaint}(i, j, f_i(j), g_i(j))\).</li>
+<li><b>(Conflict Resolution)</b> Dealer broadcasts \(g^D_i(y) = S(i, y)\) for each complaint. Parties in \(\mathsf{pubR}\) set \(\mathsf{happy}_i = 0\).</li>
+<li><b>(Identifying the CORE Set)</b> \(\mathsf{CORE}\) = parties who broadcast OK. If \(|\mathsf{CORE}| < 2t + 1\), discard the dealer.</li>
+<li><b>(Revealing f-polynomials for non-CORE parties)</b> Dealer broadcasts \(f^D_k(x) = S(x, k)\) for each \(P_k \notin \mathsf{CORE}\).</li>
+<li><b>(Opening g-polynomials for complaining parties)</b> Dealer broadcasts \(g^D_j(y) = S(j, y)\) for complaining parties. If at least \(2t + 1\) parties do not broadcast OK, discard dealer.</li>
+<li><b>(Output)</b> If dealer discarded, output \(\bot\). Otherwise output \((f_i(x), g_i(y))\).</li>
+</ol>
+
+<p>
+Each degree-\(t\) univariate \(g_l(y)\) for \(l \in \{-t, \ldots, 0\}\) is a standard Shamir sharing of \(s_l\), and \(P_i\) locally computes its share as \(g_l(i) = f_i(l)\). Communication: \(O(n^2 \log n)\) P2P + \(O(n^2 \log n)\) broadcast, in \(O(1)\) rounds (Lemma 4.5).
+</p>
+</div>
+</div>
+<div id="outline-container-org81bcd9a" class="outline-3">
+<h3 id="org81bcd9a">Multi-Moderated Packed VSS (\(\mathcal{F}_{\text{mm-pVSS}}\), Functionality 6.1)</h3>
+<div class="outline-text-3" id="text-org81bcd9a">
+<p>
+A packed VSS moderated by a set \(\mathcal{M}\) of \(t+1\) distinguished parties. Each party \(P_k\) outputs a flag \(v^k_M \in \{0,1\}\) and a decision \(\mathsf{d}^k_M \in \{\mathsf{accept}, \mathsf{reject}\}\) for each moderator \(M \in \mathcal{M}\).
+</p>
+
+<p>
+\(\mathcal{F}_{\text{mm-pVSS}}\)
+</p>
+
+<p>
+The functionality is parameterized by the set of corrupted parties \(I \subseteq \{1, \ldots, n\}\), a set \(\mathcal{M}\) of \(t+1\) distinguished parties called moderators.
+</p>
+
+<ol class="org-ol">
+<li>The dealer sends polynomials \(f_j(x), g_j(y)\) for every \(j\). If the dealer is honest, there exists a single $(2t, t)$-polynomial \(S(x,y)\) such that \(f_j(x) = S(x, j)\) and \(g_j(y) = S(j, y)\) for every \(j \in \{1, \ldots, n\}\).</li>
+<li>If the dealer is honest, send \(f_i(x), g_i(y)\) for every \(P_i \in I\) to the adversary.</li>
+<li>For each moderator \(M_j \in \mathcal{M}\):
+<ol class="org-ol">
+<li>If \(M_j\) is honest, set \(v^k_{M_j} = 1\) for every \(k\). If dealer is honest, set \(\mathsf{d}^k_{M_j} = \mathsf{accept}\) for every \(k\). If dealer is corrupt, receive \(m_j\) from adversary; if \(m_j = \mathsf{accept}\) and shares define a unique $(2t,t)$-polynomial, set \(\mathsf{d}^k_{M_j} = \mathsf{accept}\); otherwise set \(\mathsf{d}^k_{M_j} = \mathsf{reject}\) for every \(k\).</li>
+<li>If \(M_j\) is corrupt, receive \(m_j\) from adversary. If \(m_j = (\mathsf{Agreement}, (v^k_{M_j})_{k \notin I}), \mathsf{d}_{M_j})\) and for some honest \(k\) it holds that \(v^k_{M_j} = 1\), verify that \(S(x,y)\) is a $(2t,t)$-polynomial and set \(\mathsf{d}^k_{M_j} = \mathsf{d}_{M_j}\) for every \(k \notin I\). If \(m_j = (\mathsf{NoAgreement}, (\mathsf{d}^k_{M_j})_{k \notin I})\), set \(v^k_{M_j} = 0\) for every \(k\).</li>
+</ol></li>
+<li><b>(Output)</b> Each honest \(P_k\) (\(k \notin I\)) receives \(f_i(x), g_i(y)\), \((\mathsf{d}^k_M)_{M \in \mathcal{M}}\), and flags \((v^k_M)_{M \in \mathcal{M}}\).</li>
+</ol>
+
+<p>
+Communication: \(O(n^4 \log n)\) bits P2P.
+</p>
+</div>
+</div>
+<div id="outline-container-org92c6812" class="outline-3">
+<h3 id="org92c6812">Oblivious Leader Election (\(\mathcal{F}_{\text{OLE}}\), Functionality 7.1)</h3>
+<div class="outline-text-3" id="text-org92c6812">
+<p>
+\(\mathcal{F}_{\text{OLE}}\)
+</p>
+
+<p>
+The functionality is parameterized by the set of corrupted parties \(I \subset \{1, \ldots, n\}\) and a family \(\mathcal{D}\) of efficiently samplable distributions \(D : \{0,1\}^{\text{poly}(n)} \to \{1, \ldots, n\}^n\).
+</p>
+
+<ol class="org-ol">
+<li>Receive from the adversary a sampler \(D\) and verify that \(D \in \mathcal{D}\). If not, take a default sampler.</li>
+<li>Choose a random \(r \leftarrow \{0,1\}^{\text{poly}(n)}\) and sample \((\ell_1, \ldots, \ell_n) = D(r)\).</li>
+<li>Hand \(r\) to the adversary and hand \(\ell_i\) to every party \(P_i\).</li>
+</ol>
+
+<p>
+With fairness \(\delta \geq 1/2\): there exists \(\ell \in \{1, \ldots, n\}\) such that (a) each honest party \(P_i\) outputs \(\ell_i = \ell\), and (b) \(P_\ell\) is an honest party.
+</p>
+
+<p>
+Protocol (\(\Pi_{\text{OLE}}\), Protocol 7.2):
+</p>
+<ol class="org-ol">
+<li><b>(Choose and commit weights)</b> Each \(P_i\) chooses random \(c_{i \to j} \in \{1, \ldots, n^4\}\) for every \(j\), hiding \(t+1\) values per $(2t,t)$-bivariate polynomial. Parties invoke \(\mathcal{F}_{\text{mm-pVSS}}\) in \(T = \lceil n/(t+1) \rceil\) parallel instances. Each \(P_k\) records \(\mathsf{succeeded}_i := \{j \mid v^i_{d,j} = 1 \text{ for all } P_d \in \mathcal{P}\}\).</li>
+<li><b>(Reconstruct and pick a leader)</b> Run reconstruction (\(\Pi^{\text{Rec}}_{\text{mm-pVSS}}\)) in parallel. Each \(P_k\) computes \(c^k_j = \sum_{i=1}^{n} c^k_{i \to j} \bmod n^4\) and outputs the \(j\) minimizing \(c^k_j\) among \(j \in \mathsf{succeeded}_k\).</li>
+</ol>
+
+<p>
+Communication: \(O(n^4 \log n)\) bits P2P (Theorem 7.3).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb0704ad" class="outline-2">
+<h2 id="orgb0704ad">Protocol Overview</h2>
+<div class="outline-text-2" id="text-orgb0704ad">
+<p>
+Broadcast decomposes into two sub-protocols: gradecast followed by Byzantine agreement.
+</p>
+</div>
+<div id="outline-container-org781962c" class="outline-3">
+<h3 id="org781962c">Gradecast construction</h3>
+<div class="outline-text-3" id="text-org781962c">
+<p>
+The naive approach to gradecast has the dealer send \(M\) to all \(n\) parties, and each party forwards it to all others for verification &#x2014; costing \(O(n^2 L)\) bits. The key idea of this paper is to avoid sending the full message at each step by encoding it as a polynomial and distributing <i>shares</i> instead.
+</p>
+
+<p>
+<b>Step 1: Encode and share &#x2014; \(O(nL)\) bits.</b> The dealer encodes its $L$-bit message into a $(t, t)$-bivariate polynomial \(S(x,y)\) over \(\mathbb{F}\) holding \((t+1)^2 \approx n^2\) field elements. Each party \(P_i\) receives only two univariate polynomials: \(f_i(x) = S(x, i)\) and \(g_i(y) = S(i, y)\), each of degree \(t\) &#x2014; so \(O(n \log n)\) bits per party. Sending to all \(n\) parties costs \(O(n^2 \log n)\) per gradecast instance. For an $L$-bit message, the dealer runs \(\ell = \lceil L / n^2 \log n \rceil\) parallel instances, so the total sharing cost is \(\ell \cdot O(n^2 \log n) = O(nL)\) bits.
+</p>
+
+<p>
+<b>Step 2: Verify &#x2014; \(O(n^3 \log n)\) bits.</b> Each pair \((P_i, P_j)\) exchanges point evaluations \(f_i(j), g_i(j)\) and checks \(f_i(j) = g_j(i)\). Each exchange is \(O(\log n)\) bits, over \(O(n^2)\) pairs, costing \(O(n^2 \log n)\) per instance and \(O(n^3 \log n)\) across all instances. Inconsistencies produce complaints; the dealer resolves them by revealing polynomials. The STAR algorithm finds a CORE of \(\geq 2t+1\) consistent parties.
+</p>
+
+<p>
+<b>Step 3: Reaffirm and reconstruct &#x2014; \(O(n^3 \log n)\) bits.</b> Three reaffirmation rounds (OK\(_C\), OK\(_E\), OK\(_F\)) propagate agreement about the CORE. Then data dissemination: the \(t+1\) honest parties forward their shares, giving every party \(\geq 2t+1\) points on \(S(x,y)\), sufficient for Reed-Solomon error correction. Each party reconstructs \(S(x,y)\) via robust interpolation.
+</p>
+
+<p>
+<b>Grade assignment.</b> After reconstruction, each \(P_i\) assigns its grade based on how much confirmation it received:
+</p>
+<ul class="org-ul">
+<li><b>Grade 2:</b> \(P_i\) sent OK\(_F\) in Round 7, and received \(\geq 2t+1\) OK\(_F\) messages from parties in \(F_i\) that hold the same polynomials \((f'_i(x), g'_i(y))\). This means \(P_i\) has strong evidence that all honest parties agree on the same polynomial \(S'(x,y)\).</li>
+<li><b>Grade 1:</b> \(P_i\) successfully reconstructed a unique \(S'(x,y)\) from \(\geq 2t+1\) shares, but did not receive enough OK\(_F\) confirmations to be certain of global agreement.</li>
+<li><b>Grade 0:</b> \(P_i\) received fewer than \(2t+1\) valid shares, or robust interpolation did not yield a unique polynomial. Output \(\bot\).</li>
+</ul>
+
+<p>
+If the dealer is honest, all honest parties receive consistent shares, pass all reaffirmation rounds, and output grade 2. If the dealer is corrupt but some honest party outputs grade 2, the non-equivocation and agreement properties of gradecast guarantee all honest parties output the same value with grade \(\geq 1\).
+</p>
+
+<p>
+<b>Total:</b> \(O(nL)\) for sharing + \(O(n^3 \log n)\) for verification and reaffirmation \(= O(nL + n^3 \log n)\).
+</p>
+
+
+<div id="org86b682a" class="figure">
+<p><img src="images/abraham-gradecast-4party.svg" alt="abraham-gradecast-4party.svg" class="org-svg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org75a4222" class="outline-3">
+<h3 id="org75a4222">Byzantine agreement and OLE</h3>
+<div class="outline-text-3" id="text-org75a4222">
+<p>
+After gradecast, each party converts its grade to a BA input: grade 2 maps to 1, grade \(< 2\) maps to 0. The BA protocol (Protocol 8.2) runs iteratively in 6-round iterations:
+</p>
+
+<ul class="org-ul">
+<li><b>Rounds I&#x2013;III:</b> Each party broadcasts its current bit \(b_i\). Parties count how many sent 0 vs 1. If \(\geq t+1\) parties sent a value \(v\), adopt \(b_i = v\). If \(\geq n - t\) parties agree, set \(\mathsf{decided} = \mathsf{true}\).</li>
+<li><b>Rounds IV&#x2013;V:</b> If not yet decided, set \(\mathsf{openToAcceptRandom} = \mathsf{true}\) (willing to accept the leader's bit). Repeat counting.</li>
+<li><b>Round VI (OLE):</b> All parties run oblivious leader election. Each \(P_i\) chooses random values \(c_{i \to j} \in \{1, \ldots, n^4\}\) for every \(j\), committed via multi-moderated packed VSS. After reconstruction, parties compute \(c_j = \sum_i c_{i \to j} \bmod n^4\) and elect the \(j\) minimizing \(c_j\) as leader. With probability \(\geq 1/2\), the leader \(P_\ell\) is honest. If \(\mathsf{openToAcceptRandom}\), adopt \(b_{\ell}\). If \(\mathsf{decided}\), output \(b_i\) and halt. Otherwise, next iteration.</li>
+</ul>
+
+<p>
+When an honest leader is elected, all honest parties adopt the same bit and will agree in the next iteration, so BA terminates in expected \(O(1)\) iterations. Each iteration costs \(O(n^2)\) bits for bit exchange plus \(O(n^4 \log n)\) for OLE.
+</p>
+
+
+<div id="orge01964c" class="figure">
+<p><img src="images/abraham-ba-flowchart.svg" alt="abraham-ba-flowchart.svg" class="org-svg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org60a0295" class="outline-3">
+<h3 id="org60a0295">Broadcast output</h3>
+<div class="outline-text-3" id="text-org60a0295">
+<p>
+If BA outputs \(y = 1\), each party outputs the gradecast message \(m\). If \(y = 0\), output \(\bot\).
+</p>
+
+
+<div id="orga8306bd" class="figure">
+<p><img src="images/abraham-broadcast-4party.svg" alt="abraham-broadcast-4party.svg" class="org-svg" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org8225b44" class="outline-2">
+<h2 id="org8225b44">References</h2>
+<div class="outline-text-2" id="text-org8225b44">
 <div class="csl-bib-body">
   <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Ittai Abraham, Gilad Asharov, Shravani Patil, and Arpita Patra. 2022. “Asymptotically Free Broadcast in Constant Expected Time via Packed VSS.” <a href="https://eprint.iacr.org/2022/1266">https://eprint.iacr.org/2022/1266</a>.</div>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:01 -->
+<!-- 2026-03-22 Sun 22:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SoK: Collusion-resistant Multi-party Private Set Intersections in the Semi-honest Model</title>
@@ -252,16 +252,16 @@
 <p>
 Original paper: <a href="#citeproc_bib_item_2"><i>SoK: Collusion-resistant Multi-party Private Set Intersections in the Semi-honest Model</i>. Jelle Vos, Mauro Conti, and Zekeriya Erkin. 2024</a>
 </p>
-<div id="outline-container-org417313e" class="outline-2">
-<h2 id="org417313e">Summary</h2>
-<div class="outline-text-2" id="text-org417313e">
+<div id="outline-container-org4285b0c" class="outline-2">
+<h2 id="org4285b0c">Summary</h2>
+<div class="outline-text-2" id="text-org4285b0c">
 <ul class="org-ul">
 <li>This paper presents a summary of multi-party PSI protocols in the semi-honest model excluding protocols that have helper parties.</li>
 <li><p>
 It classifies PSI into types and present the communication and computational complexities as follows:
 </p>
 
-<div id="org6f5114c" class="figure">
+<div id="org6ad050d" class="figure">
 <p><img src="images/_20250212_143623screenshot.png" alt="_20250212_143623screenshot.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Summary of the paper</p>
@@ -269,9 +269,9 @@ It classifies PSI into types and present the communication and computational com
 </ul>
 </div>
 </div>
-<div id="outline-container-org1fd50ea" class="outline-2">
-<h2 id="org1fd50ea">Notes</h2>
-<div class="outline-text-2" id="text-org1fd50ea">
+<div id="outline-container-orge2169f7" class="outline-2">
+<h2 id="orge2169f7">Notes</h2>
+<div class="outline-text-2" id="text-orge2169f7">
 <ul class="org-ul">
 <li>the state of the art 2 party PSI is <a href="#citeproc_bib_item_1"><i>Faster Secure Comparisons with Offline Phase for Efficient Private Set Intersection</i>. Florian Kerschbaum, Erik-Oliver Blass, and Rasoul Akhavan Mahdavi. 2022</a>, which is 1 million elements in less than \(6\) seconds over a 100 MBit/s communication channel.</li>
 <li>multi-party PSI is called MPSI</li>
@@ -283,13 +283,13 @@ It classifies PSI into types and present the communication and computational com
 <li>the next best is size revealing. Any size revealing protocol can be converted to a size hiding by padding with dummy elements up to an upper bound. The dummy elements can be repeating existing elements or an agreed upon unused element.</li>
 </ul>
 </div>
-<div id="outline-container-org904e7f2" class="outline-3">
-<h3 id="org904e7f2">Techniques to implement MPSI</h3>
-<div class="outline-text-3" id="text-org904e7f2">
+<div id="outline-container-org63e4080" class="outline-3">
+<h3 id="org63e4080">Techniques to implement MPSI</h3>
+<div class="outline-text-3" id="text-org63e4080">
 </div>
-<div id="outline-container-org9555553" class="outline-4">
-<h4 id="org9555553">Private Homomorphic Set Representations</h4>
-<div class="outline-text-4" id="text-org9555553">
+<div id="outline-container-orgc6cf7d5" class="outline-4">
+<h4 id="orgc6cf7d5">Private Homomorphic Set Representations</h4>
+<div class="outline-text-4" id="text-orgc6cf7d5">
 <ul class="org-ul">
 <li>Define an operation + such that \(X_1\cap \ldots X_n \approx Dec(Enc(X_1)+\ldots +Enc(X_n))\) holds</li>
 </ul>
@@ -298,15 +298,15 @@ Ways to implement this:
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orgfd442bd"></a>Bitset<br />
-<div class="outline-text-5" id="text-orgfd442bd">
+<li><a id="orgbdffebc"></a>Bitset<br />
+<div class="outline-text-5" id="text-orgbdffebc">
 <p>
 When the universe of elements is small, you can use a bitset. The + operation is then the AND operation and ENC and DEC can be any homomorphic encryption that supports the AND operation.
 </p>
 </div>
 </li>
-<li><a id="org92bec48"></a>Hash Sets<br />
-<div class="outline-text-5" id="text-org92bec48">
+<li><a id="org6481a68"></a>Hash Sets<br />
+<div class="outline-text-5" id="text-org6481a68">
 <p>
 Let \(H: U -> \{1,\ldots, m\}\) be a hash function.
 Use AND operation as the + operation and any supporting homomorphic encryption scheme.
@@ -316,8 +316,8 @@ Then for every element, check if it exists in the set.
 </p>
 </div>
 </li>
-<li><a id="org3650874"></a>Sorted Multisets<br />
-<div class="outline-text-5" id="text-org3650874">
+<li><a id="org04c59f8"></a>Sorted Multisets<br />
+<div class="outline-text-5" id="text-org04c59f8">
 <p>
 Assume some partial ordering exists in \(U\).
 The key idea is to combine multiple sets \(X_1,\ldots,X_n\) into multiset \(X_1 \cap\ldots \cap X_n\), and then isolate those elements with multiplicity \(n\).
@@ -330,8 +330,8 @@ The literature calls this last step as 'monotonizing'.
 </p>
 </div>
 </li>
-<li><a id="orgcbc3741"></a>Polynomials<br />
-<div class="outline-text-5" id="text-orgcbc3741">
+<li><a id="orgdf7b726"></a>Polynomials<br />
+<div class="outline-text-5" id="text-orgdf7b726">
 <p>
 Parties compute \(P_{i}\) with their set elements as roots.
 Use the property \(r_1P_1 + r_2P_2 = r GCD(P_1, P_2)\). Here \(r_1\) and \(r_2\) are random polynomials.
@@ -341,21 +341,21 @@ This method cannot handle duplicates, as they will appear as multiple roots.
 </li>
 </ul>
 </div>
-<div id="outline-container-orgfd0fb9d" class="outline-4">
-<h4 id="orgfd0fb9d">Leaky Homomorphic Set Representations</h4>
-<div class="outline-text-4" id="text-orgfd0fb9d">
+<div id="outline-container-org65ace76" class="outline-4">
+<h4 id="org65ace76">Leaky Homomorphic Set Representations</h4>
+<div class="outline-text-4" id="text-org65ace76">
 </div>
 <ul class="org-ul">
-<li><a id="org9a8d420"></a>Bloom Filters<br />
-<div class="outline-text-5" id="text-org9a8d420">
+<li><a id="org81a0a2e"></a>Bloom Filters<br />
+<div class="outline-text-5" id="text-org81a0a2e">
 <p>
 Use bloom filters and share them.
 Others check if their elements are in the shared bloom filters.
 </p>
 </div>
 </li>
-<li><a id="org7694fbf"></a>Garbled Bloom Filters<br />
-<div class="outline-text-5" id="text-org7694fbf">
+<li><a id="orgaa98fc3"></a>Garbled Bloom Filters<br />
+<div class="outline-text-5" id="text-orgaa98fc3">
 <p>
 Use \(h\) hash functions and thus, \(h\) bins.
 Let \(b_i\) denote the \(ith\) bin.
@@ -368,9 +368,9 @@ After inserting all the elements, set remaining empty bins to a random number.
 </li>
 </ul>
 </div>
-<div id="outline-container-org8954bf3" class="outline-4">
-<h4 id="org8954bf3">Aggregatable Membership Queries</h4>
-<div class="outline-text-4" id="text-org8954bf3">
+<div id="outline-container-org1813a9c" class="outline-4">
+<h4 id="org1813a9c">Aggregatable Membership Queries</h4>
+<div class="outline-text-4" id="text-org1813a9c">
 <p>
 The key idea is to do the following:
 </p>
@@ -386,15 +386,15 @@ In a nutshell, define some operator \(+\):
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orgc29a229"></a>Polynomials embedding<br />
-<div class="outline-text-5" id="text-orgc29a229">
+<li><a id="org63174ad"></a>Polynomials embedding<br />
+<div class="outline-text-5" id="text-org63174ad">
 <p>
 Embed the elements as the root of a polynomial \(p(x)\), and give \(rp(x)+P\) to another party. When evaluating the polynomial at \(x=x_0\) a root of \(p(x)\), it becomes \(P\), otherwise a random number except with negligible probability.
 </p>
 </div>
 </li>
-<li><a id="orgdc0960d"></a>Oblivious Pseudo Random Function (OPRF)<br />
-<div class="outline-text-5" id="text-orgdc0960d">
+<li><a id="orgd953feb"></a>Oblivious Pseudo Random Function (OPRF)<br />
+<div class="outline-text-5" id="text-orgd953feb">
 <p>
 The idea is as follows:
 </p>
@@ -405,8 +405,8 @@ The idea is as follows:
 </ul>
 </div>
 </li>
-<li><a id="org64f3a2d"></a>OKVS<br />
-<div class="outline-text-5" id="text-org64f3a2d">
+<li><a id="org8ae167d"></a>OKVS<br />
+<div class="outline-text-5" id="text-org8ae167d">
 <p>
 An OKVS can be viewed as a non-interactive version of an OPPRF that can also sent in the clear.
 </p>
@@ -416,9 +416,9 @@ An OKVS can be viewed as a non-interactive version of an OPPRF that can also sen
 </div>
 </div>
 </div>
-<div id="outline-container-orgc9d8db3" class="outline-2">
-<h2 id="orgc9d8db3">References</h2>
-<div class="outline-text-2" id="text-orgc9d8db3">
+<div id="outline-container-orge5ae4b3" class="outline-2">
+<h2 id="orge5ae4b3">References</h2>
+<div class="outline-text-2" id="text-orge5ae4b3">
 <div class="csl-bib-body">
   <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Florian Kerschbaum, Erik-Oliver Blass, and Rasoul Akhavan Mahdavi. 2022. “Faster Secure Comparisons with Offline Phase for Efficient Private Set Intersection.” <a href="http://arxiv.org/abs/2209.13913">http://arxiv.org/abs/2209.13913</a>.</div>
   <div class="csl-entry"><a id="citeproc_bib_item_2"></a>Jelle Vos, Mauro Conti, and Zekeriya Erkin. 2024. “SoK: Collusion-resistant Multi-party Private Set Intersections in the Semi-honest Model.” <a href="https://ieeexplore.ieee.org/abstract/document/10646669?casa_token=SC9GM3SMrZcAAAAA:GWpdE0SfvbK5E4vPnmP-wCRLV2udPyeerw8Xtuqv5KZMjhaPDKjIuVt0Ih03_U1kCiqb1sEtKd4v">https://ieeexplore.ieee.org/abstract/document/10646669?casa_token=SC9GM3SMrZcAAAAA:GWpdE0SfvbK5E4vPnmP-wCRLV2udPyeerw8Xtuqv5KZMjhaPDKjIuVt0Ih03_U1kCiqb1sEtKd4v</a>.</div>

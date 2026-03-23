@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:01 -->
+<!-- 2026-03-22 Sun 22:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Threshold Signatures</title>
@@ -220,9 +220,9 @@
 <p>
 Paper: <a href="#citeproc_bib_item_1"><i>Threshold Signatures</i>. Chelsea Komlo. 2024</a>
 </p>
-<div id="outline-container-org33bd680" class="outline-2">
-<h2 id="org33bd680">Summary</h2>
-<div class="outline-text-2" id="text-org33bd680">
+<div id="outline-container-org91fbdd1" class="outline-2">
+<h2 id="org91fbdd1">Summary</h2>
+<div class="outline-text-2" id="text-org91fbdd1">
 <p>
 This article talks about
 </p>
@@ -235,18 +235,18 @@ This article talks about
 </ul>
 </div>
 </div>
-<div id="outline-container-org649aa44" class="outline-2">
-<h2 id="org649aa44">Benefits of Threshold Signature Schemes</h2>
-<div class="outline-text-2" id="text-org649aa44">
+<div id="outline-container-org036ae7d" class="outline-2">
+<h2 id="org036ae7d">Benefits of Threshold Signature Schemes</h2>
+<div class="outline-text-2" id="text-org036ae7d">
 <ol class="org-ol">
 <li>Redundancy</li>
 <li>Corruption Resilience</li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org3a7ba53" class="outline-2">
-<h2 id="org3a7ba53">Applications of threshold signatures</h2>
-<div class="outline-text-2" id="text-org3a7ba53">
+<div id="outline-container-orgd46933c" class="outline-2">
+<h2 id="orgd46933c">Applications of threshold signatures</h2>
+<div class="outline-text-2" id="text-orgd46933c">
 <p>
 Applications of threshold signatures (generally wherever trusted signatures are needed):
 </p>
@@ -258,9 +258,9 @@ Applications of threshold signatures (generally wherever trusted signatures are 
 </ul>
 </div>
 </div>
-<div id="outline-container-org957cae7" class="outline-2">
-<h2 id="org957cae7">Case Study: Threshold ECDSA</h2>
-<div class="outline-text-2" id="text-org957cae7">
+<div id="outline-container-org4c80c58" class="outline-2">
+<h2 id="org4c80c58">Case Study: Threshold ECDSA</h2>
+<div class="outline-text-2" id="text-org4c80c58">
 <p>
 They say FROST <a href="#citeproc_bib_item_2"><i>FROST: Flexible Round-Optimized Schnorr Threshold Signatures</i>. Chelsea Komlo, and Ian Goldberg. 2020</a><sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>  is a simple example for EdDSA.
 FROST allows issuing Schnorr Signatures, therefore can easily do EdDSA signatures since it is a variant of Schnorr.
@@ -278,18 +278,18 @@ FROST has a IETF draft which is nearing completion.
 </p>
 </div>
 </div>
-<div id="outline-container-orge370b0f" class="outline-2">
-<h2 id="orge370b0f">Threshold BLS</h2>
-<div class="outline-text-2" id="text-orge370b0f">
+<div id="outline-container-org2e75b8e" class="outline-2">
+<h2 id="org2e75b8e">Threshold BLS</h2>
+<div class="outline-text-2" id="text-org2e75b8e">
 <p>
 As opposed to threshold EdDSA, we can generate threshold BLS signatures in a single non-interactive round.
 It is also robust.
 </p>
 </div>
 </div>
-<div id="outline-container-org7e80d70" class="outline-2">
-<h2 id="org7e80d70">Practical considerations</h2>
-<div class="outline-text-2" id="text-org7e80d70">
+<div id="outline-container-orgca36346" class="outline-2">
+<h2 id="orgca36346">Practical considerations</h2>
+<div class="outline-text-2" id="text-orgca36346">
 <p>
 Some applications use: two out of three (e.g., cryptocurrency wallets)
 Threshold signatures allows key rotation, i.e., changing the secret key shares while keeping the public key constant.
@@ -298,18 +298,18 @@ Key rotation is also called proactive security.
 </p>
 </div>
 </div>
-<div id="outline-container-orgbd617f0" class="outline-2">
-<h2 id="orgbd617f0">News</h2>
-<div class="outline-text-2" id="text-orgbd617f0">
+<div id="outline-container-org1bc05bb" class="outline-2">
+<h2 id="org1bc05bb">News</h2>
+<div class="outline-text-2" id="text-org1bc05bb">
 <p>
 NIST is trying to formalize existing threshold signature schemes.
 Post-quantum threshold signature scheme is an active area.
 </p>
 </div>
 </div>
-<div id="outline-container-orgcfe956d" class="outline-2">
-<h2 id="orgcfe956d">References</h2>
-<div class="outline-text-2" id="text-orgcfe956d">
+<div id="outline-container-org0a9e0d0" class="outline-2">
+<h2 id="org0a9e0d0">References</h2>
+<div class="outline-text-2" id="text-org0a9e0d0">
 <div class="csl-bib-body">
   <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Chelsea Komlo. 2024. “Threshold Signatures.” <a href="https://ieeexplore.ieee.org/document/10799187/?arnumber=10799187">https://ieeexplore.ieee.org/document/10799187/?arnumber=10799187</a>.</div>
   <div class="csl-entry"><a id="citeproc_bib_item_2"></a>Chelsea Komlo, and Ian Goldberg. 2020. “FROST: Flexible Round-Optimized Schnorr Threshold Signatures.” <a href="https://eprint.iacr.org/2020/852">https://eprint.iacr.org/2020/852</a>.</div>

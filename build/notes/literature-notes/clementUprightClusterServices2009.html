@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:02 -->
+<!-- 2026-03-22 Sun 22:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Upright Cluster Services</title>
@@ -252,15 +252,15 @@
 <p>
 Paper: <a href="#citeproc_bib_item_4"><i>Upright cluster services</i>. Allen Clement, Manos Kapritsos, Sangmin Lee, Yang Wang, Lorenzo Alvisi, Mike Dahlin, and Taylor Riche. 2009</a>
 </p>
-<div id="outline-container-orgb4e2414" class="outline-2">
-<h2 id="orgb4e2414">01-note</h2>
-<div class="outline-text-2" id="text-orgb4e2414">
+<div id="outline-container-org8084174" class="outline-2">
+<h2 id="org8084174">01-note</h2>
+<div class="outline-text-2" id="text-org8084174">
 </div>
-<div id="outline-container-org38f566c" class="outline-3">
-<h3 id="org38f566c">Failure Model</h3>
-<div class="outline-text-3" id="text-org38f566c">
+<div id="outline-container-org485f1d9" class="outline-3">
+<h3 id="org485f1d9">Failure Model</h3>
+<div class="outline-text-3" id="text-org485f1d9">
 
-<div id="orge223c41" class="figure">
+<div id="org00a1906" class="figure">
 <p><img src="images/_20230309_214322screenshot.png" alt="_20230309_214322screenshot.png" width="500px" />
 </p>
 </div>
@@ -270,26 +270,26 @@ Paper: <a href="#citeproc_bib_item_4"><i>Upright cluster services</i>. Allen Cle
 <li>Standard assumption \(u \ge r\)</li>
 </ul>
 </div>
-<div id="outline-container-orgf8723f4" class="outline-4">
-<h4 id="orgf8723f4">\(u\) Omission failures</h4>
-<div class="outline-text-4" id="text-orgf8723f4">
+<div id="outline-container-orga03bfc7" class="outline-4">
+<h4 id="orga03bfc7">\(u\) Omission failures</h4>
+<div class="outline-text-4" id="text-orga03bfc7">
 <p>
 Omission failures (including crash failures) in which a node fails to send one or more messages specified by the protocol and sends no incorrect messages based on the protocol and its inputs.
 </p>
 </div>
 </div>
-<div id="outline-container-orgc03bead" class="outline-4">
-<h4 id="orgc03bead">\(r\) Commission failures</h4>
-<div class="outline-text-4" id="text-orgc03bead">
+<div id="outline-container-org051888a" class="outline-4">
+<h4 id="org051888a">\(r\) Commission failures</h4>
+<div class="outline-text-4" id="text-org051888a">
 <p>
 Commission failures, which include all failures that are not omission failures, including all failures in which a node sends a message that is not specified by the protocol.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgf76c568" class="outline-3">
-<h3 id="orgf76c568">System properties</h3>
-<div class="outline-text-3" id="text-orgf76c568">
+<div id="outline-container-org9aec3c4" class="outline-3">
+<h3 id="org9aec3c4">System properties</h3>
+<div class="outline-text-3" id="text-org9aec3c4">
 <ul class="org-ul">
 <li>An UpRight system is safe ("right") despite \(r\) commission failures and any number of omission failures.</li>
 <li>An UpRight system is safe and eventually live ("up") during sufficiently long synchronous intervals when there are at most \(u\) failures of which at most \(r\) are commission failures and the rest are omission failures.
@@ -298,49 +298,49 @@ If more than \(r\) commission faults exist, then the system is still live, but n
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc262009" class="outline-3">
-<h3 id="orgc262009">Applications using UpRight</h3>
-<div class="outline-text-3" id="text-orgc262009">
+<div id="outline-container-orgfdc7726" class="outline-3">
+<h3 id="orgfdc7726">Applications using UpRight</h3>
+<div class="outline-text-3" id="text-orgfdc7726">
 </div>
-<div id="outline-container-org28de45f" class="outline-4">
-<h4 id="org28de45f">Architecture</h4>
-<div class="outline-text-4" id="text-org28de45f">
+<div id="outline-container-org1cb14d1" class="outline-4">
+<h4 id="org1cb14d1">Architecture</h4>
+<div class="outline-text-4" id="text-org1cb14d1">
 
-<div id="orgb634004" class="figure">
+<div id="org26efe7f" class="figure">
 <p><img src="images/SCR-20230313-gnp.png" alt="SCR-20230313-gnp.png" width="500px" />
 </p>
 <p><span class="figure-number">Figure 1: </span>UpRight Library Architecture</p>
 </div>
 </div>
 </div>
-<div id="outline-container-org18b5314" class="outline-4">
-<h4 id="org18b5314">Request Execution</h4>
-<div class="outline-text-4" id="text-org18b5314">
+<div id="outline-container-org00d13f6" class="outline-4">
+<h4 id="org00d13f6">Request Execution</h4>
+<div class="outline-text-4" id="text-org00d13f6">
 </div>
 <ul class="org-ul">
-<li><a id="org78faa1f"></a>Spontaneous Replies<br />
-<div class="outline-text-5" id="text-org78faa1f">
+<li><a id="org473f620"></a>Spontaneous Replies<br />
+<div class="outline-text-5" id="text-org473f620">
 <p>
 Applications may allow the server to push unsolicited messages to clients. For example, in Zookeeper, a client can watch an object and be notified of any changes to it.
 </p>
 </div>
 </li>
-<li><a id="orge69e3ed"></a>Read-only replies<br />
-<div class="outline-text-5" id="text-orge69e3ed">
+<li><a id="org7405998"></a>Read-only replies<br />
+<div class="outline-text-5" id="text-org7405998">
 <p>
 As a performance optimization, UpRight supports PBFT’s <a href="#citeproc_bib_item_3"><i>Practical byzantine fault tolerance and proactive recovery</i>. Miguel Castro, and Barbara Liskov. 2002</a> read-only optimization, in which a client shim sends read-only, side-effect-free requests directly to the server shims and server shims execute them without ordering them in the global sequence of requests.
 </p>
 </div>
 </li>
-<li><a id="org090bec6"></a>Multithreading<br />
-<div class="outline-text-5" id="text-org090bec6">
+<li><a id="orge9cb2ba"></a>Multithreading<br />
+<div class="outline-text-5" id="text-orge9cb2ba">
 <p>
 Parallel execution allows applications to take advantage of hardware resources, but application servers must ensure that the actual execution is equivalent to executing the requests sequentially in the order specified by the UpRight library.
 </p>
 </div>
 </li>
-<li><a id="org84f05cd"></a>Nondeterminism<br />
-<div class="outline-text-5" id="text-org84f05cd">
+<li><a id="org28ed630"></a>Nondeterminism<br />
+<div class="outline-text-5" id="text-org28ed630">
 <p>
 Many applications rely on real time or random numbers as part of normal operation. These factors can be used in many ways including garbage collecting soft state, naming new data structures, or declaring uncommunicative nodes dead.
 </p>
@@ -348,9 +348,9 @@ Many applications rely on real time or random numbers as part of normal operatio
 </li>
 </ul>
 </div>
-<div id="outline-container-org80e0761" class="outline-4">
-<h4 id="org80e0761">Checkpoints</h4>
-<div class="outline-text-4" id="text-org80e0761">
+<div id="outline-container-org86d9b37" class="outline-4">
+<h4 id="org86d9b37">Checkpoints</h4>
+<div class="outline-text-4" id="text-org86d9b37">
 <p>
 In an asynchronous system, even correct server replicas can fall arbitrarily behind, so BFT state machine replication frameworks must provide a way to checkpoint a server replica’s state, to certify that a quorum of server replicas have produced identical checkpoints, and to transfer a certified checkpoint to a node that has fallen behind.
 The hybrid check- point/delta approach seeks to minimize intrusiveness to legacy code.
@@ -359,15 +359,15 @@ This work provides three checkpointing mechanisms for the <b>Hybrid checkpoint/d
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orgc938d21"></a>Stop and copy<br />
-<div class="outline-text-5" id="text-orgc938d21">
+<li><a id="org9689b17"></a>Stop and copy<br />
+<div class="outline-text-5" id="text-org9689b17">
 <p>
 If an application’s state is small and an application can tolerate a few tens of milliseconds of added latency, the simplest checkpoint strategy is to pause the arrival of new requests so that the application is quiescent while it writes it state to disk.
 </p>
 </div>
 </li>
-<li><a id="org7467d35"></a>Helper process<br />
-<div class="outline-text-5" id="text-org7467d35">
+<li><a id="orgd082f70"></a>Helper process<br />
+<div class="outline-text-5" id="text-orgd082f70">
 <p>
 The helper process approach produces checkpoints asynchronously to avoid pausing request execution and seeks to minimize intrusiveness to legacy code.
 To ensure that different replicas produce identical checkpoints without having to pause request processing, each node runs two slightly modified instances of the server application process, a primary and a helper, to which we feed the same series of requests.
@@ -376,8 +376,8 @@ For the helper, we omit sending replies to clients, and we pause the sequence of
 </p>
 </div>
 </li>
-<li><a id="orgd19399c"></a>Copy on write<br />
-<div class="outline-text-5" id="text-orgd19399c">
+<li><a id="org6e218f2"></a>Copy on write<br />
+<div class="outline-text-5" id="text-org6e218f2">
 <p>
 Applications can be modified so that their key data structures are treated as copy on write while checkpoints are taken.
 </p>
@@ -386,9 +386,9 @@ Applications can be modified so that their key data structures are treated as co
 </ul>
 </div>
 </div>
-<div id="outline-container-org32340ad" class="outline-3">
-<h3 id="org32340ad">UpRight Protocol</h3>
-<div class="outline-text-3" id="text-org32340ad">
+<div id="outline-container-org5697825" class="outline-3">
+<h3 id="org5697825">UpRight Protocol</h3>
+<div class="outline-text-3" id="text-org5697825">
 <ul class="org-ul">
 <li>Client deposits a request at the Request quorum.</li>
 <li>The Request Quorum
@@ -401,14 +401,14 @@ Applications can be modified so that their key data structures are treated as co
 <li>The execution module embodies the application’s server, which executes requests from the ordered batches and produces replies</li>
 </ul>
 
-<div id="orgfcffdcf" class="figure">
+<div id="orgd89881d" class="figure">
 <p><img src="images/_20230313_131958screenshot.png" alt="_20230313_131958screenshot.png" width="700px" />
 </p>
 </div>
 </div>
-<div id="outline-container-org471755b" class="outline-4">
-<h4 id="org471755b">Request Quorum</h4>
-<div class="outline-text-4" id="text-org471755b">
+<div id="outline-container-orgdfab120" class="outline-4">
+<h4 id="orgdfab120">Request Quorum</h4>
+<div class="outline-text-4" id="text-orgdfab120">
 <ul class="org-ul">
 <li>A client sends its request to the RQ nodes with a MAC authenticator</li>
 <li>An RQ node therefore stores each request before forwarding its digest</li>
@@ -417,16 +417,16 @@ Applications can be modified so that their key data structures are treated as co
 </ul>
 </div>
 <ul class="org-ul">
-<li><a id="orgdb0ffc3"></a>Validating requests<br />
-<div class="outline-text-5" id="text-orgdb0ffc3">
+<li><a id="org8de6e22"></a>Validating requests<br />
+<div class="outline-text-5" id="text-org8de6e22">
 <ul class="org-ul">
 <li>The use of MAC authenticators rather than digital signatures is a vital optimization to BFT replication systems</li>
 <li>To ensure non-repudiation, this work uses a modified version of Matrix Signatures</li>
 </ul>
 </div>
 </li>
-<li><a id="org601359e"></a>Rate-limiting<br />
-<div class="outline-text-5" id="text-org601359e">
+<li><a id="org2cc56c1"></a>Rate-limiting<br />
+<div class="outline-text-5" id="text-org2cc56c1">
 <ul class="org-ul">
 <li>An RQ node will store at most one unordered request per client and ignore any new requests from that client until it learns that the previous request has been ordered</li>
 <li>Execution nodes produce a checkpoint every <code>CP_INTERVAL</code> batches, and they never fetch requests older than the two most recent checkpoints</li>
@@ -435,9 +435,9 @@ Applications can be modified so that their key data structures are treated as co
 </li>
 </ul>
 </div>
-<div id="outline-container-orgcc2094c" class="outline-4">
-<h4 id="orgcc2094c">Ordering</h4>
-<div class="outline-text-4" id="text-orgcc2094c">
+<div id="outline-container-orge1d28a4" class="outline-4">
+<h4 id="orge1d28a4">Ordering</h4>
+<div class="outline-text-4" id="text-orge1d28a4">
 <p>
 Inspired from Zyzzyva NO_ITEM_DATA:kotlaZyzzyvaSpeculativeByzantine2007a, Aardvark NO_ITEM_DATA:aardvark, and Yin et al <a href="#citeproc_bib_item_5"><i>Separating agreement from execution for byzantine fault tolerant services</i>. Jian Yin, Jean-Philippe Martin, Arun Venkataramani, Lorenzo Alvisi, and Mike Dahlin. 2003</a>
 </p>
@@ -448,15 +448,15 @@ Inspired from Zyzzyva NO_ITEM_DATA:kotlaZyzzyvaSpeculativeByzantine2007a, Aardva
 </ol>
 </div>
 <ul class="org-ul">
-<li><a id="org1bf9e81"></a>Dependence on Execution<br />
-<div class="outline-text-5" id="text-org1bf9e81">
+<li><a id="org5e8de06"></a>Dependence on Execution<br />
+<div class="outline-text-5" id="text-org5e8de06">
 <p>
 The separation of the order and execution stages requires coordination between the two to coordinate garbage collection and to ensure agreement on execution checkpoint state.
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orgfdab9e8"></a>Ordering - Execution coordination<br />
-<div class="outline-text-6" id="text-orgfdab9e8">
+<li><a id="org675cbca"></a>Ordering - Execution coordination<br />
+<div class="outline-text-6" id="text-org675cbca">
 <ol class="org-ol">
 <li>After executing batch \(B\) with sequence number \((i ∗ CP INTERVAL)\), an execution node begins to produce execution checkpoint \(i\)</li>
 <li>Once that checkpoint has been produced, the execution node sends a hash of the checkpoint with a MAC authenticator to the order nodes</li>
@@ -467,16 +467,16 @@ Thus to order batch \(B'\), order nodes implicitly agree that a quorum of execut
 </p>
 </div>
 </li>
-<li><a id="org0ea9e36"></a>Execution recovery<br />
-<div class="outline-text-6" id="text-org0ea9e36">
+<li><a id="org3b46192"></a>Execution recovery<br />
+<div class="outline-text-6" id="text-org3b46192">
 <ol class="org-ol">
 <li>If an execution node falls behind (e.g., it misses some batches because of a network fault or a local crash-recover event), it catches up by sending the order nodes its current sequence number, and the order nodes respond with the hash and sequence number of the most recent execution check- point and with the ordered batches since that checkpoint</li>
 <li>The execution node then fetches the execution checkpoint from its peers and processes the subsequent ordered batches to get to the current state</li>
 </ol>
 </div>
 </li>
-<li><a id="org6f2992d"></a>Need for execution<br />
-<div class="outline-text-6" id="text-org6f2992d">
+<li><a id="org15616a3"></a>Need for execution<br />
+<div class="outline-text-6" id="text-org15616a3">
 <ol class="org-ol">
 <li>It allows order nodes and execution nodes garbage collect their logs and checkpoints
 Once batch \(B′′\) with sequence number \(i + 2 ∗ CP INTERVAL\) has been ordered, the order and execution nodes garbage collect their logs and checkpoints up to and including batch \(B\)</li>
@@ -489,13 +489,13 @@ The execution nodes cannot reach agreement on their own, so they rely on the ord
 </li>
 </ul>
 </div>
-<div id="outline-container-orgd40fbdc" class="outline-4">
-<h4 id="orgd40fbdc">Execution</h4>
+<div id="outline-container-org5781d98" class="outline-4">
+<h4 id="org5781d98">Execution</h4>
 </div>
 </div>
-<div id="outline-container-orgcb6b020" class="outline-3">
-<h3 id="orgcb6b020">Constraints</h3>
-<div class="outline-text-3" id="text-orgcb6b020">
+<div id="outline-container-org659ef89" class="outline-3">
+<h3 id="org659ef89">Constraints</h3>
+<div class="outline-text-3" id="text-org659ef89">
 <ul class="org-ul">
 <li>Execution requires \(u+r+1\) replicas</li>
 <li>Fast-path execution requires \(u+1\) replicas</li>
@@ -508,9 +508,9 @@ Logical nodes can be multiplexed on the same physical nodes, so a total of \(2u 
 </ul>
 </div>
 </div>
-<div id="outline-container-org6e1751c" class="outline-3">
-<h3 id="org6e1751c">Preferred quorum optimization</h3>
-<div class="outline-text-3" id="text-org6e1751c">
+<div id="outline-container-org57edb95" class="outline-3">
+<h3 id="org57edb95">Preferred quorum optimization</h3>
+<div class="outline-text-3" id="text-org57edb95">
 <p>
 Using preferred quorums means optimistically sending messages to the minimum number of nodes and resending to more nodes if observed progress is slow
 </p>
@@ -522,21 +522,21 @@ Using preferred quorums means optimistically sending messages to the minimum num
 </ol>
 </div>
 </div>
-<div id="outline-container-org6719878" class="outline-3">
-<h3 id="org6719878">Hot spare optimization</h3>
-<div class="outline-text-3" id="text-org6719878">
+<div id="outline-container-orgf931bd7" class="outline-3">
+<h3 id="orgf931bd7">Hot spare optimization</h3>
+<div class="outline-text-3" id="text-orgf931bd7">
 </div>
-<div id="outline-container-org3d31af3" class="outline-4">
-<h4 id="org3d31af3">Definition</h4>
-<div class="outline-text-4" id="text-org3d31af3">
+<div id="outline-container-orgab772d7" class="outline-4">
+<h4 id="orgab772d7">Definition</h4>
+<div class="outline-text-4" id="text-orgab772d7">
 <p>
 Using hot spares means delaying allocation of some nodes until needed and then allocating those nodes from a pool of hot spares
 </p>
 </div>
 </div>
-<div id="outline-container-org3307a07" class="outline-4">
-<h4 id="org3307a07">Usage</h4>
-<div class="outline-text-4" id="text-org3307a07">
+<div id="outline-container-org9ab51b3" class="outline-4">
+<h4 id="org9ab51b3">Usage</h4>
+<div class="outline-text-4" id="text-org9ab51b3">
 <ul class="org-ul">
 <li>Using preferred quorums to send requests to subsets of execution nodes or making an execution node a hot spare may be most attractive if the application has only a small amount of state that must be transferred before a hot spare begins processing; otherwise it may be more challenging to configure execution nodes as hot spares without risking unacceptably long pauses when a spare is activated</li>
 <li>Some of this start-up time can be masked by activating an execution node once the checkpoint for its in-memory data structures has been transferred and then transferring its on-disk state in the background (not implemented in this work)</li>
@@ -544,52 +544,52 @@ Using hot spares means delaying allocation of some nodes until needed and then a
 </div>
 </div>
 </div>
-<div id="outline-container-org2005b18" class="outline-3">
-<h3 id="org2005b18">Performance</h3>
-<div class="outline-text-3" id="text-org2005b18">
+<div id="outline-container-orgb7fa8eb" class="outline-3">
+<h3 id="orgb7fa8eb">Performance</h3>
+<div class="outline-text-3" id="text-orgb7fa8eb">
 <p>
 JS-Zyzzyvark is Java Stable Zyzzyva Aardvark
 J-Zyzzyvark is without disk bottleneck
 </p>
 </div>
-<div id="outline-container-org860c216" class="outline-4">
-<h4 id="org860c216">Response time and throughput</h4>
-<div class="outline-text-4" id="text-org860c216">
+<div id="outline-container-orgd318e6d" class="outline-4">
+<h4 id="orgd318e6d">Response time and throughput</h4>
+<div class="outline-text-4" id="text-orgd318e6d">
 <p>
 Clients issue \(1\) byte or \(1\) KB null requests that produce \(1\) byte or \(1\) KB responses
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="orgc0730e1"></a>Basic configuration<br />
-<div class="outline-text-5" id="text-orgc0730e1">
+<li><a id="org70505aa"></a>Basic configuration<br />
+<div class="outline-text-5" id="text-org70505aa">
 <p>
 The system is configured with \(u=1\) and \(r=1\)
 </p>
 
-<div id="orgfa1f4ae" class="figure">
+<div id="org7723619" class="figure">
 <p><img src="images/_20230313_190643screenshot.png" alt="_20230313_190643screenshot.png" width="700px" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Latency vs. throughput for J-Zyzzyvark and JS-Zyzzyvark.</p>
 </div>
 </div>
 </li>
-<li><a id="org95a20cc"></a>Other configuration<br />
-<div class="outline-text-5" id="text-org95a20cc">
+<li><a id="org83c5d36"></a>Other configuration<br />
+<div class="outline-text-5" id="text-org83c5d36">
 <p>
 The system is configured with arbitrary \(u\) and \(r\)
 </p>
 
-<div id="org78c37c1" class="figure">
+<div id="org3556860" class="figure">
 <p><img src="images/_20230313_191101screenshot.png" alt="_20230313_191101screenshot.png" width="700px" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Latency vs. throughput for J-Zyzzyvark and JS-Zyzzyvark for various values of \(r\) and \(u\)</p>
 </div>
 </div>
 </li>
-<li><a id="orgf0d2482"></a>Co-located RQ, Order and Execution<br />
-<div class="outline-text-5" id="text-orgf0d2482">
+<li><a id="org69ae418"></a>Co-located RQ, Order and Execution<br />
+<div class="outline-text-5" id="text-org69ae418">
 
-<div id="orgb62c1c5" class="figure">
+<div id="org47cf4f9" class="figure">
 <p><img src="images/_20230313_191246screenshot.png" alt="_20230313_191246screenshot.png" width="700px" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Latency vs. throughput for JS-Zyzzyvark configured for various values of \(r\) and \(u\) with RQ, Order, and Execution nodes colocated</p>
@@ -598,9 +598,9 @@ The system is configured with arbitrary \(u\) and \(r\)
 </li>
 </ul>
 </div>
-<div id="outline-container-orge6a7b0a" class="outline-4">
-<h4 id="orge6a7b0a">Request Authentication</h4>
-<div class="outline-text-4" id="text-orge6a7b0a">
+<div id="outline-container-org8817c28" class="outline-4">
+<h4 id="org8817c28">Request Authentication</h4>
+<div class="outline-text-4" id="text-org8817c28">
 <p>
 Between matrix signatures, digital signatures, and MAC authenticators for \(1\) byte requests
 \(u=1\)
@@ -609,18 +609,18 @@ No RQ means we skip Request Quorum
 No auth RQ means that we turn of auth checks
 </p>
 
-<div id="orge0030c3" class="figure">
+<div id="orgc097ea1" class="figure">
 <p><img src="images/_20230313_191547screenshot.png" alt="_20230313_191547screenshot.png" width="700px" />
 </p>
 <p><span class="figure-number">Figure 5: </span>JS-Zyzzyvark performance when using the RQ node and matrix signatures, standard signatures, and MAC authenticators. ($1$B requests)</p>
 </div>
 </div>
 </div>
-<div id="outline-container-org4339c26" class="outline-4">
-<h4 id="org4339c26">Request digests</h4>
-<div class="outline-text-4" id="text-org4339c26">
+<div id="outline-container-orgca1f8b8" class="outline-4">
+<h4 id="orgca1f8b8">Request digests</h4>
+<div class="outline-text-4" id="text-orgca1f8b8">
 
-<div id="org39af4f9" class="figure">
+<div id="orga27f041" class="figure">
 <p><img src="images/_20230313_192026screenshot.png" alt="_20230313_192026screenshot.png" width="700px" />
 </p>
 <p><span class="figure-number">Figure 6: </span>JS-Zyzzyvark performance for $1$B, $1$KB, and $10$KB requests, and for $1$KB and $10$KB requests where full requests, rather than digests, are routed through Order nodes</p>
@@ -628,9 +628,9 @@ No auth RQ means that we turn of auth checks
 </div>
 </div>
 </div>
-<div id="outline-container-org44577cd" class="outline-3">
-<h3 id="org44577cd">Zookeeper</h3>
-<div class="outline-text-3" id="text-org44577cd">
+<div id="outline-container-org04d6c2d" class="outline-3">
+<h3 id="org04d6c2d">Zookeeper</h3>
+<div class="outline-text-3" id="text-org04d6c2d">
 <ul class="org-ul">
 <li>Handles omission failures</li>
 <li>Zookeeper deployment consists of \(2u+1\) servers</li>
@@ -645,9 +645,9 @@ No auth RQ means that we turn of auth checks
 </div>
 </div>
 </div>
-<div id="outline-container-org1ccd99a" class="outline-2">
-<h2 id="org1ccd99a">Notes</h2>
-<div class="outline-text-2" id="text-org1ccd99a">
+<div id="outline-container-org9f660e4" class="outline-2">
+<h2 id="org9f660e4">Notes</h2>
+<div class="outline-text-2" id="text-org9f660e4">
 <ul class="org-ul">
 <li>This is an SMR Protocol.</li>
 <li>It is in the partial synchrony network model.</li>
@@ -656,9 +656,9 @@ No auth RQ means that we turn of auth checks
 </ul>
 </div>
 </div>
-<div id="outline-container-org0ea8d29" class="outline-2">
-<h2 id="org0ea8d29">References</h2>
-<div class="outline-text-2" id="text-org0ea8d29">
+<div id="outline-container-org495a90b" class="outline-2">
+<h2 id="org495a90b">References</h2>
+<div class="outline-text-2" id="text-org495a90b">
 <div class="csl-bib-body">
   <div class="csl-entry">NO_ITEM_DATA:kotlaZyzzyvaSpeculativeByzantine2007a</div>
   <div class="csl-entry">NO_ITEM_DATA:aardvark</div>

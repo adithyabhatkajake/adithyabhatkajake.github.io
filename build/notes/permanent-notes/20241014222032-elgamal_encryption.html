@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:02 -->
+<!-- 2026-03-22 Sun 22:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Elgamal Encryption</title>
@@ -249,9 +249,9 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Elgamal Encryption</h1>
-<div id="outline-container-org9664af7" class="outline-2">
-<h2 id="org9664af7">Key Generation</h2>
-<div class="outline-text-2" id="text-org9664af7">
+<div id="outline-container-orgb1d6d30" class="outline-2">
+<h2 id="orgb1d6d30">Key Generation</h2>
+<div class="outline-text-2" id="text-orgb1d6d30">
 <p>
 Let \(\mathbb{G}\) be a cyclic group with \(g\in \mathbb{G}\) be a generator.
 </p>
@@ -262,9 +262,9 @@ Let \(\mathbb{G}\) be a cyclic group with \(g\in \mathbb{G}\) be a generator.
 </div>
 </div>
 </div>
-<div id="outline-container-org10dd808" class="outline-2">
-<h2 id="org10dd808">Encryption and Decryption</h2>
-<div class="outline-text-2" id="text-org10dd808">
+<div id="outline-container-org6e09c24" class="outline-2">
+<h2 id="org6e09c24">Encryption and Decryption</h2>
+<div class="outline-text-2" id="text-org6e09c24">
 <p>
 Let \(m \in \mathbb{G}\) be a message.
 </p>
@@ -283,18 +283,18 @@ Let \(m \in \mathbb{G}\) be a message.
 </div>
 </div>
 </div>
-<div id="outline-container-org2279bb6" class="outline-2">
-<h2 id="org2279bb6">Security Properties</h2>
-<div class="outline-text-2" id="text-org2279bb6">
+<div id="outline-container-org11aab7c" class="outline-2">
+<h2 id="org11aab7c">Security Properties</h2>
+<div class="outline-text-2" id="text-org11aab7c">
 <ul class="org-ul">
 <li>Discrete Log + CDH implies Encryption is One-way.</li>
 <li>Discrete Log + DDH implies CPA Security.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orge0df529" class="outline-2">
-<h2 id="orge0df529">Not CCA secure</h2>
-<div class="outline-text-2" id="text-orge0df529">
+<div id="outline-container-orgef1f4b0" class="outline-2">
+<h2 id="orgef1f4b0">Not CCA secure</h2>
+<div class="outline-text-2" id="text-orgef1f4b0">
 <p>
 It is not CCA secure as the encryption scheme is malleable.
 If \(c := (c_{1}, c_{2})\) is the encryption of \(m\), then \(c' := (c_{1}, 2c_{2})\) is the encryption of \(2m\).

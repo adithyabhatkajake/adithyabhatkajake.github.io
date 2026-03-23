@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:00 -->
+<!-- 2026-03-22 Sun 22:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Maliciously Secure Circuit Private Set Intersection via SPDZ-Compatible Oblivious PRF</title>
@@ -252,9 +252,9 @@
 <p>
 Original paper: <a href="#citeproc_bib_item_1"><i>Maliciously Secure Circuit Private Set Intersection via SPDZ-Compatible Oblivious PRF</i>. Yaxi Yang, Xiaojian Liang, Xiangfu Song, Ye Dong, Linting Huang, Hongyu Ren, Changyu Dong, and Jianying Zhou. 2024</a>
 </p>
-<div id="outline-container-org094965d" class="outline-2">
-<h2 id="org094965d">Problem</h2>
-<div class="outline-text-2" id="text-org094965d">
+<div id="outline-container-orgc91a9ab" class="outline-2">
+<h2 id="orgc91a9ab">Problem</h2>
+<div class="outline-text-2" id="text-orgc91a9ab">
 <ul class="org-ul">
 <li>Existing Circuit-PSI protocols only semi-honest secure</li>
 <li>Cannot convert to malicious: <b>consistency issue</b>
@@ -265,26 +265,26 @@ Original paper: <a href="#citeproc_bib_item_1"><i>Maliciously Secure Circuit Pri
 </ul>
 </div>
 </div>
-<div id="outline-container-org4d5e0fe" class="outline-2">
-<h2 id="org4d5e0fe">Solution: \(\Pi_{mcPSI}\) Protocol</h2>
-<div class="outline-text-2" id="text-org4d5e0fe">
+<div id="outline-container-orgd51686c" class="outline-2">
+<h2 id="orgd51686c">Solution: \(\Pi_{mcPSI}\) Protocol</h2>
+<div class="outline-text-2" id="text-orgd51686c">
 </div>
-<div id="outline-container-org1ec6f54" class="outline-3">
-<h3 id="org1ec6f54">Key Innovation: DDOPRF (Distributed Dual-key Oblivious PRF)</h3>
-<div class="outline-text-3" id="text-org1ec6f54">
+<div id="outline-container-org6e903bb" class="outline-3">
+<h3 id="org6e903bb">Key Innovation: DDOPRF (Distributed Dual-key Oblivious PRF)</h3>
+<div class="outline-text-3" id="text-org6e903bb">
 <ul class="org-ul">
 <li>SPDZ-compatible OPRF using Dodis-Yampolskiy PRF: \(F(k,x) = g^{1/(k+x)}\)</li>
 <li>Computes PRF on secret-shared inputs with MAC authentication</li>
 <li>"Dual-key" mechanism (\(k\) and \(k_s\)) enables fairness</li>
 </ul>
 </div>
-<div id="outline-container-org09a4b69" class="outline-4">
-<h4 id="org09a4b69">Four-Phase Protocol</h4>
-<div class="outline-text-4" id="text-org09a4b69">
+<div id="outline-container-orgb675645" class="outline-4">
+<h4 id="orgb675645">Four-Phase Protocol</h4>
+<div class="outline-text-4" id="text-orgb675645">
 </div>
 <ul class="org-ul">
-<li><a id="org5a659e2"></a>Phase 1: Secret Shared Shuffle<br />
-<div class="outline-text-5" id="text-org5a659e2">
+<li><a id="org29f0af9"></a>Phase 1: Secret Shared Shuffle<br />
+<div class="outline-text-5" id="text-org29f0af9">
 <ul class="org-ul">
 <li>Inputs: \(\mathbf{x}\) (\(P_0\)), \(\mathbf{y}\) (\(P_1\))</li>
 <li>Create ASS: \(\langle \mathbf{x} \rangle\), \(\langle \mathbf{y} \rangle\)</li>
@@ -292,8 +292,8 @@ Original paper: <a href="#citeproc_bib_item_1"><i>Maliciously Secure Circuit Pri
 </ul>
 </div>
 </li>
-<li><a id="org9987d27"></a>Phase 2: DDOPRF<br />
-<div class="outline-text-5" id="text-org9987d27">
+<li><a id="org0fc81a6"></a>Phase 2: DDOPRF<br />
+<div class="outline-text-5" id="text-org0fc81a6">
 <ul class="org-ul">
 <li>\(P_0\) computes: \(F(k, x'_i) = g^{1/(k+x'_i)}\)</li>
 <li>\(P_1\) computes: \(F(k, k_s, y'_j) = g^{k_s/(k+y'_j)}\)</li>
@@ -301,8 +301,8 @@ Original paper: <a href="#citeproc_bib_item_1"><i>Maliciously Secure Circuit Pri
 </ul>
 </div>
 </li>
-<li><a id="orga83947e"></a>Phase 3: Fair Comparison<br />
-<div class="outline-text-5" id="text-orga83947e">
+<li><a id="org1399dd5"></a>Phase 3: Fair Comparison<br />
+<div class="outline-text-5" id="text-org1399dd5">
 <ul class="org-ul">
 <li>Bit-decompose \(\langle k_s \rangle\) into \(\ell\) bits</li>
 <li>Open bits one-by-one (with MAC checks)</li>
@@ -312,8 +312,8 @@ Original paper: <a href="#citeproc_bib_item_1"><i>Maliciously Secure Circuit Pri
 </ul>
 </div>
 </li>
-<li><a id="org8ae4cda"></a>Phase 4: Function Computation<br />
-<div class="outline-text-5" id="text-org8ae4cda">
+<li><a id="org8ebd2f9"></a>Phase 4: Function Computation<br />
+<div class="outline-text-5" id="text-org8ebd2f9">
 <ul class="org-ul">
 <li>Collect matching shares: \(\langle \mathbf{x} \cap \mathbf{y} \rangle\)</li>
 <li>Send to \(\mathcal{F}_{2PC}\) to compute \(f(\mathbf{x} \cap \mathbf{y})\)</li>
@@ -325,13 +325,13 @@ Original paper: <a href="#citeproc_bib_item_1"><i>Maliciously Secure Circuit Pri
 </ul>
 </div>
 </div>
-<div id="outline-container-org85713a1" class="outline-3">
-<h3 id="org85713a1">Technical Details</h3>
-<div class="outline-text-3" id="text-org85713a1">
+<div id="outline-container-org97cde43" class="outline-3">
+<h3 id="org97cde43">Technical Details</h3>
+<div class="outline-text-3" id="text-org97cde43">
 </div>
-<div id="outline-container-org45828f6" class="outline-4">
-<h4 id="org45828f6">Secret Sharing Notation</h4>
-<div class="outline-text-4" id="text-org45828f6">
+<div id="outline-container-orge0c5d99" class="outline-4">
+<h4 id="orge0c5d99">Secret Sharing Notation</h4>
+<div class="outline-text-4" id="text-orge0c5d99">
 <ul class="org-ul">
 <li>$&lang; x &rang; : Linear Secret Sharing (LSS) - unauthenticated
 <ul class="org-ul">
@@ -346,9 +346,9 @@ Original paper: <a href="#citeproc_bib_item_1"><i>Maliciously Secure Circuit Pri
 </ul>
 </div>
 </div>
-<div id="outline-container-orge35f26e" class="outline-4">
-<h4 id="orge35f26e">Beaver Triple Multiplication</h4>
-<div class="outline-text-4" id="text-orge35f26e">
+<div id="outline-container-orgffd9123" class="outline-4">
+<h4 id="orgffd9123">Beaver Triple Multiplication</h4>
+<div class="outline-text-4" id="text-orgffd9123">
 <ul class="org-ul">
 <li>Precompute random triple: \((\langle a \rangle, \langle b \rangle, \langle c \rangle)\) where \(c = a \cdot b\)</li>
 <li>To compute \(\langle x \cdot y \rangle\):
@@ -361,9 +361,9 @@ Original paper: <a href="#citeproc_bib_item_1"><i>Maliciously Secure Circuit Pri
 </ul>
 </div>
 </div>
-<div id="outline-container-org63bca91" class="outline-4">
-<h4 id="org63bca91">MAC Check Protocol</h4>
-<div class="outline-text-4" id="text-org63bca91">
+<div id="outline-container-orge177204" class="outline-4">
+<h4 id="orge177204">MAC Check Protocol</h4>
+<div class="outline-text-4" id="text-orge177204">
 <p>
 To open \(\langle x \rangle\) with integrity check:
 </p>
@@ -376,9 +376,9 @@ To open \(\langle x \rangle\) with integrity check:
 </ol>
 </div>
 </div>
-<div id="outline-container-org8182c71" class="outline-4">
-<h4 id="org8182c71">Group Shares (MSS/AMSS)</h4>
-<div class="outline-text-4" id="text-org8182c71">
+<div id="outline-container-org2cd11cb" class="outline-4">
+<h4 id="org2cd11cb">Group Shares (MSS/AMSS)</h4>
+<div class="outline-text-4" id="text-org2cd11cb">
 <ul class="org-ul">
 <li>\(([x])\): Multiplicative Secret Sharing over group \(\mathbb{G}\)
 <ul class="org-ul">
@@ -390,9 +390,9 @@ To open \(\langle x \rangle\) with integrity check:
 </ul>
 </div>
 </div>
-<div id="outline-container-org64eb256" class="outline-4">
-<h4 id="org64eb256">DDOPRF Protocol Detail</h4>
-<div class="outline-text-4" id="text-org64eb256">
+<div id="outline-container-orgc68cb7c" class="outline-4">
+<h4 id="orgc68cb7c">DDOPRF Protocol Detail</h4>
+<div class="outline-text-4" id="text-orgc68cb7c">
 <p>
 Input: \(\langle x \rangle\), \(\langle k \rangle\), optional \(\langle k_s \rangle\)
 </p>
@@ -412,9 +412,9 @@ Output: \(g^{1/(k+x)}\) or \(g^{k_s/(k+x)}\)
 </div>
 </div>
 </div>
-<div id="outline-container-org35ca167" class="outline-2">
-<h2 id="org35ca167">References</h2>
-<div class="outline-text-2" id="text-org35ca167">
+<div id="outline-container-org8368c7c" class="outline-2">
+<h2 id="org8368c7c">References</h2>
+<div class="outline-text-2" id="text-org8368c7c">
 <div class="csl-bib-body">
   <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Yaxi Yang, Xiaojian Liang, Xiangfu Song, Ye Dong, Linting Huang, Hongyu Ren, Changyu Dong, and Jianying Zhou. 2024. “Maliciously Secure Circuit Private Set Intersection via SPDZ-Compatible Oblivious PRF.” <a href="https://eprint.iacr.org/2024/789">https://eprint.iacr.org/2024/789</a>.</div>
 </div>

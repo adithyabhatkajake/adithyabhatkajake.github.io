@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:02 -->
+<!-- 2026-03-22 Sun 22:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Zero Knowledge</title>
@@ -257,9 +257,9 @@ Consider other knowledge assumptions like
 <li>Witness hiding,</li>
 <li>Non-interactive Zero Knowledge</li>
 </ul>
-<div id="outline-container-org7115909" class="outline-2">
-<h2 id="org7115909">Notation</h2>
-<div class="outline-text-2" id="text-org7115909">
+<div id="outline-container-orgf6a7b39" class="outline-2">
+<h2 id="orgf6a7b39">Notation</h2>
+<div class="outline-text-2" id="text-orgf6a7b39">
 <ul class="org-ul">
 <li>\(P\) Prover</li>
 <li>\(P^{*}\) Malicious Prover</li>
@@ -271,26 +271,26 @@ Generally, \(L = \{x| \exists\pi, V(x,\pi) = ACCEPT \}\)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org2bb84b8" class="outline-2">
-<h2 id="org2bb84b8">Resources</h2>
-<div class="outline-text-2" id="text-org2bb84b8">
+<div id="outline-container-orge9cc6d2" class="outline-2">
+<h2 id="orge9cc6d2">Resources</h2>
+<div class="outline-text-2" id="text-orge9cc6d2">
 </div>
-<div id="outline-container-orgffb7106" class="outline-3">
-<h3 id="orgffb7106"><span class="todo TODO">TODO</span> Parse notes from here <a href="https://www.youtube.com/watch?v=6uGimDYZPMw">https://www.youtube.com/watch?v=6uGimDYZPMw</a></h3>
+<div id="outline-container-org64683f5" class="outline-3">
+<h3 id="org64683f5"><span class="todo TODO">TODO</span> Parse notes from here <a href="https://www.youtube.com/watch?v=6uGimDYZPMw">https://www.youtube.com/watch?v=6uGimDYZPMw</a></h3>
 </div>
 </div>
-<div id="outline-container-org7c8d976" class="outline-2">
-<h2 id="org7c8d976">Completeness</h2>
-<div class="outline-text-2" id="text-org7c8d976">
+<div id="outline-container-orgccdcf6e" class="outline-2">
+<h2 id="orgccdcf6e">Completeness</h2>
+<div class="outline-text-2" id="text-orgccdcf6e">
 <ul class="org-ul">
 <li>Correct \(P\) and correct \(V\) should always succeed.</li>
 <li>\(\forall (x,w) \in \mathcal{R}_{\mathcal{L}}: Pr[V(x,\pi)=1| \pi \leftarrow P(x,w)]=1\)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc804b27" class="outline-2">
-<h2 id="orgc804b27">Soundness</h2>
-<div class="outline-text-2" id="text-orgc804b27">
+<div id="outline-container-orgea72414" class="outline-2">
+<h2 id="orgea72414">Soundness</h2>
+<div class="outline-text-2" id="text-orgea72414">
 <ul class="org-ul">
 <li>An honest \(V\) always rejects \(x \not\in \mathcal{L}\) for any prover \(P^*\).</li>
 <li>Soundness protects a verifier from accepting false proofs from malicious provers.</li>
@@ -298,9 +298,9 @@ Generally, \(L = \{x| \exists\pi, V(x,\pi) = ACCEPT \}\)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org668267a" class="outline-2">
-<h2 id="org668267a">Knowledge Soundness</h2>
-<div class="outline-text-2" id="text-org668267a">
+<div id="outline-container-org425a2fb" class="outline-2">
+<h2 id="org425a2fb">Knowledge Soundness</h2>
+<div class="outline-text-2" id="text-org425a2fb">
 <ul class="org-ul">
 <li>This requires the existence of a PPT extractor \(\mathcal{E}\), that given two accepting transcripts \(\mathcal{T}_{1}\) and \(\mathcal{T}_{2}\) for a statement such that \(\mathcal{T}_{1} \ne \mathcal{T}_{2}\), outputs a witness \(wit\) such that \((statement, wit)\in \mathcal{L}\).</li>
 <li>\(\exists\) PPT extractor \(\mathcal{E}\) such that \(\forall x\) and \(\forall\) PPT \(P^{*}\):
@@ -311,17 +311,17 @@ Generally, \(L = \{x| \exists\pi, V(x,\pi) = ACCEPT \}\)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org7092567" class="outline-2">
-<h2 id="org7092567">Zero Knowledge</h2>
-<div class="outline-text-2" id="text-org7092567">
+<div id="outline-container-orgbaaeb03" class="outline-2">
+<h2 id="orgbaaeb03">Zero Knowledge</h2>
+<div class="outline-text-2" id="text-orgbaaeb03">
 <ul class="org-ul">
 <li>As opposed to knowledge soundness, zero knowledge protects the prover against malicious verifiers.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org17bb469" class="outline-2">
-<h2 id="org17bb469">Succinctness</h2>
-<div class="outline-text-2" id="text-org17bb469">
+<div id="outline-container-org8a0cdb2" class="outline-2">
+<h2 id="org8a0cdb2">Succinctness</h2>
+<div class="outline-text-2" id="text-org8a0cdb2">
 <ul class="org-ul">
 <li>Proof should be small in the size of the witness.</li>
 <li>\(|\pi|=o_{\lambda}(|w|)\); ideally \(O_{\lambda}(polylog(|w|))\)</li>

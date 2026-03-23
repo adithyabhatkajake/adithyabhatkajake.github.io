@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:01 -->
+<!-- 2026-03-22 Sun 22:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Multi-Threshold Byzantine Fault Tolerance</title>
@@ -252,9 +252,9 @@
 <p>
 Paper: <a href="#citeproc_bib_item_1"><i>Multi-Threshold Byzantine Fault Tolerance</i>. Atsuki Momose, and Ling Ren. 2021</a>
 </p>
-<div id="outline-container-org97250ba" class="outline-2">
-<h2 id="org97250ba">Overview</h2>
-<div class="outline-text-2" id="text-org97250ba">
+<div id="outline-container-org25b5536" class="outline-2">
+<h2 id="org25b5536">Overview</h2>
+<div class="outline-text-2" id="text-org25b5536">
 <p>
 This is a Byzantine Fault Tolerant SMR Protocol where the standard \(t<n/3\) thresholds split into safety and liveness thresholds along with network agnostic behaviour.
 Concretely, a MT-BFT has \(4\) thresholds which are all in \((0,n)\)
@@ -267,9 +267,9 @@ Concretely, a MT-BFT has \(4\) thresholds which are all in \((0,n)\)
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc90dc02" class="outline-2">
-<h2 id="orgc90dc02">Constraints Summary</h2>
-<div class="outline-text-2" id="text-orgc90dc02">
+<div id="outline-container-org7561549" class="outline-2">
+<h2 id="org7561549">Constraints Summary</h2>
+<div class="outline-text-2" id="text-org7561549">
 <p>
 The following constraints always hold since synchrony assumptions are stronger than asynchrony assumptions:
 </p>
@@ -282,9 +282,9 @@ This work also focuses on the \(\gamma<\beta\) case, i.e., safety is more import
 </p>
 </div>
 </div>
-<div id="outline-container-org2ab8257" class="outline-2">
-<h2 id="org2ab8257">Notes</h2>
-<div class="outline-text-2" id="text-org2ab8257">
+<div id="outline-container-org1d39710" class="outline-2">
+<h2 id="org1d39710">Notes</h2>
+<div class="outline-text-2" id="text-org1d39710">
 <ul class="org-ul">
 <li>It is an SMR protocol.</li>
 <li>It works in both the synchronous and partially synchronous network model.
@@ -297,76 +297,76 @@ This work also focuses on the \(\gamma<\beta\) case, i.e., safety is more import
 <li>I think the protocol assumes a clock synchronization protocol. It is unclear whether the clock synchronization protocol exists in this multi-threshold model?</li>
 </ul>
 </div>
-<div id="outline-container-orgc409c2b" class="outline-3">
-<h3 id="orgc409c2b">RBC Definition</h3>
-<div class="outline-text-3" id="text-orgc409c2b">
+<div id="outline-container-org86169bb" class="outline-3">
+<h3 id="org86169bb">RBC Definition</h3>
+<div class="outline-text-3" id="text-org86169bb">
 
-<div id="orga8ff553" class="figure">
+<div id="orga00c1ee" class="figure">
 <p><img src="images/_20230308_232117SCR-20230308-wf3.png" alt="_20230308_232117SCR-20230308-wf3.png" width="500px" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org1d82f04" class="outline-3">
-<h3 id="org1d82f04">Reliable Broadcast can be achieved if and only if \(2\gamma_s+\beta_a < n\)</h3>
-<div class="outline-text-3" id="text-org1d82f04">
+<div id="outline-container-org1f00cf9" class="outline-3">
+<h3 id="org1f00cf9">Reliable Broadcast can be achieved if and only if \(2\gamma_s+\beta_a < n\)</h3>
+<div class="outline-text-3" id="text-org1f00cf9">
 </div>
-<div id="outline-container-orgea76531" class="outline-4">
-<h4 id="orgea76531">Proof theorem</h4>
-<div class="outline-text-4" id="text-orgea76531">
+<div id="outline-container-org0c3a262" class="outline-4">
+<h4 id="org0c3a262">Proof theorem</h4>
+<div class="outline-text-4" id="text-org0c3a262">
 <p>
 Proof by lower-bound in the <b>sync-psync</b> timing model for the <b>RBC</b> problem.
 </p>
 
-<div id="orgcf28215" class="figure">
+<div id="orga0f90ce" class="figure">
 <p><img src="images/SCR-20230308-pbq.png" alt="SCR-20230308-pbq.png" width="500px" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgddb1bcf" class="outline-4">
-<h4 id="orgddb1bcf">Proof</h4>
-<div class="outline-text-4" id="text-orgddb1bcf">
+<div id="outline-container-org5e6e213" class="outline-4">
+<h4 id="org5e6e213">Proof</h4>
+<div class="outline-text-4" id="text-org5e6e213">
 
-<div id="org3550678" class="figure">
+<div id="orge3cf3c0" class="figure">
 <p><img src="images/_20230308_181603SCR-20230308-pcj.png" alt="_20230308_181603SCR-20230308-pcj.png" width="500px" />
 </p>
 </div>
 
-<div id="org3e6acf7" class="figure">
+<div id="org444d2a3" class="figure">
 <p><img src="images/_20230308_181656SCR-20230308-pdy.png" alt="_20230308_181656SCR-20230308-pdy.png" width="500px" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgaa2f2cb" class="outline-4">
-<h4 id="orgaa2f2cb">My understanding</h4>
-<div class="outline-text-4" id="text-orgaa2f2cb">
+<div id="outline-container-org25b7d70" class="outline-4">
+<h4 id="org25b7d70">My understanding</h4>
+<div class="outline-text-4" id="text-org25b7d70">
 
-<div id="org592eab5" class="figure">
+<div id="orge139b2d" class="figure">
 <p><img src="images/_20230308_182918IMG_0835.jpeg" alt="_20230308_182918IMG_0835.jpeg" width="700px" />
 </p>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org65e434e" class="outline-3">
-<h3 id="org65e434e">Optimal protocol with \(\beta_{a}+2\gamma_{s}\lt n\), \(\beta_{s}\lt n\), \(\gamma_{s} \lt n/2\) and \(\gamma_{a}<\min{\beta_{a},\gamma_{s}}\)</h3>
-<div class="outline-text-3" id="text-org65e434e">
+<div id="outline-container-orgf4e5b36" class="outline-3">
+<h3 id="orgf4e5b36">Optimal protocol with \(\beta_{a}+2\gamma_{s}\lt n\), \(\beta_{s}\lt n\), \(\gamma_{s} \lt n/2\) and \(\gamma_{a}<\min{\beta_{a},\gamma_{s}}\)</h3>
+<div class="outline-text-3" id="text-orgf4e5b36">
 </div>
-<div id="outline-container-orgf3016d1" class="outline-4">
-<h4 id="orgf3016d1">The protocol</h4>
-<div class="outline-text-4" id="text-orgf3016d1">
+<div id="outline-container-org018ce18" class="outline-4">
+<h4 id="org018ce18">The protocol</h4>
+<div class="outline-text-4" id="text-org018ce18">
 
-<div id="org2beae78" class="figure">
+<div id="orgf193317" class="figure">
 <p><img src="images/_20230308_222656SCR-20230308-v5p.png" alt="_20230308_222656SCR-20230308-v5p.png" width="800px" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgfcf4735" class="outline-4">
-<h4 id="orgfcf4735">We need to use quorum size of \(|C|=n-\gamma_{s}\)</h4>
-<div class="outline-text-4" id="text-orgfcf4735">
+<div id="outline-container-orgc65addb" class="outline-4">
+<h4 id="orgc65addb">We need to use quorum size of \(|C|=n-\gamma_{s}\)</h4>
+<div class="outline-text-4" id="text-orgc65addb">
 <ul class="org-ul">
 <li>Since the protocol needs to be live in both synchrony and asynchrony, we need \(|C|<=n-\gamma_{a}\) and \(|C|<=n-\gamma_{s}\)</li>
 <li>Since \(\gamma_{s} > \gamma_{a}\), we have the optimal quorum size of \(|C|=n-\gamma_{s}\)</li>
@@ -374,26 +374,26 @@ Proof by lower-bound in the <b>sync-psync</b> timing model for the <b>RBC</b> pr
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfe4c713" class="outline-4">
-<h4 id="orgfe4c713">The quorum size of \(|C|=n-\gamma_s\) ensures validity</h4>
-<div class="outline-text-4" id="text-orgfe4c713">
+<div id="outline-container-org6304562" class="outline-4">
+<h4 id="org6304562">The quorum size of \(|C|=n-\gamma_s\) ensures validity</h4>
+<div class="outline-text-4" id="text-org6304562">
 <ul class="org-ul">
 <li>All we need in the validity property is that some value is output by the protocol</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf5379f7" class="outline-4">
-<h4 id="orgf5379f7">Asynchronous quorum intersection needs \(\beta_{s}+2\gamma_{s} < n\)</h4>
-<div class="outline-text-4" id="text-orgf5379f7">
+<div id="outline-container-org348d918" class="outline-4">
+<h4 id="org348d918">Asynchronous quorum intersection needs \(\beta_{s}+2\gamma_{s} < n\)</h4>
+<div class="outline-text-4" id="text-org348d918">
 <ul class="org-ul">
 <li>Asynchronous quorum intersection needs to prevent existence of alternate certificates</li>
 <li>\(n-\gamma_s + n-\gamma_{S} > n+\beta_{a}\implies n-2\gamma_{s}>\beta_{a}\) or \(\beta_{a}+2\gamma_{S} < n\)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfb18b54" class="outline-4">
-<h4 id="orgfb18b54">Synchronous quorum intersection needs \(\gamma_{s} < n/2\) and \(n-\gamma_{s} > \beta_{s}\)</h4>
-<div class="outline-text-4" id="text-orgfb18b54">
+<div id="outline-container-org5c16d9c" class="outline-4">
+<h4 id="org5c16d9c">Synchronous quorum intersection needs \(\gamma_{s} < n/2\) and \(n-\gamma_{s} > \beta_{s}\)</h4>
+<div class="outline-text-4" id="text-org5c16d9c">
 <ul class="org-ul">
 <li>Since \(\gamma_s < n/2\), \(n-\gamma_s > \beta_{s}\) contains at least one honest node.</li>
 <li>The protocol uses two equivocation checks. First on the proposal and second on the certificate. The second equivocation check works for any \(\beta_{s} < n\).</li>
@@ -401,54 +401,54 @@ Proof by lower-bound in the <b>sync-psync</b> timing model for the <b>RBC</b> pr
 </ul>
 </div>
 </div>
-<div id="outline-container-orgcef458b" class="outline-4">
-<h4 id="orgcef458b">Synchrony safety proof</h4>
-<div class="outline-text-4" id="text-orgcef458b">
+<div id="outline-container-org2d42ee7" class="outline-4">
+<h4 id="org2d42ee7">Synchrony safety proof</h4>
+<div class="outline-text-4" id="text-org2d42ee7">
 
-<div id="org6264e9d" class="figure">
+<div id="orgcbe7b6d" class="figure">
 <p><img src="images/_20230308_234144screenshot.png" alt="_20230308_234144screenshot.png" width="500px" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgcbe0fb1" class="outline-4">
-<h4 id="orgcbe0fb1">Synchrony liveness proof (DID NOT UNDERSTAND)</h4>
-<div class="outline-text-4" id="text-orgcbe0fb1">
+<div id="outline-container-org16d6a8b" class="outline-4">
+<h4 id="org16d6a8b">Synchrony liveness proof (DID NOT UNDERSTAND)</h4>
+<div class="outline-text-4" id="text-org16d6a8b">
 
-<div id="org383aef7" class="figure">
+<div id="org545c318" class="figure">
 <p><img src="images/_20230308_234315screenshot.png" alt="_20230308_234315screenshot.png" width="500px" />
 </p>
 </div>
 
-<div id="orgfad7aa1" class="figure">
+<div id="org47e2c95" class="figure">
 <p><img src="images/_20230308_234359screenshot.png" alt="_20230308_234359screenshot.png" width="500px" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orga3dec64" class="outline-4">
-<h4 id="orga3dec64">Asynchrony safety proof</h4>
-<div class="outline-text-4" id="text-orga3dec64">
+<div id="outline-container-org12aa7dd" class="outline-4">
+<h4 id="org12aa7dd">Asynchrony safety proof</h4>
+<div class="outline-text-4" id="text-org12aa7dd">
 
-<div id="org89e288f" class="figure">
+<div id="org25b783d" class="figure">
 <p><img src="images/_20230308_235208screenshot.png" alt="_20230308_235208screenshot.png" width="500px" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgce2a8a5" class="outline-4">
-<h4 id="orgce2a8a5">Asynchrony liveness proof</h4>
-<div class="outline-text-4" id="text-orgce2a8a5">
+<div id="outline-container-org6928012" class="outline-4">
+<h4 id="org6928012">Asynchrony liveness proof</h4>
+<div class="outline-text-4" id="text-org6928012">
 
-<div id="orgba0688b" class="figure">
+<div id="orge63d3b6" class="figure">
 <p><img src="images/_20230308_235334screenshot.png" alt="_20230308_235334screenshot.png" width="500px" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org327dd74" class="outline-4">
-<h4 id="org327dd74">Metrics</h4>
-<div class="outline-text-4" id="text-org327dd74">
+<div id="outline-container-org9a16f95" class="outline-4">
+<h4 id="org9a16f95">Metrics</h4>
+<div class="outline-text-4" id="text-org9a16f95">
 <ul class="org-ul">
 <li>Latency is \(2\Delta+2\delta\)</li>
 <li>Communication complexity is \(O(n^{3})\) w/o threshold signatures</li>
@@ -456,77 +456,77 @@ Proof by lower-bound in the <b>sync-psync</b> timing model for the <b>RBC</b> pr
 </div>
 </div>
 </div>
-<div id="outline-container-orgcec988a" class="outline-3">
-<h3 id="orgcec988a">MT-BFT SMR with Public verifiability needs \(\beta_s+\gamma_s \lt n\) along with the RBC bound</h3>
-<div class="outline-text-3" id="text-orgcec988a">
+<div id="outline-container-org49eaa33" class="outline-3">
+<h3 id="org49eaa33">MT-BFT SMR with Public verifiability needs \(\beta_s+\gamma_s \lt n\) along with the RBC bound</h3>
+<div class="outline-text-3" id="text-org49eaa33">
 <ul class="org-ul">
 <li>Same bounds as RBC + a bound for public verifiability</li>
 <li>Bound for public verifiability by showing bound for Publicly verifiable RBC (PVRBC)</li>
 </ul>
 </div>
-<div id="outline-container-org7181112" class="outline-4">
-<h4 id="org7181112">Proof theorem</h4>
-<div class="outline-text-4" id="text-org7181112">
+<div id="outline-container-org64c8f1b" class="outline-4">
+<h4 id="org64c8f1b">Proof theorem</h4>
+<div class="outline-text-4" id="text-org64c8f1b">
 
-<div id="org43a93cd" class="figure">
+<div id="org8d76369" class="figure">
 <p><img src="images/_20230309_055407screenshot.png" alt="_20230309_055407screenshot.png" width="500px" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org49e8944" class="outline-4">
-<h4 id="org49e8944">Proof</h4>
-<div class="outline-text-4" id="text-org49e8944">
+<div id="outline-container-orgfecba85" class="outline-4">
+<h4 id="orgfecba85">Proof</h4>
+<div class="outline-text-4" id="text-orgfecba85">
 
-<div id="org00e9953" class="figure">
+<div id="org9912c6a" class="figure">
 <p><img src="images/_20230309_055611screenshot.png" alt="_20230309_055611screenshot.png" width="500px" />
 </p>
 </div>
 
-<div id="org03b9d57" class="figure">
+<div id="org0a482a8" class="figure">
 <p><img src="images/_20230309_055744screenshot.png" alt="_20230309_055744screenshot.png" width="500px" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb390773" class="outline-4">
-<h4 id="orgb390773">My understanding of the proof</h4>
-<div class="outline-text-4" id="text-orgb390773">
+<div id="outline-container-org541d1c6" class="outline-4">
+<h4 id="org541d1c6">My understanding of the proof</h4>
+<div class="outline-text-4" id="text-org541d1c6">
 
-<div id="org83ef429" class="figure">
+<div id="orgb133345" class="figure">
 <p><img src="images/_20230309_133034IMG_0837 Large.jpeg" alt="_20230309_133034IMG_0837 Large.jpeg" width="500px" />
 </p>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org52bd51a" class="outline-3">
-<h3 id="org52bd51a">A concrete protocol with \(\beta_s<\frac{2n}{3}\) and \(\beta_{a}=\gamma_{a} =\gamma_{s}=\frac{n}{3}\)</h3>
-<div class="outline-text-3" id="text-org52bd51a">
+<div id="outline-container-orge739f9e" class="outline-3">
+<h3 id="orge739f9e">A concrete protocol with \(\beta_s<\frac{2n}{3}\) and \(\beta_{a}=\gamma_{a} =\gamma_{s}=\frac{n}{3}\)</h3>
+<div class="outline-text-3" id="text-orge739f9e">
 </div>
-<div id="outline-container-orgeda1246" class="outline-4">
-<h4 id="orgeda1246">Protocol</h4>
-<div class="outline-text-4" id="text-orgeda1246">
+<div id="outline-container-orgbf680be" class="outline-4">
+<h4 id="orgbf680be">Protocol</h4>
+<div class="outline-text-4" id="text-orgbf680be">
 
-<div id="org27ed8fa" class="figure">
+<div id="orga83a930" class="figure">
 <p><img src="images/_20230309_130003screenshot.png" alt="_20230309_130003screenshot.png" width="700px" />
 </p>
 </div>
 
-<div id="orge72b6f2" class="figure">
+<div id="orgd797121" class="figure">
 <p><img src="images/_20230309_130103screenshot.png" alt="_20230309_130103screenshot.png" width="700px" />
 </p>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-orgb8dc28d" class="outline-3">
-<h3 id="orgb8dc28d">A framework to upgrade to optimal synchronous safety</h3>
+<div id="outline-container-orgf6f5e30" class="outline-3">
+<h3 id="orgf6f5e30">A framework to upgrade to optimal synchronous safety</h3>
 </div>
 
-<div id="outline-container-orgf733c4c" class="outline-3">
-<h3 id="orgf733c4c">Typos</h3>
-<div class="outline-text-3" id="text-orgf733c4c">
+<div id="outline-container-org674a398" class="outline-3">
+<h3 id="org674a398">Typos</h3>
+<div class="outline-text-3" id="text-org674a398">
 <ul class="org-ul">
 <li>Page 4, "Synchronous equivocation-checking", repica</li>
 <li>Section 4.1 use of \(\beta_{s}+f_{s} < n\) instead of \(\beta_{s}+\gamma_{s} < n\) in two locations</li>
@@ -534,9 +534,9 @@ Proof by lower-bound in the <b>sync-psync</b> timing model for the <b>RBC</b> pr
 </div>
 </div>
 </div>
-<div id="outline-container-org8028288" class="outline-2">
-<h2 id="org8028288">References</h2>
-<div class="outline-text-2" id="text-org8028288">
+<div id="outline-container-org7accda7" class="outline-2">
+<h2 id="org7accda7">References</h2>
+<div class="outline-text-2" id="text-org7accda7">
 <div class="csl-bib-body">
   <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Atsuki Momose, and Ling Ren. 2021. “Multi-Threshold Byzantine Fault Tolerance.” <a href="https://doi.org/10.1145/3460120.3484554">https://doi.org/10.1145/3460120.3484554</a>.</div>
 </div>

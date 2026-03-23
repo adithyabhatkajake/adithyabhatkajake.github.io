@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 21:02 -->
+<!-- 2026-03-22 Sun 22:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Vector Clock</title>
@@ -253,9 +253,9 @@
 This is another type of a [BROKEN LINK: b14e67f9-14a6-44b4-8d85-ed5197a887ed].
 The term was coined independently by <i>Timestamps in message-passing systems that preserve the partial ordering</i>. Colin J. Fidge. 1987 and NO_ITEM_DATA:matternVirtualTimeGlobal
 </p>
-<div id="outline-container-orgf56fb78" class="outline-2">
-<h2 id="orgf56fb78">Resources</h2>
-<div class="outline-text-2" id="text-orgf56fb78">
+<div id="outline-container-orga2e44f6" class="outline-2">
+<h2 id="orga2e44f6">Resources</h2>
+<div class="outline-text-2" id="text-orga2e44f6">
 <ul class="org-ul">
 <li>Wikipedia: <a href="https://en.wikipedia.org/wiki/Vector_clock">https://en.wikipedia.org/wiki/Vector_clock</a></li>
 <li>First: NO_ITEM_DATA:matternVirtualTimeGlobal and <i>Timestamps in message-passing systems that preserve the partial ordering</i>. Colin J. Fidge. 1987</li>
@@ -263,9 +263,9 @@ The term was coined independently by <i>Timestamps in message-passing systems th
 </ul>
 </div>
 </div>
-<div id="outline-container-org9150900" class="outline-2">
-<h2 id="org9150900">Algorithm</h2>
-<div class="outline-text-2" id="text-org9150900">
+<div id="outline-container-org1e2e8f7" class="outline-2">
+<h2 id="org1e2e8f7">Algorithm</h2>
+<div class="outline-text-2" id="text-org1e2e8f7">
 <p>
 Let the system consist of \(n\) nodes.
 </p>
@@ -273,18 +273,22 @@ Let the system consist of \(n\) nodes.
 <li>Each node \(i\) maintains an array \(VC_{i} = [0,\ldots,0]\).</li>
 <li>For every local event at node \(i\), it updates its local clock, i.e., \(VC_{i}[i] += 1\).</li>
 <li>While sending a message \(m\):
-a. Send \((VC_{i}, m)\)
-b. \(VC_{i}[i] += 1\)</li>
+<ol class="org-ol">
+<li>Send \((VC_{i}, m)\)</li>
+<li>\(VC_{i}[i] += 1\)</li>
+</ol></li>
 <li>On receiving a message \((VC_{j}, m)\):
-a. \(VC_{i}[i] += 1\)
-b. If \(VC_{i}[j] \le VC_{j}[j]\), \(VC_{i}[j] = VC_{j}[j] + 1\)
-c. For \(k \in [1,n]\): \(VC_{i}[k] \leftarrow max(VC_{i}[k],VC_{j}[k])\)</li>
+<ol class="org-ol">
+<li>\(VC_{i}[i] += 1\)</li>
+<li>If \(VC_{i}[j] \le VC_{j}[j]\), \(VC_{i}[j] = VC_{j}[j] + 1\)</li>
+<li>For \(k \in [1,n]\): \(VC_{i}[k] \leftarrow max(VC_{i}[k],VC_{j}[k])\)</li>
+</ol></li>
 </ol>
 </div>
 </div>
-<div id="outline-container-org649bd1e" class="outline-2">
-<h2 id="org649bd1e">Analysis</h2>
-<div class="outline-text-2" id="text-org649bd1e">
+<div id="outline-container-orgc125e06" class="outline-2">
+<h2 id="orgc125e06">Analysis</h2>
+<div class="outline-text-2" id="text-orgc125e06">
 <ul class="org-ul">
 <li>Step 2 is needed to prevent local events from being assigned the same time.</li>
 <li>Step 3b is needed to prevent the sending event from being assigned the same time as the previous event.</li>
@@ -295,9 +299,9 @@ c. For \(k \in [1,n]\): \(VC_{i}[k] \leftarrow max(VC_{i}[k],VC_{j}[k])\)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org8bc75c8" class="outline-2">
-<h2 id="org8bc75c8">Results</h2>
-<div class="outline-text-2" id="text-org8bc75c8">
+<div id="outline-container-org4e682ac" class="outline-2">
+<h2 id="org4e682ac">Results</h2>
+<div class="outline-text-2" id="text-org4e682ac">
 <ul class="org-ul">
 <li>From Mattern et al., at any instant of real time, \(\forall i,j\): \(VC_{i}[i] \ge VC_{j}[i]\)</li>
 <li>(Mattern et al.) Define a total order for two events \(e\) and \(e'\) as follows:
@@ -309,9 +313,9 @@ c. For \(k \in [1,n]\): \(VC_{i}[k] \leftarrow max(VC_{i}[k],VC_{j}[k])\)</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org1079299" class="outline-2">
-<h2 id="org1079299">Applications</h2>
-<div class="outline-text-2" id="text-org1079299">
+<div id="outline-container-orgaf1dee8" class="outline-2">
+<h2 id="orgaf1dee8">Applications</h2>
+<div class="outline-text-2" id="text-orgaf1dee8">
 <ul class="org-ul">
 <li><i>Timestamps in message-passing systems that preserve the partial ordering</i>. Colin J. Fidge. 1987 Debugging distributed logs</li>
 <li><i>Timestamps in message-passing systems that preserve the partial ordering</i>. Colin J. Fidge. 1987 This paper talks about an application where users send requests to access data in a distributed database by providing ranges of timestamps. If the servers cross the timestamp in the request the server considers the request as timed out.</li>

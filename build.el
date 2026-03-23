@@ -44,15 +44,134 @@
 (require 'oc-csl)
 (require 'citeproc)
 
+;; Allow alphabetical list markers (a. b. c.) for nested sub-items
+(setq org-list-allow-alphabetical t)
+
 ;; Configure org-cite with bibliography from citar config (passed via build.sh)
 (setq org-cite-global-bibliography (list (getenv "BIBLIOGRAPHY")))
 (setq org-cite-export-processors
       `((html csl ,(expand-file-name "assets/rich-inline.csl" default-directory))
         (t basic)))
 
+;; --- Content-hash build cache ---
+
+(defvar hash-cache-file (expand-file-name ".build-hashes" default-directory)
+  "File storing content hashes from the previous build.")
+
+(defvar hash-cache-old (make-hash-table :test 'equal)
+  "Hash table of file -> sha256 from the previous build.")
+
+(defvar hash-cache-new (make-hash-table :test 'equal)
+  "Hash table of file -> sha256 being built during this run.")
+
+(defvar force-full-rebuild (string= (or (getenv "FORCE_BUILD") "0") "1")
+  "When non-nil, rebuild everything regardless of cache.")
+
+(defun hash-cache-load ()
+  "Load the hash cache from disk into `hash-cache-old'."
+  (when (file-exists-p hash-cache-file)
+    (with-temp-buffer
+      (insert-file-contents hash-cache-file)
+      (let ((data (read (current-buffer))))
+        (setq hash-cache-old (make-hash-table :test 'equal))
+        (dolist (pair (alist-get 'files data))
+          (puthash (car pair) (cdr pair) hash-cache-old))
+        ;; Check shared deps hash
+        (let ((old-deps-hash (alist-get 'shared-deps-hash data)))
+          (unless (and old-deps-hash
+                       (string= old-deps-hash (hash-shared-deps)))
+            (message "Shared dependencies changed, forcing full rebuild")
+            (setq force-full-rebuild t)))))))
+
+(defun hash-cache-save ()
+  "Save `hash-cache-new' to disk."
+  (with-temp-file hash-cache-file
+    (let ((pairs '()))
+      (maphash (lambda (k v) (push (cons k v) pairs)) hash-cache-new)
+      (prin1 `((shared-deps-hash . ,(hash-shared-deps))
+               (files . ,pairs))
+             (current-buffer))))
+  (message "Hash cache saved: %d entries" (hash-table-count hash-cache-new)))
+
+(defun hash-file-sha256 (filepath)
+  "Compute SHA256 of FILEPATH contents."
+  (with-temp-buffer
+    (insert-file-contents-literally filepath)
+    (secure-hash 'sha256 (current-buffer))))
+
+(defun hash-string-sha256 (str)
+  "Compute SHA256 of string STR."
+  (secure-hash 'sha256 str))
+
+(defun hash-org-file-with-includes (filepath)
+  "Compute composite SHA256 of FILEPATH and any #+INCLUDE'd files."
+  (let ((hashes (list (hash-file-sha256 filepath))))
+    (with-temp-buffer
+      (insert-file-contents filepath)
+      (goto-char (point-min))
+      (while (re-search-forward
+              "^[ \t]*#\\+INCLUDE:\\s-+\"\\([^\"]+\\)\"" nil t)
+        (let* ((inc-path (match-string 1))
+               (inc-path (if (string-match "::.*\\'" inc-path)
+                             (substring inc-path 0 (match-beginning 0))
+                           inc-path))
+               (inc-abs (expand-file-name inc-path
+                                          (file-name-directory filepath))))
+          (when (file-exists-p inc-abs)
+            (push (hash-file-sha256 inc-abs) hashes)))))
+    (hash-string-sha256 (mapconcat #'identity (nreverse hashes) ":"))))
+
+(defun hash-shared-deps ()
+  "Compute a combined hash of build config and shared assets.
+Changes to these files affect all outputs."
+  (let ((dep-files (list
+                    (expand-file-name "build.el" default-directory)
+                    (expand-file-name "build-adithya-cv.el" default-directory)
+                    (expand-file-name "assets/syntax.css" default-directory)
+                    (expand-file-name "assets/rich-inline.csl" default-directory))))
+    (hash-string-sha256
+     (mapconcat (lambda (f)
+                  (if (file-exists-p f) (hash-file-sha256 f) "missing"))
+                dep-files ":"))))
+
+;; Load the cache (and check shared deps)
+(hash-cache-load)
+(when force-full-rebuild
+  (message "Full rebuild: all files will be re-exported"))
+
+;; --- Advice: content-hash check instead of mtime ---
+
+(defun hash-based-publish-needed-p (orig-fn filename &rest args)
+  "Use content hash for .org files, fall back to mtime for assets."
+  (if (and (stringp filename) (string-suffix-p ".org" filename))
+      (let* ((abs-path (expand-file-name filename))
+             (current-hash (hash-org-file-with-includes abs-path))
+             (cached-hash (gethash abs-path hash-cache-old))
+             (changed (or force-full-rebuild
+                          (null cached-hash)
+                          (not (string= current-hash cached-hash)))))
+        (puthash abs-path current-hash hash-cache-new)
+        (when changed
+          (message "Content changed: %s" (file-name-nondirectory filename)))
+        changed)
+    ;; Static assets: use original mtime check
+    (apply orig-fn filename args)))
+
+(advice-add 'org-publish-cache-file-needs-publishing
+            :around #'hash-based-publish-needed-p)
+
 ;; Build CV PDF into assets/
 (load-file "build-adithya-cv.el")
-(build-adithya-cv)
+(let* ((cv-source (expand-file-name "CV.org" default-directory))
+       (cv-hash (hash-file-sha256 cv-source))
+       (cv-cached (gethash cv-source hash-cache-old))
+       (cv-changed (or force-full-rebuild
+                       (null cv-cached)
+                       (not (string= cv-hash cv-cached)))))
+  (puthash cv-source cv-hash hash-cache-new)
+  (if cv-changed
+      (progn (build-adithya-cv) (message "CV rebuilt"))
+    (message "CV unchanged, skipping PDF generation")))
 
 ;; Define the root index file
 (defvar root-index-file "index.org")
@@ -465,7 +584,12 @@ Ensures LINK with DESC is properly resolved using INFO."
          :recursive t
          :publishing-function org-publish-attachment)))
 
-(org-publish-all t)
+;; Publish with cache-aware advice active
+(let ((org-publish-use-timestamps-flag t))
+  (org-publish-all nil))
+
+;; Save the new hash cache for next build
+(hash-cache-save)
 
 (message "Build complete!")
 ;;; build.el ends here
