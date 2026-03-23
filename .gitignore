@@ -1,7 +1,6 @@
 .DS_Store
 .packages/
 .claude/
-build/
 CV.tex
 blogs/index.org
 blogs/page-*.org

@@ -1,0 +1,2587 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-03-22 Sun 21:00 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Setting Up Doom Emacs Emacs Configuration File</title>
+<meta name="author" content="Adithya Bhat" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
+<link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
+<link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class="banner">
+   <a id="myname" href="/">Hermitsage</a>
+  <hr>
+<nav>
+    <p>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/cv.html">CV</a>
+        <a href="/notes/index.html">Notes</a>
+        <a href="/blogs/index.html">Blog</a>
+    </p>
+  </nav>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">Setting Up Doom Emacs Emacs Configuration File</h1>
+<ul class="org-ul">
+<li>Resources</li>
+<li><a href="https://github.com/elken/doom">https://github.com/elken/doom</a></li>
+</ul>
+<div id="outline-container-orgd347a54" class="outline-2">
+<h2 id="orgd347a54">Meta</h2>
+<div class="outline-text-2" id="text-orgd347a54">
+</div>
+<div id="outline-container-orgfd4beb4" class="outline-3">
+<h3 id="orgfd4beb4">Debugging Configuration Issues</h3>
+<div class="outline-text-3" id="text-orgfd4beb4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> debug-counter 0)
+(<span class="org-keyword">setq</span> debug-counter (+ debug-counter 1))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org97678e2" class="outline-3">
+<h3 id="org97678e2">User details</h3>
+<div class="outline-text-3" id="text-org97678e2">
+<p>
+Place your private configuration here! Remember, you do not need to run 'doom
+sync' after modifying this file!
+</p>
+
+<p>
+Some functionality uses this to identify you, e.g. GPG configuration, email
+clients, file templates and snippets. It is optional.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> user-full-name <span class="org-string">"Adithya Bhat"</span>
+      user-mail-address <span class="org-string">"dth.bht@gmail.com"</span>)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb8a9c61" class="outline-3">
+<h3 id="orgb8a9c61">Key binding to toggle debug on error</h3>
+<div class="outline-text-3" id="text-orgb8a9c61">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(map! <span class="org-builtin">:leader</span>
+      <span class="org-builtin">:desc</span> <span class="org-string">"Toggle debug on error"</span> <span class="org-string">"t d"</span> #'toggle-debug-on-error)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd71e3ea" class="outline-2">
+<h2 id="orgd71e3ea">Doom Specific Configuration</h2>
+</div>
+<div id="outline-container-org82a37d4" class="outline-2">
+<h2 id="org82a37d4">Visuals</h2>
+<div class="outline-text-2" id="text-org82a37d4">
+</div>
+<div id="outline-container-orgcdc8cfa" class="outline-3">
+<h3 id="orgcdc8cfa">Theme</h3>
+<div class="outline-text-3" id="text-orgcdc8cfa">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">In all of the following, WEIGHT is a symbol such as `</span><span class="org-comment"><span class="org-constant">semibold</span></span><span class="org-comment">',</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">`</span><span class="org-comment"><span class="org-constant">light</span></span><span class="org-comment">', `</span><span class="org-comment"><span class="org-constant">bold</span></span><span class="org-comment">', or anything mentioned in `</span><span class="org-comment"><span class="org-constant">modus-themes-weights</span></span><span class="org-comment">'.</span>
+(<span class="org-keyword">setq</span> modus-themes-italic-constructs t
+      modus-themes-bold-constructs nil
+      modus-themes-mixed-fonts t
+      modus-themes-variable-pitch-ui nil
+
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Options for `</span><span class="org-comment"><span class="org-constant">modus-themes-prompts</span></span><span class="org-comment">' are either nil (the</span>
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">default), or a list of properties that may include any of those</span>
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">symbols: `</span><span class="org-comment"><span class="org-constant">italic</span></span><span class="org-comment">', `</span><span class="org-comment"><span class="org-constant">WEIGHT</span></span><span class="org-comment">'</span>
+      modus-themes-prompts '(italic bold)
+
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">The `</span><span class="org-comment"><span class="org-constant">modus-themes-completions</span></span><span class="org-comment">' is an alist that reads two</span>
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">keys: `</span><span class="org-comment"><span class="org-constant">matches</span></span><span class="org-comment">', `</span><span class="org-comment"><span class="org-constant">selection</span></span><span class="org-comment">'.  Each accepts a nil value (or</span>
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">empty list) or a list of properties that can include any of</span>
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">the following (for WEIGHT read further below):</span>
+      <span class="org-comment-delimiter">;;</span>
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">`</span><span class="org-comment"><span class="org-constant">matches</span></span><span class="org-comment">'   :: `</span><span class="org-comment"><span class="org-constant">underline</span></span><span class="org-comment">', `</span><span class="org-comment"><span class="org-constant">italic</span></span><span class="org-comment">', `</span><span class="org-comment"><span class="org-constant">WEIGHT</span></span><span class="org-comment">'</span>
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">`</span><span class="org-comment"><span class="org-constant">selection</span></span><span class="org-comment">' :: `</span><span class="org-comment"><span class="org-constant">underline</span></span><span class="org-comment">', `</span><span class="org-comment"><span class="org-constant">italic</span></span><span class="org-comment">', `</span><span class="org-comment"><span class="org-constant">WEIGHT</span></span><span class="org-comment">'</span>
+      modus-themes-completions
+      '((matches . (extrabold))
+        (selection . (semibold italic text-also)))
+
+      modus-themes-org-blocks 'tinted-background <span class="org-comment-delimiter">; </span><span class="org-comment">{nil,'gray-background,'tinted-background}</span>
+
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">The `</span><span class="org-comment"><span class="org-constant">modus-themes-headings</span></span><span class="org-comment">' is an alist: read the manual's</span>
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">node about it or its doc string.  Basically, it supports</span>
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">per-level configurations for the optional use of</span>
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">`</span><span class="org-comment"><span class="org-constant">variable-pitch</span></span><span class="org-comment">' typography, a height value as a multiple of</span>
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">the base font size (e.g. 1.5), and a `</span><span class="org-comment"><span class="org-constant">WEIGHT</span></span><span class="org-comment">'.</span>
+      modus-themes-headings
+      '((0 . (background overline rainbow 1.3))
+        (1 . (background overline rainbow 1.4))
+        (2 . (background overline rainbow 1.2))
+        (3 . (overline 1.1))
+        (t . (1.0)))
+
+      modus-themes-org-agenda
+      '((header-block . (semibold 1.3))
+        (header-date . (1.2))
+        (event . (accented italic varied))
+        (scheduled . (rainbow)))
+
+      modus-themes-hl-line '(underline accented)
+
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Options for `</span><span class="org-comment"><span class="org-constant">modus-themes-paren-match</span></span><span class="org-comment">' are either nil (the</span>
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">default), or a list of properties that may include any of those</span>
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">symbols: `</span><span class="org-comment"><span class="org-constant">bold</span></span><span class="org-comment">', `</span><span class="org-comment"><span class="org-constant">intense</span></span><span class="org-comment">', `</span><span class="org-comment"><span class="org-constant">underline</span></span><span class="org-comment">'</span>
+      modus-themes-paren-match '(bold intense)
+
+      modus-themes-mixed-fonts t
+
+      modus-themes-mode-line
+      '(accented 3d))
+
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Remember that more (MUCH MORE) can be done with overrides, which we</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">document extensively in this manual.</span>
+(<span class="org-keyword">setq</span> doom-theme 'modus-vivendi)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(use-package nano-theme</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">:config</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">(setq doom-theme 'nano-light)  ; or 'nano-dark</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">;; Optional: use nano-mode for the full experience</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">(nano-mode)</span>
+<span class="org-comment-delimiter">;;   </span><span class="org-comment">)</span>
+
+
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org60b94c2" class="outline-3">
+<h3 id="org60b94c2">Font</h3>
+<div class="outline-text-3" id="text-org60b94c2">
+<p>
+Doom exposes five (optional) variables for controlling fonts in Doom:
+</p>
+<ul class="org-ul">
+<li>`doom-font' &#x2013; the primary font to use</li>
+<li>`doom-variable-pitch-font' &#x2013; a non-monospace font (where applicable)</li>
+<li>`doom-big-font' &#x2013; used for `doom-big-font-mode'; use this for presentations or streaming.</li>
+<li>`doom-symbol-font' &#x2013; for unicode glyphs</li>
+<li>`doom-serif-font' &#x2013; for the `fixed-pitch-serif' face</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span>
+   doom-font (font-spec <span class="org-builtin">:family</span> <span class="org-string">"Iosevka Nerd Font Mono"</span> <span class="org-builtin">:size</span> 15)
+   doom-big-font (font-spec <span class="org-builtin">:family</span> <span class="org-string">"Iosevka Nerd Font Mono"</span> <span class="org-builtin">:size</span> 24)
+   doom-variable-pitch-font (font-spec <span class="org-builtin">:family</span> <span class="org-string">"Iosevka Aile"</span> <span class="org-builtin">:size</span> 15)
+   doom-symbol-font (font-spec <span class="org-builtin">:family</span> <span class="org-string">"Iosevka Nerd Font"</span>))
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(setq</span>
+<span class="org-comment-delimiter">;;  </span><span class="org-comment">doom-font (font-spec :family "Iosevka Nerd Font Mono" :size 15)</span>
+<span class="org-comment-delimiter">;;  </span><span class="org-comment">doom-big-font (font-spec :family "Iosevka Nerd Font Mono" :size 24)</span>
+<span class="org-comment-delimiter">;;  </span><span class="org-comment">doom-variable-pitch-font (font-spec :family "Inter" :size 15)</span>
+<span class="org-comment-delimiter">;;  </span><span class="org-comment">doom-symbol-font (font-spec :family "Symbols Nerd Font Mono"))</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(setq</span>
+<span class="org-comment-delimiter">;;  </span><span class="org-comment">doom-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 14)</span>
+<span class="org-comment-delimiter">;;  </span><span class="org-comment">doom-big-font (font-spec :family "JetBrainsMono Nerd Font Mono" :size 22)</span>
+<span class="org-comment-delimiter">;;  </span><span class="org-comment">doom-variable-pitch-font (font-spec :family "Inter" :size 15)</span>
+<span class="org-comment-delimiter">;;  </span><span class="org-comment">doom-symbol-font (font-spec :family "Symbols Nerd Font Mono"))</span>
+(<span class="org-keyword">setq-default</span> line-spacing 0.15)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org58d0ce8" class="outline-3">
+<h3 id="org58d0ce8"><code>Modeline</code></h3>
+<div class="outline-text-3" id="text-org58d0ce8">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setopt</span> doom-modeline-height 30)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf7b4c0a" class="outline-3">
+<h3 id="orgf7b4c0a">Splash screen</h3>
+<div class="outline-text-3" id="text-orgf7b4c0a">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> fancy-splash-image (file-name-concat doom-private-dir <span class="org-string">"splash.png"</span>))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc232f71" class="outline-3">
+<h3 id="orgc232f71">Line number</h3>
+<div class="outline-text-3" id="text-orgc232f71">
+<p>
+This determines the style of line numbers in effect.
+If set to `nil', it disables all the line numbers.
+For relative line numbers, set this to `relative'.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> display-line-numbers-type t)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge3d179a" class="outline-3">
+<h3 id="orge3d179a">Keybinding to toggle day/night theme for <code>modus</code> themes</h3>
+<div class="outline-text-3" id="text-orge3d179a">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(map! <span class="org-builtin">:leader</span>
+      <span class="org-builtin">:desc</span> <span class="org-string">"Toggle Modus Themes"</span> <span class="org-string">"t T"</span> #'modus-themes-toggle)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org98e9588" class="outline-3">
+<h3 id="org98e9588">Window maximization key binding</h3>
+<div class="outline-text-3" id="text-org98e9588">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(map! <span class="org-builtin">:leader</span> <span class="org-builtin">:desc</span> <span class="org-string">"maximize"</span> <span class="org-string">"w m"</span> #'doom/window-maximize-buffer)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org85388b4" class="outline-3">
+<h3 id="org85388b4">Toggle Visual Line Column Mode</h3>
+<div class="outline-text-3" id="text-org85388b4">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(map! <span class="org-builtin">:leader</span>
+      <span class="org-builtin">:desc</span> <span class="org-string">"Toggle visual line fill column mode"</span> <span class="org-string">"t y"</span> #'visual-line-fill-column-mode)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org8eb1ed4" class="outline-3">
+<h3 id="org8eb1ed4">Tab Mode</h3>
+<div class="outline-text-3" id="text-org8eb1ed4">
+<p>
+I like to quickly switch between the last tab back and forth
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(map! <span class="org-builtin">:map</span> tab-prefix-map <span class="org-string">"z"</span> #'tab-recent)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgce15ab7" class="outline-3">
+<h3 id="orgce15ab7">Popup buffer on the right</h3>
+<div class="outline-text-3" id="text-orgce15ab7">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my/popup-buffer-right</span> ()
+  <span class="org-doc">"Display current buffer as a popup on the right side."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let</span> ((buffer (current-buffer)))
+    (bury-buffer)
+    (<span class="org-keyword">when-let*</span> ((window (display-buffer-in-side-window
+                         buffer
+                         '((side . right)
+                           (window-width . 0.3)
+                           (window-parameters
+                            (quit . t)
+                            (select . t)
+                            (ttl . 5))))))
+      (+popup--init window)
+      (select-window window))))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga0d2f4b" class="outline-3">
+<h3 id="orga0d2f4b">Resize window to percentage</h3>
+<div class="outline-text-3" id="text-orga0d2f4b">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my/resize-window</span> ()
+  <span class="org-doc">"Resize windows when exactly 2 windows are present.</span>
+<span class="org-doc">Asks for a percentage and resizes the left/top window to occupy that percentage."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">if</span> (/= (count-windows) 2)
+      (message <span class="org-string">"wrong number of windows, need only 2"</span>)
+    (<span class="org-keyword">let*</span> ((percentage (read-number <span class="org-string">"Percentage for left/top window: "</span> 50))
+           (root (frame-root-window))
+           (horizontal (window-left-child root))
+           (first-win (<span class="org-keyword">if</span> horizontal
+                          (window-left-child root)
+                        (window-top-child root)))
+           (total-size (<span class="org-keyword">if</span> horizontal
+                           (window-total-width root)
+                         (window-total-height root)))
+           (target-size (round (* total-size (/ percentage 100.0))))
+           (current-size (<span class="org-keyword">if</span> horizontal
+                             (window-total-width first-win)
+                           (window-total-height first-win)))
+           (delta (- target-size current-size)))
+      (window-resize first-win delta horizontal))))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org406affb" class="outline-3">
+<h3 id="org406affb">Fix org mode heading <code>fontification</code> problem</h3>
+<div class="outline-text-3" id="text-org406affb">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my/fix-org-verbatim</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (set-face-attribute 'org-verbatim nil
+                      <span class="org-builtin">:inherit</span> nil
+                      <span class="org-builtin">:foreground</span> (face-attribute 'modus-themes-prose-verbatim <span class="org-builtin">:foreground</span>)))
+(<span class="org-keyword">with-eval-after-load</span> 'org
+  (<span class="org-keyword">with-eval-after-load</span> 'modus-themes
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Copy the foreground/background/decoration from modus-themes-markup-verbatim</span>
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">but use the current heading's font and size</span>
+    (my/fix-org-verbatim)))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7da8641" class="outline-3">
+<h3 id="org7da8641">Org mode completed checkbox face</h3>
+<div class="outline-text-3" id="text-org7da8641">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">1. Define the custom face</span>
+(<span class="org-keyword">defface</span> <span class="org-variable-name">org-checkbox-done-text</span>
+  '((t nil))
+  <span class="org-doc">"Face for the text following a checked org-mode checkbox."</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">2. Define the function</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">my-org-checkbox-done-face</span> ()
+  (<span class="org-keyword">when</span> (fboundp 'modus-themes-get-color-value)
+    (<span class="org-keyword">let</span> ((fg-dim (modus-themes-get-color-value 'fg-dim)))
+      (custom-set-faces
+       `(org-checkbox-done-text 
+         ((t <span class="org-builtin">:foreground</span> ,fg-dim <span class="org-builtin">:strike-through</span> t)))))))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">3. Apply after everything is loaded, and on theme switch</span>
+(add-hook 'doom-after-init-hook #'my-org-checkbox-done-face)
+(add-hook 'modus-themes-after-load-theme-hook #'my-org-checkbox-done-face)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">4. Apply the face via font-lock</span>
+(font-lock-add-keywords
+ 'org-mode
+ '((<span class="org-string">"^[ \t]*</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(?:</span></span><span class="org-string">[-+*]</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">[0-9]+[.)]</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string"> \\[</span><span class="org-string"><span class="org-constant">X\\</span></span><span class="org-string">] </span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">.*</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string">$"</span>
+    1 'org-checkbox-done-text prepend)
+   (<span class="org-string">"^[ \t]*</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(?:</span></span><span class="org-string">[-+*]</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">[0-9]+[.)]</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string"> </span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">.*</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string"> \\[</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">[0-9]+</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string">/\\2\\]$"</span>
+    1 'org-checkbox-done-text prepend))
+ 'append)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org84ac492" class="outline-3">
+<h3 id="org84ac492">Fix Checklist symbol rendering</h3>
+<div class="outline-text-3" id="text-org84ac492">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'org-modern
+    (<span class="org-keyword">setq</span> org-modern-checkbox
+          '((?X . <span class="org-string">" &#10003; "</span>)
+            (?- . <span class="org-string">" &#9680; "</span>)
+            (?\s . <span class="org-string">" &#9744; "</span>))))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org68a7d15" class="outline-2">
+<h2 id="org68a7d15">Editor</h2>
+<div class="outline-text-2" id="text-org68a7d15">
+</div>
+<div id="outline-container-org0ec0058" class="outline-3">
+<h3 id="org0ec0058">Default directory</h3>
+<div class="outline-text-3" id="text-org0ec0058">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> default-directory <span class="org-string">"~"</span>)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd7d592d" class="outline-3">
+<h3 id="orgd7d592d">Disable mouse</h3>
+<div class="outline-text-3" id="text-orgd7d592d">
+<p>
+Sometimes the mouse gets in the way.
+Especially in <code>org-agenda</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> mouse-avoidance-mode 'banish)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org8170157" class="outline-3">
+<h3 id="org8170157">Full size window on startup</h3>
+<div class="outline-text-3" id="text-org8170157">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist '(ns-appearance . dark))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org160e4b5" class="outline-3">
+<h3 id="org160e4b5">Auto-revert files that changed on the disk</h3>
+<div class="outline-text-3" id="text-org160e4b5">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(global-auto-revert-mode t)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga0567e0" class="outline-3">
+<h3 id="orga0567e0">Spelling</h3>
+<div class="outline-text-3" id="text-orga0567e0">
+</div>
+<div id="outline-container-org901f4a7" class="outline-4">
+<h4 id="org901f4a7">Dictionary</h4>
+<div class="outline-text-4" id="text-org901f4a7">
+<p>
+Resources
+</p>
+<ul class="org-ul">
+<li><a href="https://www.reddit.com/r/emacs/comments/mr3urh/disable_spellfumode_in_doomemacs/">https://www.reddit.com/r/emacs/comments/mr3urh/disable_spellfumode_in_doomemacs/</a></li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> ispell-dictionary <span class="org-string">"english"</span>)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org0de2980" class="outline-4">
+<h4 id="org0de2980">Disable spelling suggestions from Company</h4>
+<div class="outline-text-4" id="text-org0de2980">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">(setq debug-on-error t)</span>
+(set-company-backend! 'text-mode '(company-dabbrev company-yasnippet <span class="org-builtin">:separate</span>))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgced04d7" class="outline-3">
+<h3 id="orgced04d7">Navigate in page</h3>
+<div class="outline-text-3" id="text-orgced04d7">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(map! <span class="org-string">"C-."</span> #'avy-goto-char-timer)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgee4d418" class="outline-3">
+<h3 id="orgee4d418">Quick-access directories</h3>
+<div class="outline-text-3" id="text-orgee4d418">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'dirvish
+  (<span class="org-keyword">setopt</span> dirvish-quick-access-entries
+         `((<span class="org-string">"h"</span> <span class="org-string">"~/"</span>                          <span class="org-string">"Home"</span>)
+           (<span class="org-string">"e"</span> ,user-emacs-directory         <span class="org-string">"Emacs user directory"</span>)
+           (<span class="org-string">"g"</span> <span class="org-string">"~/Github/"</span>                   <span class="org-string">"Github"</span>)
+           (<span class="org-string">"d"</span> <span class="org-string">"~/Downloads/"</span>                <span class="org-string">"Downloads"</span>)
+           (<span class="org-string">"t"</span> <span class="org-string">"~/.local/share/Trash/files/"</span> <span class="org-string">"Trash"</span>))))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org89c4f73" class="outline-2">
+<h2 id="org89c4f73">Lang</h2>
+<div class="outline-text-2" id="text-org89c4f73">
+</div>
+<div id="outline-container-org6e450c9" class="outline-3">
+<h3 id="org6e450c9">Org Mode</h3>
+<div class="outline-text-3" id="text-org6e450c9">
+</div>
+<div id="outline-container-org38688ce" class="outline-4">
+<h4 id="org38688ce">Root Org Directory</h4>
+<div class="outline-text-4" id="text-org38688ce">
+<p>
+Point to an <code>iCloud</code> directory.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> org-directory <span class="org-string">"~/iCloud/Research Notes/"</span>
+      org-startup-numerated t)
+(add-to-list 'safe-local-variable-directories org-directory)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org62efb38" class="outline-4">
+<h4 id="org62efb38">Beautify Org Mode</h4>
+<div class="outline-text-4" id="text-org62efb38">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'org
+  (<span class="org-keyword">setq</span> org-ellipsis <span class="org-string">" &#10551;"</span>
+        org-hide-emphasis-markers t))
+(add-hook! 'org-mode-hook #'variable-pitch-mode)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org9a95132" class="outline-4">
+<h4 id="org9a95132">Setup org-modern</h4>
+<div class="outline-text-4" id="text-org9a95132">
+<p>
+Sweet font rendering for org buffers.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> org-modern
+  <span class="org-builtin">:hook</span> (org-mode . global-org-modern-mode))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd73b9c3" class="outline-4">
+<h4 id="orgd73b9c3">Add ACM Latex classes to Org Export</h4>
+<div class="outline-text-4" id="text-orgd73b9c3">
+<p>
+Add ACM articles to the list of <code>org-latex-classes</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'ox-latex
+  <span class="org-builtin">:config</span>
+  (add-to-list 'org-latex-classes
+               '(<span class="org-string">"acmart"</span>
+                 <span class="org-string">"\\documentclass{acmart}"</span>
+                 (<span class="org-string">"\\section{%s}"</span> . <span class="org-string">"\\section*{%s}"</span>)
+                 (<span class="org-string">"\\subsection{%s}"</span> . <span class="org-string">"\\subsection*{%s}"</span>)
+                 (<span class="org-string">"\\subsubsection{%s}"</span> . <span class="org-string">"\\subsubsection*{%s}"</span>))))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgcaa0f22" class="outline-4">
+<h4 id="orgcaa0f22">Do not inherit statistics from tree</h4>
+<div class="outline-text-4" id="text-orgcaa0f22">
+<p>
+From: <a href="https://emacs.stackexchange.com/questions/35778/how-to-make-statistics-cookies-count-any-todo-entries-in-the-subtree-for-the-who">https://emacs.stackexchange.com/questions/35778/how-to-make-statistics-cookies-count-any-todo-entries-in-the-subtree-for-the-who</a>
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'org
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> org-hierarchical-todo-statistics nil))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org03f483f" class="outline-4">
+<h4 id="org03f483f">Reset sub-tasks</h4>
+<div class="outline-text-4" id="text-org03f483f">
+<p>
+To reset sub-tasks on completion.
+I have repeating projects like laundry, cleaning my car, etc. which on completion needs to reset with all the sub-tasks.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">org-reset-subtask-state-subtree</span> ()
+  <span class="org-doc">"Reset all subtasks in an entry subtree."</span>
+  (<span class="org-keyword">interactive</span> <span class="org-string">"*"</span>)
+  (<span class="org-keyword">if</span> (org-before-first-heading-p)
+      (<span class="org-warning">error</span> <span class="org-string">"Not inside a tree"</span>)
+    (<span class="org-keyword">save-excursion</span>
+      (<span class="org-keyword">save-restriction</span>
+        (org-narrow-to-subtree)
+        (org-fold-show-subtree)
+        (goto-char (point-min))
+        (beginning-of-line 2)
+        (narrow-to-region (point) (point-max))
+        (org-map-entries
+         '(when (member (org-get-todo-state) org-done-keywords)
+            (<span class="org-keyword">if</span> (org-entry-get (point) <span class="org-string">"REPEAT_TO_STATE"</span>)
+                (org-todo (org-entry-get (point) <span class="org-string">"REPEAT_TO_STATE"</span>))
+              (org-todo (car org-todo-keywords)))))))))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">org-reset-subtask-state-maybe</span> ()
+  <span class="org-doc">"Reset all subtasks in an entry if the `</span><span class="org-doc"><span class="org-constant">RESET_SUBTASKS</span></span><span class="org-doc">' property is set"</span>
+  (<span class="org-keyword">interactive</span> <span class="org-string">"*"</span>)
+  (<span class="org-keyword">if</span> (org-entry-get (point) <span class="org-string">"RESET_SUBTASKS"</span>)
+      (org-reset-subtask-state-subtree)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">org-subtask-reset</span> ()
+  (<span class="org-keyword">when</span> (member org-state org-done-keywords) <span class="org-comment-delimiter">;; </span><span class="org-comment">org-state dynamically bound in org.el/org-todo</span>
+    (org-reset-subtask-state-maybe)
+    (org-update-statistics-cookies t)))
+
+(<span class="org-keyword">with-eval-after-load</span> 'org
+  <span class="org-builtin">:custom</span>
+  (<span class="org-keyword">setq</span> org-default-properties (cons <span class="org-string">"RESET_SUBTASKS"</span> org-default-properties))
+  (add-hook 'org-after-todo-state-change-hook 'org-subtask-reset)
+  (<span class="org-keyword">provide</span> '<span class="org-constant">org-subtask-reset</span>))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org0f7fccb" class="outline-4">
+<h4 id="org0f7fccb">Org Modules</h4>
+<div class="outline-text-4" id="text-org0f7fccb">
+<ol class="org-ol">
+<li><p>
+Get <code>org-checklist</code> so that we can reset check boxes in a to-do item.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">https://orgmode.org/worg/org-contrib/org-checklist.html</span>
+(<span class="org-keyword">with-eval-after-load</span> 'org
+  (<span class="org-keyword">require</span> '<span class="org-constant">org-checklist</span>))
+</pre>
+</div></li>
+<li><p>
+Get <code>org-edna</code> for advanced TODO dependencies (replaces org-depend)
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">https://www.nongnu.org/org-edna-el/</span>
+(<span class="org-keyword">use-package</span> org-edna
+  <span class="org-builtin">:after</span> org
+  <span class="org-builtin">:config</span>
+  (org-edna-mode 1))
+</pre>
+</div></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgb115956" class="outline-4">
+<h4 id="orgb115956">Capture templates</h4>
+<div class="outline-text-4" id="text-orgb115956">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> +org-capture-todo-file <span class="org-string">"todo.org"</span>
+      +org-capture-notes-file <span class="org-string">"notes.org"</span>)
+(<span class="org-keyword">defun</span> <span class="org-function-name">my/org-capture-to-chosen-file</span> ()
+  <span class="org-doc">"This function finds the `project notes` folder in `denote-directory` and  "</span>
+  (<span class="org-keyword">let</span> ((chosen-file (completing-read <span class="org-string">"Choose a note file: "</span> (directory-files (file-name-concat denote-directory <span class="org-string">"project notes"</span>) t <span class="org-string">"</span><span class="org-string"><span class="org-warning">\</span></span><span class="org-string">.org$"</span>))))
+    (<span class="org-keyword">when</span> (<span class="org-keyword">and</span> chosen-file
+               (not (string= chosen-file <span class="org-string">""</span>)))
+      (set-buffer (org-capture-target-buffer chosen-file))
+      (<span class="org-keyword">with-current-buffer</span> (find-file-noselect chosen-file)
+        (goto-char (point-max))
+        (save-buffer)))))
+
+(<span class="org-keyword">with-eval-after-load</span> 'org
+  (<span class="org-keyword">setq</span> org-capture-templates
+        '((<span class="org-string">"a"</span> <span class="org-string">"Packages"</span> entry
+           (file+headline +org-capture-todo-file <span class="org-string">"Packages"</span>) <span class="org-comment-delimiter">;; </span><span class="org-comment">personal.org</span>
+           <span class="org-string">"* WAIT &#128230; %?\n SCHEDULED: &lt;%&lt;%Y-%m-%d %a&gt;&gt;\nCreated: %u\n%a\n%i"</span>)
+          (<span class="org-string">"c"</span> <span class="org-string">"CV Todo"</span> entry
+           (file+headline <span class="org-string">"~/Github/personal-website/CV.org"</span> <span class="org-string">"02-CV Tasks"</span>)
+           <span class="org-string">"* TODO &#128221; %?\nCreated: %u\n"</span>)
+          (<span class="org-string">"e"</span> <span class="org-string">"Emacs Todo"</span> entry
+           (file+headline <span class="org-string">"personal.org"</span> <span class="org-string">"&#128187; Emacs"</span>)
+           <span class="org-string">"* SOMEDAY &#128104;&#127995;&#8205;&#128187; %?\nCreated: %u\n"</span>)
+          (<span class="org-string">"t"</span> <span class="org-string">"Task"</span> entry
+           (file+headline +org-capture-todo-file <span class="org-string">"00-Inbox"</span>) <span class="org-comment-delimiter">;; </span><span class="org-comment">personal.org</span>
+           <span class="org-string">"* TODO &#128203; %?\nSCHEDULED: &lt;%&lt;%Y-%m-%d %a&gt;&gt;\nCreated: %u\n%a\n%i"</span> <span class="org-builtin">:prepend</span> t)
+          (<span class="org-string">"x"</span> <span class="org-string">"Project Task"</span> entry
+           (<span class="org-keyword">function</span> my/org-capture-to-chosen-file)
+           <span class="org-string">"* TODO &#128203; %?\nSCHEDULED: &lt;%&lt;%Y-%m-%d %a&gt;&gt;\nCreated: %u\n%a\n%i"</span> <span class="org-builtin">:empty-lines</span> 1)
+          (<span class="org-string">"n"</span> <span class="org-string">"Capture Notes"</span>)
+          (<span class="org-string">"nd"</span> <span class="org-string">"Dist. Sys. Protocol"</span> plain
+           (file denote-last-path)
+           (<span class="org-keyword">function</span> (<span class="org-keyword">lambda</span> ()
+                       (<span class="org-keyword">let</span> ((denote-use-directory (expand-file-name <span class="org-string">"protocols"</span> denote-directory))
+                             (denote-prompts '(title keywords)))
+                         (denote-org-capture)))))
+          (<span class="org-string">"nf"</span> <span class="org-string">"Fleeting notes"</span> plain
+           (file denote-last-path)
+           (<span class="org-keyword">function</span> (<span class="org-keyword">lambda</span> ()
+                       (<span class="org-keyword">let</span> ((denote-use-directory (expand-file-name <span class="org-string">"temporary notes"</span> denote-directory))
+                             (denote-prompts '(title)))
+                         (denote-org-capture)))))
+          (<span class="org-string">"ng"</span> <span class="org-string">"General notes"</span> plain
+           (file denote-last-path)
+           (<span class="org-keyword">function</span> (<span class="org-keyword">lambda</span> ()
+                       (<span class="org-keyword">let</span> ((denote-use-directory (expand-file-name <span class="org-string">"general notes"</span> denote-directory))
+                             (denote-prompts '(title keywords)))
+                         (denote-org-capture)))))
+          (<span class="org-string">"nm"</span> <span class="org-string">"Meta notes"</span> plain
+           (file denote-last-path)
+           (<span class="org-keyword">function</span> (<span class="org-keyword">lambda</span> ()
+                       (<span class="org-keyword">let</span> ((denote-use-directory (expand-file-name <span class="org-string">"meta notes"</span> denote-directory))
+                             (denote-prompts '(title keywords)))
+                         (denote-org-capture)))))
+          (<span class="org-string">"nn"</span> <span class="org-string">"New project"</span> plain
+           (file denote-last-path)
+           (<span class="org-keyword">function</span> (<span class="org-keyword">lambda</span> ()
+                       (<span class="org-keyword">let</span> ((denote-use-directory (expand-file-name <span class="org-string">"project notes"</span> denote-directory))
+                             (denote-prompts '(title keywords)))
+                         (denote-org-capture)))))
+          (<span class="org-string">"np"</span> <span class="org-string">"Project Notes"</span> entry
+           (<span class="org-keyword">function</span> my/org-capture-to-chosen-file)
+           <span class="org-string">"* %U %?"</span> <span class="org-builtin">:empty-lines</span> 1)
+          (<span class="org-string">"p"</span> <span class="org-string">"Templates for projects"</span>)
+          (<span class="org-string">"pt"</span> <span class="org-string">"Project-local todo"</span> entry
+           (file+headline +org-capture-project-todo-file <span class="org-string">"Inbox"</span>)
+           <span class="org-string">"* TODO %?\n%a\nCreated: %u\n%i\n"</span> <span class="org-builtin">:prepend</span> t)
+          (<span class="org-string">"pn"</span> <span class="org-string">"Project-local notes"</span> entry
+           (file+headline +org-capture-project-notes-file <span class="org-string">"Notes"</span>)
+           <span class="org-string">"* %?\n%a\n%i\nCreated: %u"</span> <span class="org-builtin">:prepend</span> t)
+          (<span class="org-string">"pc"</span> <span class="org-string">"Project-local changelog"</span> entry
+           (file+headline +org-capture-project-changelog-file <span class="org-string">"Unreleased"</span>)
+           <span class="org-string">"* %U %?\n%a\n%i"</span> <span class="org-builtin">:prepend</span> t))))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3be881f" class="outline-4">
+<h4 id="org3be881f">Add action to mark as done at a custom time in the past</h4>
+<div class="outline-text-4" id="text-org3be881f">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my/org-todo-with-time</span> (arg)
+  <span class="org-doc">"Mark task as DONE using specified time as the completion timestamp.</span>
+<span class="org-doc">ARG is passed to org-todo functions."</span>
+  (<span class="org-keyword">interactive</span> <span class="org-string">"P"</span>)
+  (<span class="org-keyword">let*</span> ((time-string (org-read-date t t))  <span class="org-comment-delimiter">;; </span><span class="org-comment">Interactive prompt for date+time</span>
+         (time (org-time-string-to-time time-string))
+         (org-use-last-clock-out-time-as-effective-time nil)
+         (org-use-effective-time t)
+         (org-extend-today-until 0))
+    (<span class="org-keyword">cl-letf</span> (((symbol-function 'org-current-time)
+               (<span class="org-keyword">lambda</span> () time))
+              ((symbol-function 'current-time)  <span class="org-comment-delimiter">;; </span><span class="org-comment">This affects org-today</span>
+               (<span class="org-keyword">lambda</span> () time)))
+      (<span class="org-keyword">if</span> (eq major-mode 'org-agenda-mode)
+          (org-agenda-todo arg)
+        (org-todo arg)))))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Add it to embark maps for both org and org-agenda modes</span>
+(<span class="org-keyword">with-eval-after-load</span> 'embark
+  (map! <span class="org-builtin">:map</span> embark-org-heading-map
+        <span class="org-string">"y"</span> #'my/org-todo-with-time))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge477b02" class="outline-4">
+<h4 id="orge477b02">Auto-complete Dollar Sign in Org Mode</h4>
+<div class="outline-text-4" id="text-orge477b02">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'smartparens
+  (sp-local-pair 'org-mode <span class="org-string">"$"</span> <span class="org-string">"$"</span>))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org143856f" class="outline-4">
+<h4 id="org143856f">Org Attachment flat storage</h4>
+<div class="outline-text-4" id="text-org143856f">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'org
+  (<span class="org-keyword">setq</span> org-attach-preferred-new-method 'dir
+        org-attach-dir-relative t
+        org-attach-store-link-p 'file))
+(<span class="org-keyword">setq</span> debug-counter (+ debug-counter 1))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf4c9e6b" class="outline-4">
+<h4 id="orgf4c9e6b">Capture book quotes</h4>
+<div class="outline-text-4" id="text-orgf4c9e6b">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defvar</span> <span class="org-variable-name">my/book-quote-org-file</span> (file-name-concat org-directory <span class="org-string">"200-notes"</span> <span class="org-string">"general notes"</span> <span class="org-string">"20250219T000809--book-notes__resources_tracking.org"</span>))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Function to find or create a heading for the current book</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">my/find-or-create-book-heading</span> (book-title)
+  <span class="org-doc">"Find or create heading with BOOK-TITLE."</span>
+  (goto-char (point-min))
+  (<span class="org-keyword">unless</span> (re-search-forward (format <span class="org-string">"^\\* %s$"</span> (regexp-quote book-title)) nil t)
+    (goto-char (point-max))
+    (insert (format <span class="org-string">"\n* %s"</span> book-title)))
+  (end-of-line))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Command to capture quotes from nov.el</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">my/nov-capture-quote</span> ()
+  <span class="org-doc">"Capture a quote from the current nov.el book."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">if</span> (not (eq major-mode 'nov-mode))
+      (message <span class="org-string">"Not in nov-mode"</span>)
+    (<span class="org-keyword">let</span> ((book-title (nov-book-title))
+          (selected-text (<span class="org-keyword">if</span> (region-active-p)
+                             (buffer-substring-no-properties
+                              (region-beginning) (region-end))
+                            <span class="org-string">""</span>)))
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Create a dynamic template with the current book</span>
+      (<span class="org-keyword">let</span> ((org-capture-templates
+             `((<span class="org-string">"b"</span> <span class="org-string">"Book Quote"</span> plain
+                (file+function my/book-quote-org-file
+                               (<span class="org-keyword">lambda</span> () (my/find-or-create-book-heading ,book-title)))
+                <span class="org-string">"- %i\n  %U"</span>
+                <span class="org-builtin">:empty-lines-after</span> 1))))
+        (org-capture nil <span class="org-string">"b"</span>)))))
+
+(map! <span class="org-builtin">:map</span> nov-mode-map
+ <span class="org-builtin">:localleader</span>
+ <span class="org-builtin">:desc</span> <span class="org-string">"Capture book note"</span> <span class="org-string">"n"</span> #'my/nov-capture-quote)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7ed7eca" class="outline-4">
+<h4 id="org7ed7eca">Set Key Binding for <code>imenu</code></h4>
+<div class="outline-text-4" id="text-org7ed7eca">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'org
+  (<span class="org-keyword">with-eval-after-load</span> 'consult
+    (map! <span class="org-builtin">:map</span> org-mode-map
+        <span class="org-string">"C-'"</span> #'consult-imenu)))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgececd39" class="outline-4">
+<h4 id="orgececd39">Increase depth for headings search</h4>
+<div class="outline-text-4" id="text-orgececd39">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">+my/org-notes-headlines</span> ()
+  <span class="org-doc">"Jump to an Org headline in `</span><span class="org-doc"><span class="org-constant">org-agenda-files</span></span><span class="org-doc">'."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let</span> ((full-agenda-files
+         (mapcar (<span class="org-keyword">lambda</span> (file)
+                   (<span class="org-keyword">if</span> (file-name-absolute-p file)
+                       file
+                     (expand-file-name file org-directory)))
+                 org-agenda-files)))
+    (doom-completing-read-org-headings
+     <span class="org-string">"Jump to org headline: "</span> full-agenda-files
+     <span class="org-builtin">:depth</span> 100
+     <span class="org-builtin">:include-files</span> t)))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Create a new mapping</span>
+(map! <span class="org-builtin">:leader</span>
+      <span class="org-builtin">:desc</span> <span class="org-string">"Search headings"</span> <span class="org-string">"n h"</span> #'+my/org-notes-headlines)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Unmap old keybinding</span>
+(map! <span class="org-builtin">:leader</span>
+      <span class="org-string">"n S"</span> nil)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge957c5e" class="outline-4">
+<h4 id="orge957c5e">Setup TODO dependency trigger</h4>
+<div class="outline-text-4" id="text-orge957c5e">
+<p>
+Set up a dependency where completing the current task (Y) triggers another task (X) to become TODO and scheduled with the completion date.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my/setup-todo-dependency</span> ()
+  <span class="org-doc">"Set up a TODO dependency where completing the current task triggers another task.</span>
+<span class="org-doc">When the current heading (task Y) is completed, task X will become TODO and scheduled</span>
+<span class="org-doc">with the completion date of Y. Uses org-edna syntax."</span>
+  (<span class="org-keyword">interactive</span>)
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Step 1: Check if in org-mode</span>
+  (<span class="org-keyword">unless</span> (derived-mode-p 'org-mode)
+    (<span class="org-warning">user-error</span> <span class="org-string">"Not in org mode"</span>))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Step 2: Get current heading (task Y)</span>
+  (<span class="org-keyword">when</span> (org-before-first-heading-p)
+    (<span class="org-warning">user-error</span> <span class="org-string">"Not on an org heading"</span>))
+
+  (<span class="org-keyword">save-excursion</span>
+    (<span class="org-keyword">unless</span> (org-at-heading-p)
+      (org-back-to-heading t))
+
+    (<span class="org-keyword">let</span> ((task-y-heading (org-get-heading t t t t)))
+      (<span class="org-keyword">unless</span> task-y-heading
+        (<span class="org-warning">user-error</span> <span class="org-string">"No heading at point"</span>))
+
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Step 3: Select heading from org-agenda-files (task X)</span>
+      (<span class="org-keyword">let*</span> ((full-agenda-files
+              (mapcar (<span class="org-keyword">lambda</span> (file)
+                        (<span class="org-keyword">if</span> (file-name-absolute-p file)
+                            file
+                          (expand-file-name file org-directory)))
+                      org-agenda-files))
+             (selection (doom-completing-read-org-headings
+                         <span class="org-string">"Select task to trigger on completion: "</span>
+                         full-agenda-files
+                         <span class="org-builtin">:depth</span> 100
+                         <span class="org-builtin">:include-files</span> t)))
+        (<span class="org-keyword">unless</span> selection
+          (<span class="org-warning">user-error</span> <span class="org-string">"No task selected"</span>))
+
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">Parse selection and go to task X</span>
+        (<span class="org-keyword">let*</span> ((marker (get-text-property 0 'marker selection))
+               x-id)
+          (<span class="org-keyword">unless</span> marker
+            (<span class="org-warning">user-error</span> <span class="org-string">"Could not find marker for selected heading"</span>))
+
+          <span class="org-comment-delimiter">;; </span><span class="org-comment">Step 4: Get or create ID for task X</span>
+          (<span class="org-keyword">with-current-buffer</span> (marker-buffer marker)
+            (<span class="org-keyword">save-excursion</span>
+              (goto-char (marker-position marker))
+              <span class="org-comment-delimiter">;; </span><span class="org-comment">Check for existing CUSTOM_ID or ID</span>
+              (<span class="org-keyword">setq</span> x-id (<span class="org-keyword">or</span> (org-entry-get nil <span class="org-string">"CUSTOM_ID"</span>)
+                            (org-entry-get nil <span class="org-string">"ID"</span>)))
+              (<span class="org-keyword">unless</span> x-id
+                <span class="org-comment-delimiter">;; </span><span class="org-comment">Create new CUSTOM_ID: yyyy-mm-dd-hh-mm-ss-&lt;heading-with-hyphens&gt;</span>
+                (<span class="org-keyword">let*</span> ((heading (org-get-heading t t t t))
+                       (heading-slug (replace-regexp-in-string
+                                     <span class="org-string">"[</span><span class="org-string"><span class="org-negation-char">^</span></span><span class="org-string">a-zA-Z0-9]+"</span> <span class="org-string">"-"</span>
+                                     (downcase heading)))
+                       (heading-slug (replace-regexp-in-string
+                                     <span class="org-string">"^-</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">|</span></span><span class="org-string">-$"</span> <span class="org-string">""</span>
+                                     heading-slug))
+                       (timestamp (format-time-string <span class="org-string">"%Y-%m-%d-%H-%M-%S"</span>)))
+                  (<span class="org-keyword">setq</span> x-id (concat timestamp <span class="org-string">"-"</span> heading-slug))
+                  (org-entry-put nil <span class="org-string">"CUSTOM_ID"</span> x-id)))
+              (save-buffer)))
+
+          <span class="org-comment-delimiter">;; </span><span class="org-comment">Step 5: Set TRIGGER on task Y using org-edna format</span>
+          <span class="org-comment-delimiter">;; </span><span class="org-comment">scheduled!(".") sets scheduled date to current time when trigger fires</span>
+          (<span class="org-keyword">let*</span> ((existing-trigger (org-entry-get nil <span class="org-string">"TRIGGER"</span>))
+                 (new-trigger (format <span class="org-string">"ids(\"%s\") todo!(TODO) scheduled!(\".\")"</span> x-id))
+                 (final-trigger (<span class="org-keyword">if</span> existing-trigger
+                                   (concat existing-trigger <span class="org-string">" "</span> new-trigger)
+                                 new-trigger)))
+            (org-entry-put nil <span class="org-string">"TRIGGER"</span> final-trigger)
+            (message <span class="org-string">"Set trigger: completing '</span><span class="org-string"><span class="org-constant">%s</span></span><span class="org-string">' will schedule '</span><span class="org-string"><span class="org-constant">%s</span></span><span class="org-string">' as TODO"</span>
+                     task-y-heading
+                     (substring-no-properties selection))))))))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org454fa45" class="outline-4">
+<h4 id="org454fa45">Capture Papers to review</h4>
+<div class="outline-text-4" id="text-org454fa45">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defvar</span> <span class="org-variable-name">my-conference-names</span>
+  '(<span class="org-string">"Financial Cryptography"</span>
+    <span class="org-string">"NDSS"</span>
+    <span class="org-string">"IEEE S&amp;P"</span>
+    <span class="org-string">"USENIX Security"</span>
+    <span class="org-string">"CCS"</span>
+    <span class="org-string">"Crypto"</span>
+    <span class="org-string">"Eurocrypt"</span>
+    <span class="org-string">"Asiacrypt"</span>
+    <span class="org-string">"AsiaCCS"</span>
+    <span class="org-string">"EuroSys"</span>
+    <span class="org-string">"ACNS"</span>)
+  <span class="org-doc">"List of conference names for completion."</span>)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">my-create-paper-review</span> ()
+  <span class="org-doc">"Create a paper review file and corresponding inbox task.</span>
+
+<span class="org-doc">This function will create a review file in the =Reviews= folder and trigger an org-capture-template to record the review task"</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let*</span> ((year (read-string <span class="org-string">"Conference Year: "</span>))
+         (conference (completing-read <span class="org-string">"Conference name: "</span> my-conference-names))
+         (paper-num (read-string <span class="org-string">"Paper number: "</span>))
+         <span class="org-comment-delimiter">;; </span><span class="org-comment">Build the directory path</span>
+         (review-dir (expand-file-name 
+                      (format <span class="org-string">"Reviews/%s/%s"</span> year conference)
+                      org-directory))
+         <span class="org-comment-delimiter">;; </span><span class="org-comment">Build the file path</span>
+         (review-file (expand-file-name 
+                       (format <span class="org-string">"%s.org"</span> paper-num)
+                       review-dir)))
+
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Create directory if it doesn't exist</span>
+    (<span class="org-keyword">unless</span> (file-exists-p review-dir)
+      (make-directory review-dir t))
+
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Create the review file</span>
+    (find-file review-file)
+    (<span class="org-keyword">when</span> (= (buffer-size) 0)  <span class="org-comment-delimiter">; </span><span class="org-comment">Only insert if file is new</span>
+      (insert (format <span class="org-string">"#+TITLE: Review - %s Paper %s\n"</span> conference paper-num))
+      (insert (format <span class="org-string">"#+DATE: %s\n"</span> (format-time-string <span class="org-string">"%Y-%m-%d"</span>)))
+      (insert (format <span class="org-string">"#+CONFERENCE: %s\n"</span> conference))
+      (insert (format <span class="org-string">"#+PAPER: %s\n\n"</span> paper-num))
+      (save-buffer))
+
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Store a link to this review file</span>
+    (org-store-link nil)
+
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Trigger the ?t capture template</span>
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Create inbox task</span>
+    (<span class="org-keyword">let*</span> ((link (org-link-make-string
+                  (concat <span class="org-string">"file:"</span> review-file)
+                  (format <span class="org-string">"Review - %s Paper %s"</span> conference paper-num)))
+           (org-capture-initial (format <span class="org-string">"Review Paper %s\n - %s"</span> paper-num link)))
+
+      <span class="org-comment-delimiter">;;</span>
+      (org-capture nil <span class="org-string">"t"</span>))
+
+
+    (message <span class="org-string">"Created review file and inbox task for Paper %s"</span> paper-num)))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgffea1ea" class="outline-4">
+<h4 id="orgffea1ea">Org Effort Setup</h4>
+<div class="outline-text-4" id="text-orgffea1ea">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> org-global-properties
+      '((<span class="org-string">"Effort_ALL"</span>. <span class="org-string">"0 0:10 0:30 1:00 2:00 3:00 4:00"</span>))
+      org-sort-agenda-noeffort-is-high t)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfe49902" class="outline-4">
+<h4 id="orgfe49902">Allow refiling items using embark</h4>
+<div class="outline-text-4" id="text-orgfe49902">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'embark
+  (<span class="org-keyword">defun</span> <span class="org-function-name">my/org-refile-item-to-heading</span> ()
+    <span class="org-doc">"Refile the org list item at point to a heading selected via imenu.</span>
+<span class="org-doc">The item is appended to the end of any existing list under that heading,</span>
+<span class="org-doc">or inserted as a new list if none exists. Handles nested sub-items."</span>
+    (<span class="org-keyword">interactive</span>)
+    (<span class="org-keyword">unless</span> (org-at-item-p)
+      (<span class="org-warning">user-error</span> <span class="org-string">"Not at an org list item"</span>))
+    (<span class="org-keyword">let*</span> ((item-struct (org-list-struct))
+           (item-begin (org-list-get-item-begin))
+           (item-end (org-list-get-item-end-before-blank item-begin item-struct))
+           (item-text (buffer-substring-no-properties item-begin item-end))
+           (base-indent (<span class="org-keyword">save-excursion</span>
+                          (goto-char item-begin)
+                          (current-indentation)))
+           (item-content (<span class="org-keyword">with-temp-buffer</span>
+                           (insert item-text)
+                           (goto-char (point-min))
+                           (<span class="org-keyword">while</span> (not (eobp))
+                             (<span class="org-keyword">when</span> (looking-at (format <span class="org-string">"^[ \t]\\{0,%d\\}"</span> base-indent))
+                               (replace-match <span class="org-string">""</span>))
+                             (forward-line 1))
+                           (string-trim-right (buffer-string)))))
+      (delete-region item-begin item-end)
+      (<span class="org-keyword">when</span> (<span class="org-keyword">and</span> (bolp) (looking-at <span class="org-string">"^$"</span>))
+        (delete-char 1))
+      (<span class="org-keyword">save-excursion</span>
+        (consult-imenu)
+        (org-end-of-meta-data t)
+        (<span class="org-keyword">if</span> (org-at-item-p)
+            (<span class="org-keyword">progn</span>
+              (goto-char (org-list-get-bottom-point (org-list-struct)))
+              (forward-line -1)
+              (end-of-line)
+              (insert <span class="org-string">"\n"</span> item-content))
+          (<span class="org-keyword">unless</span> (looking-at <span class="org-string">"^$"</span>)
+            (insert <span class="org-string">"\n"</span>))
+          (insert item-content <span class="org-string">"\n"</span>)))))
+
+  (map! <span class="org-builtin">:map</span> embark-org-item-map
+        <span class="org-string">"r"</span> #'my/org-refile-item-to-heading)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Tell embark to ignore the target when calling this action</span>
+  (<span class="org-keyword">cl-pushnew</span> 'embark--ignore-target
+              (alist-get 'my/org-refile-item-to-heading embark-target-injection-hooks)))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org403f0cf" class="outline-3">
+<h3 id="org403f0cf">Org Agenda</h3>
+<div class="outline-text-3" id="text-org403f0cf">
+</div>
+<div id="outline-container-org14d4325" class="outline-4">
+<h4 id="org14d4325">Task management keywords</h4>
+<div class="outline-text-4" id="text-org14d4325">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'org
+  (<span class="org-keyword">setq</span>
+   org-todo-keywords '((sequence
+                        <span class="org-string">"TODO(t)"</span> <span class="org-comment-delimiter">; </span><span class="org-comment">Need this task to be done</span>
+                        <span class="org-string">"NEXT(n)"</span> <span class="org-comment-delimiter">; </span><span class="org-comment">This is the next item that needs to be done for this task</span>
+                        <span class="org-string">"|"</span>
+                        <span class="org-string">"DONE(d)"</span> <span class="org-comment-delimiter">; </span><span class="org-comment">Finished the task successfully</span>
+                        <span class="org-string">"KILL(k)"</span>) <span class="org-comment-delimiter">; </span><span class="org-comment">Cancelled the task</span>
+                       (sequence
+                        <span class="org-string">"WAIT(w)"</span> <span class="org-comment-delimiter">; </span><span class="org-comment">Waiting for an external event to occur to process this</span>
+                        <span class="org-string">"FOLLOWUP"</span> <span class="org-comment-delimiter">; </span><span class="org-comment">I asked someone else to do this and I need to follow up on it</span>
+                        <span class="org-string">"SOMEDAY"</span> <span class="org-comment-delimiter">; </span><span class="org-comment">Tasks that I want to do someday</span>
+                        <span class="org-string">"|"</span>
+                        <span class="org-string">"DONE(d)"</span>)
+                       (sequence
+                        <span class="org-string">"CURRENT(c)"</span><span class="org-comment-delimiter">; </span><span class="org-comment">A collection of active tasks</span>
+                        <span class="org-string">"PROJ(q)"</span> <span class="org-comment-delimiter">; </span><span class="org-comment">A collection of inactive tasks</span>
+                        <span class="org-string">"|"</span>
+                        <span class="org-string">"DONE(d)"</span>
+                        <span class="org-string">"KILL(k)"</span>)
+                       (sequence
+                        <span class="org-string">"DRAFT"</span> <span class="org-comment-delimiter">; </span><span class="org-comment">Writing Tasks</span>
+                        <span class="org-string">"|"</span>
+                        <span class="org-string">"DONE(d)"</span>
+                        <span class="org-string">"KILL(k)"</span>)
+                       (sequence
+                        <span class="org-string">"CODING"</span>
+                        <span class="org-string">"|"</span>
+                        <span class="org-string">"DONE(d)"</span>
+                        <span class="org-string">"KILL(k)"</span>)
+                       (sequence
+                        <span class="org-string">"READ"</span>
+                        <span class="org-string">"READING"</span>
+                        <span class="org-string">"|"</span>
+                        <span class="org-string">"DONE(d)"</span>
+                        <span class="org-string">"KILL(k)"</span>)
+                       (sequence
+                        <span class="org-string">"EVENT"</span>
+                        <span class="org-string">"|"</span>
+                        <span class="org-string">"NONATTENDANCE"</span>)
+                       <span class="org-comment-delimiter">;; </span><span class="org-comment">Basic Todos for Checkboxes TSWD</span>
+                       (sequence <span class="org-string">"[ ](T)"</span> <span class="org-string">"[-](S)"</span> <span class="org-string">"[?](W@/!)"</span> <span class="org-string">"|"</span> <span class="org-string">"[X](D)"</span>))))
+(<span class="org-keyword">setq</span> debug-counter (+ debug-counter 1))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb837890" class="outline-4">
+<h4 id="orgb837890">Org Agenda Configuration</h4>
+<div class="outline-text-4" id="text-orgb837890">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> debug-counter (+ debug-counter 1))
+(<span class="org-keyword">setq</span> org-agenda-custom-commands
+      '((<span class="org-string">"."</span> . <span class="org-string">"Custom Commands"</span>)
+        (<span class="org-string">".a"</span> <span class="org-string">"Day Planning"</span>
+         ((agenda nil
+                  ((org-agenda-span 'day)
+                   (org-agenda-skip-deadline-prewarning-if-scheduled 't)
+                   (org-agenda-overriding-header <span class="org-string">"Tasks for today"</span>)
+                   (org-agenda-time-grid nil)))
+          (agenda nil
+                  ((org-agenda-span 7)
+                   (org-deadline-warning-days 0)
+                   (org-agenda-time-grid nil)
+                   (org-agenda-deadline-leaders '(<span class="org-string">"Deadline: "</span> <span class="org-string">"(%3d d) "</span> <span class="org-string">"(%3d d. ago) "</span>))
+                   (org-agenda-overriding-header <span class="org-string">"Deadlines"</span>)
+                   (org-agenda-entry-types '(<span class="org-builtin">:deadline</span>))))))
+        (<span class="org-string">".w"</span> <span class="org-string">"Work contexts"</span>
+         ((agenda nil
+                  ((org-agenda-span 'day)
+                   (org-agenda-skip-deadline-prewarning-if-scheduled 't)
+                   (org-agenda-overriding-header <span class="org-string">"Work Tasks for today"</span>))))
+         ((org-agenda-category-filter-preset '(<span class="org-string">"+Work"</span>))))
+        (<span class="org-string">".b"</span> <span class="org-string">"Weekly Review"</span>
+         ((todo <span class="org-string">"CURRENT"</span>
+                ((org-agenda-overriding-header <span class="org-string">"Current Projects"</span>)))
+
+          (todo <span class="org-string">"PROJ"</span>
+                ((org-agenda-overriding-header <span class="org-string">"Inactive Projects"</span>)))
+          (todo <span class="org-string">"DONE|PDONE|KILL|PKILL"</span>
+                ((org-agenda-overriding-header <span class="org-string">"Finished tasks (Archive)"</span>)))
+          (alltodo <span class="org-string">""</span>
+                   ((org-agenda-overriding-header <span class="org-string">"Inbox Tasks"</span>)
+                    (org-agenda-files '(<span class="org-string">"todo.org"</span> <span class="org-string">"mobile.org"</span>))))
+          (tags <span class="org-string">"+{^On.+*}"</span>
+                ((org-agenda-overriding-header <span class="org-string">"On Tags"</span>)))
+          (todo <span class="org-string">"WAIT"</span>
+                ((org-agenda-overriding-header <span class="org-string">"Waiting (Check for Follow-up)"</span>)))))
+        (<span class="org-string">".c"</span> <span class="org-string">"Weekly Planning"</span>
+         ((tags <span class="org-string">"WEEK_PROJECT=\"t\""</span>
+                ((org-agenda-overriding-header <span class="org-string">"Focus this week"</span>)))
+          (todo <span class="org-string">"CURRENT"</span>
+                ((org-agenda-overriding-header <span class="org-string">"Current Projects"</span>)))
+          (todo <span class="org-string">"READ|READING"</span>
+                ((org-agenda-overriding-header <span class="org-string">"Reading Projects"</span>)))
+          (todo <span class="org-string">"CODING"</span>
+                ((org-agenda-overriding-header <span class="org-string">"Coding Projects"</span>)))
+          (todo <span class="org-string">"DRAFT"</span>
+                ((org-agenda-overriding-header <span class="org-string">"Writing Projects"</span>)))))
+        (<span class="org-string">".d"</span> <span class="org-string">"Open Loops"</span>
+         ((todo <span class="org-string">"CURRENT"</span>
+                ((org-agenda-overriding-header <span class="org-string">"Open Loops"</span>)))))
+        (<span class="org-string">".s"</span> <span class="org-string">"Schedule"</span>
+         ((agenda nil
+                  ((org-agenda-span 'day)
+                   (org-agenda-files '(<span class="org-string">"schedule.org"</span>))))))))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">A function to switch to a workspace with name "Agenda"</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">hermitsage/switch-to-agenda-workspace</span> ()
+  <span class="org-doc">"Switch to the Agenda workspace, creating it if necessary."</span>
+  (<span class="org-keyword">let</span> ((workspace-name <span class="org-string">"Agenda"</span>))
+    (<span class="org-keyword">unless</span> (persp-get-by-name workspace-name)
+      (persp-add-new workspace-name))
+    (persp-switch workspace-name)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">hermitsage/org-daily-view</span> ()
+  <span class="org-doc">"Open all my open loops"</span>
+  (<span class="org-keyword">interactive</span>)
+  (hermitsage/switch-to-agenda-workspace)
+  (org-agenda nil <span class="org-string">".a"</span>))
+(<span class="org-keyword">defun</span> <span class="org-function-name">hermitsage/org-weekly-review</span> ()
+  <span class="org-doc">"Open all the tasks"</span>
+  (<span class="org-keyword">interactive</span>)
+  (hermitsage/switch-to-agenda-workspace)
+  (org-agenda nil <span class="org-string">".b"</span>))
+(<span class="org-keyword">defun</span> <span class="org-function-name">hermitsage/org-week-planning</span> ()
+  <span class="org-doc">"Open planning related tasks"</span>
+  (<span class="org-keyword">interactive</span>)
+  (hermitsage/switch-to-agenda-workspace)
+  (org-agenda nil <span class="org-string">".c"</span>))
+(<span class="org-keyword">defun</span> <span class="org-function-name">hermitsage/org-open-loops</span> ()
+  <span class="org-doc">"Open all Open Loops"</span>
+  (<span class="org-keyword">interactive</span>)
+  (hermitsage/switch-to-agenda-workspace)
+  (org-agenda nil <span class="org-string">".d"</span>))
+(<span class="org-keyword">defun</span> <span class="org-function-name">hermitsage/org-schedule</span> ()
+  <span class="org-doc">"Open all my open loops"</span>
+  (<span class="org-keyword">interactive</span>)
+  (hermitsage/switch-to-agenda-workspace)
+  (org-agenda nil <span class="org-string">".s"</span>))
+(<span class="org-keyword">defun</span> <span class="org-function-name">hermitsage/org-work-view</span> ()
+  <span class="org-doc">"Open all my work tasks"</span>
+  (<span class="org-keyword">interactive</span>)
+  (hermitsage/switch-to-agenda-workspace)
+  (org-agenda nil <span class="org-string">".w"</span>))
+(map! <span class="org-builtin">:leader</span>
+      <span class="org-builtin">:prefix</span> (<span class="org-string">"z"</span> . <span class="org-string">"agenda"</span>)
+      <span class="org-builtin">:desc</span> <span class="org-string">"Daily View"</span> <span class="org-string">"a"</span> #'hermitsage/org-daily-view
+      <span class="org-builtin">:desc</span> <span class="org-string">"Weekly Review"</span> <span class="org-string">"b"</span> #'hermitsage/org-weekly-review
+      <span class="org-builtin">:desc</span> <span class="org-string">"Planning View"</span> <span class="org-string">"c"</span> #'hermitsage/org-week-planning
+      <span class="org-builtin">:desc</span> <span class="org-string">"Open Loops"</span> <span class="org-string">"d"</span> #'hermitsage/org-open-loops
+      <span class="org-builtin">:desc</span> <span class="org-string">"Schedule"</span> <span class="org-string">"s"</span> #'hermitsage/org-schedule
+      <span class="org-builtin">:desc</span> <span class="org-string">"Work View"</span> <span class="org-string">"w"</span> #'hermitsage/org-work-view
+      <span class="org-builtin">:desc</span> <span class="org-string">"Default Agenda"</span> <span class="org-string">"e"</span> #'org-agenda-list
+      <span class="org-builtin">:desc</span> <span class="org-string">"Export Markdown"</span> <span class="org-string">"p"</span> #'hermitsage/org-agenda-export-markdown)
+(<span class="org-keyword">setq</span> debug-counter (+ debug-counter 1))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">my/days-until-next-sunday</span> ()
+  <span class="org-doc">"Calculate number of days from today until the Sunday ending next week.</span>
+<span class="org-doc">If today is Sunday, returns 7 (next Sunday).</span>
+<span class="org-doc">If today is Monday, returns 13 (this week + next week).</span>
+<span class="org-doc">If today is Saturday, returns 8 (tomorrow + full next week)."</span>
+  (<span class="org-keyword">let*</span> ((day-of-week (string-to-number (format-time-string <span class="org-string">"%w"</span>))) <span class="org-comment-delimiter">; </span><span class="org-comment">0=Sun, 6=Sat</span>
+         (days-to-this-sunday (<span class="org-keyword">if</span> (= day-of-week 0) 0 (- 7 day-of-week))))
+    (+ days-to-this-sunday 7)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">hermitsage/org-agenda-export-markdown</span> ()
+  <span class="org-doc">"Export agenda from today until the next Sunday as Markdown.</span>
+<span class="org-doc">The span covers from today through the end of next week."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let*</span> ((span (my/days-until-next-sunday))
+         (date-str (format-time-string <span class="org-string">"%Y-%m-%d"</span>))
+         (default-filename (format <span class="org-string">"agenda-%s.md"</span> date-str))
+         (output-file (read-file-name <span class="org-string">"Export agenda to Markdown: "</span>
+                                      <span class="org-string">"~/"</span> nil nil default-filename))
+         (org-agenda-span span)
+         (org-agenda-start-day nil)
+         (org-agenda-start-on-weekday nil))
+    (org-agenda-list)
+    (<span class="org-keyword">with-current-buffer</span> org-agenda-buffer-name
+      (<span class="org-keyword">let</span> ((content (buffer-substring-no-properties (point-min) (point-max))))
+        (<span class="org-keyword">with-temp-file</span> output-file
+          (insert (format <span class="org-string">"# Agenda: %s\n\n"</span> date-str))
+          (insert <span class="org-string">"```\n"</span>)
+          (insert content)
+          (insert <span class="org-string">"```\n"</span>))))
+    (message <span class="org-string">"Agenda exported to %s (span: %d days)"</span> output-file span)))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2234b69" class="outline-4">
+<h4 id="org2234b69">Weekly Focus Tasks</h4>
+<div class="outline-text-4" id="text-org2234b69">
+<p>
+Some configuration to mark tasks to focus on for the week
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">mark-heading-for-week</span> ()
+  <span class="org-doc">"Mark the current heading as a project to work on this week."</span>
+  (<span class="org-keyword">interactive</span>)
+  (org-entry-put nil <span class="org-string">"WEEK_PROJECT"</span> <span class="org-string">"t"</span>)
+  (message <span class="org-string">"Marked heading as a project for this week"</span>))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">unmark-heading-for-week</span> ()
+  <span class="org-doc">"Remove the weekly project mark from the current heading."</span>
+  (<span class="org-keyword">interactive</span>)
+  (org-entry-delete nil <span class="org-string">"WEEK_PROJECT"</span>)
+  (message <span class="org-string">"Removed weekly project mark"</span>))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">toggle-heading-for-week</span> ()
+  <span class="org-doc">"Toggle the WEEK_PROJECT property on the current heading."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">if</span> (org-entry-get nil <span class="org-string">"WEEK_PROJECT"</span>)
+      (unmark-heading-for-week)
+    (mark-heading-for-week)))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Create a hook to automatically unmark a project when all tasks are done</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">check-and-unmark-completed-week-project</span> ()
+  <span class="org-doc">"If all tasks in a week project are completed, unmark the project."</span>
+  (<span class="org-keyword">when</span> (member org-state org-done-keywords)
+    (<span class="org-keyword">save-excursion</span>
+      (<span class="org-keyword">when</span> (org-up-heading-safe)
+        (<span class="org-keyword">when</span> (org-entry-get nil <span class="org-string">"WEEK_PROJECT"</span>)
+          <span class="org-comment-delimiter">;; </span><span class="org-comment">Check if all subheadings with TODO keywords are DONE</span>
+          (<span class="org-keyword">let</span> ((has-incomplete-tasks nil))
+            (org-map-entries
+             (<span class="org-keyword">lambda</span> ()
+               (<span class="org-keyword">when</span> (<span class="org-keyword">and</span> (org-get-todo-state)
+                          (not (member (org-get-todo-state) org-done-keywords)))
+                 (<span class="org-keyword">setq</span> has-incomplete-tasks t)))
+             nil 'tree)
+            (<span class="org-keyword">unless</span> has-incomplete-tasks
+              (unmark-heading-for-week))))))))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Add this to the todo state change hook</span>
+(add-hook 'org-after-todo-state-change-hook 'check-and-unmark-completed-week-project)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Key binding for toggling weekly project mark</span>
+(map! <span class="org-builtin">:map</span> org-mode-map
+      <span class="org-builtin">:localleader</span>
+      <span class="org-builtin">:desc</span> <span class="org-string">"Toggle weekly project"</span> <span class="org-string">"w"</span> #'toggle-heading-for-week)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">toggle-agenda-item-week-project</span> ()
+  <span class="org-doc">"Toggle WEEK_PROJECT property on the item at point in agenda."</span>
+  (<span class="org-keyword">interactive</span>)
+  (org-agenda-check-type t 'agenda 'todo 'tags 'search)
+  (org-agenda-check-no-diary)
+  (<span class="org-keyword">let*</span> ((marker (<span class="org-keyword">or</span> (org-get-at-bol 'org-marker)
+                     (org-agenda-error)))
+         (buffer (marker-buffer marker))
+         (pos (marker-position marker)))
+    (<span class="org-keyword">with-current-buffer</span> buffer
+      (<span class="org-keyword">save-excursion</span>
+        (goto-char pos)
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">Use your existing toggle function</span>
+        (toggle-heading-for-week)))
+    (org-agenda-redo)))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Add direct keybinding in org-agenda-mode</span>
+(map! <span class="org-builtin">:map</span> org-agenda-mode-map
+      <span class="org-builtin">:after</span> org-agenda
+      <span class="org-string">"W"</span> #'toggle-agenda-item-week-project)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Embark action for org headings</span>
+(<span class="org-keyword">defun</span> <span class="org-function-name">embark-toggle-heading-week-project</span> (heading-pos)
+  <span class="org-doc">"Toggle WEEK_PROJECT property on the heading at HEADING-POS."</span>
+  (<span class="org-keyword">interactive</span> <span class="org-string">"d"</span>)
+  (<span class="org-keyword">org-with-point-at</span> heading-pos
+    (toggle-heading-for-week)))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Add the embark action to org-heading map</span>
+(<span class="org-keyword">with-eval-after-load</span> 'embark
+  (map! <span class="org-builtin">:map</span> embark-org-heading-map
+        <span class="org-string">"w"</span> #'embark-toggle-heading-week-project))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org69ddfdd" class="outline-4">
+<h4 id="org69ddfdd">Setting up sunrise and sunset times in <code>org-agenda</code></h4>
+<div class="outline-text-4" id="text-org69ddfdd">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Set org agenda sunrise, sunset times</span>
+(<span class="org-keyword">setq</span>
+ calendar-latitude 40.425869
+ calendar-longitude -86.908066)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3fee2a7" class="outline-4">
+<h4 id="org3fee2a7">Refresh <code>org-agenda</code> files at runtime and startup</h4>
+<div class="outline-text-4" id="text-org3fee2a7">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my/org-roam-refresh-agenda-list</span> ()
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">setq</span> org-agenda-files (append
+                          (list <span class="org-string">"mobile.org"</span> <span class="org-string">"work.org"</span> <span class="org-string">"todo.org"</span> <span class="org-string">"personal.org"</span> <span class="org-string">"ideas.org"</span> <span class="org-string">"visa.org"</span> <span class="org-string">"harshitha.org"</span> <span class="org-string">"calendar-beorg.org"</span> <span class="org-string">"wedding-planning.org"</span>)
+                          (directory-files (file-name-concat org-directory <span class="org-string">"200-notes"</span> <span class="org-string">"project notes"</span>) t <span class="org-string">"\\.org$"</span>))))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Build the agenda list the first time for the session</span>
+(my/org-roam-refresh-agenda-list)
+(<span class="org-keyword">with-eval-after-load</span> 'org
+  (<span class="org-keyword">setq</span> org-todo-repeat-to-state t
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t
+        org-log-done 'time
+        org-export-with-toc nil
+        org-log-into-drawer t))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc8e2546" class="outline-4">
+<h4 id="orgc8e2546">Start <code>org-agenda</code> from current day</h4>
+<div class="outline-text-4" id="text-orgc8e2546">
+<p>
+Setting org-agenda-start-on-weekday to nil means that the agenda view – even in the 7-days-at-a-time view – will always begin on the current day.
+This is important, since while using org-mode as a day planner, you never want to think of days gone past.
+That’s something you do in other ways, such as when reviewing completed tasks.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'org
+  (<span class="org-keyword">setq</span> org-agenda-start-on-weekday nil)
+  (<span class="org-keyword">setq</span> org-agenda-start-day <span class="org-string">"-0d"</span>))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd0049fa" class="outline-3">
+<h3 id="orgd0049fa">Org Roam</h3>
+<div class="outline-text-3" id="text-orgd0049fa">
+</div>
+<div id="outline-container-org3b43e3b" class="outline-4">
+<h4 id="org3b43e3b">Setup <code>org-roam</code></h4>
+<div class="outline-text-4" id="text-org3b43e3b">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> org-roam-directory (file-name-concat org-directory <span class="org-string">"200-notes"</span> <span class="org-string">"permanent notes"</span>))
+(<span class="org-keyword">use-package</span> org-roam
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> org-roam-v2-ack t)
+  <span class="org-builtin">:custom</span>
+  (<span class="org-keyword">setq</span> org-roam-completion-everywhere t)
+  (<span class="org-keyword">setq</span> org-roam-capture-templates
+        '((<span class="org-string">"d"</span> <span class="org-string">"default"</span> plain
+           <span class="org-string">"%?"</span>
+           <span class="org-builtin">:if-new</span> (file+head <span class="org-string">"%&lt;%Y%m%d%H%M%S&gt;-${slug}.org"</span> <span class="org-string">"#+title: ${title}\n"</span>)
+           <span class="org-builtin">:unnarrowed</span> t))))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org82092c2" class="outline-4">
+<h4 id="org82092c2">Setup <code>org-roam-ui</code></h4>
+<div class="outline-text-4" id="text-org82092c2">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> websocket
+  <span class="org-builtin">:after</span> org-roam)
+
+(<span class="org-keyword">use-package</span> org-roam-ui
+  <span class="org-builtin">:after</span> org-roam <span class="org-comment-delimiter">;; </span><span class="org-comment">or :after org</span>
+  <span class="org-comment-delimiter">;;         </span><span class="org-comment">normally we'd recommend hooking orui after org-roam, but since org-roam does not have</span>
+  <span class="org-comment-delimiter">;;         </span><span class="org-comment">a hookable mode anymore, you're advised to pick something yourself</span>
+  <span class="org-comment-delimiter">;;         </span><span class="org-comment">if you don't care about startup time, use</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">:hook (after-init . org-roam-ui-mode)</span>
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org3ae18d7" class="outline-3">
+<h3 id="org3ae18d7">Latex</h3>
+<div class="outline-text-3" id="text-org3ae18d7">
+</div>
+<div id="outline-container-orgdce9cd3" class="outline-4">
+<h4 id="orgdce9cd3">Fix <code>latex</code> mode on startup</h4>
+<div class="outline-text-4" id="text-orgdce9cd3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">(add-to-list 'auto-mode-alist '("\\.tex\\'" . LaTeX-mode))</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge21fd38" class="outline-4">
+<h4 id="orge21fd38">Fontify <code>parhead</code> and <code>italhead</code></h4>
+<div class="outline-text-4" id="text-orge21fd38">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my-fold-parhead</span> (arg)
+  (propertize (concat arg <span class="org-string">"."</span>) 'face 'bold))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">my-fold-italhead</span> (arg)
+  (propertize (concat arg <span class="org-string">"."</span>) 'face 'italic))
+
+(<span class="org-keyword">with-eval-after-load</span> 'tex-fold
+  (add-to-list 'TeX-fold-macro-spec-list
+               '(my-fold-parhead (<span class="org-string">"parhead"</span>)))
+  (add-to-list 'TeX-fold-macro-spec-list
+               '(my-fold-italhead (<span class="org-string">"italhead"</span>)))
+  (add-to-list 'TeX-fold-macro-spec-list
+               '(<span class="org-string">"[{1}]"</span> (<span class="org-string">"label"</span>)))
+  (add-to-list 'TeX-fold-macro-spec-list
+               '(<span class="org-string">"[{1}]"</span> (<span class="org-string">"cref"</span> <span class="org-string">"Cref"</span> <span class="org-string">"vref"</span> <span class="org-string">"Vref"</span> <span class="org-string">"cpageref"</span>)))
+  )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org1eafd25" class="outline-4">
+<h4 id="org1eafd25">Prevent LaTeX compiler from stealing focus</h4>
+<div class="outline-text-4" id="text-org1eafd25">
+<p>
+Tweaked the code from <a href="https://github.com/doomemacs/doomemacs/blob/master/modules/lang/latex/%2Bviewers.el">https://github.com/doomemacs/doomemacs/blob/master/modules/lang/latex/%2Bviewers.el</a> so that Skim uses the <code>-g</code> option which prevents Skim from stealing the focus.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'tex
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">dolist</span> (viewer (reverse +latex-viewers))
+    (<span class="org-keyword">pcase</span> viewer
+      (`skim
+       (<span class="org-keyword">when-let</span>
+           (app-path
+            (<span class="org-keyword">and</span> IS-MAC
+                 (file-exists-p! (<span class="org-keyword">or</span> <span class="org-string">"/Applications/Skim.app"</span>
+                                     <span class="org-string">"~/Applications/Skim.app"</span>))))
+         (add-to-list 'TeX-view-program-selection '(output-pdf <span class="org-string">"Skim"</span>))
+         (add-to-list 'TeX-view-program-list
+                      (list <span class="org-string">"Skim"</span> (format <span class="org-string">"%s/Contents/SharedSupport/displayline -r -b -g %%n %%o %%b"</span>
+                                           app-path)))))))
+  )
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfe4dabc" class="outline-4">
+<h4 id="orgfe4dabc">Remove Superscript and subscript specialization</h4>
+<div class="outline-text-4" id="text-orgfe4dabc">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> tex-fontify-script nil)
+(<span class="org-keyword">setq</span> TeX-electric-sub-and-superscript t)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc2670ff" class="outline-4">
+<h4 id="orgc2670ff">Remove spellcheck in latex mode</h4>
+<div class="outline-text-4" id="text-orgc2670ff">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(add-hook! 'TeX-mode-hook
+           <span class="org-comment-delimiter">;;</span><span class="org-comment">(hl-todo-mode) ; TODO</span>
+           <span class="org-comment-delimiter">;; </span><span class="org-comment">Flycheck with both chktex and lacheck both just bother me with</span>
+           <span class="org-comment-delimiter">;; </span><span class="org-comment">worthless advice all the time. when my paper doesn't compile I'll re-</span>
+           <span class="org-comment-delimiter">;; </span><span class="org-comment">enable them.</span>
+           (flycheck-mode -1))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga9b9e91" class="outline-4">
+<h4 id="orga9b9e91"><code>CDLaTeX</code> Configuration</h4>
+<div class="outline-text-4" id="text-orga9b9e91">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> cdlatex
+  <span class="org-builtin">:bind</span>
+  (<span class="org-builtin">:map</span> cdlatex-mode-map (<span class="org-string">"TAB"</span> . cdlatex-tab))
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> cdlatex-simplify-sub-super-scripts nil) <span class="org-comment-delimiter">;; </span><span class="org-comment">I do not want $x_{i}TAB$ to get converted into $x_i$.</span>
+  <span class="org-builtin">:hook</span>
+  (cdlatex-tab . yas-expand))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">yas-next-field-or-cdlatex</span> nil
+      (<span class="org-keyword">interactive</span>)
+      <span class="org-string">"Jump to the next Yas field correctly with cdlatex active."</span>
+      (<span class="org-keyword">if</span>
+          (<span class="org-keyword">or</span> (<span class="org-keyword">bound-and-true-p</span> cdlatex-mode)
+              (<span class="org-keyword">bound-and-true-p</span> org-cdlatex-mode))
+          (cdlatex-tab)
+        (yas-next-field-or-maybe-expand)))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf9e0f8a" class="outline-4">
+<h4 id="orgf9e0f8a">Ask for master file</h4>
+<div class="outline-text-4" id="text-orgf9e0f8a">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'tex
+  (<span class="org-keyword">setq-default</span> TeX-master nil))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org606664b" class="outline-4">
+<h4 id="org606664b">Use LatexMk by default</h4>
+<div class="outline-text-4" id="text-org606664b">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'latex
+  (<span class="org-keyword">setq</span> TeX-command-default <span class="org-string">"LatexMk"</span>))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org5eb5bc5" class="outline-4">
+<h4 id="org5eb5bc5">Paper project setup</h4>
+<div class="outline-text-4" id="text-org5eb5bc5">
+<p>
+A function to initialize a LaTeX paper project with clean build configuration.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my/paper-latex-setup</span> ()
+  <span class="org-doc">"Set up a LaTeX paper project with clean build configuration.</span>
+<span class="org-doc">Creates:</span>
+<span class="org-doc">- .latexmkrc with output to build/</span>
+<span class="org-doc">- build/ directory</span>
+<span class="org-doc">- .dir-locals.el with TeX-output-dir"</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let*</span> ((project-root (<span class="org-keyword">or</span> (projectile-project-root)
+                           (vc-root-dir)
+                           default-directory))
+         (latexmkrc-file (expand-file-name <span class="org-string">".latexmkrc"</span> project-root))
+         (dir-locals-file (expand-file-name <span class="org-string">".dir-locals.el"</span> project-root))
+         (build-dir (expand-file-name <span class="org-string">"build"</span> project-root)))
+
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Create build directory</span>
+    (<span class="org-keyword">unless</span> (file-exists-p build-dir)
+      (make-directory build-dir t)
+      (message <span class="org-string">"Created build/ directory"</span>))
+
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Create .latexmkrc</span>
+    (<span class="org-keyword">unless</span> (file-exists-p latexmkrc-file)
+      (<span class="org-keyword">with-temp-file</span> latexmkrc-file
+        (insert <span class="org-string">"# LaTeXmk configuration file\n"</span>)
+        (insert <span class="org-string">"$out_dir = '</span><span class="org-string"><span class="org-constant">build</span></span><span class="org-string">';\n"</span>)
+        (insert <span class="org-string">"$pdf_mode = 1;\n"</span>)
+        (insert <span class="org-string">"$pdflatex = 'pdflatex --synctex=1 --interaction=nonstopmode --file-line-error';\n"</span>))
+      (message <span class="org-string">"Created .latexmkrc"</span>))
+
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Create or update .dir-locals.el</span>
+    (<span class="org-keyword">let</span> ((dir-locals-content '((LaTeX-mode . ((TeX-output-dir . <span class="org-string">"build"</span>))))))
+      (<span class="org-keyword">if</span> (file-exists-p dir-locals-file)
+          (message <span class="org-string">".dir-locals.el already exists - please add TeX-output-dir manually if needed"</span>)
+        (<span class="org-keyword">with-temp-file</span> dir-locals-file
+          (insert <span class="org-string">";; -*- mode: emacs-lisp -*-\n"</span>)
+          (insert (pp-to-string dir-locals-content)))
+        (message <span class="org-string">"Created .dir-locals.el"</span>)))
+
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Reload dir-locals for current buffer</span>
+    (hack-dir-local-variables-non-file-buffer)
+    (message <span class="org-string">"Paper project setup complete in %s"</span> project-root)))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge59eb70" class="outline-4">
+<h4 id="orge59eb70">Add keybinding for <code>TeX-font</code></h4>
+<div class="outline-text-4" id="text-orge59eb70">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(map! <span class="org-builtin">:map</span> LaTeX-mode-map
+      <span class="org-builtin">:leader</span>
+      <span class="org-builtin">:desc</span> <span class="org-string">"fontification"</span> <span class="org-string">"C-;"</span> #'TeX-font)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga7aedda" class="outline-4">
+<h4 id="orga7aedda">Add keybinding for <code>citar-insert-keys</code></h4>
+<div class="outline-text-4" id="text-orga7aedda">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(map! <span class="org-builtin">:map</span> LaTeX-mode-map
+      <span class="org-builtin">:localleader</span>
+      <span class="org-builtin">:desc</span> <span class="org-string">"Insert cite keys"</span> <span class="org-string">"k"</span> #'citar-insert-keys)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc02f431" class="outline-4">
+<h4 id="orgc02f431"><span class="todo FIXME">FIXME</span> Configure <code>cdlatex-math-symbol-alist</code></h4>
+<div class="outline-text-4" id="text-orgc02f431">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Add oplus in the first level of</span>
+(<span class="org-keyword">with-eval-after-load</span> 'cdlatex
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Configure symbols</span>
+  (<span class="org-keyword">setq</span> cdlatex-math-symbol-alist
+        (cons '(?+ (<span class="org-string">"\\cup"</span> <span class="org-string">"\\oplus"</span> <span class="org-string">"\\bigoplus"</span>))
+              (cons '(?* (<span class="org-string">"\\times"</span> <span class="org-string">"\\otimes"</span>))
+                    (assq-delete-all ?+
+                      (assq-delete-all ?* cdlatex-math-symbol-alist)))))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Add mathbb modify for character '</span><span class="org-comment"><span class="org-constant">a</span></span><span class="org-comment">'</span>
+  (<span class="org-keyword">setq</span> cdlatex-math-modify-alist
+        '((?a <span class="org-string">"\\mathbb"</span> nil t nil nil)))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Recompute tables</span>
+  (cdlatex-compute-tables))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org590183a" class="outline-4">
+<h4 id="org590183a">Change viewer</h4>
+<div class="outline-text-4" id="text-org590183a">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> +latex-viewers '(pdf-tools))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orga400f2f" class="outline-3">
+<h3 id="orga400f2f">Commenting shortcuts</h3>
+<div class="outline-text-3" id="text-orga400f2f">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(map! <span class="org-string">"M-/"</span> #'comment-or-uncomment-region)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orga2e0bc1" class="outline-2">
+<h2 id="orga2e0bc1">MacOS specific setup</h2>
+<div class="outline-text-2" id="text-orga2e0bc1">
+</div>
+<div id="outline-container-org9c58068" class="outline-3">
+<h3 id="org9c58068">LaTeX Binaries</h3>
+<div class="outline-text-3" id="text-org9c58068">
+<p>
+To ensure that the LaTeX related buffers function properly.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(setenv <span class="org-string">"PATH"</span> (concat (getenv <span class="org-string">"PATH"</span>) <span class="org-string">":/Library/TeX/texbin"</span>))
+(<span class="org-keyword">setq</span> exec-path (append exec-path '(<span class="org-string">"/Library/TeX/texbin"</span>)))
+(<span class="org-keyword">cond</span> (IS-MAC
+       (<span class="org-keyword">setq</span> mac-command-modifier       'super
+             mac-option-modifier        'meta
+             mac-right-option-modifier  'meta)))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga65899c" class="outline-3">
+<h3 id="orga65899c">Configure MacOS Swift Module</h3>
+<div class="outline-text-3" id="text-orga65899c">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Fix this path</span>
+(<span class="org-keyword">setq</span> macos-module-install-dir (file-name-concat doom-local-dir <span class="org-string">"straight"</span> <span class="org-string">"repos"</span> <span class="org-string">"EmacsMacOSModule"</span>))
+<span class="org-comment-delimiter">;; </span><span class="org-comment">(use-package macos</span>
+<span class="org-comment-delimiter">;;  </span><span class="org-comment">:config (macos-load-module))</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">When this fails, do the following</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Navigate to the folder</span>
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Run the "macos-rebuild-module-and-reload" command.</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org0f5cbc6" class="outline-3">
+<h3 id="org0f5cbc6">Fix Consult Locate Command</h3>
+<div class="outline-text-3" id="text-org0f5cbc6">
+<p>
+The default did not work. So, I am using this patch.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setopt</span> consult-locate-args <span class="org-string">"mdfind -name "</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org431bd9f" class="outline-2">
+<h2 id="org431bd9f">Packages</h2>
+<div class="outline-text-2" id="text-org431bd9f">
+</div>
+<div id="outline-container-orga16af48" class="outline-3">
+<h3 id="orga16af48">Bibliography</h3>
+<div class="outline-text-3" id="text-orga16af48">
+</div>
+<div id="outline-container-orgfe4fcd6" class="outline-4">
+<h4 id="orgfe4fcd6">Setup <code>Citar</code></h4>
+<div class="outline-text-4" id="text-orgfe4fcd6">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> citar
+  <span class="org-builtin">:after</span> oc
+  <span class="org-builtin">:custom</span>
+  (citar-bibliography '(<span class="org-string">"~/Overleaf/References.bib"</span>))
+  (citar-notes-paths (list (file-name-concat org-directory <span class="org-string">"200-notes"</span> <span class="org-string">"literature notes"</span>)))
+  (citar-templates  '((main . <span class="org-string">"${author editor:30%sn}     ${date year issued:4}     ${title:48}"</span>)
+                      (suffix . <span class="org-string">"          ${=key= id:15}    ${=type=:12}    ${tags keywords keywords:*}"</span>)
+                      (preview . <span class="org-string">"${author editor:%etal} (${year issued date}) ${title}, \</span>
+<span class="org-string">${journal journaltitle publisher container-title collection-title}.\n"</span>)
+                      (note . <span class="org-string">"${title}"</span>)))
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> org-cite-global-bibliography citar-bibliography)
+  <span class="org-builtin">:hook</span>
+  (LaTeX-mode . citar-capf-setup)
+  (org-mode . citar-capf-setup))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf7d750a" class="outline-4">
+<h4 id="orgf7d750a">Change Citar Note template</h4>
+<div class="outline-text-4" id="text-orgf7d750a">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my-custom-citarorg-format-note-template</span> (orig-fun key entry)
+  <span class="org-doc">"Custom template for Citar notes, including a pipe placeholder for easy navigation."</span>
+  (<span class="org-keyword">let*</span> ((filepath (expand-file-name
+                    (concat key <span class="org-string">".org"</span>)
+                    (car citar-notes-paths)))
+         (buffer (find-file filepath))
+         (template (citar--get-template 'note))
+         (note-meta (<span class="org-keyword">when</span> template
+                      (citar-format--entry template entry)))
+         (title (<span class="org-keyword">or</span> note-meta
+                    (citar-format--entry <span class="org-string">"${title}"</span> entry)))) <span class="org-comment-delimiter">;; </span><span class="org-comment">Fallback if note-meta is nil</span>
+    (<span class="org-keyword">with-current-buffer</span> buffer
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">(From the original function) This just overrides other template insertion.</span>
+      (erase-buffer)
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Insert custom content</span>
+      (insert <span class="org-string">":PROPERTIES:\n:DIR:      images/\n:END:\n"</span>)
+      (insert (format <span class="org-string">"#+title: %s\n\n"</span> title))
+      (insert (format <span class="org-string">"Original paper: [cite:@%s]\n\n"</span> key))
+      (insert <span class="org-string">"|\n\n* References\n#+print_bibliography:\n"</span>)
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Move the point to the placeholder</span>
+      (search-backward <span class="org-string">"|"</span>)
+      (delete-char 1) <span class="org-comment-delimiter">;; </span><span class="org-comment">Remove the pipe character</span>
+      (<span class="org-keyword">when</span> (fboundp 'evil-insert)
+        (evil-insert 1)))))
+
+(advice-add 'citar-org-format-note-default <span class="org-builtin">:around</span> #'my-custom-citarorg-format-note-template)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc2089cc" class="outline-4">
+<h4 id="orgc2089cc">Open Bibliographic Notes</h4>
+<div class="outline-text-4" id="text-orgc2089cc">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">when</span> (modulep! <span class="org-builtin">:completion</span> vertico)
+  (map! <span class="org-builtin">:leader</span>
+        <span class="org-builtin">:desc</span> <span class="org-string">"Edit notes"</span>
+        <span class="org-string">"n e"</span> #'citar-open-notes)
+  (map! <span class="org-builtin">:leader</span>
+        <span class="org-builtin">:desc</span> <span class="org-string">"Open Reference Files"</span>
+        <span class="org-string">"n b"</span> #'citar-open-files))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6a90673" class="outline-4">
+<h4 id="org6a90673">Sort bibliography entries by year</h4>
+<div class="outline-text-4" id="text-org6a90673">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my/sort-by-year</span> (candidates)
+  <span class="org-doc">"Sort candidates by year ascending, entries without a year last."</span>
+  (seq-sort (<span class="org-keyword">lambda</span> (a b)
+              (<span class="org-keyword">let</span> ((ya (<span class="org-keyword">if</span> (string-match <span class="org-string">"\\b</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">[0-9]\\{</span><span class="org-string"><span class="org-variable-name">4\\</span></span><span class="org-string">}</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string">\\b"</span> a)
+                           (string-to-number (match-string 1 a)) most-positive-fixnum))
+                    (yb (<span class="org-keyword">if</span> (string-match <span class="org-string">"\\b</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">(</span></span><span class="org-string">[0-9]\\{</span><span class="org-string"><span class="org-variable-name">4\\</span></span><span class="org-string">}</span><span class="org-string"><span class="org-regexp-grouping-backslash">\\</span></span><span class="org-string"><span class="org-regexp-grouping-construct">)</span></span><span class="org-string">\\b"</span> b)
+                           (string-to-number (match-string 1 b)) most-positive-fixnum)))
+                (&lt; ya yb)))
+            candidates))
+
+(add-to-list 'vertico-multiform-categories
+             '(citar-candidate (vertico-sort-function . my/sort-by-year)))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfcc8519" class="outline-3">
+<h3 id="orgfcc8519">Searching</h3>
+<div class="outline-text-3" id="text-orgfcc8519">
+<p>
+Configure <code>isearch</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">isearch-exit-at-front</span> ()
+  <span class="org-doc">"always exit isearch, at the front of search match."</span>
+  (<span class="org-keyword">interactive</span>)
+  (isearch-exit)
+  (<span class="org-keyword">when</span> isearch-forward
+    (goto-char isearch-other-end)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">isearch-exit-at-end</span> ()
+  <span class="org-doc">"Always exit isearch, at the end of search match."</span>
+  (<span class="org-keyword">interactive</span>)
+  (isearch-exit)
+  (<span class="org-keyword">when</span> (not isearch-forward)
+    (goto-char isearch-other-end)))
+
+(<span class="org-keyword">use-package</span> emacs
+  <span class="org-builtin">:bind</span> (<span class="org-builtin">:map</span> isearch-mode-map
+              (<span class="org-string">"&lt;return&gt;"</span> . isearch-exit-at-front)
+              (<span class="org-string">"C-&lt;return&gt;"</span> . isearch-exit-at-end))
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> case-fold-search t
+        isearch-lazy-count t))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgeb69535" class="outline-3">
+<h3 id="orgeb69535">Consult</h3>
+<div class="outline-text-3" id="text-orgeb69535">
+<p>
+Fix wgrep problems for long lined projects
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'consult
+  (<span class="org-keyword">setq</span> consult-grep-max-columns nil))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org11fc303" class="outline-3">
+<h3 id="org11fc303">Denote</h3>
+<div class="outline-text-3" id="text-org11fc303">
+</div>
+<div id="outline-container-org239ce1e" class="outline-4">
+<h4 id="org239ce1e">Basic settings</h4>
+<div class="outline-text-4" id="text-org239ce1e">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> denote
+  <span class="org-builtin">:init</span>
+  (<span class="org-keyword">setq</span> denote-directory (file-name-concat org-directory <span class="org-string">"200-notes"</span>))
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> denote-file-name-components-order '(signature identifier title keywords)
+        denote-known-keywords '(<span class="org-string">"distsys"</span> <span class="org-string">"crypto"</span> <span class="org-string">"blockchain"</span> <span class="org-string">"visa"</span> <span class="org-string">"purdue"</span>))
+  (add-to-list 'safe-local-variable-directories denote-directory)
+  (add-to-list 'safe-local-variable-directories (file-name-concat denote-directory <span class="org-string">"project notes"</span>)))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org65743d2" class="outline-3">
+<h3 id="org65743d2">Projectile</h3>
+<div class="outline-text-3" id="text-org65743d2">
+</div>
+<div id="outline-container-org1a22c1e" class="outline-4">
+<h4 id="org1a22c1e">Configuration</h4>
+<div class="outline-text-4" id="text-org1a22c1e">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> projectile-project-search-path
+      (list <span class="org-string">"~/Overleaf"</span> <span class="org-string">"~/Github"</span>))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orge57630c" class="outline-4">
+<h4 id="orge57630c">Project local snippets</h4>
+<div class="outline-text-4" id="text-orge57630c">
+<p>
+Inspired from here: <a href="https://www.reddit.com/r/emacs/comments/57i41t/projectlocal_snippets/">https://www.reddit.com/r/emacs/comments/57i41t/projectlocal_snippets/</a>
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">crshd/set-projectile-yas-dir</span> ()
+  <span class="org-doc">"Append a projectile-local YAS snippet dir to yas-snippet-dirs."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let</span> ((local-yas-dir (concat (projectile-project-root) <span class="org-string">".snippets"</span>)))
+    (<span class="org-keyword">when</span> (file-directory-p local-yas-dir)
+      (add-to-list 'yas-snippet-dirs local-yas-dir)
+      (yas-reload-all))))
+
+(add-hook 'projectile-find-file-hook 'crshd/set-projectile-yas-dir)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org3464b00" class="outline-3">
+<h3 id="org3464b00">Novel</h3>
+<div class="outline-text-3" id="text-org3464b00">
+</div>
+<div id="outline-container-org0fc46d3" class="outline-4">
+<h4 id="org0fc46d3">Visual Configuration</h4>
+<div class="outline-text-4" id="text-org0fc46d3">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my-nov-font-setup</span> ()
+  <span class="org-doc">"Setup fonts, centering, width, etc."</span>
+  (face-remap-add-relative 'variable-pitch <span class="org-builtin">:family</span> <span class="org-string">"Iosevka Etoile"</span>
+                           <span class="org-builtin">:height</span> 1.2)
+  (<span class="org-keyword">setq-local</span> visual-fill-column-center-text t)
+  (visual-line-fill-column-mode)
+  (variable-pitch-mode 1) <span class="org-comment-delimiter">;; </span><span class="org-comment">Enable variable-pitch-mode irrespective of the previous state</span>
+  (<span class="org-keyword">setq-local</span> line-spacing 0.2)
+  (message <span class="org-string">"Successfully configured Nov Fonts."</span>))
+
+(<span class="org-keyword">use-package</span> nov
+  <span class="org-builtin">:mode</span> (<span class="org-string">"\\.epub\\'"</span> . nov-mode)
+  <span class="org-builtin">:hook</span>
+  (nov-mode . my-nov-font-setup)
+  <span class="org-builtin">:config</span>
+  (<span class="org-keyword">setq</span> nov-save-place-file (concat doom-cache-dir <span class="org-string">"nov-places"</span>)
+        nov-text-width t))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org8706eaf" class="outline-4">
+<h4 id="org8706eaf">Mode line configuration</h4>
+<div class="outline-text-4" id="text-org8706eaf">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defvar-local</span> <span class="org-variable-name">nov-chapter-chars</span> nil
+  <span class="org-doc">"Buffer-local variable to store chapter character counts."</span>)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">nov-book-title</span> ()
+  <span class="org-doc">"Return the title of the current book from `nov-metadata`."</span>
+  (<span class="org-keyword">if</span> (<span class="org-keyword">and</span> (boundp 'nov-metadata) nov-metadata)
+      (cdr (assq 'title nov-metadata))
+    (<span class="org-warning">error</span> <span class="org-string">"nov-metadata is not available"</span>)))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">nov-compute-chapter-chars</span> ()
+  <span class="org-doc">"Compute character count for each chapter in the current nov-mode buffer."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">when</span> (eq major-mode 'nov-mode)
+    (message <span class="org-string">"Computing chapter sizes..."</span>)
+    (<span class="org-keyword">let</span> ((chars-list nil)
+          (current-index nov-documents-index)
+          (current-point (point)))
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Save the current position in history to restore it later</span>
+      (<span class="org-keyword">push</span> (list current-index current-point) nov-history)
+
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Process each document in nov-documents vector, skipping non-content entries</span>
+      (<span class="org-keyword">dotimes</span> (i (length nov-documents))
+        (<span class="org-keyword">let*</span> ((doc (aref nov-documents i))
+               (doc-id (car doc)))
+          <span class="org-comment-delimiter">;; </span><span class="org-comment">Skip non-content entries like '</span><span class="org-comment"><span class="org-constant">ncx</span></span><span class="org-comment">' and '</span><span class="org-comment"><span class="org-constant">titlepage</span></span><span class="org-comment">'</span>
+          (<span class="org-keyword">unless</span> (memq doc-id '(ncx titlepage))
+            (<span class="org-keyword">let</span> ((temp-buffer (generate-new-buffer <span class="org-string">" *nov-temp*"</span>)))
+              (<span class="org-keyword">condition-case</span> nil
+                  (<span class="org-keyword">progn</span>
+                    <span class="org-comment-delimiter">;; </span><span class="org-comment">Use a temporary buffer to avoid changing point</span>
+                    (<span class="org-keyword">with-current-buffer</span> temp-buffer
+                      (insert-file-contents (cdr doc))
+                      (<span class="org-keyword">let</span> ((char-count (- (point-max) (point-min))))
+                        (<span class="org-keyword">when</span> (&gt; char-count 0)
+                          (<span class="org-keyword">push</span> (cons i char-count) chars-list))))
+                    (kill-buffer temp-buffer))
+                (<span class="org-warning">error</span> (kill-buffer temp-buffer)))))))
+
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Restore original position</span>
+      (nov-goto-document current-index)
+      (goto-char current-point)
+
+      (<span class="org-keyword">when</span> chars-list
+        (<span class="org-keyword">setq-local</span> nov-chapter-chars (nreverse chars-list))
+        (message <span class="org-string">"Done computing chapter sizes."</span>)))))
+
+(add-hook 'nov-mode-hook 'nov-compute-chapter-chars)
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">nov-get-percentage</span> ()
+  <span class="org-doc">"Get percentage of ebook completed in nov-mode."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">when</span> (eq major-mode 'nov-mode)
+    (<span class="org-keyword">unless</span> nov-chapter-chars
+      (nov-compute-chapter-chars))
+
+    (<span class="org-keyword">if</span> (null nov-chapter-chars)
+        (message <span class="org-string">"No chapter data available. Try running nov-compute-chapter-chars first."</span>)
+      (<span class="org-keyword">let*</span> ((total-chars 0)
+             (chars-before-current 0)
+             (current-chapter-chars 0)
+             (current-chapter-read 0))
+
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">Calculate total characters</span>
+        (<span class="org-keyword">dolist</span> (chapter nov-chapter-chars)
+          (<span class="org-keyword">setq</span> total-chars (+ total-chars (cdr chapter))))
+
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">Calculate characters in chapters before current</span>
+        (<span class="org-keyword">dolist</span> (chapter nov-chapter-chars)
+          (<span class="org-keyword">when</span> (&lt; (car chapter) nov-documents-index)
+            (<span class="org-keyword">setq</span> chars-before-current (+ chars-before-current (cdr chapter)))))
+
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">Get current chapter's character count</span>
+        (<span class="org-keyword">setq</span> current-chapter-chars
+              (<span class="org-keyword">or</span> (cdr (assoc nov-documents-index nov-chapter-chars)) 0))
+
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">Calculate how much of current chapter is read</span>
+        (<span class="org-keyword">when</span> (&gt; current-chapter-chars 0)
+          (<span class="org-keyword">setq</span> current-chapter-read
+                (* (/ (float (- (point) (point-min)))
+                      (float (- (point-max) (point-min))))
+                   current-chapter-chars)))
+
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">Calculate and display percentage</span>
+        (<span class="org-keyword">if</span> (= total-chars 0)
+            (message <span class="org-string">"Total book size is zero characters."</span>)
+          (<span class="org-keyword">let</span> ((percentage (* 100 (/ (float (+ chars-before-current current-chapter-read))
+                                      (float total-chars)))))
+            percentage))))))
+
+(<span class="org-keyword">defun</span> <span class="org-function-name">nov-get-chapter-percentage</span> ()
+  <span class="org-doc">"Get percentage of current chapter completed in nov-mode."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">when</span> (eq major-mode 'nov-mode)
+    (<span class="org-keyword">let*</span> ((current-pos (- (point) (point-min)))
+           (chapter-size (- (point-max) (point-min)))
+           (percentage (<span class="org-keyword">if</span> (&gt; chapter-size 0)
+                           (* 100 (/ (float current-pos)
+                                     (float chapter-size)))
+                         0)))
+      (<span class="org-keyword">if</span> (called-interactively-p 'any)
+          (message <span class="org-string">"Chapter progress: %.2f%%"</span> percentage)
+        percentage))))
+
+(<span class="org-keyword">with-eval-after-load</span> 'doom-modeline
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Define your custom doom-modeline segments</span>
+  (doom-modeline-def-segment book-name
+                             <span class="org-string">"Show current book title in nov-mode."</span>
+                             (<span class="org-keyword">when</span> (eq major-mode 'nov-mode)
+                               (<span class="org-keyword">let</span> ((sep (doom-modeline-spc)))
+                                 (concat sep
+                                         (propertize (nov-book-title)
+                                                     'face 'doom-modeline-buffer-file)
+                                         sep))))
+
+  (doom-modeline-def-segment book-percentage
+                             <span class="org-string">"Show current position as percentage in nov-mode."</span>
+                             (<span class="org-keyword">when</span> (eq major-mode 'nov-mode)
+                               (<span class="org-keyword">let</span> ((sep (doom-modeline-spc))
+                                     (vsep (doom-modeline-vspc)))
+                                 (concat sep
+                                         <span class="org-comment-delimiter">;; </span><span class="org-comment">Add the book/reading icon</span>
+                                         (doom-modeline-icon 'mdicon <span class="org-string">"nf-md-book_open_page_variant"</span> <span class="org-string">"&#128214;"</span> <span class="org-string">"%"</span>
+                                                             <span class="org-builtin">:face</span> 'doom-modeline-info
+                                                             <span class="org-builtin">:v-adjust</span> 0.15)
+                                         vsep
+                                         (propertize (format <span class="org-string">"Book: %.2f%%%%"</span> (nov-get-percentage))
+                                                     'face 'doom-modeline-info)
+                                         sep))))
+
+  (doom-modeline-def-segment book-chapter-percentage
+                             <span class="org-string">"Show current chapter position as percentage in nov-mode."</span>
+                             (<span class="org-keyword">when</span> (eq major-mode 'nov-mode)
+                               (<span class="org-keyword">let</span> ((sep (doom-modeline-spc))
+                                     (vsep (doom-modeline-vspc)))
+                                 (concat sep
+                                         (doom-modeline-icon 'octicon <span class="org-string">"nf-oct-bookmark"</span> <span class="org-string">"&#128278; "</span> <span class="org-string">"Ch"</span>
+                                                             <span class="org-builtin">:face</span> 'doom-modeline-warning
+                                                             <span class="org-builtin">:v-adjust</span> 0.05)
+                                         vsep
+                                         (propertize (format <span class="org-string">"Chapter %d/%d: %.2f%%%%"</span> (1+ nov-documents-index) (length nov-documents) (nov-get-chapter-percentage))
+                                                     'face 'doom-modeline-warning)
+                                         sep))))
+
+  (doom-modeline-def-modeline 'my-nov-modeline
+                              '(bar workspace-name window-number modals matches follow book-name book-chapter-percentage book-percentage selection-info)
+                              '(misc-info major-mode process vcs check time))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Configure other mode-lines based on major modes</span>
+  (add-to-list 'doom-modeline-mode-alist '(nov-mode . my-nov-modeline)))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga1ea6a0" class="outline-4">
+<h4 id="orga1ea6a0">Go to TOC, keep point at current chapter</h4>
+<div class="outline-text-4" id="text-orga1ea6a0">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my/nov-goto-toc-and-chapter</span> ()
+  <span class="org-doc">"Go to the TOC and move point to the current chapter entry."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">let*</span> ((current-doc-path (cdr (aref nov-documents nov-documents-index)))
+         (current-basename (file-name-nondirectory current-doc-path)))
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">First go to the TOC</span>
+    (nov-goto-toc)
+
+    <span class="org-comment-delimiter">;; </span><span class="org-comment">Now find the link to the current chapter and move to it</span>
+    (<span class="org-keyword">let</span> ((pos (point-min))
+          (found nil))
+      (<span class="org-keyword">while</span> (<span class="org-keyword">and</span> (not found)
+                  (<span class="org-keyword">setq</span> pos (next-single-property-change pos 'shr-url nil (point-max))))
+        (<span class="org-keyword">let</span> ((url (get-text-property pos 'shr-url)))
+          (<span class="org-keyword">when</span> url
+            (<span class="org-keyword">let*</span> ((filename-target (nov-url-filename-and-target url))
+                   (filename (car filename-target)))
+              (<span class="org-keyword">when</span> filename
+                (<span class="org-keyword">let</span> ((url-basename (file-name-nondirectory filename)))
+                  <span class="org-comment-delimiter">;; </span><span class="org-comment">Compare file basenames to find a match</span>
+                  (<span class="org-keyword">when</span> (equal url-basename current-basename)
+                    (<span class="org-keyword">setq</span> found t)
+                    (goto-char pos)
+                    (message <span class="org-string">"Moved to chapter %s"</span> url-basename))))))))
+      (<span class="org-keyword">unless</span> found
+        (message <span class="org-string">"Chapter not found in TOC"</span>)))))
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Replace the original keybinding</span>
+(map! <span class="org-builtin">:map</span> nov-mode-map
+      <span class="org-builtin">:desc</span> <span class="org-string">"Go to TOC and find current chapter"</span> <span class="org-string">"t"</span> #'my/nov-goto-toc-and-chapter)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3b2103e" class="outline-4">
+<h4 id="org3b2103e">Move all Novel buffers to Reading workspace</h4>
+<div class="outline-text-4" id="text-org3b2103e">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">Define a constant for the target workspace name</span>
+(<span class="org-keyword">defconst</span> <span class="org-variable-name">my/reading-workspace-name</span> <span class="org-string">"Reading"</span>
+  <span class="org-doc">"The designated workspace name for reading activities (e.g., nov.el buffers)."</span>)
+
+<span class="org-comment-delimiter">;; </span><span class="org-comment">Configure the nov package</span>
+(<span class="org-keyword">use-package</span> nov
+  <span class="org-builtin">:config</span>
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Define the helper function within the package's config</span>
+  (<span class="org-keyword">defun</span> <span class="org-function-name">my/ensure-reading-workspace-for-nov</span> ()
+    <span class="org-doc">"Switch to the workspace defined by `my/reading-workspace-name`</span>
+<span class="org-doc">if the current buffer is in nov-mode and we aren't already in</span>
+<span class="org-doc">that workspace. Creates the workspace if it doesn't exist."</span>
+    (<span class="org-keyword">let</span> ((current-ws-name (+workspace-current-name)))
+      (<span class="org-keyword">unless</span> (string= current-ws-name my/reading-workspace-name)
+        (message <span class="org-string">"Ensuring '</span><span class="org-string"><span class="org-constant">%s</span></span><span class="org-string">' workspace for nov.el buffer..."</span> my/reading-workspace-name)
+        (+workspace-switch my/reading-workspace-name t))))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Add the function to the hook</span>
+  (add-hook 'nov-mode-hook #'my/ensure-reading-workspace-for-nov))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org5e3a3ea" class="outline-3">
+<h3 id="org5e3a3ea">Logview</h3>
+<div class="outline-text-3" id="text-org5e3a3ea">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">use-package</span> logview)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org77e7f66" class="outline-3">
+<h3 id="org77e7f66">Github Copilot</h3>
+<div class="outline-text-3" id="text-org77e7f66">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="org-comment-delimiter">;; </span><span class="org-comment">accept completion from copilot and fallback to company</span>
+(<span class="org-keyword">use-package</span> copilot
+  <span class="org-builtin">:hook</span> (prog-mode . copilot-mode)
+  <span class="org-builtin">:bind</span> (<span class="org-builtin">:map</span> copilot-completion-map
+              (<span class="org-string">"&lt;tab&gt;"</span> . 'copilot-accept-completion)
+              (<span class="org-string">"TAB"</span> . 'copilot-accept-completion)
+              (<span class="org-string">"C-TAB"</span> . 'copilot-accept-completion-by-word)
+              (<span class="org-string">"C-&lt;tab&gt;"</span> . 'copilot-accept-completion-by-word))
+  <span class="org-builtin">:config</span>
+  (add-to-list 'copilot-indentation-alist '(prog-mode 2))
+  (add-to-list 'copilot-indentation-alist '(org-mode 2))
+  (add-to-list 'copilot-indentation-alist '(text-mode 2))
+  (add-to-list 'copilot-indentation-alist '(closure-mode 2)))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org58f54fd" class="outline-3">
+<h3 id="org58f54fd">Document Viewer</h3>
+<div class="outline-text-3" id="text-org58f54fd">
+<p>
+I find the default resolution pixelated.
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> doc-view-resolution 1000)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org3305a7e" class="outline-3">
+<h3 id="org3305a7e">Email</h3>
+<div class="outline-text-3" id="text-org3305a7e">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> +mu4e-backend nil)
+(<span class="org-keyword">with-eval-after-load</span> 'mu4e
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">General settings</span>
+  (<span class="org-keyword">setq</span> mu4e-update-interval 300
+        mu4e-compose-format-flowed t
+        mu4e-view-show-images t
+        mu4e-change-filenames-when-moving t
+        mu4e-sent-messages-behavior 'trash)  <span class="org-comment-delimiter">;; </span><span class="org-comment">Changed from '</span><span class="org-comment"><span class="org-constant">delete</span></span><span class="org-comment">' to '</span><span class="org-comment"><span class="org-constant">trash</span></span><span class="org-comment">'</span>
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Configure multiple accounts</span>
+  (<span class="org-keyword">setq</span> mu4e-contexts
+        (list
+         <span class="org-comment-delimiter">;; </span><span class="org-comment">Gmail Account</span>
+         (make-mu4e-context
+          <span class="org-builtin">:name</span> <span class="org-string">"gmail"</span>
+          <span class="org-builtin">:match-func</span> (<span class="org-keyword">lambda</span> (msg)
+                        (<span class="org-keyword">when</span> msg
+                          (string-prefix-p <span class="org-string">"/gmail"</span> (mu4e-message-field msg <span class="org-builtin">:maildir</span>))))
+          <span class="org-builtin">:vars</span> '((user-mail-address . <span class="org-string">"dth.bht@gmail.com"</span>)
+                  (user-full-name . <span class="org-string">"Adithya Bhat"</span>)
+                  (mu4e-sent-folder . <span class="org-string">"/gmail/[Gmail].Sent Mail"</span>)
+                  (mu4e-drafts-folder . <span class="org-string">"/gmail/[Gmail].Drafts"</span>)
+                  (mu4e-trash-folder . <span class="org-string">"/gmail/[Gmail].Trash"</span>)
+                  (mu4e-refile-folder . <span class="org-string">"/gmail/[Gmail].All Mail"</span>)
+                  (smtpmail-smtp-user . <span class="org-string">"dth.bht@gmail.com"</span>)
+                  (smtpmail-smtp-server . <span class="org-string">"smtp.gmail.com"</span>)
+                  (smtpmail-smtp-service . 587)
+                  (smtpmail-stream-type . starttls)))
+
+         <span class="org-comment-delimiter">;; </span><span class="org-comment">Research Account</span>
+         (make-mu4e-context
+          <span class="org-builtin">:name</span> <span class="org-string">"research"</span>
+          <span class="org-builtin">:match-func</span> (<span class="org-keyword">lambda</span> (msg)
+                        (<span class="org-keyword">when</span> msg
+                          (string-prefix-p <span class="org-string">"/research"</span> (mu4e-message-field msg <span class="org-builtin">:maildir</span>))))
+          <span class="org-builtin">:vars</span> '((user-mail-address . <span class="org-string">"haxolotl.research@gmail.com"</span>)
+                  (user-full-name . <span class="org-string">"Adithya Bhat"</span>)
+                  (mu4e-sent-folder . <span class="org-string">"/research/[Gmail].Sent Mail"</span>)
+                  (mu4e-drafts-folder . <span class="org-string">"/research/[Gmail].Drafts"</span>)
+                  (mu4e-trash-folder . <span class="org-string">"/research/[Gmail].Trash"</span>)
+                  (mu4e-refile-folder . <span class="org-string">"/research/[Gmail].All Mail"</span>)
+                  (smtpmail-smtp-user . <span class="org-string">"haxolotl.research@gmail.com"</span>)
+                  (smtpmail-smtp-server . <span class="org-string">"smtp.gmail.com"</span>)
+                  (smtpmail-smtp-service . 587)
+                  (smtpmail-stream-type . starttls)))))
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Set default context</span>
+  (<span class="org-keyword">setq</span> mu4e-context-policy 'pick-first)
+  (<span class="org-keyword">setq</span> mu4e-compose-context-policy 'ask)
+
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Use your wrapper alias</span>
+  (<span class="org-keyword">setq</span> mu4e-get-mail-command <span class="org-string">"mbsync-wrapper -a"</span>))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org2b13a0b" class="outline-3">
+<h3 id="org2b13a0b">Avy</h3>
+<div class="outline-text-3" id="text-org2b13a0b">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">avy-action-dictionary</span> (pt)
+  (<span class="org-keyword">unwind-protect</span>
+      (<span class="org-keyword">save-excursion</span>
+        (goto-char pt)
+        (<span class="org-keyword">let</span> ((word (thing-at-point 'word)))
+          (<span class="org-keyword">when</span> word
+            (+lookup/dictionary-definition word)))))
+  t)
+(<span class="org-keyword">with-eval-after-load</span> 'avy
+    (<span class="org-keyword">setf</span> (alist-get ?p avy-dispatch-alist) 'avy-action-dictionary))
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga0b10c1" class="outline-3">
+<h3 id="orga0b10c1">PDF View</h3>
+<div class="outline-text-3" id="text-orga0b10c1">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'pdf-view
+  <span class="org-comment-delimiter">;; </span><span class="org-comment">Bind to link</span>
+  (map! <span class="org-builtin">:map</span> pdf-view-mode-map
+        <span class="org-string">"C-."</span> #'pdf-links-isearch-link
+        <span class="org-string">"c"</span> #'pdf-view-center-in-window))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfe42eb8" class="outline-2">
+<h2 id="orgfe42eb8">Combination</h2>
+<div class="outline-text-2" id="text-orgfe42eb8">
+<p>
+Configure interaction between multiple packages here. For example, avy and embark
+</p>
+</div>
+<div id="outline-container-orgdca47ba" class="outline-3">
+<h3 id="orgdca47ba">Avy and Embark</h3>
+<div class="outline-text-3" id="text-orgdca47ba">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">avy-action-embark</span> (pt)
+  (<span class="org-keyword">unwind-protect</span>
+      (<span class="org-keyword">save-excursion</span>
+        (goto-char pt)
+        (embark-act))
+    (select-window
+     (cdr (ring-ref avy-ring 0))))
+  t)
+
+(<span class="org-keyword">with-eval-after-load</span> 'embark
+  (<span class="org-keyword">with-eval-after-load</span> 'avy
+    (<span class="org-keyword">setf</span> (alist-get ?. avy-dispatch-alist) 'avy-action-embark)))
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org7d9dbba" class="outline-2">
+<h2 id="org7d9dbba">Fixes</h2>
+<div class="outline-text-2" id="text-org7d9dbba">
+<p>
+Temporary patches that should solve themselves during doom upgrades. So revisit them when upgrading and track the issues correspondingly.
+</p>
+</div>
+<div id="outline-container-orgf0106a0" class="outline-3">
+<h3 id="orgf0106a0">Patch Org Snippet Expansion</h3>
+<div class="outline-text-3" id="text-orgf0106a0">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(map! <span class="org-builtin">:map</span> org-mode-map
+      <span class="org-builtin">:after</span> yasnippet
+      [tab]        yas-maybe-expand
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Optionally, bind other keys for snippet navigation</span>
+      <span class="org-string">"C-c n"</span>      #'yas-next-field
+      <span class="org-string">"C-c p"</span>      #'yas-prev-field)
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(insert-file-contents <span class="org-string">"~/.config/doom/config.org"</span>)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

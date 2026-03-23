@@ -1,0 +1,98 @@
+/* Force light theme regardless of system preference */
+body {
+    background-color: #fffff8;
+    color: #111;
+}
+
+/* Constrain code blocks to article width (override ox-tufte wide style) */
+.org-src-container {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Code blocks — light gray background for light theme */
+pre.src {
+    background-color: #f0f0f0;
+    color: #1a1a1a;
+    padding: 1em;
+    border-radius: 4px;
+    overflow-x: auto;
+    width: auto;
+    box-sizing: border-box;
+}
+
+pre.example {
+    background-color: #f0f0f0;
+    color: #1a1a1a;
+    padding: 1em;
+    border-radius: 4px;
+    overflow-x: auto;
+    width: auto;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+/* Keywords: fn, let, mut, const, pub, use, mod, struct, impl, etc. */
+.org-keyword { color: #7928a1; }
+.org-rust-ts-unsafe { color: #d32f2f; }
+
+/* Types and builtins */
+.org-type { color: #b58900; }
+.org-builtin { color: #1565c0; }
+.org-constant { color: #d84315; }
+
+/* Strings and characters */
+.org-string { color: #2e7d32; }
+.org-doc { color: #2e7d32; }
+
+/* Comments */
+.org-comment { color: #8e908c; font-style: italic; }
+.org-comment-delimiter { color: #8e908c; font-style: italic; }
+
+/* Functions and variables */
+.org-function-name { color: #1565c0; }
+.org-variable-name { color: #c62828; }
+
+/* Preprocessor and macros */
+.org-preprocessor { color: #00838f; }
+
+/* Operators and punctuation */
+.org-negation-char { color: #00838f; }
+
+/* Warnings and errors */
+.org-warning { color: #f57f17; font-weight: bold; }
+
+/* General formatting */
+.org-bold { font-weight: bold; }
+.org-italic { font-style: italic; }
+.org-underline { text-decoration: underline; }
+
+/* Notes index entries */
+.note-entry {
+    margin-bottom: 1em;
+    font-size: 1.4rem;
+    line-height: 2rem;
+}
+.note-entry a {
+    font-size: inherit;
+}
+.note-badge {
+    display: inline-block;
+    font-size: 0.75em;
+    padding: 0.15em 0.5em;
+    border-radius: 3px;
+    margin-top: 0.2em;
+    font-family: sans-serif;
+}
+.date-badge {
+    background-color: #e8e8e8;
+    color: #333;
+}
+.source-badge {
+    background-color: #d4e8d4;
+    color: #2a5a2a;
+    text-transform: capitalize;
+}
