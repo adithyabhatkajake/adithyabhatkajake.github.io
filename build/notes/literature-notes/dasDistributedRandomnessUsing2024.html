@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-03-22 Sun 21:01 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Distributed Randomness using Weighted VRFs</title>
+<meta name="author" content="Adithya Bhat" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
+<link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
+<link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class="banner">
+   <a id="myname" href="/">Hermitsage</a>
+  <hr>
+<nav>
+    <p>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/cv.html">CV</a>
+        <a href="/notes/index.html">Notes</a>
+        <a href="/blogs/index.html">Blog</a>
+    </p>
+  </nav>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">Distributed Randomness using Weighted VRFs</h1>
+<p>
+Paper: <a href="#citeproc_bib_item_1"><i>Distributed Randomness using Weighted VRFs</i>. Sourav Das, Benny Pinkas, Alin Tomescu, and Zhuolun Xiang. 2024</a>
+</p>
+
+<ul class="org-ul">
+<li>Weighted Secret sharing for <b>Pairing Group Elements</b></li>
+<li>Each party has a weight \(w_i\).</li>
+</ul>
+<div id="outline-container-org14001d5" class="outline-2">
+<h2 id="org14001d5">VUF</h2>
+<div class="outline-text-2" id="text-org14001d5">
+</div>
+<div id="outline-container-org27451f0" class="outline-3">
+<h3 id="org27451f0">Single Server VUF</h3>
+<div class="outline-text-3" id="text-org27451f0">
+<ul class="org-ul">
+<li>CRS: \((g_{1}, g_{2})\) generators of two pairing groups \(\mathbb{G}_{1}\) and \(\mathbb{G}_{2}\).</li>
+<li>Key Generation: BLS-like except that even \(g_{1}^{element}\) is a secret.
+<ul class="org-ul">
+<li>\(a \leftarrow \mathbb{F}\)</li>
+<li>\(sk \leftarrow g_{1}^{a}\)</li>
+<li>\(pk \leftarrow g_{2}^{a}\)</li>
+<li>Return \((sk, pk)\)</li>
+</ul></li>
+<li>Augment Key Pair: \((sk, pk) \rightarrow (ask, apk)\) Augmentation is a way for users to update the keys I guess. So, to prevent Byzantine parties from changing an honest user's keys, the scheme produces a proof of knowledge of the previous key.
+<ul class="org-ul">
+<li>\(r \leftarrow \mathbb{F}\)</li>
+<li>\(\pi \leftarrow g_{1}^{r}\)</li>
+<li>\(rk \leftarrow sk^{r} = g_{1}^{ar}\)</li>
+<li>\(ask \leftarrow r\)</li>
+<li>\(apk \leftarrow (\pi, rk)\)</li>
+<li>Return \((ask, apk)\)</li>
+</ul></li>
+<li>Augmented Verify Public Key \((pk, apk) \rightarrow \{0,1\}\): This verifies the augmented keys.
+<ul class="org-ul">
+<li>Parse \((\pi, r) := apk\)</li>
+<li>Return \(e(\pi, pk) = e(rk, g_{2})\)</li>
+</ul></li>
+<li>Sign: \((ask, m) \rightarrow \sigma\): Slightly different from BLS. Unlike BLS, we hash to \(\mathbb{G}_{2}\) and raise it to the power of \(1/{sk}\).
+<ul class="org-ul">
+<li>\(r \leftarrow ask\)</li>
+<li>\(\sigma \leftarrow H_{2}(m)^{1/r}\)</li>
+<li>Return \(\sigma\)</li>
+</ul></li>
+<li>Verify Signature: \((apk, m, \sigma) \rightarrow \{0,1\}\):
+<ul class="org-ul">
+<li>Parse \((\pi, \cdot) := apk\)</li>
+<li>\(h_2 \leftarrow H_2(m)\)</li>
+<li>Return \(e(\pi, \sigma) = e(g_{1}, h_{2})\)</li>
+</ul></li>
+<li>Derive VUF: \((apk, \sigma) \rightarrow vuf\): The VUF is a signature using the \(ask\) over a message \(m\).
+<ul class="org-ul">
+<li>Parse \((\cdot, rk) := apk\)</li>
+<li>Return \(e(rk, \sigma) = e(g_{1}^{ar},H_{2}(m)^{1/r}) = e(g_{1},H_{2}(m))^{a}\)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org17da7cd" class="outline-3">
+<h3 id="org17da7cd">$(n,t)$-Threshold VUF</h3>
+<div class="outline-text-3" id="text-org17da7cd">
+<p>
+Mainly secret share \(g_{1}^{a}\) among all the parties.
+</p>
+<ul class="org-ul">
+<li>CRS: \((g_{1}, g_{2})\)</li>
+<li>Key Generation:
+<ul class="org-ul">
+<li>\(a_{1},\ldots,a_{n} \leftarrow ShamirSecretShare(n,t)\)</li>
+<li>\(sk_{i} \leftarrow g_{1}^{a_{i}}\)</li>
+<li>\(pk_{i} \leftarrow g_{2}^{a_{i}}\)</li>
+<li>Return \((sk_{i}, pk_{i})\) to party \(i\)</li>
+</ul></li>
+<li>Augment Key Pair: \((sk_{i}, pk_{i}) \rightarrow (ask_{i}, apk_{i})\)
+<ul class="org-ul">
+<li>\(r \leftarrow \mathbb{F}\)</li>
+<li>\(\pi \leftarrow g_{1}^{r}\)</li>
+<li>\(rk_{i} \leftarrow sk_{i}^{r} = g_{1}^{a_{i}r}\)</li>
+<li>\(ask_{i} \leftarrow r\)</li>
+<li>\(apk_{i} \leftarrow (\pi, rk_{i})\)</li>
+<li>Return \((ask_{i}, apk_{i})\)</li>
+</ul></li>
+<li>Sign: \((ask_{i}, m) \rightarrow \sigma_{i}\)
+<ul class="org-ul">
+<li>\(r_{i} \leftarrow ask_{i}\)</li>
+<li>\(\sigma_{i} \leftarrow H_{2}(m)^{1/r_{i}}\)</li>
+<li>Return \(\sigma_{i}\)</li>
+</ul></li>
+<li>Verify: \((apk_{i}, m, \sigma_{i}) \rightarrow \{0,1\}\):
+<ul class="org-ul">
+<li>Parse \((\pi, \cdot) := apk_{i}\)</li>
+<li>\(h_2 \leftarrow H_2(m)\)</li>
+<li>Return \(e(\pi, \sigma_{i}) = e(g_{1}, h_{2})\)</li>
+</ul></li>
+<li>Derive: \((apk_{i}, \sigma_{i}) \rightarrow vuf\):
+<ul class="org-ul">
+<li>Parse \((\cdot, rk_{i}) := apk_{i}\)</li>
+<li>Return \(e(rk_{i}, \sigma_{i})\)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgcdbc5a3" class="outline-3">
+<h3 id="orgcdbc5a3">Weighted VUF</h3>
+<div class="outline-text-3" id="text-orgcdbc5a3">
+<p>
+This work implements weighting with a weight value \(w_{i}\) per party \(i\).
+This work then performs a \((\sum w_{i}, \sum w^{t}_{j})\) secret sharing.
+The signature share is \(H_2(m)^{1/r_i}\) independent of the weight. Only public keys are in the order of \(O(w_i)\) for each party \(i\). The size of the signature is \(O(1)\) similar to the threshold case.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org71f165c" class="outline-2">
+<h2 id="org71f165c">PVSS</h2>
+<div class="outline-text-2" id="text-org71f165c">
+</div>
+<div id="outline-container-org7758d8f" class="outline-3">
+<h3 id="org7758d8f">Note on Secrecy</h3>
+<div class="outline-text-3" id="text-org7758d8f">
+<p>
+Uses a different secrecy game. In this game, the view of an honest transcript is indistinguishable from the view of a simulated transcript.
+Note that this is different from traditional secrecy, because in traditional secrecy games, one of the two approaches are used:
+</p>
+<ul class="org-ul">
+<li>Show that given a transcript of a sharing, if a PPT adversary breaks the secrecy, it breaks an underlying cryptographic assumption.</li>
+<li>(IND*-secrecy) Show that a PPT adversary cannot distinguish between the hiding of 0 and hiding of 1.</li>
+</ul>
+<p>
+Here, the simulation is not tied to a particular key. But the general transcripts need to be indistinguishable (so key changes are allowed).
+</p>
+</div>
+</div>
+<div id="outline-container-orgdfdd166" class="outline-3">
+<h3 id="orgdfdd166">$(n,t)$-Scheme</h3>
+<div class="outline-text-3" id="text-orgdfdd166">
+<p>
+Let \(g_{1}\), \(h_{1}\), \(g_{2}\) be generators in \(\mathbb{G_{1}}\), \(\mathbb{G_{1}}\), and \(\mathbb{G_{2}}\) respectively.
+Public keys are setup in \(\mathbb{G}_{1}\).
+</p>
+<ul class="org-ul">
+<li>Setup to create public key for registration \(i \rightarrow (sk_{i},(pk_{i},\pi_{i}))\): Standard BLS-like secret keys with a proof of knowledge.
+<ul class="org-ul">
+<li>\(sk_{i}\leftarrow \mathbb{F}\)</li>
+<li>\(pk_{i}\leftarrow g^{sk_{i}}\)</li>
+<li>\(\pi_{i}\leftarrow PoK.Dlog(g,sk_{i},pk_{i})\)</li>
+<li>Return \((sk_{i}, (pk_{i},\pi_{i}))\)</li>
+</ul></li>
+<li>Proof of Knowledge \((g,y,\alpha) \rightarrow \pi\): <code>Schnorr</code> proof of knowledge
+<ul class="org-ul">
+<li>\(r\leftarrow \mathbb{F}\)</li>
+<li>\(u \leftarrow g^{r}\)</li>
+<li>\(c \leftarrow H(g,y,u)\in \mathbb{F}\)</li>
+<li>\(z \leftarrow r+c\cdot\alpha\)</li>
+<li>\(\pi \leftarrow (g,y,u,z)\)</li>
+<li>Return \(\pi\)</li>
+</ul></li>
+<li>Verify Proof of Knowledge \((\pi)\rightarrow \{0,1\}\): Standard
+<ul class="org-ul">
+<li>Parse \(\Pi := (g,y,u,z)\)</li>
+<li>\(c \leftarrow H(g,y,u)\)</li>
+<li>Return \((g^{z} = u\cdot y^{c})\)</li>
+</ul></li>
+<li>Verify registered Public Key \((pk_{i}, \pi_{i})\rightarrow \{0,1\}\)
+<ul class="org-ul">
+<li>Parse \((\cdot, y, \cdot, \cdot) := \pi_{i}\)</li>
+<li>If \(y \ne pk_{i}\) Return \(0\)</li>
+<li>Return Verify Proof of Knowledge \(\pi_{i}\)</li>
+</ul></li>
+<li>Deal a secret \(s\leftarrow \mathbb{F}:\rightarrow \{R_{2},\vec{\pi}, \vec{com}_{1}, \vec{com}_{2},\vec{enc}_{1}\}\):
+<ul class="org-ul">
+<li>Create an \((n,t)\) polynomial with \(s\) as the secret.</li>
+<li>\(\vec{com_{1}} \leftarrow \{g_{1}^{p(0)},g_{1}^{p(1)},\ldots,g_{1}^{p(n)}\}\)</li>
+<li>\(\vec{com_{2}} \leftarrow \{g_{2}^{p(0)},g_{2}^{p(1)},\ldots,g_{2}^{p(n)}\}\)</li>
+<li>For \(i\in [n]\), \(share_{i}\leftarrow h_{1}^{p(i)}\)</li>
+<li>\(\pi \leftarrow Pok(g_{2},com_{2}[0],p(0))\)</li>
+<li>\(\vec{\pi} \leftarrow \{\pi\}\)</li>
+<li>\(r\rightarrow \mathbb{F}\)</li>
+<li>\(\vec{enc} \leftarrow (g_{1}^{r}, h_{1}^{p(1)}pk_{1}^{r},\ldots, h_{1}^{p(n)}pk_{n}^{r})\)
+These are Elgamal encryptions.
+\(\vec{enc} = (g_{1}^{r},h_{1}^{p(1)}g_{1}^{sk_{1}r},\ldots,h_{1}^{p(n)}g_{1}^{sk_{n}r})\)</li>
+<li>\(R_{2} \leftarrow g_{2}^{r}\)</li>
+<li>Return \((R_{2},\vec{\pi}, \vec{com}_{1}, \vec{com}_{2}, \vec{enc})\)</li>
+</ul></li>
+<li>Public Verification \((R_{2},\pi, \vec{com}_{1}, \vec{com}_{2}, \vec{enc}) \rightarrow \{0,1\}\):
+<ul class="org-ul">
+<li>For \(\pi\in \vec{\pi}\), if \(\pi\) verification for proof of knowledge returns \(0\), return \(0\)</li>
+<li>If degree check of \(\vec{com}_{1}\) for \((n,t)\) (SCRAPE Degree check) returns \(0\), return \(0\)</li>
+<li>If \(e(com_{1}[0], g_{2}) \ne e(g_{1}, R_{2})\), return \(0\)</li>
+<li>For \(\pi \in \vec{\pi}\)
+<ul class="org-ul">
+<li>Parse \(\Pi := (\cdot, y, \cdot, \cdot)\)</li>
+<li>\(y_{i} \leftarrow y\)</li>
+</ul></li>
+<li>If \(com_{2}[0] \ne \prod y_{i}\), return \(0\)</li>
+<li>For \(i \in [0,n]\), if \(e(g_{1},com_{2}[i]) \ne e(com_{1}[i], g_{2})\)</li>
+<li>For \(i \in [n]\), if \(e(h_{1}, com_{2}[i])\cdot e(pk_{i},R_{2}) \ne e(enc[i], g_{2})\)</li>
+</ul></li>
+<li>Aggregate sharings \((transcript_{1}, transcript_{2})\rightarrow transcript\):
+<ul class="org-ul">
+<li>Parse \(transcript_{1} := (R_{2}^{1},\vec{pi}^{1},\vec{com}_{1}^{1},\vec{com}_{2}^{1}, \vec{enc}_{1}^{1})\)</li>
+<li>Parse \(transcript_{2} := (R_{2}^{2},\vec{pi}^{2},\vec{com}_{1}^{2},\vec{com}_{2}^{2}, \vec{enc}_{1}^{2})\)</li>
+<li>\(R_{2} \leftarrow R_{2}^{1}\cdot R_{2}^{2}\)</li>
+<li>\(\vec{\pi} \leftarrow \vec{\pi}^{1}|| \vec{\pi}^{2}\)</li>
+<li>\(\vec{com}_{1} \leftarrow \vec{com}_{1}^{1} \cdot \vec{com}_{1}^{2}\)</li>
+<li>\(\vec{com}_{2} \leftarrow \vec{com}_{2}^{1} \cdot \vec{com}_{2}^{2}\)</li>
+<li>\(\vec{enc}_{1} \leftarrow \vec{enc}_{1}^{1}\cdot \vec{enc}_{1}^{2}\)</li>
+<li>Return \((R_{2}, \vec{\pi}, \vec{com}_{1}, \vec{com}_{2}, \vec{enc}_{1})\)</li>
+</ul></li>
+<li>Decrypt share \((transcript, sk_{i}) \rightarrow (ssk_{i}, spk)\): We are sharing keys here. So the decryption is a secret and public key here.
+<ul class="org-ul">
+<li>Parse \(transcript := (\cdot, \cdot, \cdot, \vec{com}_{2}, \vec{enc}_{1})\)</li>
+<li>\(ssk_{i} \leftarrow (enc_{1}[i]/enc_{1}[0])^{sk_{i}}\)</li>
+<li>\(spk \leftarrow {com}_{2}[0]\)</li>
+<li>Return \((ssk_{i}, spk)\)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org17fcc60" class="outline-3">
+<h3 id="org17fcc60"><span class="todo TODO">TODO</span> Weighted PVSS with single public key per participant</h3>
+</div>
+</div>
+<div id="outline-container-org5920a61" class="outline-2">
+<h2 id="org5920a61">Security</h2>
+<div class="outline-text-2" id="text-org5920a61">
+<p>
+Static security by reduction.
+</p>
+<ul class="org-ul">
+<li><b>correctness</b>: For all correct users, the scheme should pass.</li>
+<li><b>soundness</b>: If anything is incorrect, the scheme should fail.</li>
+<li><b>unforgeability</b>: The signature scheme should not forgeable without the knowledge of the secrets. This work proves it with UF-CMA. Proven using DBH (3-Diffie-Hellman for pairings).</li>
+<li><b>secrecy</b> when you <code>thresholdize</code> something, does it ensure secrecy of that something. Proven using DBH.</li>
+<li><b>uniqueness</b> two valid signatures for the same message must imply that the signatures are the same. This work requires unconditional uniqueness.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge10b851" class="outline-2">
+<h2 id="orge10b851">Questions</h2>
+<div class="outline-text-2" id="text-orge10b851">
+<ul class="org-ul">
+<li>What is the difference between UF-CMA and EUF-CMA?</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgfb0fba6" class="outline-2">
+<h2 id="orgfb0fba6">References</h2>
+<div class="outline-text-2" id="text-orgfb0fba6">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Sourav Das, Benny Pinkas, Alin Tomescu, and Zhuolun Xiang. 2024. “Distributed Randomness using Weighted VRFs.” <a href="https://eprint.iacr.org/2024/198">https://eprint.iacr.org/2024/198</a>.</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-03-22 Sun 21:02 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A High-Throughput Secure Reliable Multicast Protocol</title>
+<meta name="author" content="Adithya Bhat" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
+<link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
+<link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class="banner">
+   <a id="myname" href="/">Hermitsage</a>
+  <hr>
+<nav>
+    <p>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/cv.html">CV</a>
+        <a href="/notes/index.html">Notes</a>
+        <a href="/blogs/index.html">Blog</a>
+    </p>
+  </nav>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">A High-Throughput Secure Reliable Multicast Protocol</h1>
+<p>
+Paper: <a href="#citeproc_bib_item_1"><i>A high-throughput secure reliable multicast protocol</i>. Dahlia Malkhi, and Michael Reiter. 1997</a>
+</p>
+
+<p>
+This paper presents an efficient Byzantine-fault tolerant reliable broadcast with source ordering.
+</p>
+<div id="outline-container-orgab6644e" class="outline-2">
+<h2 id="orgab6644e">Acknowledgement chaining</h2>
+<div class="outline-text-2" id="text-orgab6644e">
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-keyword">\[</span> M = <span class="org-keyword">\left</span>&lt; p, m, <span class="org-keyword">\left\{</span> B <span class="org-keyword">\right\}</span>_{p} <span class="org-keyword">\right</span>&gt; <span class="org-keyword">\]</span>
+</pre>
+</div>
+<ul class="org-ul">
+<li>\(p\) is the process identifier</li>
+<li>\(m\) is the message</li>
+<li>\(B\) is the set of message digests</li>
+</ul>
+<p>
+\(seq(m)\) is the sequence number in \(m\).
+\(sender(M) = p\)
+\(seq(M) = seq(m)\)
+\(payload(M) = m\)
+</p>
+</div>
+</div>
+<div id="outline-container-org4c54297" class="outline-2">
+<h2 id="org4c54297">Re-written protocol</h2>
+<div class="outline-text-2" id="text-org4c54297">
+<ul class="org-ul">
+<li>Local Variables:
+<ul class="org-ul">
+<li>\(B2Prev \leftarrow \{\}\)</li>
+<li>\(delivered \leftarrow \{\}\)</li>
+<li>\(direct \leftarrow \{\}\)</li>
+<li>\(c_{i} \leftarrow 0\) for \(i \in [n]\)</li>
+<li>Graph \(G\)</li>
+</ul></li>
+<li>Events:
+<ul class="org-ul">
+<li>Input: \(<C, MCAST | m>\)</li>
+<li>Internal: \(<C, Timeout | >\)</li>
+<li>Internal: \(<C, Timeout-M | >\)</li>
+<li>Internal: \(<C, Timeout-C | m >\)</li>
+<li>Output: \(<C, DELIVER| q, m>\)</li>
+</ul></li>
+<li>Conflict(M,M'):
+<ul class="org-ul">
+<li>If \(sender(M)=sender(M')\) and \(seq(M)=seq(M')\):
+<ul class="org-ul">
+<li>return \(payload(M) = payload(M')\)</li>
+</ul></li>
+<li>return False</li>
+</ul></li>
+<li>Shadow(h, G):
+<ul class="org-ul">
+<li>If \(h \in delievered\):
+<ul class="org-ul">
+<li>Return false</li>
+</ul></li>
+<li>If \(h \in direct\):
+<ul class="org-ul">
+<li>Return false</li>
+</ul></li>
+<li>Return \(h \in G.V\)</li>
+</ul></li>
+<li>Candidate(M, G):
+<ul class="org-ul">
+<li>If \(M \not\in direct\):
+<ul class="org-ul">
+<li>Return false</li>
+</ul></li>
+<li>For every \((h,h') \in G.E\):
+<ul class="org-ul">
+<li>If \(h' \not\in delivered\):
+<ul class="org-ul">
+<li>Return false</li>
+</ul></li>
+</ul></li>
+<li>Return true</li>
+</ul></li>
+<li>Upon \(<C, MCAST | m, B_{1}, \{B_{2}\}_{p}>\):
+<ul class="org-ul">
+<li>For every \(h' \in G.V\):
+<ul class="org-ul">
+<li>If \(Shadow(h) = false\):
+<ul class="org-ul">
+<li>continue</li>
+</ul></li>
+<li>For every \(h \in B_{1}\cup B_{2}\):
+<ul class="org-ul">
+<li>If \(h \rightarrow* h'\):
+<ul class="org-ul">
+<li>Return</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>\(B2Prev \leftarrow B2Prev \cup B_{2}\)</li>
+<li>\(sent \leftarrow sent \cup B_{1}\cup B_{2}\)</li>
+<li>Multicast \(<p, m, B_{1}, \{ B_{2}\}_{p}>\)</li>
+<li>Schedule timeout \(<C, Timeout-C| m>\)</li>
+</ul></li>
+<li>Upon \(M = <q, m, B_{q,1}, \{B_{q,2}\}_{q}>\) from \(r\):
+<ul class="org-ul">
+<li>If \(r=q\):
+<ul class="org-ul">
+<li>For every \(h' \in delivered\):
+<ul class="org-ul">
+<li>If \(Conflict(h, h') = true\):
+<ul class="org-ul">
+<li>return</li>
+</ul></li>
+</ul></li>
+<li>For every \(h' \in direct\):
+<ul class="org-ul">
+<li>If \(Conflict(h,h') = true\):
+<ul class="org-ul">
+<li>return</li>
+</ul></li>
+</ul></li>
+<li>\(direct \leftarrow direct \cup \{ h \}\)</li>
+</ul></li>
+<li>\(G.V \leftarrow G.V \cup \{h\}\)</li>
+<li>For \(h' \in B_{1} \cup B_{2}\):
+<ul class="org-ul">
+<li>\(G.V \leftarrow G.V \cup \{h'\}\)</li>
+<li>\(G.E \leftarrow G.E \cup (h, h')\)</li>
+</ul></li>
+</ul></li>
+<li>Upon \(M\) from \(p_j\) such that \(seq(M)=c_{j}+1\), \(|DSet(M) = (n+t)/2+1|\) and \(Candidate(M, G) = true\):
+<ul class="org-ul">
+<li>trigger \(<C, DELIVER | p_{j}, payload(M) >\)</li>
+<li>\(c_{j} \leftarrow c_{j}+1\)</li>
+</ul></li>
+<li>Upon \(<C, Timeout | >\):
+<ul class="org-ul">
+<li>For every \(M \in delivered\):
+<ul class="org-ul">
+<li>Let \(unknown\) be the set of servers that have not acknowledged delivering \(M\)</li>
+<li>Let \(DSet(M)\) be the delivered set of \(M\)</li>
+<li>Send \((M, DSet(M))\) to all servers in \(unknown\)</li>
+</ul></li>
+<li>Reset timer</li>
+</ul></li>
+<li>Upon \(M\):
+<ul class="org-ul">
+<li>\(conflicted \leftarrow false\)</li>
+<li>\(depends \leftarrow false\)</li>
+<li>For every \(M'\):
+<ul class="org-ul">
+<li>If \(Conflict(M,M') = true\) and \(M'\) is stable:
+<ul class="org-ul">
+<li>\(conflicted \leftarrow true\)</li>
+</ul></li>
+</ul></li>
+<li>For every \(M'\) such that \(h\rightarrow h'\):
+<ul class="org-ul">
+<li>If \(M'\) is not stable:
+<ul class="org-ul">
+<li>\(depends \leftarrow true\)</li>
+</ul></li>
+</ul></li>
+<li>If \(depends = false\) and \(conflicted = true\):
+<ul class="org-ul">
+<li>Discard \(M\) and edges from \(G\)</li>
+</ul></li>
+</ul></li>
+<li>Upon \(<C, Timeout-M | >\):
+<ul class="org-ul">
+<li>\(B_{2}\leftarrow \{\}\)</li>
+<li>For every \(h \in G.V\):
+<ul class="org-ul">
+<li>\(cand \leftarrow true\)</li>
+<li>For every \(h' \in direct\):
+<ul class="org-ul">
+<li>If \((h\rightarrow h')\):
+<ul class="org-ul">
+<li>\(cand \leftarrow false\)</li>
+</ul></li>
+</ul></li>
+<li>If \(cand = false\):
+<ul class="org-ul">
+<li>continue</li>
+</ul></li>
+<li>For every \((h\rightarrow* h')\):
+<ul class="org-ul">
+<li>If \(h' \not\in direct\) and \(h' \not\in delivered\):
+<ul class="org-ul">
+<li>\(cand \leftarrow false\)</li>
+</ul></li>
+</ul></li>
+<li>If \(h \in B2Prev\):
+<ul class="org-ul">
+<li>\(cand \leftarrow false\)</li>
+</ul></li>
+<li>If \(cand = true\):
+<ul class="org-ul">
+<li>\(B_{2} \leftarrow B_{2} \cup \{h\}\)</li>
+</ul></li>
+</ul></li>
+<li>For every \(M = <q,m,\ldots>\) such that \(Candidate(M,G) = true\):
+<ul class="org-ul">
+<li>\(cand \leftarrow false\)</li>
+<li>If \(M' \in sent\) and \(h'\rightarrow* h\):
+<ul class="org-ul">
+<li>\(cand \leftarrow true\)</li>
+</ul></li>
+<li>If \(cand = true\) and \(M \not\in delivered\) and \(h \not\in B2Prev\):
+<ul class="org-ul">
+<li>\(B_{2} \leftarrow B_{2} \cup \{h\}\)</li>
+</ul></li>
+</ul></li>
+<li>trigger \(<C, MCAST | \bot, B_{1}, \{B_{2}\}_{p}>\)</li>
+<li>Reset timer</li>
+</ul></li>
+<li>Upon \(<C, Timeout-C | m>\):
+<ul class="org-ul">
+<li>trigger \(<C, MCAST | m, \{\}, \{\}>\)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org15c797a" class="outline-2">
+<h2 id="org15c797a">References</h2>
+<div class="outline-text-2" id="text-org15c797a">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Dahlia Malkhi, and Michael Reiter. 1997. “A high-throughput secure reliable multicast protocol.” <a href="https://content.iospress.com/articles/journal-of-computer-security/jcs5-2-03">https://content.iospress.com/articles/journal-of-computer-security/jcs5-2-03</a>.</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-03-22 Sun 21:01 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Improved Secure Two-party Computation from a Geometric Perspective</title>
+<meta name="author" content="Adithya Bhat" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
+<link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
+<link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class="banner">
+   <a id="myname" href="/">Hermitsage</a>
+  <hr>
+<nav>
+    <p>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/cv.html">CV</a>
+        <a href="/notes/index.html">Notes</a>
+        <a href="/blogs/index.html">Blog</a>
+    </p>
+  </nav>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">Improved Secure Two-party Computation from a Geometric Perspective</h1>
+<p>
+Original paper: <a href="#citeproc_bib_item_1"><i>Improved Secure Two-party Computation from a Geometric Perspective</i>. Hao Guo, Liqiang Peng, Haiyang Xue, Li Peng, Weiran Liu, Zhe Liu, and Lei Hu. 2025</a>
+</p>
+
+<p>
+In secure 2PC, a linear share of a secret \(x\) is \(x = x_{0} + x_{1} \mod L\) for some \(L = 2^{l}\).
+For \(x\in \mathbb{Z}_{L}\), \(uint(x) = x\mod L\) is the unsigned representation.
+We can also represent a signed number in \(\mathbb{Z}_{}_{L}\) by treating the first \(L/2\) numbers as positives, and the next half as negatives. E.g., For \(L=8\), the elements of \(\mathbb{Z}_{L}\) are \(\{0,1,2,3,4,5,6,7\}\) which are all unsigned integers. For the signed integers, we can represent these as \(\{0,1,2,3,-4,-3,-2,1\}\) by setting \(int(x) = uint(x) - MSB(x)\cdot L\).
+When using linear shares \(x_{0}\) and \(x_{1}\), we have
+</p>
+<ul class="org-ul">
+<li>\(uint(x) = x_{0} + x_{1}\) when \(x_{0} + x_{1} < L\)</li>
+<li>\(uint(x) = x_{0} + x_{1} - L\) when \(x_{0} + x_{1} > L\)</li>
+</ul>
+<p>
+We write this as \(uint(x) = x_{0} + x_{1} - Wrap(x_{0}, x_{1}, L)\cdot L\)
+Now \(int(x) = uint(x) - MSB(x) \cdot L\), which is \(int(x) = x_{0} + x_{1} - Wrap(x_{0}, x_{1}, L)\cdot L - MSB(x)\cdot L\), which is
+\(int(x) = x_{0} + x_{1} - (Wrap(x_{0}, x_{1}, L) + MSB)\cdot L\)
+The coefficient of \(L\) is defined as \(MW(x) = Wrap(x_{0}, x_{1},L ) + MSB(x)\)
+</p>
+
+<p>
+Computing \(MW(x)\) is expensive. This paper presents a more efficient way.
+The observation is that if \(|x| < L/3\), then
+</p>
+<ol class="org-ol">
+<li>\(MW(x) = 0\) iff \(x_{0} \in [0,L/3)\) and \(x_{1} \in [0,L/3)\)</li>
+<li>\(MW(x) = 2\) iff \(x_{0} \in [2L/3, L)\) and \(x_{1} \in [2L/3, L)\)</li>
+<li>\(MW(x) = 1\) everywhere else</li>
+</ol>
+<p>
+Now, two parties can locally check condition 1 and 2 on their shares, and use two AND gates to check if they are in CONDITION 1 or 2. If neither, they know that \(MW(x) = 1\).
+</p>
+
+<p>
+This reduces the cost of a comparison from computing WRAP and MSB to two AND gates.
+</p>
+
+<p>
+They use this technique to speed up 3 problems:
+</p>
+<ol class="org-ol">
+<li>Truncation: \(x \gg k = \lfloor int(x) / 2^{k} \rfloor\). We can efficiently compute this using
+\(x \gg k = \lfloor x_{0} / 2^{k} \rfloor + \lfloor x_{1} / 2^{k} \rfloor - MW(x) \cdot 2^{(l-k)}+\delta\) (after substituting the formula for \(int(x)\) and the formula that \(\lfloor (a+b) /d \rfloor  = \lfloor a/d \rfloor + \lfloor b/d \rfloor + \delta\) where \(\delta = 1\{(a \mod d) + (b\mod d) \ge d\}\)). So here \(\delta = Wrap(x_{0} \mod 2^{k}, x_{1} \mod 2^{k} , 2^{k}\).
+<ul class="org-ul">
+<li>We can do the \(MW(x)\) part faster because of the geometric observation.</li>
+<li>There is something called a one-bit error version where the \(\delta\) term is ignored, there this technique yields much more improvements.</li>
+</ul></li>
+<li><p>
+Signed extension protocols. Convert an $m$-bit signed number into a $n$-bit signed number (\(n>m\)).
+</p>
+<ul class="org-ul">
+<li>If \(x\in Z_{M}\) is an integer with shares \(x_{0}\) and \(x_{1}\), we want \(y\in Z_{N}\) and shares \(y_{0}\) and \(y_{1}\) such that \(int(x) = int(y)\).</li>
+<li>Substituting formulas, we get \(x_{0} + x_{1} - MW(x)\cdot M = y_{0} + y_{1} - MW(y)\cdot N\).</li>
+<li>The paper shows that \(MW(x) = MW(y)\).</li>
+<li>Then, we get \(y_{0} + y_{1} = x_{0} + x_{1} + MW(x) \cdot (N-M)\).</li>
+<li>Then they obtain a secret share of \([MW(x)]\) and set \(y_{0} = x_{0} + [MW(x)]\cdot (N-M)\) and \(y_{1} = x_{1} + [MW(x)]\cdot (N-M)\).</li>
+<li>Now, computing \(int(y)\) is \(int(x)\), thus a successful signed extension.</li>
+</ul>
+
+<p>
+The lemma that states \(MW(x) = MW(y)\) works as per the following cases:
+</p>
+<ul class="org-ul">
+<li>Case 1: \(x_{0} + x_{1} \in [0, M/2)\). This is the case where \(x\) is a positive integer and the shares do not wrap.
+<ul class="org-ul">
+<li>For \(x\), \(Wrap(x) = 0\), \(MSB(x) = 0\). Therefore, \(MW(x) = 0\)</li>
+<li>For \(y\), \(y_{0} = x_{0}\), \(y_{1} = x_{1}\). Therefore, \(y_{0} + y_{1} = x_{0} + x_{1} < M/2 < N/2\).</li>
+<li>So, \(Wrap(y) = 0\), \(MSB(y) = 0\). Therefore, \(MW(y) = 0\).</li>
+<li>Therefore, \(MW(x) = MW(y)\).</li>
+</ul></li>
+<li>Case 2: \(x_{0} + x_{1} \in [M/2, M)\). This is a negative integer.
+<ul class="org-ul">
+<li>So, \(int(x) = x_{0} + x_{1} - M\)</li>
+<li>For \(x\), \(Wrap(x) = 0\), \(MSB(x) = 1\). Therefore, \(MW(x) = 1\)</li>
+<li>\(int(x) = x_{0} + x_{1} -M = int(y)\)</li>
+<li>For \(y\), Set \(y_{0} = x_{0}\). Since \(x\) is negative, we have \(MSB(y) = 1\) to keep it negative. This results in \(int(y) = y_{0} + y_{1} - N\). This gives us \(x_{1} - M = y_{1} - N\) or \(y_{1} = x_{1} + N - M\).</li>
+<li>Now, \(y_{0} + y_{1} \in [N-M/2, N)\). This results in \(Wrap(y) = 0\).</li>
+<li>Hence, \(MW(x) = MW(y) = 1\).</li>
+</ul></li>
+<li>Case 3: \(x_{0} + x_{1} \in [M, 3M/2)\). This represents a positive integer where shares wrap around.
+<ul class="org-ul">
+<li>For \(x\), \(Wrap(x) = 1\) (since \(x_{0} + x_{1} \geq M\)), \(MSB(x) = 0\) (since the actual value \(x = x_{0} + x_{1} - M < M/2\)). Therefore, \(MW(x) = 1\).</li>
+<li>\(int(x) = x_{0} + x_{1} - M = int(y)\)</li>
+<li>For \(y\), set \(y_0 = x_0\). Since \(x\) is positive, we want \(MSB(y) = 0\). So, we want \(y_{0} + y_{1} \in [0,N/2) \cup [N, 3N/2)\).
+<ul class="org-ul">
+<li>For the first case, we have \(int(y) = y_{0} + y_{1}\), which gives us \(y_{1} = x_{1} - M\). But this makes \(y_{1}\) negative which is not allowed.</li>
+<li>For the second case, we have \(int(y) = y_{0} + y_{1} - N\) which gives us \(y_{1} = x_{1} + N - M\) which works.</li>
+</ul></li>
+<li>Now, we have \(y_{0} + y_{1} \in [N, 3N/2)\), so \(Wrap(y) = 1\).</li>
+<li>Hence, \(MW(y) = MW(x) = 1\).</li>
+</ul></li>
+<li>Case 4: \(x_{0} + x_{1} \in [3M/2, 2M)\). This represents a negative integer that wraps around.
+<ul class="org-ul">
+<li>For \(x\), \(Wrap(x) = 1\) (since \(x_{0} + x_{1} \geq M\)), \(MSB(x) = 1\) (since the actual value \(x = x_{0} + x_{1} - M \geq M/2\)). Therefore, \(MW(x) = 2\).</li>
+<li>\(int(x) = x_{0} + x_{1} - 2M = int(y)\)</li>
+<li>For \(y\), since \(x\) is negative, we want \(MSB(y)=1\), so \(y_0 + y_{1} \in [N/2, N) \cup [3N/2, 2N)\).
+<ul class="org-ul">
+<li>For the first case, we have \(int(y) = y_{0} + y_{1} = x_{0} + x_{1} - 2M\). The LHS is in range \([N/2, N)\) but the RHS is in range \([-M/2, 0)\) which is contradictory.</li>
+<li>For the second case, we have \(int(y) = y_{0} + y_{1} - 2N = x_{0} + x_1 - 2M\). So, \(y_{0} + y_{1} = x_{0} + x_{1} + 2(N-M)\).</li>
+</ul></li>
+<li>We can set \(y_{0} = x_{0} + N-M\) and \(y_{1} = x_{1} + N-M\).</li>
+<li>This gives \(y_{0} + y_{1} = x_{0} + x_{1} + 2(N - M) \in [3M/2 + 2(N-M), 2M + 2(N-M)) = [2N - M/2, 2N + 2M - 2M) = [2N - M/2, 2N)\).</li>
+<li>Since \(y_{0} + y_{1} \geq 2N - M/2 > N\), we get \(Wrap(y) = 1\).</li>
+<li>Hence, \(MW(x) = MW(y) = 2\).</li>
+</ul></li>
+</ul></li>
+<li>Multiplication. TODO</li>
+</ol>
+<div id="outline-container-org24225e9" class="outline-2">
+<h2 id="org24225e9">References</h2>
+<div class="outline-text-2" id="text-org24225e9">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Hao Guo, Liqiang Peng, Haiyang Xue, Li Peng, Weiran Liu, Zhe Liu, and Lei Hu. 2025. “Improved Secure Two-party Computation from a Geometric Perspective.” <a href="https://eprint.iacr.org/2025/200">https://eprint.iacr.org/2025/200</a>.</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

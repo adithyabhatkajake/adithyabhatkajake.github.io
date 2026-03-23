@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-03-22 Sun 21:02 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Upright Cluster Services</title>
+<meta name="author" content="Adithya Bhat" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
+<link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
+<link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class="banner">
+   <a id="myname" href="/">Hermitsage</a>
+  <hr>
+<nav>
+    <p>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/cv.html">CV</a>
+        <a href="/notes/index.html">Notes</a>
+        <a href="/blogs/index.html">Blog</a>
+    </p>
+  </nav>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">Upright Cluster Services</h1>
+<p>
+Paper: <a href="#citeproc_bib_item_4"><i>Upright cluster services</i>. Allen Clement, Manos Kapritsos, Sangmin Lee, Yang Wang, Lorenzo Alvisi, Mike Dahlin, and Taylor Riche. 2009</a>
+</p>
+<div id="outline-container-orgb4e2414" class="outline-2">
+<h2 id="orgb4e2414">01-note</h2>
+<div class="outline-text-2" id="text-orgb4e2414">
+</div>
+<div id="outline-container-org38f566c" class="outline-3">
+<h3 id="org38f566c">Failure Model</h3>
+<div class="outline-text-3" id="text-org38f566c">
+
+<div id="orge223c41" class="figure">
+<p><img src="images/_20230309_214322screenshot.png" alt="_20230309_214322screenshot.png" width="500px" />
+</p>
+</div>
+<ul class="org-ul">
+<li>\(u\) the total number of failures it can tolerate and remain live</li>
+<li>\(r\) the number of those failures that can be commission failures while maintaining safety</li>
+<li>Standard assumption \(u \ge r\)</li>
+</ul>
+</div>
+<div id="outline-container-orgf8723f4" class="outline-4">
+<h4 id="orgf8723f4">\(u\) Omission failures</h4>
+<div class="outline-text-4" id="text-orgf8723f4">
+<p>
+Omission failures (including crash failures) in which a node fails to send one or more messages specified by the protocol and sends no incorrect messages based on the protocol and its inputs.
+</p>
+</div>
+</div>
+<div id="outline-container-orgc03bead" class="outline-4">
+<h4 id="orgc03bead">\(r\) Commission failures</h4>
+<div class="outline-text-4" id="text-orgc03bead">
+<p>
+Commission failures, which include all failures that are not omission failures, including all failures in which a node sends a message that is not specified by the protocol.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf76c568" class="outline-3">
+<h3 id="orgf76c568">System properties</h3>
+<div class="outline-text-3" id="text-orgf76c568">
+<ul class="org-ul">
+<li>An UpRight system is safe ("right") despite \(r\) commission failures and any number of omission failures.</li>
+<li>An UpRight system is safe and eventually live ("up") during sufficiently long synchronous intervals when there are at most \(u\) failures of which at most \(r\) are commission failures and the rest are omission failures.
+If more than \(r\) commission faults exist, then the system is still live, but no longer safe.</li>
+<li>(Robust performance) An UpRight system ensures safety and good performance during sufficiently long synchronous intervals with an application-dependent bound on message delivery when there are at most \(u\) failures of which at most \(r\) are commission failures.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc262009" class="outline-3">
+<h3 id="orgc262009">Applications using UpRight</h3>
+<div class="outline-text-3" id="text-orgc262009">
+</div>
+<div id="outline-container-org28de45f" class="outline-4">
+<h4 id="org28de45f">Architecture</h4>
+<div class="outline-text-4" id="text-org28de45f">
+
+<div id="orgb634004" class="figure">
+<p><img src="images/SCR-20230313-gnp.png" alt="SCR-20230313-gnp.png" width="500px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>UpRight Library Architecture</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org18b5314" class="outline-4">
+<h4 id="org18b5314">Request Execution</h4>
+<div class="outline-text-4" id="text-org18b5314">
+</div>
+<ul class="org-ul">
+<li><a id="org78faa1f"></a>Spontaneous Replies<br />
+<div class="outline-text-5" id="text-org78faa1f">
+<p>
+Applications may allow the server to push unsolicited messages to clients. For example, in Zookeeper, a client can watch an object and be notified of any changes to it.
+</p>
+</div>
+</li>
+<li><a id="orge69e3ed"></a>Read-only replies<br />
+<div class="outline-text-5" id="text-orge69e3ed">
+<p>
+As a performance optimization, UpRight supports PBFT’s <a href="#citeproc_bib_item_3"><i>Practical byzantine fault tolerance and proactive recovery</i>. Miguel Castro, and Barbara Liskov. 2002</a> read-only optimization, in which a client shim sends read-only, side-effect-free requests directly to the server shims and server shims execute them without ordering them in the global sequence of requests.
+</p>
+</div>
+</li>
+<li><a id="org090bec6"></a>Multithreading<br />
+<div class="outline-text-5" id="text-org090bec6">
+<p>
+Parallel execution allows applications to take advantage of hardware resources, but application servers must ensure that the actual execution is equivalent to executing the requests sequentially in the order specified by the UpRight library.
+</p>
+</div>
+</li>
+<li><a id="org84f05cd"></a>Nondeterminism<br />
+<div class="outline-text-5" id="text-org84f05cd">
+<p>
+Many applications rely on real time or random numbers as part of normal operation. These factors can be used in many ways including garbage collecting soft state, naming new data structures, or declaring uncommunicative nodes dead.
+</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-org80e0761" class="outline-4">
+<h4 id="org80e0761">Checkpoints</h4>
+<div class="outline-text-4" id="text-org80e0761">
+<p>
+In an asynchronous system, even correct server replicas can fall arbitrarily behind, so BFT state machine replication frameworks must provide a way to checkpoint a server replica’s state, to certify that a quorum of server replicas have produced identical checkpoints, and to transfer a certified checkpoint to a node that has fallen behind.
+The hybrid check- point/delta approach seeks to minimize intrusiveness to legacy code.
+The hybrid checkpoint/delta approach uses existing application code to take checkpoints at the approximately the same coarse-grained intervals the original systems use.
+This work provides three checkpointing mechanisms for the <b>Hybrid checkpoint/delta approach</b>:
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="orgc938d21"></a>Stop and copy<br />
+<div class="outline-text-5" id="text-orgc938d21">
+<p>
+If an application’s state is small and an application can tolerate a few tens of milliseconds of added latency, the simplest checkpoint strategy is to pause the arrival of new requests so that the application is quiescent while it writes it state to disk.
+</p>
+</div>
+</li>
+<li><a id="org7467d35"></a>Helper process<br />
+<div class="outline-text-5" id="text-org7467d35">
+<p>
+The helper process approach produces checkpoints asynchronously to avoid pausing request execution and seeks to minimize intrusiveness to legacy code.
+To ensure that different replicas produce identical checkpoints without having to pause request processing, each node runs two slightly modified instances of the server application process, a primary and a helper, to which we feed the same series of requests.
+We deactivate the checkpoint generation code at the primary.
+For the helper, we omit sending replies to clients, and we pause the sequence of incoming requests so that it is quiescent while it is producing a checkpoint.
+</p>
+</div>
+</li>
+<li><a id="orgd19399c"></a>Copy on write<br />
+<div class="outline-text-5" id="text-orgd19399c">
+<p>
+Applications can be modified so that their key data structures are treated as copy on write while checkpoints are taken.
+</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org32340ad" class="outline-3">
+<h3 id="org32340ad">UpRight Protocol</h3>
+<div class="outline-text-3" id="text-org32340ad">
+<ul class="org-ul">
+<li>Client deposits a request at the Request quorum.</li>
+<li>The Request Quorum
+<ul class="org-ul">
+<li>stores the request</li>
+<li>forwards a digest of the request to the order module</li>
+<li>supplies the full request to the execution module</li>
+</ul></li>
+<li>The order module produces a totally ordered sequence of batches of request digests</li>
+<li>The execution module embodies the application’s server, which executes requests from the ordered batches and produces replies</li>
+</ul>
+
+<div id="orgfcffdcf" class="figure">
+<p><img src="images/_20230313_131958screenshot.png" alt="_20230313_131958screenshot.png" width="700px" />
+</p>
+</div>
+</div>
+<div id="outline-container-org471755b" class="outline-4">
+<h4 id="org471755b">Request Quorum</h4>
+<div class="outline-text-4" id="text-org471755b">
+<ul class="org-ul">
+<li>A client sends its request to the RQ nodes with a MAC authenticator</li>
+<li>An RQ node therefore stores each request before forwarding its digest</li>
+<li>Each RQ node checks its entry in the authenticator, and if the request appears valid, the RQ node sends the request to the order nodes with a MAC authenticator for them</li>
+<li>When an execution node receives an ordered digest, it notifies all RQ nodes that the request has been ordered and fetches the request from one of them.</li>
+</ul>
+</div>
+<ul class="org-ul">
+<li><a id="orgdb0ffc3"></a>Validating requests<br />
+<div class="outline-text-5" id="text-orgdb0ffc3">
+<ul class="org-ul">
+<li>The use of MAC authenticators rather than digital signatures is a vital optimization to BFT replication systems</li>
+<li>To ensure non-repudiation, this work uses a modified version of Matrix Signatures</li>
+</ul>
+</div>
+</li>
+<li><a id="org601359e"></a>Rate-limiting<br />
+<div class="outline-text-5" id="text-org601359e">
+<ul class="org-ul">
+<li>An RQ node will store at most one unordered request per client and ignore any new requests from that client until it learns that the previous request has been ordered</li>
+<li>Execution nodes produce a checkpoint every <code>CP_INTERVAL</code> batches, and they never fetch requests older than the two most recent checkpoints</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-orgcc2094c" class="outline-4">
+<h4 id="orgcc2094c">Ordering</h4>
+<div class="outline-text-4" id="text-orgcc2094c">
+<p>
+Inspired from Zyzzyva NO_ITEM_DATA:kotlaZyzzyvaSpeculativeByzantine2007a, Aardvark NO_ITEM_DATA:aardvark, and Yin et al <a href="#citeproc_bib_item_5"><i>Separating agreement from execution for byzantine fault tolerant services</i>. Jian Yin, Jean-Philippe Martin, Arun Venkataramani, Lorenzo Alvisi, and Mike Dahlin. 2003</a>
+</p>
+<ol class="org-ol">
+<li>A client sends its request (via the RQ) to the primary</li>
+<li>The primary accumulates a batch of requests, assigns the batch a sequence number, and sends the ordered batch of requests to the replicas, the replicas send the ordered batch of requests and a hash of the history of prior ordered batches to the execution nodes</li>
+<li>The execution nodes accept and execute the batch of ordered request only if a sufficient number of ordering decisions and histories match</li>
+</ol>
+</div>
+<ul class="org-ul">
+<li><a id="org1bf9e81"></a>Dependence on Execution<br />
+<div class="outline-text-5" id="text-org1bf9e81">
+<p>
+The separation of the order and execution stages requires coordination between the two to coordinate garbage collection and to ensure agreement on execution checkpoint state.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="orgfdab9e8"></a>Ordering - Execution coordination<br />
+<div class="outline-text-6" id="text-orgfdab9e8">
+<ol class="org-ol">
+<li>After executing batch \(B\) with sequence number \((i ∗ CP INTERVAL)\), an execution node begins to produce execution checkpoint \(i\)</li>
+<li>Once that checkpoint has been produced, the execution node sends a hash of the checkpoint with a MAC authenticator to the order nodes</li>
+<li>An order node refuses to order batch \(B′\) with sequence number \((i + 1 ∗ CP INTERVAL)\) until it has received a quorum of matching hashes for execution checkpoint \(i\)</li>
+</ol>
+<p>
+Thus to order batch \(B'\), order nodes implicitly agree that a quorum of execution nodes report identical checkpoints.
+</p>
+</div>
+</li>
+<li><a id="org0ea9e36"></a>Execution recovery<br />
+<div class="outline-text-6" id="text-org0ea9e36">
+<ol class="org-ol">
+<li>If an execution node falls behind (e.g., it misses some batches because of a network fault or a local crash-recover event), it catches up by sending the order nodes its current sequence number, and the order nodes respond with the hash and sequence number of the most recent execution check- point and with the ordered batches since that checkpoint</li>
+<li>The execution node then fetches the execution checkpoint from its peers and processes the subsequent ordered batches to get to the current state</li>
+</ol>
+</div>
+</li>
+<li><a id="org6f2992d"></a>Need for execution<br />
+<div class="outline-text-6" id="text-org6f2992d">
+<ol class="org-ol">
+<li>It allows order nodes and execution nodes garbage collect their logs and checkpoints
+Once batch \(B′′\) with sequence number \(i + 2 ∗ CP INTERVAL\) has been ordered, the order and execution nodes garbage collect their logs and checkpoints up to and including batch \(B\)</li>
+<li>It is necessary for all correct execution nodes to eventually agree on the checkpoint that represents the state of the system after processing batch \(B\)
+The execution nodes cannot reach agreement on their own, so they rely on the order nodes</li>
+</ol>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-orgd40fbdc" class="outline-4">
+<h4 id="orgd40fbdc">Execution</h4>
+</div>
+</div>
+<div id="outline-container-orgcb6b020" class="outline-3">
+<h3 id="orgcb6b020">Constraints</h3>
+<div class="outline-text-3" id="text-orgcb6b020">
+<ul class="org-ul">
+<li>Execution requires \(u+r+1\) replicas</li>
+<li>Fast-path execution requires \(u+1\) replicas</li>
+<li>Ordering requires \(2u+r+1\) replicas</li>
+<li>Fast-path ordering requires \(u+r+1\) replicas</li>
+<li>Request Quorum requires \(2u+r+1\) replicas
+The RQ stage requires \(2u + r + 1\) nodes to ensure that the order stage orders every properly submitted request and that the execution stage can fetch any request that is ordered: \(2u+r+1\) RQ nodes ensures that the primary order node can always be sent a request with \(u + r + 1\) valid entries in the matrix signature, which assures the primary that all order nodes will see \(u + 1\) valid entries, which assures the order nodes that execution nodes can fetch the full request even if \(u\) RQ nodes subsequently fail.
+Logical nodes can be multiplexed on the same physical nodes, so a total of \(2u + r + 1\) physical nodes can suffice</li>
+<li>Fast-path request quorum requires \(u+r+1\) replicas</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6e1751c" class="outline-3">
+<h3 id="org6e1751c">Preferred quorum optimization</h3>
+<div class="outline-text-3" id="text-org6e1751c">
+<p>
+Using preferred quorums means optimistically sending messages to the minimum number of nodes and resending to more nodes if observed progress is slow
+</p>
+<ol class="org-ol">
+<li>A client first transmits its request to \(u + r + 1\) RQ nodes</li>
+<li>After a timeout, the client resends to all of the RQ nodes</li>
+<li>The first time an RQ node receives a client request it forwards the request only to the primary; upon any subsequent receipt of that request the RQ node forwards the request to all order nodes</li>
+<li>The RQ nodes are also good candidates for on-demand allocation via hot spares because activating a RQ node does not require transferring state from other nodes-the RQ module starts in a clean state and can immediately begin processing client requests</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org6719878" class="outline-3">
+<h3 id="org6719878">Hot spare optimization</h3>
+<div class="outline-text-3" id="text-org6719878">
+</div>
+<div id="outline-container-org3d31af3" class="outline-4">
+<h4 id="org3d31af3">Definition</h4>
+<div class="outline-text-4" id="text-org3d31af3">
+<p>
+Using hot spares means delaying allocation of some nodes until needed and then allocating those nodes from a pool of hot spares
+</p>
+</div>
+</div>
+<div id="outline-container-org3307a07" class="outline-4">
+<h4 id="org3307a07">Usage</h4>
+<div class="outline-text-4" id="text-org3307a07">
+<ul class="org-ul">
+<li>Using preferred quorums to send requests to subsets of execution nodes or making an execution node a hot spare may be most attractive if the application has only a small amount of state that must be transferred before a hot spare begins processing; otherwise it may be more challenging to configure execution nodes as hot spares without risking unacceptably long pauses when a spare is activated</li>
+<li>Some of this start-up time can be masked by activating an execution node once the checkpoint for its in-memory data structures has been transferred and then transferring its on-disk state in the background (not implemented in this work)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org2005b18" class="outline-3">
+<h3 id="org2005b18">Performance</h3>
+<div class="outline-text-3" id="text-org2005b18">
+<p>
+JS-Zyzzyvark is Java Stable Zyzzyva Aardvark
+J-Zyzzyvark is without disk bottleneck
+</p>
+</div>
+<div id="outline-container-org860c216" class="outline-4">
+<h4 id="org860c216">Response time and throughput</h4>
+<div class="outline-text-4" id="text-org860c216">
+<p>
+Clients issue \(1\) byte or \(1\) KB null requests that produce \(1\) byte or \(1\) KB responses
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="orgc0730e1"></a>Basic configuration<br />
+<div class="outline-text-5" id="text-orgc0730e1">
+<p>
+The system is configured with \(u=1\) and \(r=1\)
+</p>
+
+<div id="orgfa1f4ae" class="figure">
+<p><img src="images/_20230313_190643screenshot.png" alt="_20230313_190643screenshot.png" width="700px" />
+</p>
+<p><span class="figure-number">Figure 2: </span>Latency vs. throughput for J-Zyzzyvark and JS-Zyzzyvark.</p>
+</div>
+</div>
+</li>
+<li><a id="org95a20cc"></a>Other configuration<br />
+<div class="outline-text-5" id="text-org95a20cc">
+<p>
+The system is configured with arbitrary \(u\) and \(r\)
+</p>
+
+<div id="org78c37c1" class="figure">
+<p><img src="images/_20230313_191101screenshot.png" alt="_20230313_191101screenshot.png" width="700px" />
+</p>
+<p><span class="figure-number">Figure 3: </span>Latency vs. throughput for J-Zyzzyvark and JS-Zyzzyvark for various values of \(r\) and \(u\)</p>
+</div>
+</div>
+</li>
+<li><a id="orgf0d2482"></a>Co-located RQ, Order and Execution<br />
+<div class="outline-text-5" id="text-orgf0d2482">
+
+<div id="orgb62c1c5" class="figure">
+<p><img src="images/_20230313_191246screenshot.png" alt="_20230313_191246screenshot.png" width="700px" />
+</p>
+<p><span class="figure-number">Figure 4: </span>Latency vs. throughput for JS-Zyzzyvark configured for various values of \(r\) and \(u\) with RQ, Order, and Execution nodes colocated</p>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-orge6a7b0a" class="outline-4">
+<h4 id="orge6a7b0a">Request Authentication</h4>
+<div class="outline-text-4" id="text-orge6a7b0a">
+<p>
+Between matrix signatures, digital signatures, and MAC authenticators for \(1\) byte requests
+\(u=1\)
+\(r=1\)
+No RQ means we skip Request Quorum
+No auth RQ means that we turn of auth checks
+</p>
+
+<div id="orge0030c3" class="figure">
+<p><img src="images/_20230313_191547screenshot.png" alt="_20230313_191547screenshot.png" width="700px" />
+</p>
+<p><span class="figure-number">Figure 5: </span>JS-Zyzzyvark performance when using the RQ node and matrix signatures, standard signatures, and MAC authenticators. ($1$B requests)</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org4339c26" class="outline-4">
+<h4 id="org4339c26">Request digests</h4>
+<div class="outline-text-4" id="text-org4339c26">
+
+<div id="org39af4f9" class="figure">
+<p><img src="images/_20230313_192026screenshot.png" alt="_20230313_192026screenshot.png" width="700px" />
+</p>
+<p><span class="figure-number">Figure 6: </span>JS-Zyzzyvark performance for $1$B, $1$KB, and $10$KB requests, and for $1$KB and $10$KB requests where full requests, rather than digests, are routed through Order nodes</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org44577cd" class="outline-3">
+<h3 id="org44577cd">Zookeeper</h3>
+<div class="outline-text-3" id="text-org44577cd">
+<ul class="org-ul">
+<li>Handles omission failures</li>
+<li>Zookeeper deployment consists of \(2u+1\) servers</li>
+<li>Common configuration is \(5\) servers with \(u=2\), \(r=0\)</li>
+<li>Servers maintain a set of hierarchically named objects in memory</li>
+<li>Writes are serialized via a Paxos-like protocol, and reads are optimized to avoid consensus where possible</li>
+<li>A client can set a watch on an object so that it is notified if the object changes unless the connection from the client to a server breaks, in which case the client is notified that the connection broke</li>
+<li>For crash tolerance, each server synchronously logs up- dates to stable storage</li>
+<li>Servers periodically produce fuzzy snapshots to checkpoint their state: a thread walks the server’s data structures and writes them to disk, but requests concurrent with snapshot production may alter these data structures as the snapshot is produced</li>
+<li>If a Zookeeper server starts producing a snapshot after request \(s_{start}\) and finishes producing it after request \(s_{end}\), the fuzzy snapshot representing the system’s state after request send comprises the data structures written to disk plus the log of updates from \(s_{start}\) to \(s_{end}\)</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org1ccd99a" class="outline-2">
+<h2 id="org1ccd99a">Notes</h2>
+<div class="outline-text-2" id="text-org1ccd99a">
+<ul class="org-ul">
+<li>This is an SMR Protocol.</li>
+<li>It is in the partial synchrony network model.</li>
+<li>It uses an unspecified definition.</li>
+<li>The adversary model is unspecified, but I believe that the protocol is adaptively secure.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org0ea8d29" class="outline-2">
+<h2 id="org0ea8d29">References</h2>
+<div class="outline-text-2" id="text-org0ea8d29">
+<div class="csl-bib-body">
+  <div class="csl-entry">NO_ITEM_DATA:kotlaZyzzyvaSpeculativeByzantine2007a</div>
+  <div class="csl-entry">NO_ITEM_DATA:aardvark</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>Miguel Castro, and Barbara Liskov. 2002. “Practical byzantine fault tolerance and proactive recovery.” <a href="https://doi.org/10.1145/571637.571640">https://doi.org/10.1145/571637.571640</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_4"></a>Allen Clement, Manos Kapritsos, Sangmin Lee, Yang Wang, Lorenzo Alvisi, Mike Dahlin, and Taylor Riche. 2009. “Upright cluster services.” <a href="https://doi.org/10.1145/1629575.1629602">https://doi.org/10.1145/1629575.1629602</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_5"></a>Jian Yin, Jean-Philippe Martin, Arun Venkataramani, Lorenzo Alvisi, and Mike Dahlin. 2003. “Separating agreement from execution for byzantine fault tolerant services.” <a href="https://doi.org/10.1145/945445.945470">https://doi.org/10.1145/945445.945470</a>.</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

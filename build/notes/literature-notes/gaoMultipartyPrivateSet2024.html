@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-03-22 Sun 21:00 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Multiparty Private Set Intersection Cardinality and Its Applications</title>
+<meta name="author" content="Adithya Bhat" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
+<link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
+<link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class="banner">
+   <a id="myname" href="/">Hermitsage</a>
+  <hr>
+<nav>
+    <p>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/cv.html">CV</a>
+        <a href="/notes/index.html">Notes</a>
+        <a href="/blogs/index.html">Blog</a>
+    </p>
+  </nav>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">Multiparty Private Set Intersection Cardinality and Its Applications</h1>
+<p>
+Paper: <a href="#citeproc_bib_item_1"><i>Multiparty Private Set Intersection Cardinality and Its Applications</i>. Jiahui Gao, Ni Trieu, and Avishay Yanai. 2024</a>
+</p>
+<ul class="org-ul">
+<li>Acknowledgements to Peter</li>
+<li>Implementation: <a href="https://github.com/asu-crypto/mpsica">Github</a></li>
+</ul>
+<div id="outline-container-org66a42ac" class="outline-2">
+<h2 id="org66a42ac">Notation and Settings</h2>
+<div class="outline-text-2" id="text-org66a42ac">
+<ul class="org-ul">
+<li>Assume the existence of a server that is non-colluding and semi-honest.
+<ul class="org-ul">
+<li>They call it the <b>server-aided</b> model (aka <a href="../permanent notes/20241016095017-semi_honest_non_colluding_helper_party_model.html#ID-8bbb6d90-1fb9-4282-9470-36bc8cf944a4">Semi-honest Non-colluding Helper Party Model</a>).</li>
+</ul></li>
+<li>There are 2 variants of their protocol:
+<ol class="org-ol">
+<li>Relying on a non-colluding semi-honest server with no input. The remaining servers are semi-honest.</li>
+<li>Reducing (1) to an \(n-1\) party by using \(P_n\) as a semi-honest party who may have an input.</li>
+</ol></li>
+</ul>
+</div>
+<div id="outline-container-orgfd290a4" class="outline-3">
+<h3 id="orgfd290a4">OKVS \(\mathsf{Exp}^{\mathcal{A}}(\mathcal{K} = (k_1,\ldots,k_m))\)</h3>
+<div class="outline-text-3" id="text-orgfd290a4">
+<p>
+<b><b>Nutshell</b></b>. Two algorithms: Encode takes a set of key-value encryptions as input and returns an encoding. Decode takes an encoding and a key as input and returns a value.
+It consists of two algorithms:
+</p>
+<ul class="org-ul">
+<li><b><b>Encode</b></b>. \(\mathsf{Encode}(\{k_i,v_i\}_{i\in [m]}) \rightarrow S\). Takes as input a set of \((k_i,v_i)\) key-value pairs from the key-value domain, \(\mathcal{K}\times \mathcal{V}\), and outputs an object \(S\) (or \(\bot\) with negligible probability)</li>
+<li><b><b>Decode</b></b>. \(\mathsf{Decode}(S,k)\rightarrow v\). Decode takes as input an object \(S\), a key \(k\) and outputs a value \(v\).</li>
+</ul>
+<blockquote>
+<p>
+<b><b>Note from Peter</b></b>: No guarantees on the output of Decode when the key is not present in the store.
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-orgf82a461" class="outline-3">
+<h3 id="orgf82a461">OPRF \(\mathcal{F}^m_{\mathsf{oprf}}\)</h3>
+<div class="outline-text-3" id="text-orgf82a461">
+<p>
+Note, in the OPRF used in this paper the receiver chooses queries first.
+<b><b>Setting.</b></b> There are 2 parties: Sender and Receiver. There is a public bound \(m\) on the number of queries made by the receiver.
+</p>
+<ol class="org-ol">
+<li>Receiver sends the \(m\) queries \((q_1,\ldots,q_m)\) to the functionality where \(q_i\in \{0,1\}^{\kappa}\).</li>
+<li>Functionality samples a random PRF key \(k\).</li>
+<li>Output \(k\) to Sender, \(\{F(k,q_1), \ldots, F(k,q_m)\}\) to Receiver.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org62f9771" class="outline-3">
+<h3 id="org62f9771">OPPRF \(\mathcal{F}^{m_1,m_2}_{\mathsf{opprf}}\)</h3>
+<div class="outline-text-3" id="text-org62f9771">
+<p>
+This one is programmable. \(m_1\) is the upper bound on the number of points that can be programmed. \(m_2\) is the bound on the number of queries.
+</p>
+<ol class="org-ol">
+<li>Sender sends points \(\mathcal{P} := \{(a_1,t_1), \ldots, (a_{m_1},t_{m_1})\}\) with distinct keys \(a_i\) to the functionality.</li>
+<li>Receiver sends \(m_2\) distinct queries \((q_1,\ldots,q_{m_2})\) to the functionality.</li>
+<li>The functionality runs \(k \leftarrow \mathsf{KeyGen}(\kappa, \mathcal{P})\).</li>
+<li>Output \(k\) to Sender, \(\{F(k,q_1), \ldots, F(k,q_{m_2})\}\) to Receiver.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgd362bf4" class="outline-3">
+<h3 id="orgd362bf4">Unconditional Zero Sharing \(\mathcal{F}_{\mathcal{ZS}}\)</h3>
+<div class="outline-text-3" id="text-orgd362bf4">
+<p>
+The functionality provides all parties
+</p>
+<ul class="org-ul">
+<li>a function \(\mathcal{S}:\{0,1\}^{\kappa}\times \{0,1\}^{\ell} \rightarrow \{0,1\}^{\kappa}\), and</li>
+<li>a key \(K_i\) for party \(P_i\)</li>
+</ul>
+<p>
+such that for every \(x\in\{0,1\}^{\ell}\), we have that
+</p>
+<ul class="org-ul">
+<li>\(s_i = S(K_i, x)\), (\(s_i\) is \(P_i\)'s random share) and</li>
+<li>\(\oplus\limits_{i=1}^n s_i = 0\)</li>
+</ul>
+<p>
+The functionality works as follows:
+</p>
+<ol class="org-ol">
+<li>All parties start with a sharing function \(S\).</li>
+<li>Functionality provides \(K_i\) to party \(P_i\).</li>
+<li>When a party \(P_i\) invokes \(S(K_i,x)\), the functionality outputs \((K_i,\mathsf{store}_{x,i})\) to \(P_i\) if it exists. Otherwise,
+<ul class="org-ul">
+<li>Generate random \(s_1,\ldots,s_n\) such that
+<ul class="org-ul">
+<li>\(s_i = S(K_i,x)\)</li>
+<li>\(\oplus\limits_{i=1}^n s_i = 0\)</li>
+</ul></li>
+<li>Store \(\mathsf{store}_{x,i}=s_i\) for \(i\in [n]\)</li>
+</ul></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org47d6177" class="outline-3">
+<h3 id="org47d6177">PSI-CA \(\mathcal{F}_{\mathsf{PSI-CA}}\)</h3>
+<div class="outline-text-3" id="text-org47d6177">
+<p>
+Each party holds \(m\) elements.
+The functionality works as follows:
+</p>
+<ol class="org-ol">
+<li>Each party \(P_i\) sends \(X_i\) of \(m\) distinct elements.</li>
+<li>Output to \(P_1\) \(|\cap\limits_{i=1}^n X_i|\)</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org8582634" class="outline-3">
+<h3 id="org8582634">Secure Dot Product of Binary Vectors</h3>
+<div class="outline-text-3" id="text-org8582634">
+<p>
+Each party holds an \(m\) element binary vector.
+</p>
+<ol class="org-ol">
+<li>Each party \(P_i\) sends \(\vec{x_i}\) to the functionality.</li>
+<li>The functionality outputs \(\sum\limits_{j=1}^m\prod\limits_{i=1}^n{x_i}[j]\) to party \(P_1\).</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-orge62ecbf" class="outline-2">
+<h2 id="orge62ecbf">Server-aided Shuffled OPRF and OPPRF</h2>
+<div class="outline-text-2" id="text-orge62ecbf">
+</div>
+<div id="outline-container-org2d1eceb" class="outline-3">
+<h3 id="org2d1eceb">Server-aided Shuffled OPRF \(\mathsf{OPRF}-\Pi^{(m)}_{\mathsf{soprf}}\)</h3>
+<div class="outline-text-3" id="text-org2d1eceb">
+<ul class="org-ul">
+<li>Sender \(\mathcal{S}\) creates a key \(k = (k_1,k_2)\) where \(k_1\in \{0,1\}^{\kappa}\) and uses it as input.</li>
+<li>Define \(F'(k,x) = F'((k_1,k_2), x) = F(k_2, F(k_1, x))\).</li>
+<li>Receiver has input \(Y := \{y_1, \ldots, y_m\}\).</li>
+<li>Sender \(\mathcal{S}\) sends \(k_1\) to the receiver \(\mathcal{R}\).</li>
+<li>Sender \(\mathcal{S}\) sends \(k_2\) to the server \(\mathcal{C}\).</li>
+<li>Receiver \(\mathcal{R}\) computes \(Y' = F(k_1, Y)\).</li>
+<li>Receiver \(\mathcal{R}\) sends \(Y'\) to the server \(\mathcal{C}\).</li>
+<li>The server \(\mathcal{C}\) chooses a random permutation \(\pi: [m] \rightarrow [m]\).</li>
+<li>The server \(\mathcal{C}\) computes \(Y'' = F(k_2, Y')\).</li>
+<li>The server \(\mathcal{C}\) sends \(\pi(Y'')\) to the receiver \(\mathcal{R}\).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc10c9ad" class="outline-3">
+<h3 id="orgc10c9ad">Server-aided OPRF \(\mathsf{OPRF}^{(m)}_{\mathsf{soprf}}\)</h3>
+<div class="outline-text-3" id="text-orgc10c9ad">
+<p>
+Similar to \(\mathsf{OPRF}-\Pi^{(m)}_{\mathsf{soprf}}\), except that there is no shuffling.
+</p>
+</div>
+</div>
+<div id="outline-container-org14765c2" class="outline-3">
+<h3 id="org14765c2">Server-aided OPPRF \(\mathsf{OPPRF}-\Pi^{(m_1,m_2)}_{\mathsf{sopprf}}\)</h3>
+<div class="outline-text-3" id="text-org14765c2">
+<div class="org-src-container">
+<pre class="src src-plantuml">Sender -&gt; $`\mathcal{F}^{(m_2)}_{\mathsf{soprf}}`$: $`k := (k_1,k_2) \in \{0,1\}^{2\kappa}`$
+</pre>
+</div>
+
+<ol class="org-ol">
+<li>Sender \(\mathcal{S}\), Receiver \(\mathcal{R}\), and server \(\mathcal{C}\) invoke \(\mathcal{F}^{(m_2)}_{\mathsf{soprf}}\) with inputs \(k := (k_1,k_2) \in \{0,1\}^{2\kappa}\) for sender \(\mathcal{S}\), \(Y := \{y_i\}_{i\in [m_2]}\) for receiver \(\mathcal{R}\).</li>
+<li>Note that \(\mathcal{F}^{(m_2)}_{\mathsf{soprf}}\) is non-shuffled.</li>
+<li>Server \(\mathcal{C}\) obtains \(k_2\), and receiver \(\mathcal{R}\) obtains \(Y' = \{y'_1,\ldots, y'_{m_2}\}\). Note, here \(y'_i = F'(k,y_i)\).</li>
+<li>Sender \(\mathcal{S}\) constructs an OKVS over \(T \leftarrow \mathsf{Encode}(\{x_i, F'(k,x_i)\oplus v_i\})\).</li>
+<li>Sender sends \(T\) to \(\mathcal{R}\).</li>
+<li></li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-org95a9dce" class="outline-2">
+<h2 id="org95a9dce">Security Guarantees</h2>
+</div>
+<div id="outline-container-org7942d69" class="outline-2">
+<h2 id="org7942d69">Notes</h2>
+<div class="outline-text-2" id="text-org7942d69">
+<ul class="org-ul">
+<li>Presents helper party based multi-party PSI-CA</li>
+<li>Key idea: Efficiency gains from helper party</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4dfeccd" class="outline-2">
+<h2 id="org4dfeccd">References</h2>
+<div class="outline-text-2" id="text-org4dfeccd">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Jiahui Gao, Ni Trieu, and Avishay Yanai. 2024. “Multiparty Private Set Intersection Cardinality and Its Applications.” <a href="https://petsymposium.org/popets/2024/popets-2024-0041.php">https://petsymposium.org/popets/2024/popets-2024-0041.php</a>.</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

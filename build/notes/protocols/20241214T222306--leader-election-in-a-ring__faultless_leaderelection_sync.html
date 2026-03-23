@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-03-22 Sun 21:03 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HS Protocol</title>
+<meta name="author" content="Adithya Bhat" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
+<link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
+<link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class="banner">
+   <a id="myname" href="/">Hermitsage</a>
+  <hr>
+<nav>
+    <p>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/cv.html">CV</a>
+        <a href="/notes/index.html">Notes</a>
+        <a href="/blogs/index.html">Blog</a>
+    </p>
+  </nav>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">HS Protocol</h1>
+<p>
+The nodes are in a ring. Every node has a UID \(u\).
+</p>
+<div class="org-src-container">
+<pre class="src src-latex">Initialize:
+  uid           // the unique ID of this process
+  active := true
+  status := null
+  phase := 0
+
+// The algorithm proceeds until a leader is chosen
+while status = null do
+  if active then
+    forward_msg := (uid, distance = 2^phase, direction = forward)
+    backward_msg := (uid, distance = 2^phase, direction = backward)
+  else
+    forward_msg := null
+    backward_msg := null
+
+  // ---------------------
+  // Forward direction phase
+  // ---------------------
+  for step in 1 to 2^phase do
+    // Send forward_msg to successor (u+1)
+    send forward_msg to (u+1)
+    // Receive a forward-traveling message from predecessor (u-1)
+    forward_in := receive from (u-1)
+
+    if forward_in != null then
+      let (f_id, f_dist, f_dir) = forward_in
+      if f_id &gt; uid then
+        // Found a larger ID
+        active := false
+      else
+        // f_id &lt;= uid
+        f_dist := f_dist - 1
+        if f_dist = 0 then
+          // The message completed its intended distance
+          if f_id = uid and active
+            // Got our own ID back without interruption
+            // This direction is "cleared" (no larger found)
+            forward_msg := null
+          else
+            // If not our ID or we are inactive, discard
+            forward_msg := null
+        else
+          // Continue forwarding smaller ID
+          forward_msg := (f_id, f_dist, f_dir)
+    else
+      // No incoming message means no forwarding needed
+      forward_msg := null
+
+  // ---------------------
+  // Backward direction phase
+  // ---------------------
+  for step in 1 to 2^phase do
+    // Send backward_msg to predecessor (u-1)
+    send backward_msg to (u-1)
+    // Receive a backward-traveling message from successor (u+1)
+    backward_in := receive from (u+1)
+
+    if backward_in != null then
+      let (b_id, b_dist, b_dir) = backward_in
+      if b_id &gt; uid then
+        // Found a larger ID
+        active := false
+      else
+        // b_id &lt;= uid
+        b_dist := b_dist - 1
+        if b_dist = 0 then
+          // The message completed its intended distance
+          if b_id = uid and active
+            // Got our own ID back without interruption
+            backward_msg := null
+          else
+            backward_msg := null
+        else
+          backward_msg := (b_id, b_dist, b_dir)
+    else
+      backward_msg := null
+
+  // ---------------------
+  // End of phase checks
+  // ---------------------
+  if active and forward_msg = null and backward_msg = null then
+    // No larger ID found this phase. We continue unless we detect a global stop.
+    // If at any point we discover we are the only active process, we become leader.
+    // (This detection can be via additional logic or known termination conditions.)
+    if "no other active process" detected then
+      status := leader
+    else
+      phase := phase + 1
+  else
+    // We encountered a larger ID or are waiting for another phase.
+    if not active
+      // We remain inactive and just pass messages for others in future phases.
+      phase := phase + 1
+    else
+      // If still active but haven't confirmed leadership, proceed to next phase
+      phase := phase + 1
+</pre>
+</div>
+<div id="outline-container-org1319cc2" class="outline-2">
+<h2 id="org1319cc2">Example</h2>
+<div class="outline-text-2" id="text-org1319cc2">
+<p>
+Below is a step-by-step example to illustrate how the Hirschberg–Sinclair (HS) algorithm works in practice.
+Consider a small ring and let us walk through a few phases to see how processes drop out until only the leader (the node with the largest ID) remains.
+</p>
+</div>
+<div id="outline-container-orgbb550aa" class="outline-3">
+<h3 id="orgbb550aa">Setup:</h3>
+<div class="outline-text-3" id="text-orgbb550aa">
+<p>
+Suppose we have a ring of \(8\) processes arranged in a circle:
+</p>
+<blockquote>
+<p>
+P0 → P1 → P2 → P3 → P4 → P5 → P6 → P7 → (back to P0)
+</p>
+</blockquote>
+<p>
+Each process has a unique identifier (ID).
+Let’s assign them as follows:
+</p>
+<blockquote>
+<p>
+P0: ID = 3
+P1: ID = 5
+P2: ID = 10
+P3: ID = 2
+P4: ID = 9
+P5: ID = 8
+P6: ID = 4
+P7: ID = 7
+</p>
+</blockquote>
+<p>
+Thus, the ring with IDs is:
+</p>
+<blockquote>
+<p>
+     P0(3)
+  P7(7)    P1(5)
+P6(4)        P2(10)
+  P5(8)    P3(2)
+     P4(9)
+</p>
+</blockquote>
+<p>
+Initially, all processes are active candidates.
+</p>
+</div>
+</div>
+<div id="outline-container-orgce17cad" class="outline-3">
+<h3 id="orgce17cad">Overview of the Algorithm’s Structure:</h3>
+<div class="outline-text-3" id="text-orgce17cad">
+<p>
+The HS algorithm runs in phases \(i = 0,1,2,\ldots\). In each phase \(i\):
+</p>
+<ul class="org-ul">
+<li>Each active process sends out "challenge" messages with its ID up to \(2^{i}\) hops in both directions.</li>
+<li>If a process with a smaller ID encounters a larger ID within that radius, it learns that it cannot be the leader and becomes inactive.</li>
+<li>As phases progress, the distance doubles, but fewer processes remain active.</li>
+</ul>
+<p>
+Eventually, after \(O(\log{n})\) phases, only the largest ID process remains active and declares itself the leader.
+</p>
+</div>
+<div id="outline-container-orgfb5d4a3" class="outline-4">
+<h4 id="orgfb5d4a3">Phase 0 (i = 0)</h4>
+<div class="outline-text-4" id="text-orgfb5d4a3">
+<p>
+Distance: \(2^0=1\) hop.
+</p>
+
+<p>
+Every active process (which is all of them at this point) sends a challenge message containing its ID one hop in both directions.
+</p>
+
+<ul class="org-ul">
+<li>P0(3) sends its ID (3) to P7 and P1.</li>
+<li>P1(5) sends its ID (5) to P0 and P2.</li>
+<li>P2(10) sends its ID (10) to P1 and P3.</li>
+<li>P3(2) sends its ID (2) to P2 and P4.</li>
+<li>P4(9) sends its ID (9) to P3 and P5.</li>
+<li>P5(8) sends its ID (8) to P4 and P6.</li>
+<li>P6(4) sends its ID (4) to P5 and P7.</li>
+<li>P7(7) sends its ID (7) to P6 and P0.</li>
+</ul>
+
+<p>
+What happens at each receiver?
+</p>
+
+<ul class="org-ul">
+<li>When P7 receives ID(3) from P0, it compares 3 to its own ID(7). Since 7 &gt; 3, P7 knows there is a smaller contender (3) behind it, but P7 doesn’t drop out for that reason. Instead, P0 might realize it has encountered someone bigger. Similarly, P1 sees ID(3) from P0 and compares 3 &lt; 5, so P1 is bigger than P0.</li>
+<li>More importantly, each challenge message that moves outward checks if it encounters a bigger ID. At the end of this step, each process looks at what messages it sent and what “larger IDs” it learned of.</li>
+</ul>
+
+<p>
+Let’s consider one process at a time:
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="org0ebcb25"></a>P0(3):<br />
+<div class="outline-text-5" id="text-org0ebcb25">
+<ul class="org-ul">
+<li>P0 sent ID(3) to P1 and P7.</li>
+<li>P1 has ID(5), which is greater than 3. Thus, P0 learns there is a process with ID(5) nearby.</li>
+<li>Similarly, P7 has ID(7), which is also greater than 3.</li>
+<li>Conclusion: P0 finds two processes in its immediate neighborhood larger than itself. P0 becomes inactive.</li>
+</ul>
+</div>
+</li>
+<li><a id="org4a614ab"></a>P1(5):<br />
+<div class="outline-text-5" id="text-org4a614ab">
+<ul class="org-ul">
+<li>P1 sent ID(5) to P0(3) and P2(10).</li>
+<li>P2(10) is greater than 5, so P1 discovers a larger ID to one side.</li>
+<li>Therefore, P1 becomes inactive.</li>
+</ul>
+</div>
+</li>
+<li><a id="orgb0e549e"></a>P2(10):<br />
+<div class="outline-text-5" id="text-orgb0e549e">
+<ul class="org-ul">
+<li>P2 sent ID(10) to P1(5) and P3(2).</li>
+<li>Both neighbors have smaller IDs (5 and 2), so P2 sees no one larger within 1 hop.</li>
+<li>P2 remains active (so far it’s the “king of the hill” in its immediate area).</li>
+</ul>
+</div>
+</li>
+<li><a id="org0a35d8b"></a>P3(2):<br />
+<div class="outline-text-5" id="text-org0a35d8b">
+<ul class="org-ul">
+<li>Sent ID(2) to P2(10) and P4(9).</li>
+<li>P2(10) and P4(9) are both larger than 2.</li>
+<li>P3 becomes inactive.</li>
+</ul>
+</div>
+</li>
+<li><a id="org05068b4"></a>P4(9):<br />
+<div class="outline-text-5" id="text-org05068b4">
+<ul class="org-ul">
+<li>Sent ID(9) to P3(2) and P5(8).</li>
+<li>P3(2) is smaller, P5(8) is smaller. No larger ID found.</li>
+<li>P4 stays active.</li>
+</ul>
+</div>
+</li>
+<li><a id="orgbcc4155"></a>P5(8):<br />
+<div class="outline-text-5" id="text-orgbcc4155">
+<ul class="org-ul">
+<li>Sent ID(8) to P4(9) and P6(4).</li>
+<li>P4(9) is larger than 8.</li>
+<li>P5 becomes inactive.</li>
+</ul>
+</div>
+</li>
+<li><a id="org6b4430a"></a>P6(4):<br />
+<div class="outline-text-5" id="text-org6b4430a">
+<ul class="org-ul">
+<li>Sent ID(4) to P5(8) and P7(7).</li>
+<li>P5(8) is larger than 4 and P7(7) is also larger.</li>
+<li>P6 becomes inactive.</li>
+</ul>
+</div>
+</li>
+<li><a id="orgc907f90"></a>P7(7):<br />
+<div class="outline-text-5" id="text-orgc907f90">
+<ul class="org-ul">
+<li>Sent ID(7) to P6(4) and P0(3).</li>
+<li>Both 4 and 3 are smaller than 7, so P7 sees no larger ID within 1 hop.</li>
+<li>P7 remains active.</li>
+</ul>
+</div>
+</li>
+<li><a id="org816f8ef"></a>Result after Phase 0:<br />
+<div class="outline-text-5" id="text-org816f8ef">
+<ul class="org-ul">
+<li>Active: P2(10), P4(9), P7(7)</li>
+<li>Inactive: P0(3), P1(5), P3(2), P5(8), P6(4)</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-org0ed9bfa" class="outline-4">
+<h4 id="org0ed9bfa">Phase 1 (i = 1)</h4>
+<div class="outline-text-4" id="text-org0ed9bfa">
+<p>
+Distance: \(2^1=2\) hops.
+</p>
+
+<p>
+Now only P2, P4, and P7 are active. They will send out their IDs 2 hops in both directions.
+</p>
+
+<p>
+Consider each active node:
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="orga8af598"></a>P2(10):<br />
+<div class="outline-text-5" id="text-orga8af598">
+<ul class="org-ul">
+<li>Two hops clockwise: P2 → P3 → P4.
+Encounters P3(2) and then P4(9). Among these, P4(9) is large but still smaller than 10.</li>
+<li>Two hops counterclockwise: P2 → P1 → P0.
+Encounters IDs 5 and 3, both smaller than 10.</li>
+<li>No larger ID found. P2 remains active.</li>
+</ul>
+</div>
+</li>
+<li><a id="org327b817"></a>P4(9):<br />
+<div class="outline-text-5" id="text-org327b817">
+<ul class="org-ul">
+<li>Two hops clockwise: P4 → P5 → P6.
+Encounters IDs 8 and 4, both smaller than 9.</li>
+<li>Two hops counterclockwise: P4 → P3 → P2.
+Encounters ID 2 and then ID 10. Uh-oh, P4 finds a larger ID (10) at P2.</li>
+<li>P4 discovers that there’s a bigger contender (P2) within 2 hops. P4 becomes inactive.</li>
+</ul>
+</div>
+</li>
+<li><a id="org4038269"></a>P7(7):<br />
+<div class="outline-text-5" id="text-org4038269">
+<ul class="org-ul">
+<li>Two hops clockwise: P7 → P0 → P1.
+Encounters IDs 3 and 5, both smaller than 7.</li>
+<li>Two hops counterclockwise: P7 → P6 → P5.
+Encounters IDs 4 and 8. Here, 8 is actually larger than 7. But wait, P5 was marked inactive at the end of the last phase. Even though P5 is inactive, it still has ID=8, which is known to be larger than 7. Generally, an inactive node will forward messages, but the key point is that P7 sees a node with a bigger ID in the path. Let’s assume the algorithm’s variant we’re using stops the challenge once a bigger ID is discovered or that P7 eventually learns about P5’s larger ID from the returned messages.</li>
+<li>P7 discovers that ID=8 is larger than 7, so P7 becomes inactive.</li>
+</ul>
+</div>
+</li>
+<li><a id="orgb5ef061"></a>Result after Phase 1:<br />
+<div class="outline-text-5" id="text-orgb5ef061">
+<ul class="org-ul">
+<li>Active: P2(10)</li>
+<li>Inactive: P0(3), P1(5), P3(2), P4(9), P5(8), P6(4), P7(7)</li>
+</ul>
+
+<p>
+Now only P2 with ID=10 remains active.
+</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-org67ecaba" class="outline-4">
+<h4 id="org67ecaba">Phase 2 (and beyond)</h4>
+<div class="outline-text-4" id="text-org67ecaba">
+<p>
+By the start of Phase 2, there is only one active process left: P2(10). Since no other processes are active, P2 automatically becomes the leader. The algorithm typically checks a few more phases or has a termination condition, but effectively, no one will challenge P2 anymore, and P2 knows it’s the largest remaining contender.
+</p>
+</div>
+</div>
+<div id="outline-container-org3dbe9ee" class="outline-4">
+<h4 id="org3dbe9ee">Final Outcome:</h4>
+<div class="outline-text-4" id="text-org3dbe9ee">
+<p>
+P2 (with ID = 10) is the leader.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgd324bd3" class="outline-2">
+<h2 id="orgd324bd3">Notes</h2>
+<div class="outline-text-2" id="text-orgd324bd3">
+<ul class="org-ul">
+<li>This is from <i>Distributed algorithms</i>. Nancy A. Lynch. 1997</li>
+<li>This is also called the HS algorithm (Hirschberg and Sinclair).</li>
+<li>The round complexity is \(O(n\log{n})\).</li>
+<li>The communication complexity is \(O(n\log{n})\).</li>
+<li>It also works if the nodes do not start at the same time.</li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>

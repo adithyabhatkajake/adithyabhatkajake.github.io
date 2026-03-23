@@ -1,0 +1,63 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.9 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="26.0.9">
+  <diagram name="Page-1" id="9wNQg6R8Vo3WzdHB7Vlj">
+    <mxGraphModel dx="1570" dy="1090" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4vkAC3lYai-PRCJgTeJW-1" target="4vkAC3lYai-PRCJgTeJW-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="330" />
+              <mxPoint x="380" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4vkAC3lYai-PRCJgTeJW-1" target="4vkAC3lYai-PRCJgTeJW-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4vkAC3lYai-PRCJgTeJW-1" target="4vkAC3lYai-PRCJgTeJW-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-1" value="Ouroboros: Provable Synchronous Proof of Stake 2017" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="320" y="240" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4vkAC3lYai-PRCJgTeJW-2" target="4vkAC3lYai-PRCJgTeJW-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4vkAC3lYai-PRCJgTeJW-2" target="4vkAC3lYai-PRCJgTeJW-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-2" value="Ouroboros Praos: Semi-synchronous Adaptive Proof of Stake&amp;nbsp;" style="whiteSpace=wrap;html=1;rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fillStyle=auto;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="320" y="400" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="4vkAC3lYai-PRCJgTeJW-4" target="4vkAC3lYai-PRCJgTeJW-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-4" value="Bitcoin Backbone Protocol - Robust Transaction Ledger" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="200" y="80" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4vkAC3lYai-PRCJgTeJW-6" target="4vkAC3lYai-PRCJgTeJW-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4vkAC3lYai-PRCJgTeJW-6" target="4vkAC3lYai-PRCJgTeJW-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-6" value="Ouroboros Genesis: Sync using only Genesis" style="whiteSpace=wrap;html=1;rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="440" y="560" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-8" value="Ouroboros Crypsinous: Stake is hidden, UC" style="whiteSpace=wrap;html=1;rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="560" y="720" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-10" value="Ouroboros Chronos: No global clock" style="whiteSpace=wrap;html=1;rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="320" y="720" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-12" value="Ouroboros Taktikos: Dynamic Local Difficulty" style="whiteSpace=wrap;html=1;rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="200" y="560" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="4vkAC3lYai-PRCJgTeJW-15" value="Ouroboros BFT: Permissioned BFT" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="520" y="400" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

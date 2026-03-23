@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-03-22 Sun 21:00 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Maliciously Secure Circuit Private Set Intersection via SPDZ-Compatible Oblivious PRF</title>
+<meta name="author" content="Adithya Bhat" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
+<link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
+<link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class="banner">
+   <a id="myname" href="/">Hermitsage</a>
+  <hr>
+<nav>
+    <p>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/cv.html">CV</a>
+        <a href="/notes/index.html">Notes</a>
+        <a href="/blogs/index.html">Blog</a>
+    </p>
+  </nav>
+</div>
+</div>
+<div id="content" class="content">
+<h1 class="title">Maliciously Secure Circuit Private Set Intersection via SPDZ-Compatible Oblivious PRF</h1>
+<p>
+Original paper: <a href="#citeproc_bib_item_1"><i>Maliciously Secure Circuit Private Set Intersection via SPDZ-Compatible Oblivious PRF</i>. Yaxi Yang, Xiaojian Liang, Xiangfu Song, Ye Dong, Linting Huang, Hongyu Ren, Changyu Dong, and Jianying Zhou. 2024</a>
+</p>
+<div id="outline-container-org094965d" class="outline-2">
+<h2 id="org094965d">Problem</h2>
+<div class="outline-text-2" id="text-org094965d">
+<ul class="org-ul">
+<li>Existing Circuit-PSI protocols only semi-honest secure</li>
+<li>Cannot convert to malicious: <b>consistency issue</b>
+<ul class="org-ul">
+<li>Parties can't guarantee inputs to function \(f\) stay unchanged from PSI output</li>
+<li>Malicious party could alter secret-shared intersection before sending to circuit</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org4d5e0fe" class="outline-2">
+<h2 id="org4d5e0fe">Solution: \(\Pi_{mcPSI}\) Protocol</h2>
+<div class="outline-text-2" id="text-org4d5e0fe">
+</div>
+<div id="outline-container-org1ec6f54" class="outline-3">
+<h3 id="org1ec6f54">Key Innovation: DDOPRF (Distributed Dual-key Oblivious PRF)</h3>
+<div class="outline-text-3" id="text-org1ec6f54">
+<ul class="org-ul">
+<li>SPDZ-compatible OPRF using Dodis-Yampolskiy PRF: \(F(k,x) = g^{1/(k+x)}\)</li>
+<li>Computes PRF on secret-shared inputs with MAC authentication</li>
+<li>"Dual-key" mechanism (\(k\) and \(k_s\)) enables fairness</li>
+</ul>
+</div>
+<div id="outline-container-org09a4b69" class="outline-4">
+<h4 id="org09a4b69">Four-Phase Protocol</h4>
+<div class="outline-text-4" id="text-org09a4b69">
+</div>
+<ul class="org-ul">
+<li><a id="org5a659e2"></a>Phase 1: Secret Shared Shuffle<br />
+<div class="outline-text-5" id="text-org5a659e2">
+<ul class="org-ul">
+<li>Inputs: \(\mathbf{x}\) (\(P_0\)), \(\mathbf{y}\) (\(P_1\))</li>
+<li>Create ASS: \(\langle \mathbf{x} \rangle\), \(\langle \mathbf{y} \rangle\)</li>
+<li>Shuffle with random unknown permutations: \(\langle \mathbf{x}' \rangle = \langle \pi(\mathbf{x}) \rangle\), \(\langle \mathbf{y}' \rangle = \langle \rho(\mathbf{y}) \rangle\)</li>
+</ul>
+</div>
+</li>
+<li><a id="org9987d27"></a>Phase 2: DDOPRF<br />
+<div class="outline-text-5" id="text-org9987d27">
+<ul class="org-ul">
+<li>\(P_0\) computes: \(F(k, x'_i) = g^{1/(k+x'_i)}\)</li>
+<li>\(P_1\) computes: \(F(k, k_s, y'_j) = g^{k_s/(k+y'_j)}\)</li>
+<li>Secondary key \(k_s\) keeps \(P_1\)'s values random until revealed</li>
+</ul>
+</div>
+</li>
+<li><a id="orga83947e"></a>Phase 3: Fair Comparison<br />
+<div class="outline-text-5" id="text-orga83947e">
+<ul class="org-ul">
+<li>Bit-decompose \(\langle k_s \rangle\) into \(\ell\) bits</li>
+<li>Open bits one-by-one (with MAC checks)</li>
+<li>Both parties reconstruct \(k_s\) simultaneously</li>
+<li>\(P_0\) computes \((g^{1/(k+x'_i)})^{k_s}\) to compare with \(P_1\)'s values</li>
+<li>Match \(\Rightarrow x'_i = y'_j\) in intersection</li>
+</ul>
+</div>
+</li>
+<li><a id="org8ae4cda"></a>Phase 4: Function Computation<br />
+<div class="outline-text-5" id="text-org8ae4cda">
+<ul class="org-ul">
+<li>Collect matching shares: \(\langle \mathbf{x} \cap \mathbf{y} \rangle\)</li>
+<li>Send to \(\mathcal{F}_{2PC}\) to compute \(f(\mathbf{x} \cap \mathbf{y})\)</li>
+<li>MAC checks ensure shares weren't tampered</li>
+<li>Similar bit-decomposition trick for fair output revelation</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org85713a1" class="outline-3">
+<h3 id="org85713a1">Technical Details</h3>
+<div class="outline-text-3" id="text-org85713a1">
+</div>
+<div id="outline-container-org45828f6" class="outline-4">
+<h4 id="org45828f6">Secret Sharing Notation</h4>
+<div class="outline-text-4" id="text-org45828f6">
+<ul class="org-ul">
+<li>$&lang; x &rang; : Linear Secret Sharing (LSS) - unauthenticated
+<ul class="org-ul">
+<li>\(P_i\) holds \(\langle x \rangle_i \in \mathbb{F}_p\) where \(\sum \langle x \rangle_i = x\)</li>
+</ul></li>
+<li>\(\langle x \rangle\): Authenticated Secret Sharing (ASS) - with MACs
+<ul class="org-ul">
+<li>\(\langle x \rangle = (\langle x \rangle, \langle \gamma(x) \rangle)\) where \(\gamma(x) = \xi \cdot x\)</li>
+<li>MAC key \(\langle \xi \rangle\) shared between parties</li>
+<li>\(P_i\) holds \(\langle x \rangle_i = (\langle x \rangle_i, \langle \gamma(x) \rangle_i) \in \mathbb{F}_p^2\)</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge35f26e" class="outline-4">
+<h4 id="orge35f26e">Beaver Triple Multiplication</h4>
+<div class="outline-text-4" id="text-orge35f26e">
+<ul class="org-ul">
+<li>Precompute random triple: \((\langle a \rangle, \langle b \rangle, \langle c \rangle)\) where \(c = a \cdot b\)</li>
+<li>To compute \(\langle x \cdot y \rangle\):
+<ol class="org-ol">
+<li>Mask: \(\langle e \rangle = \langle x \rangle - \langle a \rangle\), \(\langle f \rangle = \langle y \rangle - \langle b \rangle\)</li>
+<li>Open \(e, f\) (safe because masked by random \(a,b\))</li>
+<li>Compute: \(\langle z \rangle = \langle c \rangle + f \cdot \langle a \rangle + e \cdot \langle b \rangle + e \cdot f\)</li>
+</ol></li>
+<li>Result: \(z = x \cdot y\)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org63bca91" class="outline-4">
+<h4 id="org63bca91">MAC Check Protocol</h4>
+<div class="outline-text-4" id="text-org63bca91">
+<p>
+To open \(\langle x \rangle\) with integrity check:
+</p>
+<ol class="org-ol">
+<li>Each \(P_i\) reveals \(\langle x \rangle_i\)</li>
+<li>Reconstruct \(x' = \sum \langle x \rangle_i\)</li>
+<li>Each \(P_i\) computes: \(\langle d \rangle_i = \langle \gamma(x) \rangle_i - x' \cdot \langle \xi \rangle_i\)</li>
+<li>Commit, then open \(d = \sum \langle d \rangle_i\)</li>
+<li>Check \(d = 0\) (fails if \(x' \neq x\) with probability \(\approx 1\))</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org8182c71" class="outline-4">
+<h4 id="org8182c71">Group Shares (MSS/AMSS)</h4>
+<div class="outline-text-4" id="text-org8182c71">
+<ul class="org-ul">
+<li>\(([x])\): Multiplicative Secret Sharing over group \(\mathbb{G}\)
+<ul class="org-ul">
+<li>\(\prod ([x])_i = g^x\) (secret in exponent)</li>
+<li>Operations: \(([x]) \cdot ([y]) = ([x+y])\), \(([x])^c = ([c \cdot x])\)</li>
+</ul></li>
+<li>\(\langle [x] \rangle\): Authenticated MSS \(= (([x]), ([\gamma(x)]))\)</li>
+<li>Convert ASS$&rarr;$AMSS: \(([x])_i = g^{\langle x \rangle_i}\) (non-interactive!)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org64eb256" class="outline-4">
+<h4 id="org64eb256">DDOPRF Protocol Detail</h4>
+<div class="outline-text-4" id="text-org64eb256">
+<p>
+Input: \(\langle x \rangle\), \(\langle k \rangle\), optional \(\langle k_s \rangle\)
+</p>
+<ol class="org-ol">
+<li>\(\langle r \rangle \leftarrow\) random (for masking)</li>
+<li>\(\langle d \rangle \leftarrow \langle r \rangle \cdot (\langle k \rangle + \langle x \rangle)\)  [via Beaver triple]</li>
+<li>Open \(d\) with MAC check \(\to d = r \cdot (k+x)\)</li>
+<li>\(\langle e \rangle \leftarrow d^{-1} \cdot \langle r \rangle \to e = 1/(k+x)\)</li>
+<li>If \(k_s\) provided: \(\langle e \rangle \leftarrow \langle e \rangle \cdot \langle k_s \rangle\)  [another Beaver triple]</li>
+<li>\(\langle [e] \rangle \leftarrow \text{Convert}(\langle e \rangle)\)  [ASS to AMSS]</li>
+<li>Open \(g^e\) with MAC check</li>
+</ol>
+<p>
+Output: \(g^{1/(k+x)}\) or \(g^{k_s/(k+x)}\)
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org35ca167" class="outline-2">
+<h2 id="org35ca167">References</h2>
+<div class="outline-text-2" id="text-org35ca167">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Yaxi Yang, Xiaojian Liang, Xiangfu Song, Ye Dong, Linting Huang, Hongyu Ren, Changyu Dong, and Jianying Zhou. 2024. “Maliciously Secure Circuit Private Set Intersection via SPDZ-Compatible Oblivious PRF.” <a href="https://eprint.iacr.org/2024/789">https://eprint.iacr.org/2024/789</a>.</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
