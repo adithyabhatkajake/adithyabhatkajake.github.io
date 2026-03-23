@@ -1,3 +1,9 @@
+/* Force light theme regardless of system preference */
+body {
+    background-color: #fffff8;
+    color: #111;
+}
+
 /* Constrain code blocks to article width (override ox-tufte wide style) */
 .org-src-container {
     max-width: 90%;
@@ -5,10 +11,10 @@
     margin-right: auto;
 }
 
-/* Theme-independent syntax highlighting for org-mode htmlize CSS classes */
+/* Code blocks — light gray background for light theme */
 pre.src {
-    background-color: #1a1a2e;
-    color: #e0e0e0;
+    background-color: #f0f0f0;
+    color: #1a1a1a;
     padding: 1em;
     border-radius: 4px;
     overflow-x: auto;
@@ -17,8 +23,8 @@ pre.src {
 }
 
 pre.example {
-    background-color: #1a1a2e;
-    color: #e0e0e0;
+    background-color: #f0f0f0;
+    color: #1a1a1a;
     padding: 1em;
     border-radius: 4px;
     overflow-x: auto;
@@ -30,34 +36,34 @@ pre.example {
 }
 
 /* Keywords: fn, let, mut, const, pub, use, mod, struct, impl, etc. */
-.org-keyword { color: #c792ea; }
-.org-rust-ts-unsafe { color: #ff5370; }
+.org-keyword { color: #7928a1; }
+.org-rust-ts-unsafe { color: #d32f2f; }
 
 /* Types and builtins */
-.org-type { color: #ffcb6b; }
-.org-builtin { color: #82aaff; }
-.org-constant { color: #f78c6c; }
+.org-type { color: #b58900; }
+.org-builtin { color: #1565c0; }
+.org-constant { color: #d84315; }
 
 /* Strings and characters */
-.org-string { color: #c3e88d; }
-.org-doc { color: #c3e88d; }
+.org-string { color: #2e7d32; }
+.org-doc { color: #2e7d32; }
 
 /* Comments */
-.org-comment { color: #676e95; font-style: italic; }
-.org-comment-delimiter { color: #676e95; font-style: italic; }
+.org-comment { color: #8e908c; font-style: italic; }
+.org-comment-delimiter { color: #8e908c; font-style: italic; }
 
 /* Functions and variables */
-.org-function-name { color: #82aaff; }
-.org-variable-name { color: #f07178; }
+.org-function-name { color: #1565c0; }
+.org-variable-name { color: #c62828; }
 
 /* Preprocessor and macros */
-.org-preprocessor { color: #89ddff; }
+.org-preprocessor { color: #00838f; }
 
 /* Operators and punctuation */
-.org-negation-char { color: #89ddff; }
+.org-negation-char { color: #00838f; }
 
 /* Warnings and errors */
-.org-warning { color: #ffcb6b; font-weight: bold; }
+.org-warning { color: #f57f17; font-weight: bold; }
 
 /* General formatting */
 .org-bold { font-weight: bold; }
