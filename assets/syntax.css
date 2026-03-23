@@ -69,3 +69,30 @@ pre.example {
 .org-bold { font-weight: bold; }
 .org-italic { font-style: italic; }
 .org-underline { text-decoration: underline; }
+
+/* Notes index entries */
+.note-entry {
+    margin-bottom: 1em;
+    font-size: 1.4rem;
+    line-height: 2rem;
+}
+.note-entry a {
+    font-size: inherit;
+}
+.note-badge {
+    display: inline-block;
+    font-size: 0.75em;
+    padding: 0.15em 0.5em;
+    border-radius: 3px;
+    margin-top: 0.2em;
+    font-family: sans-serif;
+}
+.date-badge {
+    background-color: #e8e8e8;
+    color: #333;
+}
+.source-badge {
+    background-color: #d4e8d4;
+    color: #2a5a2a;
+    text-transform: capitalize;
+}

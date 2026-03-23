@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0">
+  <info>
+    <title>Rich Inline Citation</title>
+    <id>rich-inline</id>
+    <updated>2024-01-01T00:00:00+00:00</updated>
+  </info>
+  <citation>
+    <layout delimiter="; ">
+      <group delimiter=". ">
+        <text variable="title" font-style="italic"/>
+        <names variable="author">
+          <name form="long" and="text" delimiter=", " delimiter-precedes-last="always"/>
+        </names>
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </group>
+    </layout>
+  </citation>
+  <bibliography>
+    <sort>
+      <key variable="author"/>
+    </sort>
+    <layout suffix=".">
+      <group delimiter=". ">
+        <names variable="author">
+          <name form="long" and="text" delimiter=", " delimiter-precedes-last="always"/>
+        </names>
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+        <text variable="title" quotes="true"/>
+        <text variable="URL"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>

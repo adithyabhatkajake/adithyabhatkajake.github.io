@@ -33,12 +33,22 @@
 (package-install 'htmlize)
 (package-install 'ox-tufte)
 (package-install 'rust-mode)
+(package-install 'citeproc)
 
 ;; Load the org-mode library
 (require 'org)
 (require 'ox-publish)
 (require 'ol)
 (require 'org-attach)
+(require 'oc)
+(require 'oc-csl)
+(require 'citeproc)
+
+;; Configure org-cite with bibliography from citar config (passed via build.sh)
+(setq org-cite-global-bibliography (list (getenv "BIBLIOGRAPHY")))
+(setq org-cite-export-processors
+      `((html csl ,(expand-file-name "assets/rich-inline.csl" default-directory))
+        (t basic)))
 
 ;; Build CV PDF into assets/
 (load-file "build-adithya-cv.el")
@@ -81,7 +91,9 @@
       org-id-locations-file (expand-file-name ".org-id-locations" default-directory) ;; ID locations file
       org-attach-use-inheritance t
       ;; Use CSS classes for syntax highlighting instead of inline styles
-      org-html-htmlize-output-type 'css)
+      org-html-htmlize-output-type 'css
+      ;; Skip broken links (org-roam ID links won't resolve in batch mode)
+      org-export-with-broken-links 'mark)
 
 ;; Create a standard HTML nav using absolute paths from site root
 (defun site-nav-html (_)
@@ -95,10 +107,11 @@
         <a href=\"%s\">Home</a>
         <a href=\"%sabout.html\">About</a>
         <a href=\"%scv.html\">CV</a>
+        <a href=\"%snotes/index.html\">Notes</a>
         <a href=\"%sblogs/index.html\">Blog</a>
     </p>
   </nav>
-</div>" site-root site-root site-root site-root site-root))
+</div>" site-root site-root site-root site-root site-root site-root))
 
 ;; --- Blog index generation ---
 (defvar blogs-dir "blogs")
@@ -176,6 +189,144 @@
 (when (file-directory-p blogs-dir)
   (generate-blog-index))
 
+;; --- Notes index generation ---
+(defvar org-dir (getenv "ORG_DIR"))
+(defvar notes-base-dir (when org-dir (file-name-concat org-dir "200-notes")))
+(defvar notes-subdirs '(("literature-notes" . "literature notes")
+                        ("permanent-notes" . "permanent notes")
+                        ("protocols" . "protocols")))
+(defvar notes-dir "notes")
+(defvar notes-per-page 50)
+
+(defun notes--extract-date-from-filename (filename)
+  "Try to extract a YYYY-MM-DD date from FILENAME's timestamp prefix."
+  (let ((name (file-name-nondirectory filename)))
+    (cond
+     ;; Denote format: 20241221T230010--title.org
+     ((string-match "^\\([0-9]\\{4\\}\\)\\([0-9]\\{2\\}\\)\\([0-9]\\{2\\}\\)T" name)
+      (format "%s-%s-%s" (match-string 1 name) (match-string 2 name) (match-string 3 name)))
+     ;; Zettelkasten format: 20241003013133-title.org
+     ((string-match "^\\([0-9]\\{4\\}\\)\\([0-9]\\{2\\}\\)\\([0-9]\\{2\\}\\)[0-9]+-" name)
+      (format "%s-%s-%s" (match-string 1 name) (match-string 2 name) (match-string 3 name)))
+     (t nil))))
+
+(defun notes--extract-metadata (file subdir-slug)
+  "Extract title and date from an org FILE, tagging with SUBDIR-SLUG."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (let ((title (when (re-search-forward "^#\\+[Tt][Ii][Tt][Ll][Ee]:\\s-*\\(.*\\)" nil t)
+                   (string-trim (match-string 1))))
+          (date (progn
+                  (goto-char (point-min))
+                  (cond
+                   ;; Try #+date: <2024-01-08> or #+date: [2024-01-08 ...]
+                   ((re-search-forward "^#\\+[Dd][Aa][Tt][Ee]:\\s-*[<\\[]\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)" nil t)
+                    (match-string 1))
+                   ;; Try #+date: 2024-01-08
+                   ((progn (goto-char (point-min))
+                           (re-search-forward "^#\\+[Dd][Aa][Tt][Ee]:\\s-*\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)" nil t))
+                    (match-string 1))
+                   ;; Fall back to filename
+                   (t (notes--extract-date-from-filename file))))))
+      (when title
+        (list :title title
+              :date (or date "0000-00-00")
+              :file (file-name-nondirectory file)
+              :subdir subdir-slug)))))
+
+(defun notes--generate-page (entries page-num total-pages output-dir)
+  "Generate a single notes index page with ENTRIES for PAGE-NUM of TOTAL-PAGES."
+  (let* ((filename (if (= page-num 1) "index.org"
+                     (format "page-%d.org" page-num)))
+         (filepath (file-name-concat output-dir filename)))
+    (with-temp-file filepath
+      (insert "#+title: Notes\n\n")
+      (dolist (entry entries)
+        (let* ((title (plist-get entry :title))
+               (date (plist-get entry :date))
+               (file (plist-get entry :file))
+               (subdir (plist-get entry :subdir))
+               (html-file (concat (file-name-sans-extension file) ".html"))
+               (label (replace-regexp-in-string "-" " " subdir)))
+          (insert (format "@@html:<div class=\"note-entry\"><a href=\"%s/%s\">%s</a><br><span class=\"note-badge date-badge\">%s</span> <span class=\"note-badge source-badge\">%s</span></div>@@\n"
+                          subdir html-file title date label))))
+      ;; Pagination nav
+      (when (> total-pages 1)
+        (insert "\n@@html:<nav class=\"pagination\">@@\n")
+        (when (> page-num 1)
+          (let ((prev-file (if (= page-num 2) "index.html" (format "page-%d.html" (1- page-num)))))
+            (insert (format "[[file:%s][← Newer]]" prev-file))))
+        (when (and (> page-num 1) (< page-num total-pages))
+          (insert " | "))
+        (when (< page-num total-pages)
+          (insert (format "[[file:page-%d.html][Older →]]" (1+ page-num))))
+        (insert "\n@@html:</nav>@@\n")))
+    (message "Generated notes index: %s" filepath)))
+
+(defun generate-notes-index ()
+  "Scan notes source directories, generate paginated index pages."
+  (let ((notes-path (file-name-concat default-directory notes-dir))
+        (all-entries '()))
+    ;; Create local notes/ directory
+    (unless (file-exists-p notes-path)
+      (make-directory notes-path t))
+    ;; Collect entries from all source directories
+    (dolist (subdir-pair notes-subdirs)
+      (let* ((slug (car subdir-pair))
+             (dirname (cdr subdir-pair))
+             (src-dir (file-name-concat notes-base-dir dirname)))
+        (when (file-directory-p src-dir)
+          (let ((org-files (directory-files src-dir t "\\.org$")))
+            (dolist (f org-files)
+              (let ((entry (notes--extract-metadata f slug)))
+                (when entry
+                  (push entry all-entries))))))))
+    ;; Sort by date descending
+    (setq all-entries (sort all-entries
+                            (lambda (a b)
+                              (string> (plist-get a :date) (plist-get b :date)))))
+    (let* ((total (length all-entries))
+           (total-pages (max 1 (ceiling (/ (float total) notes-per-page)))))
+      ;; Clean old generated index files
+      (dolist (f (directory-files notes-path t "^\\(index\\|page-[0-9]+\\)\\.org$"))
+        (delete-file f))
+      ;; Generate each page
+      (dotimes (i total-pages)
+        (let* ((start (* i notes-per-page))
+               (end (min (* (1+ i) notes-per-page) total))
+               (page-entries (seq-subseq all-entries start end)))
+          (notes--generate-page page-entries (1+ i) total-pages notes-path)))
+      (message "Notes index generated: %d notes across %d pages" total total-pages))))
+
+;; Generate notes index before publishing
+(when (and notes-base-dir (file-directory-p notes-base-dir))
+  (generate-notes-index))
+
+;; --- Org-ID resolution for org-roam links ---
+(require 'org-id)
+
+(defun build-org-id-db ()
+  "Scan all notes files and register their :ID: properties for link resolution."
+  (let ((count 0))
+    (dolist (subdir-pair notes-subdirs)
+      (let* ((dirname (cdr subdir-pair))
+             (src-dir (file-name-concat notes-base-dir dirname)))
+        (when (file-directory-p src-dir)
+          (dolist (f (directory-files src-dir t "\\.org$"))
+            (with-temp-buffer
+              (insert-file-contents f)
+              (goto-char (point-min))
+              (while (re-search-forward ":ID:\\s-+\\([a-f0-9-]+\\)" nil t)
+                (let ((id (match-string 1)))
+                  (puthash id f org-id-locations)
+                  (cl-incf count))))))))
+    (message "Org-ID database built: %d IDs registered" count)))
+
+(when (and notes-base-dir (file-directory-p notes-base-dir))
+  (unless (hash-table-p org-id-locations)
+    (setq org-id-locations (make-hash-table :test 'equal)))
+  (build-org-id-db))
+
 ;; We are using https://ogbe.net/blog/emacs_org_static_site for inspiration
 ;; Configure attachment directories
 
@@ -203,7 +354,8 @@ Ensures LINK with DESC is properly resolved using INFO."
   (concat
    "<link rel=\"stylesheet\" type=\"text/css\" href=\"/assets/tufte-css/tufte.css\" />\n"
    "<link rel=\"stylesheet\" href=\"/assets/tufte-css/ox-tufte.css\" type=\"text/css\" />\n"
-   "<link rel=\"stylesheet\" href=\"/assets/syntax.css\" type=\"text/css\" />\n"))
+   "<link rel=\"stylesheet\" href=\"/assets/syntax.css\" type=\"text/css\" />\n"
+   "<script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"></script>\n"))
 
 ;; Set up the org-publish project for the root index file.
 (setq org-publish-project-alist
@@ -233,6 +385,77 @@ Ensures LINK with DESC is properly resolved using INFO."
          :html-preamble site-nav-html
          :html-postamble nil
          :with-toc nil)
+
+        ;; Publish the notes index (generated locally)
+        ,@(when notes-base-dir
+            `(("notes-index-project"
+               :base-directory ,(file-name-concat default-directory "notes")
+               :base-extension "org"
+               :publishing-directory ,(file-name-concat publish-dir "notes")
+               :publishing-function org-html-publish-to-html
+               :recursive nil
+               :html-head ,(html-head-fn)
+               :section-numbers nil
+               :html-preamble site-nav-html
+               :html-postamble nil
+               :with-toc nil)
+
+              ;; Literature notes
+              ("literature-notes-project"
+               :base-directory ,(file-name-concat notes-base-dir "literature notes")
+               :base-extension "org"
+               :publishing-directory ,(file-name-concat publish-dir "notes" "literature-notes")
+               :publishing-function org-html-publish-to-html
+               :recursive nil
+               :html-head ,(html-head-fn)
+               :section-numbers nil
+               :html-preamble site-nav-html
+               :html-postamble nil
+               :with-toc nil)
+              ("literature-notes-images"
+               :base-directory ,(file-name-concat notes-base-dir "literature notes" "images")
+               :base-extension "png\\|jpg\\|gif\\|svg\\|pdf"
+               :publishing-directory ,(file-name-concat publish-dir "notes" "literature-notes" "images")
+               :recursive t
+               :publishing-function org-publish-attachment)
+              ("literature-notes-attach"
+               :base-directory ,(file-name-concat notes-base-dir "literature notes" "attach")
+               :base-extension "png\\|jpg\\|gif\\|svg\\|pdf"
+               :publishing-directory ,(file-name-concat publish-dir "notes" "literature-notes" "attach")
+               :recursive t
+               :publishing-function org-publish-attachment)
+
+              ;; Permanent notes
+              ("permanent-notes-project"
+               :base-directory ,(file-name-concat notes-base-dir "permanent notes")
+               :base-extension "org"
+               :publishing-directory ,(file-name-concat publish-dir "notes" "permanent-notes")
+               :publishing-function org-html-publish-to-html
+               :recursive nil
+               :html-head ,(html-head-fn)
+               :section-numbers nil
+               :html-preamble site-nav-html
+               :html-postamble nil
+               :with-toc nil)
+              ("permanent-notes-assets"
+               :base-directory ,(file-name-concat notes-base-dir "permanent notes" "data")
+               :base-extension "png\\|jpg\\|gif\\|svg\\|pdf\\|drawio"
+               :publishing-directory ,(file-name-concat publish-dir "notes" "permanent-notes" "data")
+               :recursive t
+               :publishing-function org-publish-attachment)
+
+              ;; Protocols
+              ("protocols-project"
+               :base-directory ,(file-name-concat notes-base-dir "protocols")
+               :base-extension "org"
+               :publishing-directory ,(file-name-concat publish-dir "notes" "protocols")
+               :publishing-function org-html-publish-to-html
+               :recursive nil
+               :html-head ,(html-head-fn)
+               :section-numbers nil
+               :html-preamble site-nav-html
+               :html-postamble nil
+               :with-toc nil)))
 
         ;; Publish the assets directory
         ("assets-project"
