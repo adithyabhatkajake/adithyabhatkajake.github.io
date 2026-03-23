@@ -27,12 +27,12 @@
 
 ;; Initialize the package system
 (package-initialize)
-(unless package-archive-contents
-  (package-refresh-contents))
+(package-refresh-contents)
 
 ;; Install dependencies
 (package-install 'htmlize)
 (package-install 'ox-tufte)
+(package-install 'rust-mode)
 
 ;; Load the org-mode library
 (require 'org)
