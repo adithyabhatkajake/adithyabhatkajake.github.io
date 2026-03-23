@@ -1,0 +1,65 @@
+/* Constrain code blocks to article width (override ox-tufte wide style) */
+.org-src-container {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Theme-independent syntax highlighting for org-mode htmlize CSS classes */
+pre.src {
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+    padding: 1em;
+    border-radius: 4px;
+    overflow-x: auto;
+    width: auto;
+    box-sizing: border-box;
+}
+
+pre.example {
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+    padding: 1em;
+    border-radius: 4px;
+    overflow-x: auto;
+    width: auto;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+/* Keywords: fn, let, mut, const, pub, use, mod, struct, impl, etc. */
+.org-keyword { color: #c792ea; }
+.org-rust-ts-unsafe { color: #ff5370; }
+
+/* Types and builtins */
+.org-type { color: #ffcb6b; }
+.org-builtin { color: #82aaff; }
+.org-constant { color: #f78c6c; }
+
+/* Strings and characters */
+.org-string { color: #c3e88d; }
+.org-doc { color: #c3e88d; }
+
+/* Comments */
+.org-comment { color: #676e95; font-style: italic; }
+.org-comment-delimiter { color: #676e95; font-style: italic; }
+
+/* Functions and variables */
+.org-function-name { color: #82aaff; }
+.org-variable-name { color: #f07178; }
+
+/* Preprocessor and macros */
+.org-preprocessor { color: #89ddff; }
+
+/* Operators and punctuation */
+.org-negation-char { color: #89ddff; }
+
+/* Warnings and errors */
+.org-warning { color: #ffcb6b; font-weight: bold; }
+
+/* General formatting */
+.org-bold { font-weight: bold; }
+.org-italic { font-style: italic; }
+.org-underline { text-decoration: underline; }

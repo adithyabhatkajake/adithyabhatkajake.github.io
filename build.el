@@ -1,28 +1,26 @@
-;;; build.el --- How to build our website -*- lexical-binding: t; -*-
+;; --- How to build our website -*- lexical-binding: t; -*-
 ;;
 ;; Copyright (C) 2023 Adithya Bhat
 ;;
 ;; Author: Adithya Bhat <dth.bht@gmail.com>
 ;; Maintainer: Adithya Bhat <dth.bht@gmail.com>
 ;; Created: April 15, 2023
-;; Modified: April 15, 2023
+;; Modified: October 18, 2024
 ;; Version: 0.0.1
-;; Package-Requires: ((emacs "28.1"))
+;; Package-Requires: ((emacs "29.1"))
 ;;
 ;; This file is not part of GNU Emacs.
-;;
 ;;; Commentary:
+;; In this file, we will do the following:
 ;;
-;;  How to build our website
-;;
+
 ;;; Code:
 
-(require 'ox-publish)
-
-;; Setup usage of htmlize
 ;; Set the package installation directory so that packages aren't stored in the
 ;; ~/.emacs.d/elpa path.
 (require 'package)
+
+;; Code: Set the package installation directory to a local folder
 (setq package-user-dir (expand-file-name "./.packages"))
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
@@ -34,194 +32,217 @@
 
 ;; Install dependencies
 (package-install 'htmlize)
+(package-install 'ox-tufte)
 
-;; Remove the validate link at the bottom
-(setq org-html-validation-link nil)
+;; Load the org-mode library
+(require 'org)
+(require 'ox-publish)
+(require 'ol)
+(require 'org-attach)
 
-;; Ignore all the org headings with tags: noexport and ignore
-(setq org-export-exclude-tags '("noexport" "ignore"))
+;; Build CV PDF into assets/
+(load-file "build-adithya-cv.el")
+(build-adithya-cv)
 
-;; This tells org export how to handle exporting code blocks
-;; By choosing css, we can let an external css file handle the syntax highlighting
-(setq org-html-htmlize-output-type 'css)
+;; Define the root index file
+(defvar root-index-file "index.org")
+(defvar root-about-file "about.org")
+(defvar publish-dir "build")
+(defvar assets-dir "assets")
+(defvar site-root "/")  ;; Change to your base URL if needed
 
-;; This settings sets the header of the html file
-;; We add our doom light themed css file to the head of the html file here.
-;; We also add the mathjax script to the head of the html file here.
-(setq org-html-head (concat "<link rel=\"stylesheet\" href=\"/assets/styles.css\"/>\n"
-                            "<script type=\"text/javascript\" id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"></script>"))
+;; Create publish directory if it doesn't exist
+(unless (file-exists-p publish-dir)
+  (make-directory publish-dir t))
 
-(defvar build-website-root default-directory
-  "The folder where the website source files are stored.")
+;; Ensure that the assets directory exists
+;; If it doesn't, warn the user and fail
+(unless (file-exists-p assets-dir)
+  (message "Assets directory not found. Please create one.")
+  (error "Assets directory not found"))
 
-(defvar build-website-output (expand-file-name "_site" build-website-root)
-  "The folder where the website will be built.")
+;; Ensure that the root index file exists
+;; If it doesn't, warn the user and fail
+(unless (file-exists-p root-index-file)
+  (message "Root index file not found. Please create one.")
+  (error "Root index file not found"))
 
-(message "Building website in %s" build-website-output)
+;; Ensure that the about file exists
+;; If it doesn't, warn the user and fail
+(unless (file-exists-p root-about-file)
+  (message "About file not found. Please create one.")
+  (error "About file not found"))
 
-(defvar build-website-exclude-dirs '("_site" ;; Output folder
-                                     ".git"  ;; Version control
-                                     "assets";; Assets folder
-                                     )
-  "The folders to exclude when building the website.")
+;; Org export settings
+(setq org-export-with-properties nil ;; This disables property export globally
+      org-export-with-tags nil ;; This disables tag export globally
+      ;; Global attach settings
+      org-attach-id-dir (file-name-concat assets-dir "attachments/") ;; Attachments directory
+      org-id-locations-file (expand-file-name ".org-id-locations" default-directory) ;; ID locations file
+      org-attach-use-inheritance t
+      ;; Use CSS classes for syntax highlighting instead of inline styles
+      org-html-htmlize-output-type 'css)
 
-;; Ensure Emacs uses UTF-8 encoding by default
-(prefer-coding-system 'utf-8)
-;; (setq default-buffer-file-coding-system 'utf-8)
-(setq coding-system-for-read 'utf-8)
-(setq coding-system-for-write 'utf-8)
-(setq org-export-coding-system 'utf-8)
+;; Create a standard HTML nav using absolute paths from site root
+(defun site-nav-html (_)
+  "Return a standard HTML nav with links to the home and blog pages."
+  (format "
+<div class=\"banner\">
+   <a id=\"myname\" href=\"%s\">Hermitsage</a>
+  <hr>
+<nav>
+    <p>
+        <a href=\"%s\">Home</a>
+        <a href=\"%sabout.html\">About</a>
+        <a href=\"%scv.html\">CV</a>
+        <a href=\"%sblogs/index.html\">Blog</a>
+    </p>
+  </nav>
+</div>" site-root site-root site-root site-root site-root))
 
-;; Generate the CV from CV.org
-(add-to-list 'org-latex-classes
-             '("resume" "\\documentclass{resume}
+;; --- Blog index generation ---
+(defvar blogs-dir "blogs")
+(defvar blogs-per-page 10)
 
-% Change the page layout if you need to
-[PACKAGES]
-[EXTRA]
-\\newcommand{\\tab}[1]{\\hspace{.2667\\textwidth}\\rlap{#1}}
-\\newcommand{\\itab}[1]{\\hspace{0em}\\rlap{#1}}
-\\name{Adithya Bhat} % Your name
-\\address{
-    \\\\ Email - \\href{mailto:aditbhat@visa.com}{aditbhat@visa.com} \\\\
-    GitHub - \\href{https://github.com/adithyabhatkajake}{https://github.com/adithyabhatkajake}
-}
-\\address{
-    \\\\ Website - \\href{https://adithyabhatkajake.github.io}{https://adithyabhatkajake.github.io}
-}
-\\address{Visa Research, Visa Inc., CA} % Your address
-"
-               ("\\begin{rSection}{%s}" "\\end{rSection}" "\\begin{rSection}{%s}" "\\end{rSection}")
-               ("\\begin{rSubsection}{%s}" "\\end{rSubsection}" "\\begin{rSubsection}{%s}" "\\end{rSubsection}")))
+(defun blog--extract-metadata (file)
+  "Extract title and date from an org FILE's headers."
+  (with-temp-buffer
+    (insert-file-contents file)
+    (let ((title (when (re-search-forward "^#\\+title:\\s-*\\(.*\\)" nil t)
+                   (match-string 1)))
+          (date (progn
+                  (goto-char (point-min))
+                  (when (re-search-forward "^#\\+date:\\s-*<\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)" nil t)
+                    (match-string 1)))))
+      (when (and title date)
+        (list :title title :date date :file (file-name-nondirectory file))))))
 
-;; TODO: Generate CV fresh every time
-(defun build-generate-cv ()
-  "Generate the CV from the org file."
-  (let ((org-latex-logfiles-extensions (quote ("lof" "lot" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl" "xmpi" "run.xml" "bcf")))
-        (org-latex-packages-alist 'nil)
-        (org-latex-default-packages-alist 'nil))
-    (with-current-buffer (find-file-noselect "CV.org")
-      (org-latex-export-to-pdf))))
+(defun blog--generate-page (entries page-num total-pages output-dir)
+  "Generate a single blog index page with ENTRIES for PAGE-NUM of TOTAL-PAGES."
+  (let* ((filename (if (= page-num 1) "index.org"
+                     (format "page-%d.org" page-num)))
+         (filepath (file-name-concat output-dir filename)))
+    (with-temp-file filepath
+      (insert "#+title: Blog\n\n")
+      (dolist (entry entries)
+        (let ((title (plist-get entry :title))
+              (date (plist-get entry :date))
+              (file (plist-get entry :file)))
+          (insert (format "- [[file:%s][%s]] — /%s/\n" file title date))))
+      ;; Pagination nav
+      (when (> total-pages 1)
+        (insert "\n@@html:<nav class=\"pagination\">@@\n")
+        (when (> page-num 1)
+          (let ((prev-file (if (= page-num 2) "index.html" (format "page-%d.html" (1- page-num)))))
+            (insert (format "[[file:%s][← Newer]]" prev-file))))
+        (when (and (> page-num 1) (< page-num total-pages))
+          (insert " | "))
+        (when (< page-num total-pages)
+          (insert (format "[[file:page-%d.html][Older →]]" (1+ page-num))))
+        (insert "\n@@html:</nav>@@\n")))
+    (message "Generated blog index: %s" filepath)))
 
-;; Generate the CV every time
-(build-generate-cv)
+(defun generate-blog-index ()
+  "Scan blogs/ for org files, generate paginated index pages."
+  (let* ((blog-path (file-name-concat default-directory blogs-dir))
+         (org-files (directory-files blog-path t "\\.org$"))
+         ;; Exclude generated index/page files
+         (org-files (seq-remove
+                     (lambda (f)
+                       (let ((name (file-name-nondirectory f)))
+                         (or (string= name "index.org")
+                             (string-match-p "^page-[0-9]+\\.org$" name))))
+                     org-files))
+         ;; Extract metadata from each file
+         (entries (delq nil (mapcar #'blog--extract-metadata org-files)))
+         ;; Sort by date descending
+         (entries (sort entries
+                        (lambda (a b)
+                          (string> (plist-get a :date) (plist-get b :date)))))
+         (total (length entries))
+         (total-pages (max 1 (ceiling (/ (float total) blogs-per-page)))))
+    ;; Clean old generated index files
+    (dolist (f (directory-files blog-path t "^\\(index\\|page-[0-9]+\\)\\.org$"))
+      (delete-file f))
+    ;; Generate each page
+    (dotimes (i total-pages)
+      (let* ((start (* i blogs-per-page))
+             (end (min (* (1+ i) blogs-per-page) total))
+             (page-entries (seq-subseq entries start end)))
+        (blog--generate-page page-entries (1+ i) total-pages blog-path)))
+    (message "Blog index generated: %d posts across %d pages" total total-pages)))
 
-;; Create a nav.org file with links to the following:
-;; - Home
-;; - CV
-;; - All directories in the root folder
-(defun build-generate-nav-org (exclude-dirs)
-  "Generate a `nav.org` file with links.
-The links include the base directory and all subdirectories, except those in
-EXCLUDE-DIRS."
-  (let* ((base-dir default-directory)
-         (all-dirs (directory-files base-dir t "^[^.]" t))
-         (filtered-dirs (cl-remove-if
-                         (lambda (dir)
-                           (or (not (file-directory-p dir))
-                               (member (file-name-nondirectory dir) exclude-dirs)))
-                         all-dirs))
-         (assets-dir (expand-file-name "assets" base-dir))
-         (nav-file (expand-file-name "nav.org" assets-dir)))
-    (with-temp-file nav-file
-      (insert "*Links*: @@html:")
-      (insert "<a href=\"/\">Home</a> ")
-      (insert "<a href=\"/cv.html\">CV</a>")
-      (dolist (dir filtered-dirs)
-        (let ((dir-name (file-name-nondirectory dir)))
-          (insert (format " <a href=\"/%s\">%s</a>" dir-name dir-name))))
-      (insert "@@\n"))))
+;; Generate blog index before publishing
+(when (file-directory-p blogs-dir)
+  (generate-blog-index))
 
-;; Generate the nav.org file
-(build-generate-nav-org build-website-exclude-dirs)
+;; We are using https://ogbe.net/blog/emacs_org_static_site for inspiration
+;; Configure attachment directories
 
-;; Read the nav.org file
-(defun build-read-nav-org ()
-  "Read the content of `nav.org` from the `assets` directory."
-  (let* ((base-dir default-directory)
-         (nav-file (expand-file-name "assets/nav.org" base-dir)))
-    (if (file-exists-p nav-file)
-        (with-temp-buffer
-          (insert-file-contents nav-file)
-          (buffer-string))
-      (message "nav.org not found in assets directory.")
-      "")))
+;; Fix attachment links during export
+(defun fix-attachment-links (link desc info)
+  "Handle attachment links properly during export.
+Ensures LINK with DESC is properly resolved using INFO."
+  (let ((path (org-element-property :path link)))
+    (if (string-prefix-p "attachment:" (org-element-property :raw-link link))
+        (let ((filename (substring path (length "attachment:")))
+              (html-extension (plist-get info :html-extension))
+              (link-org-files-as-html-p (org-html-link-org-files-as-html-p info)))
+          (format "<a href=\"%s/%s\">%s</a>"
+                  attach-dir
+                  filename
+                  (or desc filename)))
+      nil)))
 
-;; Inject nav.org to the top of all generated html files
-(defun build-org-html-publish-to-html (plist filename pub-dir)
-  "Publish an Org file to HTML, including `nav.org` at the top.
-PLIST is the property list for the project. FILENAME is the filename of the
-Org file to publish. PUB-DIR is the publishing directory."
-  (let ((nav-content (build-read-nav-org))
-        (pub-dir (expand-file-name pub-dir)))
-    (unless (file-directory-p pub-dir)
-      (make-directory pub-dir t))
-    (with-current-buffer (find-file-noselect filename)
-      (goto-char (point-min))
-      (insert nav-content "\n")
-      (org-publish-org-to 'html filename
-                          (concat "." (or (plist-get plist :html-extension) "html"))
-                          plist pub-dir))))
+;; Register the fix-attachment-links function
+(org-link-set-parameters "attachment"
+                         :export #'fix-attachment-links)
 
-;; A function to list all directories to export from the root directory
-(defun build-list-org-directories (exclude-dirs)
-  "List all directories in `default-directory` except those in EXCLUDE-DIRS."
-  (let ((all-dirs (directory-files default-directory t "^[^.]" t))
-        (filtered-dirs '()))
-    (dolist (dir all-dirs)
-      (when (and (file-directory-p dir)
-                 (not (member (file-name-nondirectory dir) exclude-dirs)))
-        (push dir filtered-dirs)))
-    filtered-dirs))
+(defun html-head-fn ()
+  "Return HTML head elements for my Org HTML export."
+  (concat
+   "<link rel=\"stylesheet\" type=\"text/css\" href=\"/assets/tufte-css/tufte.css\" />\n"
+   "<link rel=\"stylesheet\" href=\"/assets/tufte-css/ox-tufte.css\" type=\"text/css\" />\n"
+   "<link rel=\"stylesheet\" href=\"/assets/syntax.css\" type=\"text/css\" />\n"))
 
-;; A function to generate the org-publish project alist
-(defun build-generate-org-publish-projects (exclude-dirs)
-  "Generate org-publish project alist entries.
-It creates entries for all directories in `default-directory` except excluded
-ones in EXCLUDE-DIRS."
-  (let ((org-dirs (build-list-org-directories exclude-dirs))
-        (projects '()))
-    ;; Add the base directory
-    (push (list "site:base"
-                :base-directory default-directory
-                :publishing-directory build-website-output
-                :publishing-function 'build-org-html-publish-to-html
-                :section-numbers nil
-                :with-toc nil)
-          projects)
-    (dolist (dir org-dirs)
-      (let ((project-name (file-name-nondirectory dir)))
-        (message "Processing %s with dir %s" project-name dir)
-        (push (list project-name
-                    :base-directory dir
-                    :publishing-directory (file-name-concat build-website-output project-name)
-                    :publishing-function 'build-org-html-publish-to-html
-                    :section-numbers nil
-                    :with-toc nil)
-              projects)))
-    ;; Add assets directory
-    (push `("assets"
-            :base-directory ,(file-name-concat default-directory "assets")
-            :recursive t
-            :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|pptx"
-            :publishing-directory ,(file-name-concat build-website-output "assets")
-            :publishing-function org-publish-attachment)
-          projects)
-    (setq org-publish-project-alist projects)))
+;; Set up the org-publish project for the root index file.
+(setq org-publish-project-alist
+      ;; Publish the root index file
+      `(("index-project"
+         :base-directory ,default-directory
+         :base-extension "org"
+         :publishing-directory ,publish-dir
+         :publishing-function org-html-publish-to-html
+         :recursive nil
+         :publishing-files (list ,root-index-file ,root-about-file)
+         :html-head ,(html-head-fn)
+         :section-numbers nil
+         :html-preamble site-nav-html
+         :html-postamble nil
+         :with-toc nil)
 
-;; Generate the project alist
-(build-generate-org-publish-projects build-website-exclude-dirs)
+        ;; Publish the blogs directory
+        ("blogs-project"
+         :base-directory ,(file-name-concat default-directory "blogs")
+         :base-extension "org"
+         :publishing-directory ,(file-name-concat publish-dir "blogs")
+         :publishing-function org-html-publish-to-html
+         :recursive nil
+         :html-head ,(html-head-fn)
+         :section-numbers nil
+         :html-preamble site-nav-html
+         :html-postamble nil
+         :with-toc nil)
 
-;; A function to build all projects in org-publish-project-alist
-(defun build-publish-all-projects ()
-  "Publish all projects in org-publish-project-alist."
-  (interactive)
-  (dolist (project org-publish-project-alist)
-    (org-publish-project (car project) t)))
+        ;; Publish the assets directory
+        ("assets-project"
+         :base-directory ,assets-dir
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|ttf\\|woff\\|eot\\|svg"
+         :publishing-directory ,(file-name-concat publish-dir assets-dir)
+         :recursive t
+         :publishing-function org-publish-attachment)))
 
-;; Generate the site output
-(build-publish-all-projects)
+(org-publish-all t)
 
 (message "Build complete!")
-(provide 'build)
 ;;; build.el ends here

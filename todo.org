@@ -1,0 +1,11 @@
+* Inbox
+** TODO Add Permanent notes to the navigation bar
+Created: [2025-01-03 Fri]
+** TODO Create an index for the permanent notes
+Created: [2025-01-03 Fri]
+** TODO Export Permanent notes
+Created: [2025-01-03 Fri]
+** TODO Create an index page for the literature notes
+Created: [2025-01-03 Fri]
+** TODO Fix Citation export
+Created: [2025-01-03 Fri]

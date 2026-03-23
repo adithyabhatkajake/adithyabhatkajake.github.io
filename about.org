@@ -1,0 +1,15 @@
+:PROPERTIES:
+:DIR:      assets/attachments
+:END:
+#+title: About
+
+
+* About
+** Short Bio
+** Interests
+*** Pickleball
+*** Emacs :ATTACH:
+
+[[attachment:_20250308_203458screenshot.png]]
+
+*** Books

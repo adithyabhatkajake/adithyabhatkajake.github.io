@@ -4,54 +4,15 @@
 #+HTML: The PDF version can be found <a href="assets/cv.pdf">here</a>.
 #+HTML: (They are the same.)
 
-* 00-Information :noexport:
-- Run =C-c C-c= on all the blocks in the =01-= blocks to setup the configuration.
-- Run =C-c C-e= to export the file. Choose pdf via latex or html (for the website). The output pdf is in =assets/cv.pdf= and the output html is in =_site/cv.html=
-- Add the tag =noexport= for headings that org should not export.
-* 01-Config/Preamble :ignore:
-** LaTeX Config :ignore:
-#+BEGIN_SRC emacs-lisp :exports none  :results none :eval always
-;; Execute =C-c C-c= here.
-
-(setq org-latex-logfiles-extensions (quote ("lof" "lot" "tex~" "aux" "idx" "log" "out" "toc" "nav" "snm" "vrb" "dvi" "fdb_latexmk" "blg" "brf" "fls" "entoc" "ps" "spl" "bbl" "xmpi" "run.xml" "bcf")))
-(add-to-list 'org-latex-classes
-             '("resume" "\\documentclass{resume}
-
-% Change the page layout if you need to
-[PACKAGES]
-[EXTRA]
-\\newcommand{\\tab}[1]{\\hspace{.2667\\textwidth}\\rlap{#1}}
-\\newcommand{\\itab}[1]{\\hspace{0em}\\rlap{#1}}
-\\name{Adithya Bhat} % Your name
-\\address{
-    \\\\ Email - \\href{mailto:aditbhat@visa.com}{aditbhat@visa.com} \\\\
-    GitHub - \\href{https://github.com/adithyabhatkajake}{https://github.com/adithyabhatkajake}
-}
-\\address{
-    \\\\ Website - \\href{https://adithyabhatkajake.github.io}{https://adithyabhatkajake.github.io}
-}
-\\address{Visa Research, Visa Inc., CA} % Your address
-"
-               ("\\begin{rSection}{%s}" "\\end{rSection}" "\\begin{rSection}{%s}" "\\end{rSection}")
-               ("\\begin{rSubsection}{%s}" "\\end{rSubsection}" "\\begin{rSubsection}{%s}" "\\end{rSubsection}")
-               ))
-(setq org-latex-packages-alist 'nil)
-(setq org-latex-default-packages-alist 'nil)
-#+END_SRC
-#+LATEX_CLASS: resume
-#+LATEX_HEADER: \usepackage[utf8]{inputenc}
-#+LATEX_HEADER: \usepackage[left=0.95in,top=0.95in,right=0.95in,bottom=0.95in]{geometry} % Document margins
-#+LATEX_HEADER: \usepackage[colorlinks=true,allcolors=cyan]{hyperref}
-#+LATEX_HEADER: \usepackage{breakurl}
-** Exporter Settings :ignore:
-#+AUTHOR: Adithya Bhat
-#+EXPORT_FILE_NAME: ./assets/cv.pdf
-#+OPTIONS: toc:nil title:nil date:nil
-* 02-CV Tasks :noexport:
+* Meta information :noexport:
+- Run =build-cv.el= to get the PDF
+* CV Tasks :noexport:
+** TODO Add FastSync Patent
+Created: [2024-09-08 Sun]
 * Research Interests
-My interests are /Byzantine fault-tolerant distributed systems/, /applied cryptography/ and /blockchain protocols/.
+My interests are /Byzantine fault-tolerant distributed systems/ and /applied cryptography/.
 My work aims at developing and evaluating cryptographic solutions for secure, fault-tolerant distributed systems.
-My current research focuses on energy-efficient consensus protocols in network settings such as synchronous, asynchronous, and all intermediate models; fault-tolerant cryptographic protocols such as PVSS and Random Beacons, and secure Byzantine fault-tolerant distributed protocols.
+My current research focuses on energy-efficient consensus protocols in network settings such as synchronous, asynchronous, and all intermediate models; fault-tolerant cryptographic protocols such as PVSS and Random Beacons and Private set intersection.
 * Education
 @@latex: \item @@ *Purdue University, West Lafayette*
 @@latex: \hfill @@ /(2018-2023)/\\
@@ -148,23 +109,75 @@ My current research focuses on energy-efficient consensus protocols in network s
 #+begin_export latex
 \vspace{0.5em}
 #+end_export
-1. <<SensorBFT>> /SensorBFT: Fault-Tolerant Target Localization using Voronoi Diagrams and Approximate Agreement./ *ICDCS 2024*. Akhil Bandarupalli, Adithya Bhat, Somali Chaterji, Michael K. Reiter, Aniket Kate, Saurabh Bagchi.
-1. <<Delphi>> /Delphi: Efficient Asynchronous Approximate Agreement for Distributed Oracles./ *DSN 2024*. Akhil Bandarupalli, Adithya Bhat, Saurabh Bagchi, Aniket Kate, Chen-Da Liu-Zhang, and Michael K. Reiter. [[https://arxiv.org/pdf/2405.02431][eprint]]
-1. <<HashRand>> /HashRand: Efficient Asynchronous Random Beacon without Threshold Cryptographic Setup./ *CCS 2024*. Akhil Bandarupalli, Adithya Bhat, Saurabh Bagchi, Aniket Kate, and Michael Reiter. [[https://eprint.iacr.org/2023/1755.pdf][eprint]]
-1. <<Tor>> /Attacking and Improving the Tor Directory Protocol./ *IEEE S&P 2024*. Zhongtang Luo, Adithya Bhat, Kartik Nayak, and Aniket Kate. [[https://zhtluo.com/paper/Attacking_and_Improving_the_Tor_Directory_Protocol.pdf][eprint]]
-1. <<E2C>> /EESMR - Energy Efficient State Machine Replication./ *Middleware 2023*. Adithya Bhat, Akhil Bandarupalli, Manish Nagaraj, Saurabh Bagchi, Aniket Kate, Michael Reiter. [[https://dl.acm.org/doi/10.1145/3590140.3592848][conference]] [[https://arxiv.org/abs/2304.04998][eprint]]
-2. <<Apollo>><<Artemis>> /The unique chain rule and its applications./ *Financial Cryptography 2023*. Adithya Bhat, Akhil Bandarupalli, Saurabh Bagchi, Aniket Kate, Michael Reiter. [[https://fc23.ifca.ai/preproceedings/138.pdf][pre-conference]] [[https://doi.org/10.1007/978-3-031-47754-6_3][conference]] [[https://eprint.iacr.org/2021/180][eprint]] [[https://github.com/adithyabhatkajake/libchatter-rs][code]]
-3. <<OptRand>> /OptRand - Optimistically Responsive Reconfigurable Distributed Randomness./ *NDSS 2023*. Adithya Bhat, Nibesh Shrestha, Aniket Kate, Kartik Nayak. [[https://www.ndss-symposium.org/ndss-paper/optrand-optimistically-responsive-reconfigurable-distributed-randomness/][conference]] [[https://eprint.iacr.org/2022/193][eprint]] [[https://github.com/nibeshrestha/optrand][protocol code]] [[https://github.com/libdist-rs/optrand-rs][crypto code]] [[https://www.youtube.com/watch?v=6DH2bGXP3-4][video]]
-4. /OpenSquare: Decentralized Repeated Modular Squaring Service./ *CCS 2021*. Sri Aravinda Krishnan Thyagarajan, Tiantian Gong, Adithya Bhat, Aniket Kate, Dominique Schroder. [[https://dl.acm.org/doi/10.1145/3460120.3484809][conference]] [[https://eprint.iacr.org/2021/1273][eprint]] [[https://github.com/verifiable-timed-signatures/OpenSquare][code]]
-5. <<RandPiper>> /RandPiper – Reconfiguration Friendly Random Beacons with Quadratic Communication./ *CCS 2021*. Adithya Bhat, Nibesh Shrestha, Aniket Kate, Kartik Nayak. [[https://dl.acm.org/doi/abs/10.1145/3460120.3484574][conference]] [[https://eprint.iacr.org/2020/1590.pdf][eprint]] [[https://github.com/zhtluo/randpiper-rs][code]]
-6. <<Reparo>> /Reparo - Publicly Verifiable Repair Layer for any Blockchain./ *FC 2021*. Sri Aravinda Krishnan Thyagarajan, Adithya Bhat, Bernardo Magri, Daniel Tschudi, Aniket Kate. [[https://fc21.ifca.ai/papers/119.pdf][conference]] [[https://arxiv.org/abs/2001.00486][eprint]]
-7. <<VTS>> /Verifiable Timed Signatures for Blockchains./ *CCS 2020*. Sri Aravinda Krishnan Thyagarajan, Adithya Bhat, Guilio Malavolta, Nico Dottling, Aniket Kate, Dominique Schroder. [[https://dl.acm.org/doi/10.1145/3372297.3417263][conference]] [[https://eprint.iacr.org/2020/1563.pdf][eprint]] [[https://github.com/verifiable-timed-signatures/liblhtlp][code]]
-# 9. <<TransNet>> /Transitive Network - A Tokenless IOU-based Credit Network./ Cryptocurrency Implementers Workshop, FC 2019. *Adithya Bhat*, Pedro Moreno Sanchez, Aniket Kate. [[https://github.com/pedrorechez/transitivenetwork][code]]
+1. <<lite-pot>> /Lite-PoT: Practical Powers-of-Tau Setup Ceremony./
+   *CCS 2025.*
+   Lucien K. L. Ng, Pedro Moreno-Sanchez, Mohsen Minaei, Panagiotis Chatzigiannis, *Adithya Bhat*, Duc V. Le.
+   [[https://arxiv.org/pdf/2503.04549][eprint]]
+2. <<SyncDKG>> /Synchronous Distributed Key Generation without Broadcasts./
+   *Journal of Cryptology 2024*.
+   Nibesh Shrestha, *Adithya Bhat*, Kartik Nayak, Aniket Kate.
+   [[https://doi.org/10.62056/ayfhsgvtw][journal]] [[https://eprint.iacr.org/2021/1635][eprint]]
+3. <<SensorBFT>> /SensorBFT: Fault-Tolerant Target Localization using Voronoi Diagrams and Approximate Agreement./
+   *ICDCS 2024*.
+   Akhil Bandarupalli, *Adithya Bhat*, Somali Chaterji, Michael K. Reiter, Aniket Kate, Saurabh Bagchi.
+   [[https://www.computer.org/csdl/proceedings-article/icdcs/2024/860500a186/1ZCgEXQYbZe][conference]] [[https://reitermk.github.io/papers/2024/ICDCS.pdf][eprint]]
+4. <<Delphi>> /Delphi: Efficient Asynchronous Approximate Agreement for Distributed Oracles./
+   *DSN 2024*.
+   Akhil Bandarupalli, *Adithya Bhat*, Saurabh Bagchi, Aniket Kate, Chen-Da Liu-Zhang, and Michael K. Reiter.
+   [[https://ieeexplore.ieee.org/abstract/document/10647006][conference]] [[https://arxiv.org/pdf/2405.02431][eprint]]
+5. <<HashRand>> /HashRand: Efficient Asynchronous Random Beacon without Threshold Cryptographic Setup./
+   *CCS 2024*.
+   Akhil Bandarupalli, *Adithya Bhat*, Saurabh Bagchi, Aniket Kate, and Michael Reiter.
+   [[https://dl.acm.org/doi/abs/10.1145/3658644.3670326][conference]] [[https://eprint.iacr.org/2023/1755.pdf][eprint]]
+6. <<Tor>> /Attacking and Improving the Tor Directory Protocol./
+   *IEEE S&P 2024*.
+   Zhongtang Luo, *Adithya Bhat*, Kartik Nayak, and Aniket Kate.
+   [[https://ieeexplore.ieee.org/abstract/document/10646693][conference]] [[https://zhtluo.com/paper/Attacking_and_Improving_the_Tor_Directory_Protocol.pdf][eprint]]
+7. <<E2C>> /EESMR - Energy Efficient State Machine Replication./
+   *Middleware 2023*.
+   *Adithya Bhat*, Akhil Bandarupalli, Manish Nagaraj, Saurabh Bagchi, Aniket Kate, Michael Reiter. [[https://dl.acm.org/doi/10.1145/3590140.3592848][conference]] [[https://arxiv.org/abs/2304.04998][eprint]]
+8. <<Apollo>><<Artemis>> /The unique chain rule and its applications./
+   *Financial Cryptography 2023*.
+   *Adithya Bhat*, Akhil Bandarupalli, Saurabh Bagchi, Aniket Kate, Michael Reiter.
+   [[https://fc23.ifca.ai/preproceedings/138.pdf][pre-conference]] [[https://doi.org/10.1007/978-3-031-47754-6_3][conference]] [[https://eprint.iacr.org/2021/180][eprint]] [[https://github.com/adithyabhatkajake/libchatter-rs][code]]
+9. <<OptRand>> /OptRand - Optimistically Responsive Reconfigurable Distributed Randomness./
+   *NDSS 2023*.
+   *Adithya Bhat*, Nibesh Shrestha, Aniket Kate, Kartik Nayak.
+   [[https://www.ndss-symposium.org/ndss-paper/optrand-optimistically-responsive-reconfigurable-distributed-randomness/][conference]] [[https://eprint.iacr.org/2022/193][eprint]] [[https://github.com/nibeshrestha/optrand][protocol code]] [[https://github.com/libdist-rs/optrand-rs][crypto code]] [[https://www.youtube.com/watch?v=6DH2bGXP3-4][video]]
+10. <<OpenSquare>> /OpenSquare: Decentralized Repeated Modular Squaring Service./
+    *CCS 2021*.
+    Sri Aravinda Krishnan Thyagarajan, Tiantian Gong, *Adithya Bhat*, Aniket Kate, Dominique Schroder.
+    [[https://dl.acm.org/doi/10.1145/3460120.3484809][conference]] [[https://eprint.iacr.org/2021/1273][eprint]] [[https://github.com/verifiable-timed-signatures/OpenSquare][code]]
+11. <<RandPiper>> /RandPiper – Reconfiguration Friendly Random Beacons with Quadratic Communication./
+    *CCS 2021*.
+    *Adithya Bhat*, Nibesh Shrestha, Aniket Kate, Kartik Nayak.
+    [[https://dl.acm.org/doi/abs/10.1145/3460120.3484574][conference]] [[https://eprint.iacr.org/2020/1590.pdf][eprint]] [[https://github.com/zhtluo/randpiper-rs][code]]
+12. <<Reparo>> /Reparo - Publicly Verifiable Repair Layer for any Blockchain./
+    *FC 2021*.
+    Sri Aravinda Krishnan Thyagarajan, Adithya Bhat, Bernardo Magri, Daniel Tschudi, Aniket Kate.
+    [[https://fc21.ifca.ai/papers/119.pdf][conference]] [[https://arxiv.org/abs/2001.00486][eprint]]
+13. <<VTS>> /Verifiable Timed Signatures for Blockchains./
+    *CCS 2020*.
+    Sri Aravinda Krishnan Thyagarajan, Adithya Bhat, Guilio Malavolta, Nico Dottling, Aniket Kate, Dominique Schroder.
+    [[https://dl.acm.org/doi/10.1145/3372297.3417263][conference]] [[https://eprint.iacr.org/2020/1563.pdf][eprint]] [[https://github.com/verifiable-timed-signatures/liblhtlp][code]]
+
+* Patents
+#+begin_export latex
+\vspace{0.5em}
+#+end_export
+1. /Accountable Decentralized Anonymous Payments./ United States Patent Application 20240265373. [[https://www.freepatentsonline.com/y2024/0265373.html][patent]].
+2. /Fast sync blockchain system and method./ United States Patent Application WO2024026321A1. [[https://patents.google.com/patent/WO2024026321A1/en][patent]].
+3. /A system for partially synchronous scalable blockchains./ United States Patent Application WO2024233453A1. [[https://patentimages.storage.googleapis.com/06/d1/cc/9b924b543965ac/WO2024233453A1.pdf][patent]]
 * Tech Reports
-1. <<SyncDKG>> /Synchronous Distributed Key Generation without Broadcasts./ Nibesh Shrestha, *Adithya Bhat*, Kartik Nayak, Aniket Kate. [[https://eprint.iacr.org/2021/1635][eprint]]
-2. <<Leto>> /Leto - Partially Synchronous Unique Chains made flexible./ *Adithya Bhat*, Saurabh Bagchi, Aniket Kate, Michael Reiter. [[https://github.com/libdist-rs/leto-rs][code]]
-3. <<FastSync>> /Using the future to verify the past./ Adithya Bhat, Mohsen Minaei, Mahdi Zamani. Appeared in CESC, 2022. *U.S. Patent pending.*
+1. <<fps>> FPS: Flexible Payment Systems.
+   *Adithya Bhat*, Srinivasan Raghuraman, Panagiotis Chatzigiannis, Duc V Le, Mohsen Minaei.
+   [[https://eprint.iacr.org/2025/2095][eprint]]
+1. <<FHE-sok>> SoK: /Fully-homomorphic encryption in smart contracts./ *Poster - FHE.org workshop*.
+   Daniel Aronoff, *Adithya Bhat*, Panagiotis Chatzigiannis, Mohsen Minaei, Srinivasan Raghuraman, Robert M. Townsend, Nicolas Xuan-Yi Zhang.
+   [[https://eprint.iacr.org/2025/527.pdf][eprint]]
+3. <<Leto>> /Leto - Partially Synchronous Unique Chains made flexible./ *Adithya Bhat*, Saurabh Bagchi, Aniket Kate, Michael Reiter. [[https://github.com/libdist-rs/leto-rs][code]]
 4. <<UTT>> /UTT: Decentralized Ecash with Accountable Privacy./ *Science of Blockchain Conference 2023*. Alin Tomescu, Adithya Bhat, Benny Applebaum, Ittai Abraham, Guy Gueta, Benny Pinkas, and Avishay Yanai. [[https://eprint.iacr.org/2022/452][eprint]] [[https://github.com/definitelyNotFBI/utt][code]]
+5. <<TransNet>> /Transitive Network - A Tokenless IOU-based Credit Network./ *Cryptocurrency Implementers Workshop, FC 2019.* *Adithya Bhat*, Pedro Moreno Sanchez, Aniket Kate. [[https://github.com/pedrorechez/transitivenetwork][code]]
 * Software Artifacts
 1. Developed a synchronous networking library to implement SMR protocols. [[https://github.cowwm/adithyabhatkajake/libchatter-rs][code]] @@latex: \hfill @@ (Rust)
 2. Implemented Apollo [[[Apollo]]] (protocol node, normal client and special client) using the Rust networking library. [[https://github.com/adithyabhatkajake/libchatter-rs][code]] @@latex: \hfill @@ (Rust)
@@ -190,25 +203,52 @@ My current research focuses on energy-efficient consensus protocols in network s
 * Talks
 # 2. Coin-tossing. @@latex: \hfill @@ /(Duke University - CSXXX)/
 # 2. Consensus number of a cryptocurrency. @@latex: \hfill @@ /(Purdue University - CSXXX)/
-1. Reconfiguration-friendly Byzantine Fault-tolerant Distributed randomness. [[https://adithyabhatkajake.github.io/assets/presentations/KU-Leuven-RandomBeacons.pptx][slides]] @@latex: \hfill @@ /(KU Leuven)/
-2. Unique Chain Rule and its applications. [[https://adithyabhatkajake.github.io/assets/presentations/Unique-Chain-Rule-Applications.pptx][slides]] @@latex: \hfill @@ /(FC 2023)/
-3. Reconfiguration-friendly Byzantine Fault-tolerant Distributed randomness. [[https://adithyabhatkajake.github.io/assets/presentations/BU-RandomBeacons.pptx][slides]] @@latex: \hfill @@ /(Boston University)/
-4. Flexible State Machine Replication. [[https://adithyabhatkajake.github.io/assets/presentations/Midwest-crypto-day-Lightning-Talk.pptx][slides]] @@latex: \hfill @@ /(Midwest Crypto Day - Lightning session)/
-5. OptRand - Optimistically Responsive Reconfigurable Distributed Randomness. [[https://www.youtube.com/watch?v=6DH2bGXP3-4][video]] @@latex: \hfill @@ /(NDSS 2023)/
-6. FastSync: Using the future to verify the past. [[https://www.youtube.com/watch?v=kCqrd1MQ1no&t=3341s][video]] @@latex:\hfill @@ /(CESC 2022)/
-7. RandPiper - Reconfiguration friendly random beacons with quadratic communication. @@latex:\hfill @@ /(CCS 2021)/
-8. Reparo - Publicly Verifiable Repair Layer for any blockchain. [[https://youtube.com/watch?v=jV_Pjc17eWY][video]] @@latex: \hfill @@ /(FC 2021)/
-9. Transitive network - A tokenless IOU-based Credit Network. Cryptocurrency Implementers Workshop. @@latex: \hfill @@ /(FC 2019)/
+1. Attacking and Improving the Tor Directory Protocol. @@latex: \hfill @@ /(RWC 2025)/
+2. A study of practical BFT systems. @@latex: \hfill @@ /(Supra Team)/
+3. A study of practical BFT systems. @@latex: \hfill @@ /(Espresso Systems)/
+4. A study of practical BFT systems. [[https://doi.org/10.4230/DagRep.14.9.22][abstract]] @@latex: \hfill @@ /(Next Generation Secure Distributed Computing Seminar, Dagstuhl)/
+5. OptRand, an optimistically responsive distributed random beacon protocol. [[https://www.youtube.com/watch?v=gtmOLG7lSVI&list=PLaJEOSRGBY4zhVg-eaw1IcsbdjJ0VEprq&index=3][video]] @@latex: \hfill @@ /(Web3 Randomness Workshop)/
+6. Reconfiguration-friendly Byzantine Fault-tolerant Distributed randomness. [[https://adithyabhatkajake.github.io/assets/presentations/KU-Leuven-RandomBeacons.pptx][slides]] @@latex: \hfill @@ /(KU Leuven)/
+7. Unique Chain Rule and its applications. [[https://adithyabhatkajake.github.io/assets/presentations/Unique-Chain-Rule-Applications.pptx][slides]] @@latex: \hfill @@ /(FC 2023)/
+8. Reconfiguration-friendly Byzantine Fault-tolerant Distributed randomness. [[https://adithyabhatkajake.github.io/assets/presentations/BU-RandomBeacons.pptx][slides]] @@latex: \hfill @@ /(Boston University)/
+9. Flexible State Machine Replication. [[https://adithyabhatkajake.github.io/assets/presentations/Midwest-crypto-day-Lightning-Talk.pptx][slides]] @@latex: \hfill @@ /(Midwest Crypto Day - Lightning session)/
+10. OptRand - Optimistically Responsive Reconfigurable Distributed Randomness. [[https://www.youtube.com/watch?v=6DH2bGXP3-4][video]] @@latex: \hfill @@ /(NDSS 2023)/
+11. FastSync: Using the future to verify the past. [[https://www.youtube.com/watch?v=kCqrd1MQ1no&t=3341s][video]] @@latex:\hfill @@ /(CESC 2022)/
+12. RandPiper - Reconfiguration friendly random beacons with quadratic communication. @@latex:\hfill @@ /(CCS 2021)/
+13. Reparo - Publicly Verifiable Repair Layer for any blockchain. [[https://youtube.com/watch?v=jV_Pjc17eWY][video]] @@latex: \hfill @@ /(FC 2021)/
+14. Transitive network - A tokenless IOU-based Credit Network. Cryptocurrency Implementers Workshop. @@latex: \hfill @@ /(FC 2019)/
 * Academic Service
-  - Program Committee:
-    - CCS 2024
+- Program Committee:
+  - 2026: FC, CCS, ACNS, Usenix Security
+  - 2025: FC, CCS, CVC
+  - 2024: CCS
 - Reviewer for
   - 2024: ACM TOPS, Journal of Cryptology
   - 2023: SOSP AEC, IET
 - External Reviewer for
+  - 2025: ITCS, Crypto
   - 2024: IEEE S & P
   - 2023: CCS, IET, Middleware, IEEE S & P
   - 2022: CCS, PODC, IEEE S & P, CESC
   - 2021: AFT, FC, PODC, IEEE S & P
   - 2020: Usenix Security, IEEE S & P
   - 2019: NDSS
+* 02-CV Tasks :noexport:
+** DONE 📝 Usenix Security PC
+CLOSED: [2025-09-02 Tue 22:54]
+Created: [2025-08-12 Tue]
+** DONE 📝 Lite-PoT CCS Acceptance
+CLOSED: [2025-09-02 Tue 22:54]
+Created: [2025-08-12 Tue]
+** TODO 📝 Add Defi 26 acceptance of SoK on homomorphic smart contracts
+Created: [2026-01-20 Tue]
+** TODO 📝 Add FastSync Eprint
+SCHEDULED: <2026-01-29 Thu 20:00>
+Created: [2026-01-29 Thu]
+** TODO 📝 Defi 2026 Acceptance
+Created: [2026-02-02 Mon]
+** TODO 📝 WTSC 2026 Acceptance
+Created: [2026-02-02 Mon]
+** TODO 📝 Add FastSync Eprint
+Created: [2026-02-02 Mon]
+https://arxiv.org/abs/2601.21286
