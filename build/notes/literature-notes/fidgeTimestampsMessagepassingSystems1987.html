@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-22 Sun 22:29 -->
+<!-- 2026-03-23 Mon 14:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Timestamps in Message-Passing Systems That Preserve the Partial Ordering</title>
@@ -240,7 +240,7 @@
     <p>
         <a href="/">Home</a>
         <a href="/about.html">About</a>
-        <a href="/cv.html">CV</a>
+        <a href="/CV.html">CV</a>
         <a href="/notes/index.html">Notes</a>
         <a href="/blogs/index.html">Blog</a>
     </p>
@@ -269,7 +269,7 @@ An example algorithm rules to maintain a timestamp (Lamport Clock) for asynchron
 <li><p>
 Upon receiving a signal, a process sets the value of each entry in the timestamp array to be the maximum of the two corresponding values in the local array, and in the piggybacked array received. The value corresponding to the sender, however, is a special case and is set to be one greater than the value received (to allow for transit time), but only if the local value is not already greater than that received (to allow for signal "overtaking" as described below), i.e.,
 </p>
-<div class="algorithm" id="org7d9da38">
+<div class="algorithm" id="org00ebdca">
 <p>
 q?other<sub>array</sub>; <i>* receive timestamp array from process q *</i>
 if local<sub>array</sub>[q] &le; other<sub>array</sub>[q] then
@@ -290,7 +290,7 @@ for i := 1 to n do
 The asynchronous timestamping does not work for the synchronous case.
 </p>
 
-<div id="orga89fdc4" class="figure">
+<div id="org52db5e7" class="figure">
 <p><img src="images/_20250202_182524screenshot.png" alt="_20250202_182524screenshot.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>An example where Lamport Clock (the asynchronous timestamping algorithm) fails for the synchronous case. Technically event a occurred before b, but it looks like b occurred before a.</p>
@@ -301,7 +301,7 @@ So the solution is to add a bidirectional timestamp exchange.
 </p>
 
 
-<div id="org47e7774" class="figure">
+<div id="org1bcef32" class="figure">
 <p><img src="images/_20250202_182330screenshot.png" alt="_20250202_182330screenshot.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>The synchronous timestamping algorithm.</p>
@@ -317,7 +317,7 @@ An example algorithm rules to maintain a timestamp for synchronous processes:
 <li><p>
 During a communication event, the two processes involved exchange timestamp arrays and each element in the local array is set to be the maximum of its old value and the corresponding value in the array received, i.e.,
 </p>
-<div class="algorithm" id="org698ae6a">
+<div class="algorithm" id="org89cceb0">
 <p>
 q?other<sub>array</sub>;
 for i := 1 to n do

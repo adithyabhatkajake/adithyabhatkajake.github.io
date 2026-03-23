@@ -225,7 +225,7 @@ Changes to these files affect all outputs."
     <p>
         <a href=\"%s\">Home</a>
         <a href=\"%sabout.html\">About</a>
-        <a href=\"%scv.html\">CV</a>
+        <a href=\"%sCV.html\">CV</a>
         <a href=\"%snotes/index.html\">Notes</a>
         <a href=\"%sblogs/index.html\">Blog</a>
     </p>
@@ -485,7 +485,7 @@ Ensures LINK with DESC is properly resolved using INFO."
          :publishing-directory ,publish-dir
          :publishing-function org-html-publish-to-html
          :recursive nil
-         :publishing-files (list ,root-index-file ,root-about-file)
+         :exclude "todo\\.org"
          :html-head ,(html-head-fn)
          :section-numbers nil
          :html-preamble site-nav-html
