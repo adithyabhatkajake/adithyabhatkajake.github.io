@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-23 Mon 14:17 -->
+<!-- 2026-03-25 Wed 14:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Commit Protocols</title>
@@ -196,7 +196,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -231,7 +230,7 @@ Inspired from the database world, where a transaction is atomically applied/abor
 <h2 id="org4d4b652">Definition</h2>
 <div class="outline-text-2" id="text-org4d4b652">
 <p>
-The definition from <i>Distributed algorithms</i>. Nancy A. Lynch. 1997
+The definition from [1]
 </p>
 <div class="org-src-container">
 <pre class="src src-latex">Let <span class="org-tex-math">$\{0,1\}$</span> be the input domain, where <span class="org-tex-math">$1$</span> represents <span class="org-keyword">\emph</span>{<span class="org-italic">commit</span>}, and <span class="org-tex-math">$0$</span> represents <span class="org-keyword">\emph</span>{<span class="org-italic">abort</span>}.
@@ -262,7 +261,7 @@ This is similar but not identical to Byzantine Agreement/Binary consensus but wi
 <ul class="org-ul">
 <li>1 phase commit / 1PC, 2PC, 3PC are specific protocols with 1,2, and 3 rounds respectively.</li>
 <li><p>
-See related <i>A comparison of the Byzantine Agreement problem and the Transaction Commit Problem</i>. Jim Gray. 1990. According to this, the commit problem and Byzantine generals are identical in the fault-free case.
+See related [2]. According to this, the commit problem and Byzantine generals are identical in the fault-free case.
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -295,13 +294,13 @@ See related <i>A comparison of the Byzantine Agreement problem and the Transacti
 </tr>
 </tbody>
 </table></li>
-<li>From <i>A comparison of the Byzantine Agreement problem and the Transaction Commit Problem</i>. Jim Gray. 1990
+<li>From [2]
 <ul class="org-ul">
 <li>Generally, the fault model is crash/omission (Processes may lose state and be reset to a null state)</li>
 <li>The network model is partially synchronous: (Messages may be delayed, corrupted, or lost)</li>
 </ul></li>
 <li><p>
-From <i>A comparison of the Byzantine Agreement problem and the Transaction Commit Problem</i>. Jim Gray. 1990
+From [2]
 </p>
 <blockquote>
 <p>

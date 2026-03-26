@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-23 Mon 14:17 -->
+<!-- 2026-03-25 Wed 14:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Semi-honest Non-colluding Helper Party Model</title>
@@ -196,7 +196,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
   window.MathJax = {
     tex: {
@@ -205,7 +204,8 @@
       },
       tags: 'ams',
       tagSide: 'right',
-      tagIndent: '.8em'
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
     },
     chtml: {
       scale: 1.0,
@@ -250,7 +250,7 @@
 <div id="content" class="content">
 <h1 class="title">Semi-honest Non-colluding Helper Party Model</h1>
 <ul class="org-ul">
-<li>Idea: For helper party, we can use any honest-majority protocol to implement dishonest majority protocol by assigning \(n\) shares to the parties and an additional \(t\) shares to the helper party. If \(t=n-1\), then helper and 1 honest party can work together to get things done. <i>Unstoppable Wallets: Chain-assisted Threshold ECDSA and its Applications</i>. Guy Zyskind, Avishay Yanai, and Alex "Sandy" Pentland. 2023</li>
+<li>Idea: For helper party, we can use any honest-majority protocol to implement dishonest majority protocol by assigning \(n\) shares to the parties and an additional \(t\) shares to the helper party. If \(t=n-1\), then helper and 1 honest party can work together to get things done. [1]</li>
 <li>Idea: To generate a random share: \(P_{1}\) and \(P_{c}\) together generate shares.
 <ul class="org-ul">
 <li>\(P_{1}\) sends \((n,t+1)\) shares of a random number to all nodes and additional \(t\) shares to \(P_{c}\)</li>

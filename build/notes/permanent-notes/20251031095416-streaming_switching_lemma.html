@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-23 Mon 14:17 -->
+<!-- 2026-03-26 Thu 16:40 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Streaming Switching Lemma</title>
@@ -196,7 +196,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
   window.MathJax = {
     tex: {
@@ -205,7 +204,8 @@
       },
       tags: 'ams',
       tagSide: 'right',
-      tagIndent: '.8em'
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
     },
     chtml: {
       scale: 1.0,
@@ -252,28 +252,311 @@
 <div id="outline-container-org5627aec" class="outline-2">
 <h2 id="org5627aec">Streaming Switching Lemma</h2>
 <div class="outline-text-2" id="text-org5627aec">
-<ul class="org-ul">
-<li>What if the adversary is given a stream of query elements produced by a random function/permutation?
-<ul class="org-ul">
-<li>Considered by Jaegar and Tessaro at EUROCRYPT 2019 [JT'19]</li>
-</ul></li>
-<li><b>Streaming Switching Lemma</b>: Adversary with \(S\) bits of memory with $1$-pass access to stream of \(q\) elements from random permutation/function has distinguishing advantage of at most \(\sqrt{Q\cdot S/N}\)
-<ul class="org-ul">
-<li>If \(S\approx q\), then this bound is worse than the \(O(q^2/N)\)</li>
-</ul></li>
-</ul>
+<p>
+Can a space-bounded adversary (limited to \(S\) bits of memory) distinguish between a stream of \(q\) elements sampled with replacement from \([N]\) (random function) versus without replacement (random permutation)?
+</p>
+
+<p>
+First considered by Jaeger and Tessaro at EUROCRYPT 2019 [<a href="#citeproc_bib_item_1">1</a>].
+</p>
 </div>
-<div id="outline-container-orgc01a1a6" class="outline-3">
-<h3 id="orgc01a1a6">Applications</h3>
-<div class="outline-text-3" id="text-orgc01a1a6">
+<div id="outline-container-orge60cb28" class="outline-3">
+<h3 id="orge60cb28">Statement</h3>
+<div class="outline-text-3" id="text-orge60cb28">
+<p>
+<b>Conjecture 1 (Main conjecture)</b> [<a href="#citeproc_bib_item_1">1</a>]: Let \(k > N/2\) and assume
+\(m = \binom{A}{k}\) for some \(A \geq k\). Then the complete $k$-hypergraph on \(A\) vertices
+(i.e., all size-\(k\) subsets of \(\{1, \ldots, A\}\)) maximizes \(D^2_{N,k}(m)\), where
+</p>
+
+<p>
+\[D^2_{N,k}(m) = \max_{H \in \mathcal{H}_{N,k}(m)} \sum_{i=1}^{N} d_H(i)^2\]
+</p>
+
+<p>
+and \(d_H(i)\) is the number of hyperedges containing vertex \(i\).
+</p>
+
+<p>
+Intuitively: among all $k$-uniform hypergraphs with \(N\) vertices and \(m\) edges, the
+"clique-like" structure (all $k$-subsets of some $A$-element set) maximizes the sum of
+squared degrees. This is well understood for graphs (\(k=2\)) but open for general \(k\).
+</p>
+</div>
+<div id="outline-container-org777e4cb" class="outline-4">
+<h4 id="org777e4cb">Example (\(k=2\), \(N=6\), \(m=6\))</h4>
+<div class="outline-text-4" id="text-org777e4cb">
+
+<div id="orgaed282f" class="figure">
+<p><img src="data/conjecture1_example.png" alt="conjecture1_example.png" />
+</p>
+</div>
+
+<p>
+Both graphs have \(N=6\) vertices and \(m=6\) edges, but very different \(D^2\):
+</p>
+
 <ul class="org-ul">
-<li>AES-based counter mode
-<ul class="org-ul">
-<li>\(m_i\) is encrypted to \((r_i, c_i=AES_k(r_i)\oplus m_i)\) for uniform \(r_i\)</li>
-<li>Replace AES by random \(P\)</li>
-<li>Apply streaming switching lemma (several times) to show that \((r_i,c_i)\) indistinguishable from \((r_i,\alpha_i)\) for uniform \(\alpha_i\)</li>
-</ul></li>
+<li><b>\(K_4\) + 2 isolated vertices</b> (left): degrees \(3,3,3,3,0,0\) \(\Rightarrow\) \(D^2 = 4\times 9 + 2\times 0 = 36\)</li>
+<li><b>\(C_6\) cycle</b> (right): degrees \(2,2,2,2,2,2\) \(\Rightarrow\) \(D^2 = 6\times 4 = 24\)</li>
 </ul>
+
+<p>
+The \(K_4\) construction wins because squaring rewards high-degree vertices more than it
+penalizes the isolated ones. Concentrating edges into a clique always beats spreading
+them out uniformly.
+</p>
+</div>
+</div>
+<div id="outline-container-org00d7783" class="outline-4">
+<h4 id="org00d7783">Why cliques win: an edge-transfer argument</h4>
+<div class="outline-text-4" id="text-org00d7783">
+<p>
+The key is that \(f(x) = x^2\) is convex: its derivative \(f'(x) = 2x\) is strictly
+increasing. The marginal gain of adding one unit of degree to a vertex already at degree
+\(d\) is:
+</p>
+
+<p>
+\[f(d+1) - f(d) = (d+1)^2 - d^2 = 2d + 1\]
+</p>
+
+<p>
+This grows with \(d\), so high-degree vertices benefit more from each additional edge.
+Symmetrically, the penalty for reducing degree is smaller at low degrees.
+</p>
+
+<p>
+<b>Edge transfer:</b> suppose vertex \(a\) has degree \(d_a\) and vertex \(b\) has degree \(d_b\)
+with \(d_a > d_b + 1\). Moving any edge endpoint from \(b\) to \(a\) changes \(D^2\) by:
+</p>
+
+<p>
+\[\Delta D^2 = \bigl[(d_a+1)^2 + (d_b-1)^2\bigr] - \bigl[d_a^2 + d_b^2\bigr] = 2(d_a - d_b) > 0\]
+</p>
+
+<p>
+So the transfer is always profitable. Repeating until no such pair exists forces all
+edges into a clique.
+</p>
+
+<p>
+<b>Concrete steps on the \(C_6 \to K_4\) path</b> (same \(N=6\), \(m=6\)):
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">Step</th>
+<th scope="col" class="org-left">Degree sequence</th>
+<th scope="col" class="org-right">\(D^2\)</th>
+<th scope="col" class="org-left">Transfer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0</td>
+<td class="org-left">\(2,2,2,2,2,2\)</td>
+<td class="org-right">24</td>
+<td class="org-left">Start: \(C_6\)</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">\(3,2,2,2,1,2\)</td>
+<td class="org-right">26</td>
+<td class="org-left">Move edge from deg-2 to deg-2 vertex</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">\(3,3,2,2,1,1\)</td>
+<td class="org-right">28</td>
+<td class="org-left">Move edge from deg-1 to deg-2 vertex</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">\(3,3,3,2,1,0\)</td>
+<td class="org-right">32</td>
+<td class="org-left">Move edge from deg-1 to deg-2 vertex</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-left">\(3,3,3,3,0,0\)</td>
+<td class="org-right">36</td>
+<td class="org-left">Move edge from deg-1 to deg-2 vertex</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Each transfer strictly increases \(D^2\), and the process terminates at \(K_4\).
+</p>
+</div>
+</div>
+<div id="outline-container-org2ad4045" class="outline-4">
+<h4 id="org2ad4045">Why this argument fails for \(k \geq 3\)</h4>
+<div class="outline-text-4" id="text-org2ad4045">
+
+<div id="org21d7912" class="figure">
+<p><img src="data/conjecture1_hardness.png" alt="conjecture1_hardness.png" />
+</p>
+</div>
+
+<p>
+The three panels above use \(k=3\), \(N=6\), \(m=4\) hyperedges (drawn as shaded triangles).
+</p>
+
+<ul class="org-ul">
+<li><b>Panel 1 (\(K_4^{(3)}\))</b>: all 3-subsets of \(\{1,2,3,4\}\). Degrees \(3,3,3,3,0,0\),
+\(D^2 = 36\). The conjectured maximizer.</li>
+
+<li><b>Panel 2 (Star on edge \(\{1,2\}\))</b>: four hyperedges all containing vertices 1 and 2.
+Degrees \(4,4,1,1,1,1\), \(D^2 = 2\times16 + 4\times1 = 36\). This also achieves the
+maximum, so there are already <i>multiple</i> optimal structures, and it is not clear which
+one to "aim for".</li>
+
+<li><b>Panel 3 (after a transfer)</b>: replace hyperedge \(\{1,2,6\}\) with \(\{3,4,5\}\) in
+Panel 2. This looks like moving weight toward lower-degree vertices, analogous to the
+\(k=2\) transfer. But \(D^2\) <i>drops</i> from 36 to 30.</li>
+</ul>
+
+<p>
+The reason the transfer fails is that replacing one $k$-hyperedge touches \(k\) degrees
+simultaneously. For \(k=3\), removing \(\{1,2,6\}\) penalises the two <i>high</i>-degree
+vertices 1 and 2 (each loses \(2d-1\) from \(D^2\)) while adding \(\{3,4,5\}\) only rewards
+three <i>low</i>-degree vertices. Concretely:
+</p>
+
+<p>
+\[\Delta D^2 = \underbrace{(3^2-4^2) + (3^2-4^2)}_{\text{vertices 1,2 lose degree}} +
+               \underbrace{(2^2-1^2)+(2^2-1^2)+(2^2-1^2)}_{\text{vertices 3,4,5 gain degree}} +
+               \underbrace{(0^2-1^2)}_{\text{vertex 6 loses degree}}
+             = -14 + 9 - 1 = -6\]
+</p>
+
+<p>
+For \(k=2\) the transfer formula was \(\Delta D^2 = 2(d_a - d_b) + 2\), which depends only
+on <i>two</i> degrees and is easy to make positive. For \(k=3\) the sign of \(\Delta D^2\)
+depends on the interplay of <i>six</i> degrees at once, and no simple greedy rule emerges.
+</p>
+</div>
+</div>
+<div id="outline-container-orge1a36df" class="outline-4">
+<h4 id="orge1a36df">Streaming Switching Lemma (Theorem 1, conditional on Conjecture 1): Let \(N\) be given,</h4>
+<div class="outline-text-4" id="text-orge1a36df">
+<p>
+\(q < N/2\), and \(20\log(e) \leq S \leq N/4\). An adversary with \(S\) bits of memory
+receiving a stream of \(q\) elements sampled either with replacement (random function) or
+without replacement (random permutation) from \([N]\) has distinguishing advantage at most
+</p>
+
+<p>
+\[\sqrt{\frac{S \cdot q}{N}}\]
+</p>
+</div>
+</div>
+<div id="outline-container-orgca33dbe" class="outline-4">
+<h4 id="orgca33dbe">Comparison to the standard switching lemma</h4>
+<div class="outline-text-4" id="text-orgca33dbe">
+<p>
+Without memory constraints, the classical switching lemma gives a distinguishing advantage
+of \(O(q^2/N)\).
+</p>
+
+<p>
+If \(S \approx q\), then \(\sqrt{S \cdot q / N} \approx q / \sqrt{N}\), which is <i>larger</i> than
+\(q^2/N\) when \(q < \sqrt{N}\) (i.e., below the birthday bound). So in this regime the
+streaming bound is weaker than the classical one. The streaming lemma is useful when
+\(S \ll q\), where it gives a tighter bound than \(O(q^2/N)\).
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc01a1a6" class="outline-2">
+<h2 id="orgc01a1a6">Applications</h2>
+<div class="outline-text-2" id="text-orgc01a1a6">
+</div>
+<div id="outline-container-orgb62a4bd" class="outline-3">
+<h3 id="orgb62a4bd">AES-based counter mode (\(CTR\))</h3>
+<div class="outline-text-3" id="text-orgb62a4bd">
+<p>
+In randomized counter mode, message \(m_i\) is encrypted as
+\((r_i,\ c_i = \mathrm{AES}_K(r_i) \oplus m_i)\) for a uniformly random nonce \(r_i\).
+</p>
+
+<p>
+The security goal is that a space-bounded adversary seeing the stream of ciphertexts
+cannot learn anything about the messages, i.e., the outputs are indistinguishable from
+\((r_i, \alpha_i)\) for uniform random \(\alpha_i\).
+</p>
+</div>
+<div id="outline-container-orgc871e02" class="outline-4">
+<h4 id="orgc871e02">Two obstacles in the proof</h4>
+<div class="outline-text-4" id="text-orgc871e02">
+<p>
+Before the streaming switching lemma can be applied, two obstacles must be resolved:
+</p>
+
+<ol class="org-ol">
+<li><b>Nonce collisions.</b> The \(r_i\)'s are drawn with replacement, so some may repeat. If
+\(r_i = r_j\), then \(\mathrm{AES}_K(r_i) = \mathrm{AES}_K(r_j)\), and the ciphertext
+bodies satisfy \(c_i \oplus c_j = m_i \oplus m_j\), a real information leak.</li>
+
+<li><b>Permutation vs. random function.</b> Even on distinct inputs, AES is a permutation: its
+outputs are also distinct, hence correlated. The proof ultimately needs i.i.d. uniform
+outputs, which a permutation does not provide.</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org15b05fa" class="outline-4">
+<h4 id="org15b05fa">Two-step reduction</h4>
+<div class="outline-text-4" id="text-org15b05fa">
+<p>
+<b>Step 1: Treat nonces as distinct.</b> The streaming switching lemma says a space-bounded
+adversary cannot distinguish a stream drawn with replacement from one drawn without
+replacement. Applied to the \(r_i\)'s: the adversary cannot detect whether any nonces
+collide, so we can assume WLOG all \(r_i\)'s are distinct. This costs \(O(\sqrt{Sq/N})\).
+</p>
+
+<p>
+<b>Step 2: Replace the permutation with a random function.</b> With distinct inputs, the
+classical switching lemma applies: a random permutation on distinct inputs is
+indistinguishable from a random function. For a space-bounded adversary this replacement
+again costs \(O(\sqrt{Sq/N})\) via the streaming version of the lemma. With a random
+function \(F\), the outputs \(F(r_i)\) are i.i.d. uniform, so \(c_i = F(r_i) \oplus m_i\) is
+uniform and independent of \(m_i\).
+</p>
+
+<p>
+The streaming switching lemma is thus applied <b>multiple times</b> throughout the reduction.
+The resulting security bound for CTR$ is \(O(\sqrt{ST/N})\), where \(T\) is the number of
+encrypted blocks, a significant improvement over the classical \(O(T^2/N)\) when the
+adversary is memory-constrained (see Figure 1 of [<a href="#citeproc_bib_item_1">1</a>]).
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org56099b6" class="outline-2">
+<h2 id="org56099b6">References</h2>
+<div class="outline-text-2" id="text-org56099b6">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Joseph Jaeger, and Stefano Tessaro. 2019. “Tight Time-Memory Trade-offs for Symmetric Encryption.” <a href="https://eprint.iacr.org/2019/258">https://eprint.iacr.org/2019/258</a>.</div>
 </div>
 </div>
 </div>

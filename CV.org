@@ -169,6 +169,9 @@ My current research focuses on energy-efficient consensus protocols in network s
 2. /Fast sync blockchain system and method./ United States Patent Application WO2024026321A1. [[https://patents.google.com/patent/WO2024026321A1/en][patent]].
 3. /A system for partially synchronous scalable blockchains./ United States Patent Application WO2024233453A1. [[https://patentimages.storage.googleapis.com/06/d1/cc/9b924b543965ac/WO2024233453A1.pdf][patent]]
 * Tech Reports
+1. <<ira>> Ira: Efficient Transaction Replay for Distributed Systems.
+   *Adithya Bhat*, Harshal B Shah, Mohsen Minaei.
+   [[https://arxiv.org/abs/2601.21286][eprint]]
 1. <<fps>> FPS: Flexible Payment Systems.
    *Adithya Bhat*, Srinivasan Raghuraman, Panagiotis Chatzigiannis, Duc V Le, Mohsen Minaei.
    [[https://eprint.iacr.org/2025/2095][eprint]]

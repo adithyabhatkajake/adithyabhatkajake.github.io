@@ -468,13 +468,48 @@ Ensures LINK with DESC is properly resolved using INFO."
 (org-link-set-parameters "attachment"
                          :export #'fix-attachment-links)
 
+;; Override MathJax template to enable $...$ inline math delimiters
+(setq org-html-mathjax-template
+      "<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '%MULTLINEWIDTH'
+      },
+      tags: 'ams',
+      tagSide: '%TAGSIDE',
+      tagIndent: '%TAGINDENT',
+      inlineMath: [['$', '$'], ['\\\\(', '\\\\)']]
+    },
+    chtml: {
+      scale: %SCALE,
+      displayAlign: '%ALIGN',
+      displayIndent: '%INDENT'
+    },
+    svg: {
+      scale: %SCALE,
+      displayAlign: '%ALIGN',
+      displayIndent: '%INDENT'
+    },
+    output: {
+      font: '%FONT',
+      displayOverflow: '%OVERFLOW'
+    }
+  };
+</script>
+
+<script
+  id=\"MathJax-script\"
+  async
+  src=\"%PATH\">
+</script>")
+
 (defun html-head-fn ()
   "Return HTML head elements for my Org HTML export."
   (concat
    "<link rel=\"stylesheet\" type=\"text/css\" href=\"/assets/tufte-css/tufte.css\" />\n"
    "<link rel=\"stylesheet\" href=\"/assets/tufte-css/ox-tufte.css\" type=\"text/css\" />\n"
-   "<link rel=\"stylesheet\" href=\"/assets/syntax.css\" type=\"text/css\" />\n"
-   "<script id=\"MathJax-script\" async src=\"https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js\"></script>\n"))
+   "<link rel=\"stylesheet\" href=\"/assets/syntax.css\" type=\"text/css\" />\n"))
 
 ;; Set up the org-publish project for the root index file.
 (setq org-publish-project-alist

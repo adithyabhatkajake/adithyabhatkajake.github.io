@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-23 Mon 14:17 -->
+<!-- 2026-03-25 Wed 14:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Random Beacons</title>
@@ -196,7 +196,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -221,10 +220,10 @@
 <h2 id="org95e3eb8">Random Beacons in the wild</h2>
 <div class="outline-text-2" id="text-org95e3eb8">
 <ul class="org-ul">
-<li>(Centralized) Lavarand: Randomness from lava NO_ITEM_DATA:LavaRnd</li>
-<li>(Distributed) DRand: Public Randomness project <i>Drand - A Distributed Randomness Beacon Daemon</i>. Drand. 2021, NO_ITEM_DATA:DistributedRandomnessBeacon</li>
-<li>(Centralized) Randomness from atmospheric noise <i>True Random Number Service</i>. Mads Haahr. 2012</li>
-<li>(Centralized) NIST interoperable randomness beacon <i>Interoperable Randomness Beacons: CSRC</i>. Information Technology Laboratory Computer Security Division. 2021</li>
+<li>(Centralized) Lavarand: Randomness from lava [NO_ITEM_DATA:LavaRnd]</li>
+<li>(Distributed) DRand: Public Randomness project [2], [NO_ITEM_DATA:DistributedRandomnessBeacon]</li>
+<li>(Centralized) Randomness from atmospheric noise [4]</li>
+<li>(Centralized) NIST interoperable randomness beacon [5]</li>
 </ul>
 </div>
 </div>
@@ -232,8 +231,8 @@
 <h2 id="org3cccf87">Applications</h2>
 <div class="outline-text-2" id="text-org3cccf87">
 <ol class="org-ol">
-<li>According to NO_ITEM_DATA:aguileraCorrectnessProofBenOrs, global coins can substitute a local coin and can speed up protocols.</li>
-<li>Asynchronous distributed protocols need randomness since no deterministic protocols exist due to <i>Impossibility of Distributed Consensus with One Faulty Process</i>. Michael J Fischer, Nancy A Lynch, and Michael S Paterson. 1985. So we can use the first application to speed up asynchronous protocols.</li>
+<li>According to [NO_ITEM_DATA:aguileraCorrectnessProofBenOrs], global coins can substitute a local coin and can speed up protocols.</li>
+<li>Asynchronous distributed protocols need randomness since no deterministic protocols exist due to [7]. So we can use the first application to speed up asynchronous protocols.</li>
 <li>The Ouroboros sequence of works, the only-known provably secure Proof-of-stake protocols, need randomness to ensure eventual consistency.</li>
 </ol>
 </div>

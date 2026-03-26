@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-23 Mon 14:16 -->
+<!-- 2026-03-25 Wed 14:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SoK: Collusion-resistant Multi-party Private Set Intersections in the Semi-honest Model</title>
@@ -196,7 +196,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
   window.MathJax = {
     tex: {
@@ -205,7 +204,8 @@
       },
       tags: 'ams',
       tagSide: 'right',
-      tagIndent: '.8em'
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
     },
     chtml: {
       scale: 1.0,
@@ -250,7 +250,7 @@
 <div id="content" class="content">
 <h1 class="title">SoK: Collusion-resistant Multi-party Private Set Intersections in the Semi-honest Model</h1>
 <p>
-Original paper: <a href="#citeproc_bib_item_2"><i>SoK: Collusion-resistant Multi-party Private Set Intersections in the Semi-honest Model</i>. Jelle Vos, Mauro Conti, and Zekeriya Erkin. 2024</a>
+Original paper: [<a href="#citeproc_bib_item_1">1</a>]
 </p>
 <div id="outline-container-org4285b0c" class="outline-2">
 <h2 id="org4285b0c">Summary</h2>
@@ -261,7 +261,7 @@ Original paper: <a href="#citeproc_bib_item_2"><i>SoK: Collusion-resistant Multi
 It classifies PSI into types and present the communication and computational complexities as follows:
 </p>
 
-<div id="org18f3bbc" class="figure">
+<div id="org0af1d19" class="figure">
 <p><img src="images/_20250212_143623screenshot.png" alt="_20250212_143623screenshot.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Summary of the paper</p>
@@ -273,7 +273,7 @@ It classifies PSI into types and present the communication and computational com
 <h2 id="orge2169f7">Notes</h2>
 <div class="outline-text-2" id="text-orge2169f7">
 <ul class="org-ul">
-<li>the state of the art 2 party PSI is <a href="#citeproc_bib_item_1"><i>Faster Secure Comparisons with Offline Phase for Efficient Private Set Intersection</i>. Florian Kerschbaum, Erik-Oliver Blass, and Rasoul Akhavan Mahdavi. 2022</a>, which is 1 million elements in less than \(6\) seconds over a 100 MBit/s communication channel.</li>
+<li>the state of the art 2 party PSI is [<a href="#citeproc_bib_item_2">2</a>], which is 1 million elements in less than \(6\) seconds over a 100 MBit/s communication channel.</li>
 <li>multi-party PSI is called MPSI</li>
 <li>MPSI typically computes \(X_1 \cap X_i \cap X_n\) and gives the output to \(P_1\).</li>
 <li>This paper focuses on semi-honest, no external parties.</li>
@@ -420,8 +420,8 @@ An OKVS can be viewed as a non-interactive version of an OPPRF that can also sen
 <h2 id="orge5ae4b3">References</h2>
 <div class="outline-text-2" id="text-orge5ae4b3">
 <div class="csl-bib-body">
-  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Florian Kerschbaum, Erik-Oliver Blass, and Rasoul Akhavan Mahdavi. 2022. “Faster Secure Comparisons with Offline Phase for Efficient Private Set Intersection.” <a href="http://arxiv.org/abs/2209.13913">http://arxiv.org/abs/2209.13913</a>.</div>
-  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>Jelle Vos, Mauro Conti, and Zekeriya Erkin. 2024. “SoK: Collusion-resistant Multi-party Private Set Intersections in the Semi-honest Model.” <a href="https://ieeexplore.ieee.org/abstract/document/10646669?casa_token=SC9GM3SMrZcAAAAA:GWpdE0SfvbK5E4vPnmP-wCRLV2udPyeerw8Xtuqv5KZMjhaPDKjIuVt0Ih03_U1kCiqb1sEtKd4v">https://ieeexplore.ieee.org/abstract/document/10646669?casa_token=SC9GM3SMrZcAAAAA:GWpdE0SfvbK5E4vPnmP-wCRLV2udPyeerw8Xtuqv5KZMjhaPDKjIuVt0Ih03_U1kCiqb1sEtKd4v</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Jelle Vos, Mauro Conti, and Zekeriya Erkin. 2024. “SoK: Collusion-resistant Multi-party Private Set Intersections in the Semi-honest Model.” <a href="https://ieeexplore.ieee.org/abstract/document/10646669?casa_token=SC9GM3SMrZcAAAAA:GWpdE0SfvbK5E4vPnmP-wCRLV2udPyeerw8Xtuqv5KZMjhaPDKjIuVt0Ih03_U1kCiqb1sEtKd4v">https://ieeexplore.ieee.org/abstract/document/10646669?casa_token=SC9GM3SMrZcAAAAA:GWpdE0SfvbK5E4vPnmP-wCRLV2udPyeerw8Xtuqv5KZMjhaPDKjIuVt0Ih03_U1kCiqb1sEtKd4v</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Florian Kerschbaum, Erik-Oliver Blass, and Rasoul Akhavan Mahdavi. 2022. “Faster Secure Comparisons with Offline Phase for Efficient Private Set Intersection.” <a href="http://arxiv.org/abs/2209.13913">http://arxiv.org/abs/2209.13913</a>.</div>
 </div>
 </div>
 </div>

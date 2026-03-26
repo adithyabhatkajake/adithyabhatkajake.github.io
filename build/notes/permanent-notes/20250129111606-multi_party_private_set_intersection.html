@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-23 Mon 14:17 -->
+<!-- 2026-03-25 Wed 14:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Multi-party Private Set Intersection</title>
@@ -196,7 +196,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -221,11 +220,11 @@
 <h2 id="orgfcfe4be">Papers</h2>
 <div class="outline-text-2" id="text-orgfcfe4be">
 <ul class="org-ul">
-<li><i>Practical Multi-party Private Set Intersection from Symmetric-Key Techniques</i>. Vladimir Kolesnikov, Naor Matania, Benny Pinkas, Mike Rosulek, and Ni Trieu. 2017</li>
-<li><i>A Scalable Multiparty Private Set Intersection</i>. Atsuko Miyaji, and Shohei Nishida. 2015</li>
-<li><i>Efficient Scalable Multiparty Private Set-Intersection via Garbled Bloom Filters</i>. Roi Inbar, Eran Omri, and Benny Pinkas. 2018</li>
-<li><i>An Algebraic Approach to Maliciously Secure Private Set Intersection</i>. Satrajit Ghosh, and Tobias Nilges. 2017</li>
-<li><i>Multi-Party Private Set Intersection: An Information-Theoretic Approach</i>. Zhusheng Wang, Karim Banawan, and Sennur Ulukus. 2021</li>
+<li>[1]</li>
+<li>[2]</li>
+<li>[3]</li>
+<li>[4]</li>
+<li>[5]</li>
 </ul>
 </div>
 </div>
@@ -234,10 +233,10 @@
 <div class="outline-text-2" id="text-org9624e44">
 <ul class="org-ul">
 <li>Multiple Shop owners or digital services want to launch a collective promotion campaign. To do so, these shops must identify their mutual set of customers, without violating the privacy of the customers. ([BROKEN LINK: cite:@miyajiScalableMultipartyPrivate2015; @kolesnikovPracticalMultipartyPrivate2017])</li>
-<li>Multiple organizations come together to catch an intruder in a common network. The organizations keep a list of suspicious IPs and by computing the intersection they narrow them down. Since IP addresses contain personal information it is important to keep them private. (<i>Practical Multi-party Private Set Intersection from Symmetric-Key Techniques</i>. Vladimir Kolesnikov, Naor Matania, Benny Pinkas, Mike Rosulek, and Ni Trieu. 2017; <i>Privacy-Preserving Set Operations</i>. Lea Kissner, and Dawn Song. 2005 inbarEfficientScalableMultiparty2018)</li>
-<li>Detect botnets. (<i>An Algebraic Approach to Maliciously Secure Private Set Intersection</i>. Satrajit Ghosh, and Tobias Nilges. 2017)</li>
-<li>An investigative agency needs to narrow down a list of suspects by cooperating with multiple other agencies. Since none of the agencies can share plain data with each other, they engage in an MPSI protocol to only consider relevant suspects. <i>Multi-Party Private Set Intersection: An Information-Theoretic Approach</i>. Zhusheng Wang, Karim Banawan, and Sennur Ulukus. 2021</li>
-<li>More applications in <i>SoK: Collusion-resistant Multi-party Private Set Intersections in the Semi-honest Model</i>. Jelle Vos, Mauro Conti, and Zekeriya Erkin. 2024</li>
+<li>Multiple organizations come together to catch an intruder in a common network. The organizations keep a list of suspicious IPs and by computing the intersection they narrow them down. Since IP addresses contain personal information it is important to keep them private. ([1, 6 inbarEfficientScalableMultiparty2018])</li>
+<li>Detect botnets. ([4])</li>
+<li>An investigative agency needs to narrow down a list of suspects by cooperating with multiple other agencies. Since none of the agencies can share plain data with each other, they engage in an MPSI protocol to only consider relevant suspects. [5]</li>
+<li>More applications in [7]</li>
 </ul>
 </div>
 </div>

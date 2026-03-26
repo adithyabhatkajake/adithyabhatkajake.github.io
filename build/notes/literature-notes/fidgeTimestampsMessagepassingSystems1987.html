@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-23 Mon 14:16 -->
+<!-- 2026-03-25 Wed 14:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Timestamps in Message-Passing Systems That Preserve the Partial Ordering</title>
@@ -196,7 +196,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
   window.MathJax = {
     tex: {
@@ -205,7 +204,8 @@
       },
       tags: 'ams',
       tagSide: 'right',
-      tagIndent: '.8em'
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
     },
     chtml: {
       scale: 1.0,
@@ -250,7 +250,7 @@
 <div id="content" class="content">
 <h1 class="title">Timestamps in Message-Passing Systems That Preserve the Partial Ordering</h1>
 <p>
-Original paper: <a href="#citeproc_bib_item_1"><i>Timestamps in message-passing systems that preserve the partial ordering</i>. Colin J. Fidge. 1987</a>
+Original paper: [<a href="#citeproc_bib_item_1">1</a>]
 </p>
 <div id="outline-container-org0449c3e" class="outline-2">
 <h2 id="org0449c3e">An example timestamping algorithm</h2>
@@ -269,7 +269,7 @@ An example algorithm rules to maintain a timestamp (Lamport Clock) for asynchron
 <li><p>
 Upon receiving a signal, a process sets the value of each entry in the timestamp array to be the maximum of the two corresponding values in the local array, and in the piggybacked array received. The value corresponding to the sender, however, is a special case and is set to be one greater than the value received (to allow for transit time), but only if the local value is not already greater than that received (to allow for signal "overtaking" as described below), i.e.,
 </p>
-<div class="algorithm" id="org00ebdca">
+<div class="algorithm" id="orgd235278">
 <p>
 q?other<sub>array</sub>; <i>* receive timestamp array from process q *</i>
 if local<sub>array</sub>[q] &le; other<sub>array</sub>[q] then
@@ -290,7 +290,7 @@ for i := 1 to n do
 The asynchronous timestamping does not work for the synchronous case.
 </p>
 
-<div id="org52db5e7" class="figure">
+<div id="orgcffb32e" class="figure">
 <p><img src="images/_20250202_182524screenshot.png" alt="_20250202_182524screenshot.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>An example where Lamport Clock (the asynchronous timestamping algorithm) fails for the synchronous case. Technically event a occurred before b, but it looks like b occurred before a.</p>
@@ -301,7 +301,7 @@ So the solution is to add a bidirectional timestamp exchange.
 </p>
 
 
-<div id="org1bcef32" class="figure">
+<div id="orga743972" class="figure">
 <p><img src="images/_20250202_182330screenshot.png" alt="_20250202_182330screenshot.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>The synchronous timestamping algorithm.</p>
@@ -317,7 +317,7 @@ An example algorithm rules to maintain a timestamp for synchronous processes:
 <li><p>
 During a communication event, the two processes involved exchange timestamp arrays and each element in the local array is set to be the maximum of its old value and the corresponding value in the array received, i.e.,
 </p>
-<div class="algorithm" id="org89cceb0">
+<div class="algorithm" id="orgaa289cb">
 <p>
 q?other<sub>array</sub>;
 for i := 1 to n do
@@ -363,7 +363,7 @@ It is easy to extend these algorithms to the case where the number of processes 
 <h2 id="org0b34f1a">References</h2>
 <div class="outline-text-2" id="text-org0b34f1a">
 <div class="csl-bib-body">
-  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Colin J. Fidge. 1987. “Timestamps in message-passing systems that preserve the partial ordering.” <a href="https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=e706b8ae2952740cb95c0182c4c44b0d11cc54c1">https://citeseerx.ist.psu.edu/document?repid=rep1&#38;type=pdf&#38;doi=e706b8ae2952740cb95c0182c4c44b0d11cc54c1</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Colin J. Fidge. 1987. “Timestamps in message-passing systems that preserve the partial ordering.” <a href="https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=e706b8ae2952740cb95c0182c4c44b0d11cc54c1">https://citeseerx.ist.psu.edu/document?repid=rep1&#38;type=pdf&#38;doi=e706b8ae2952740cb95c0182c4c44b0d11cc54c1</a>.</div>
 </div>
 </div>
 </div>

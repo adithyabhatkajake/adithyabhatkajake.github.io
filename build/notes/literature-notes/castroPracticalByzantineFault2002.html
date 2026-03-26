@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-23 Mon 14:16 -->
+<!-- 2026-03-25 Wed 14:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Practical byzantine fault tolerance and proactive recovery</title>
@@ -196,7 +196,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
   window.MathJax = {
     tex: {
@@ -205,7 +204,8 @@
       },
       tags: 'ams',
       tagSide: 'right',
-      tagIndent: '.8em'
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
     },
     chtml: {
       scale: 1.0,
@@ -250,7 +250,7 @@
 <div id="content" class="content">
 <h1 class="title">Practical byzantine fault tolerance and proactive recovery</h1>
 <p>
-Paper: <a href="#citeproc_bib_item_1"><i>Practical byzantine fault tolerance and proactive recovery</i>. Miguel Castro, and Barbara Liskov. 2002</a>
+Paper: [<a href="#citeproc_bib_item_1">1</a>]
 </p>
 <div id="outline-container-org37479b5" class="outline-2">
 <h2 id="org37479b5">PBFT definition</h2>
@@ -278,7 +278,7 @@ This is a customization of the standard SMR definition.
 The safety property offered by PBFT is a relaxed form of linearizability tolerating Byzantine clients where the system behaves as a centralized implementation that executes operations atomically one at a time.
 </p>
 
-<div id="org333fa8c" class="figure">
+<div id="org89f80ff" class="figure">
 <p><img src="_20230506_163800screenshot.png" alt="_20230506_163800screenshot.png" width="800px" />
 </p>
 </div>
@@ -314,7 +314,7 @@ The PBFT protocol ensures fairness by ensuring that clients get replies to their
 <h2 id="org25909b3">References</h2>
 <div class="outline-text-2" id="text-org25909b3">
 <div class="csl-bib-body">
-  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Miguel Castro, and Barbara Liskov. 2002. “Practical byzantine fault tolerance and proactive recovery.” <a href="https://doi.org/10.1145/571637.571640">https://doi.org/10.1145/571637.571640</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Miguel Castro, and Barbara Liskov. 2002. “Practical byzantine fault tolerance and proactive recovery.” <a href="https://doi.org/10.1145/571637.571640">https://doi.org/10.1145/571637.571640</a>.</div>
 </div>
 </div>
 </div>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-23 Mon 14:16 -->
+<!-- 2026-03-25 Wed 14:42 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Threshold Signatures</title>
@@ -196,7 +196,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -218,7 +217,7 @@
 <div id="content" class="content">
 <h1 class="title">Threshold Signatures</h1>
 <p>
-Paper: <a href="#citeproc_bib_item_1"><i>Threshold Signatures</i>. Chelsea Komlo. 2024</a>
+Paper: [<a href="#citeproc_bib_item_1">1</a>]
 </p>
 <div id="outline-container-org91fbdd1" class="outline-2">
 <h2 id="org91fbdd1">Summary</h2>
@@ -262,7 +261,7 @@ Applications of threshold signatures (generally wherever trusted signatures are 
 <h2 id="org4c80c58">Case Study: Threshold ECDSA</h2>
 <div class="outline-text-2" id="text-org4c80c58">
 <p>
-They say FROST <a href="#citeproc_bib_item_2"><i>FROST: Flexible Round-Optimized Schnorr Threshold Signatures</i>. Chelsea Komlo, and Ian Goldberg. 2020</a><sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>  is a simple example for EdDSA.
+They say FROST [<a href="#citeproc_bib_item_2">2</a>]<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>  is a simple example for EdDSA.
 FROST allows issuing Schnorr Signatures, therefore can easily do EdDSA signatures since it is a variant of Schnorr.
 Signing needs:
 </p>
@@ -273,7 +272,7 @@ Signing needs:
 <p>
 FROST protects against concurrency attacks that were not considered previously.
 FROST is not robust, i.e., there is no signature even if one signer fails.
-ROAST <a href="#citeproc_bib_item_3"><i>ROAST: Robust Asynchronous Schnorr Threshold Signatures</i>. Tim Ruffing, Viktoria Ronge, Elliott Jin, Jonas Schneider-Bensch, and Dominique Schröder. 2022</a> is a wrapper protocol that can be used along with FROST to get a robust signature scheme.
+ROAST [<a href="#citeproc_bib_item_3">3</a>] is a wrapper protocol that can be used along with FROST to get a robust signature scheme.
 FROST has a IETF draft which is nearing completion.
 </p>
 </div>
@@ -311,9 +310,9 @@ Post-quantum threshold signature scheme is an active area.
 <h2 id="org0a9e0d0">References</h2>
 <div class="outline-text-2" id="text-org0a9e0d0">
 <div class="csl-bib-body">
-  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>Chelsea Komlo. 2024. “Threshold Signatures.” <a href="https://ieeexplore.ieee.org/document/10799187/?arnumber=10799187">https://ieeexplore.ieee.org/document/10799187/?arnumber=10799187</a>.</div>
-  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>Chelsea Komlo, and Ian Goldberg. 2020. “FROST: Flexible Round-Optimized Schnorr Threshold Signatures.” <a href="https://eprint.iacr.org/2020/852">https://eprint.iacr.org/2020/852</a>.</div>
-  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>Tim Ruffing, Viktoria Ronge, Elliott Jin, Jonas Schneider-Bensch, and Dominique Schröder. 2022. “ROAST: Robust Asynchronous Schnorr Threshold Signatures.” <a href="https://eprint.iacr.org/2022/550">https://eprint.iacr.org/2022/550</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Chelsea Komlo. 2024. “Threshold Signatures.” <a href="https://ieeexplore.ieee.org/document/10799187/?arnumber=10799187">https://ieeexplore.ieee.org/document/10799187/?arnumber=10799187</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Chelsea Komlo, and Ian Goldberg. 2020. “FROST: Flexible Round-Optimized Schnorr Threshold Signatures.” <a href="https://eprint.iacr.org/2020/852">https://eprint.iacr.org/2020/852</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>[3] Tim Ruffing, Viktoria Ronge, Elliott Jin, Jonas Schneider-Bensch, and Dominique Schröder. 2022. “ROAST: Robust Asynchronous Schnorr Threshold Signatures.” <a href="https://eprint.iacr.org/2022/550">https://eprint.iacr.org/2022/550</a>.</div>
 </div>
 </div>
 </div>

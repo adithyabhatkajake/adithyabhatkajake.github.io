@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-23 Mon 14:17 -->
+<!-- 2026-03-26 Thu 16:27 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Space bounded adversaries</title>
@@ -196,7 +196,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
   window.MathJax = {
     tex: {
@@ -205,7 +204,8 @@
       },
       tags: 'ams',
       tagSide: 'right',
-      tagIndent: '.8em'
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
     },
     chtml: {
       scale: 1.0,
@@ -252,17 +252,92 @@
 <div id="outline-container-orgdbe4864" class="outline-2">
 <h2 id="orgdbe4864">Space-bounded Adversaries</h2>
 <div class="outline-text-2" id="text-orgdbe4864">
+<p>
+<b>Central question:</b> Does limiting an adversary's memory improve security? Concretely, if a distinguisher trying to tell a PRF apart from a truly random function is restricted to \(S\) bits of space, can it still achieve the birthday-bound advantage \(O(q^{2}/2^{\lambda})\)?
+</p>
+
+<p>
+The answer depends on the <i>access model</i>:
+</p>
+<ul class="org-ul">
+<li>With <b>adaptive queries</b> (the adversary can query any input at any time): yes — space-bounding alone provides no improvement.</li>
+<li>With <b>streaming access</b> (a single left-to-right pass over the output): no — the bound improves to \(\sqrt{S \cdot q / N}\).</li>
+</ul>
+
+
+<div id="org63a4635" class="figure">
+<p><img src="data/space-bounded-question.svg" alt="space-bounded-question.svg" class="org-svg" />
+</p>
+</div>
+
 <ul class="org-ul">
 <li>Suppose an adversary is space bounded by \(S \ll q\), where \(q\) is the number of queries</li>
 <li>It can still distinguish between real/ideal world using <b>adaptive queries</b> with advantage \(O(q^{2}/2^{\lambda})\) and space \(2\lambda\)</li>
-<li><b>Adaptive queries</b> means that an adversary can query any point any time</li>
-<li>The matching algorithm is as follows:
+<li><b>Adaptive queries</b> means that an adversary can query any point any time (contrast with the streaming model where the adversary gets a single pass over the output)</li>
+<li>The matching algorithm is Floyd's cycle detection [<a href="#citeproc_bib_item_1">1</a>], also used in Pollard's \(\rho\) method [<a href="#citeproc_bib_item_2">2</a>]:
 <ul class="org-ul">
-<li>Adversary keeps two pointers \(y_1=F(x_0)\) and \(y_2=F(x_0)\).</li>
-<li>It updates \(y_1 = F(y_1)\), \(y_2 = F(F(y_2))\)</li>
-<li>Eventually, they will meet if the function is a random function</li>
+<li>Adversary keeps two pointers \(y_1=F(x_0)\) and \(y_2=F(x_0)\)</li>
+<li>It updates \(y_1 = F(y_1)\), \(y_2 = F(F(y_2))\) and checks if \(y_1 = y_2\) after each update</li>
+<li>They will eventually meet for <b>any</b> function on a finite domain (by the pigeonhole principle). For a random function \(F: \{0,1\}^{\lambda} \to \{0,1\}^{\lambda}\), the expected meeting time is \(O(2^{\lambda/2})\)</li>
 </ul></li>
+<li>This shows that <b>space-bounding alone does not improve the birthday bound</b> when the adversary can make adaptive queries. This motivates the streaming restriction in the Streaming Switching Lemma [<a href="#citeproc_bib_item_3">3</a>], which achieves the improved bound \(\sqrt{S \cdot q / N}\) by limiting the adversary to a single pass</li>
 </ul>
+</div>
+<div id="outline-container-orge587437" class="outline-3">
+<h3 id="orge587437">The $&rho;$-structure of a random function</h3>
+<div class="outline-text-3" id="text-orge587437">
+<p>
+Any function \(F: [N] \to [N]\) iterated from a starting point \(x_0\) produces a sequence that eventually enters a cycle. This is called the $&rho;$-structure (after the shape of the Greek letter \(\rho\)).
+</p>
+
+
+<div id="orgef2de92" class="figure">
+<p><img src="data/rho-structure.svg" alt="rho-structure.svg" class="org-svg" />
+</p>
+</div>
+
+<p>
+For a random function on \([N]\), both the tail length \(\tau\) and cycle length \(\lambda\) are \(O(\sqrt{N})\) in expectation.
+</p>
+</div>
+</div>
+<div id="outline-container-org8fe8669" class="outline-3">
+<h3 id="org8fe8669">Floyd's cycle detection algorithm</h3>
+<div class="outline-text-3" id="text-org8fe8669">
+<p>
+Floyd's algorithm detects this cycle using only two pointers (\(2\lambda\) bits of space). The "tortoise" \(y_1\) advances one step per round, while the "hare" \(y_2\) advances two steps. They are guaranteed to meet inside the cycle.
+</p>
+
+
+<div id="orgc9421d4" class="figure">
+<p><img src="data/floyd-algorithm.svg" alt="floyd-algorithm.svg" class="org-svg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org2d92308" class="outline-3">
+<h3 id="org2d92308">Streaming vs adaptive: why the access model matters</h3>
+<div class="outline-text-3" id="text-org2d92308">
+<p>
+The key motivation for the Streaming Switching Lemma is that adaptive queries (as in Floyd's algorithm) bypass the space bound. The streaming restriction recovers improved bounds.
+</p>
+
+
+<div id="orga95e0e6" class="figure">
+<p><img src="data/streaming-vs-adaptive.svg" alt="streaming-vs-adaptive.svg" class="org-svg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org81b8218" class="outline-3">
+<h3 id="org81b8218">References</h3>
+<div class="outline-text-3" id="text-org81b8218">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Donald Ervin Knuth. 1995. “The art of computer programming. 2: Seminumerical algorithms.”</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] J M Pollard. 1975. “A monte carlo method for factorization.” <a href="https://dl.acm.org/doi/10.1007/BF01933667">https://dl.acm.org/doi/10.1007/BF01933667</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>[3] Joseph Jaeger, and Stefano Tessaro. 2019. “Tight Time-Memory Trade-offs for Symmetric Encryption.” <a href="https://eprint.iacr.org/2019/258">https://eprint.iacr.org/2019/258</a>.</div>
+</div>
+</div>
 </div>
 </div>
 </div>

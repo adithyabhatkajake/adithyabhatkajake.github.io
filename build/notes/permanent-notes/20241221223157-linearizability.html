@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-23 Mon 14:17 -->
+<!-- 2026-03-25 Wed 14:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Linearizability</title>
@@ -196,7 +196,6 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -221,7 +220,7 @@
 <h2 id="org3337cc5">Notes</h2>
 <div class="outline-text-2" id="text-org3337cc5">
 <ul class="org-ul">
-<li>Linearizability is a correctness condition for ordering that establishes that each operation shall appear to be applied instantaneously at a certain point in time between its invocation and its response. <i>Consistency in Non-Transactional Distributed Storage Systems</i>. Paolo Viotti, and Marko Vukolić. 2016</li>
+<li>Linearizability is a correctness condition for ordering that establishes that each operation shall appear to be applied instantaneously at a certain point in time between its invocation and its response. [1]</li>
 <li>Linearizability features a <b>locality</b> property: a composition of linearizable objects is itself linearizable – hence, linearizability enables modular design and verification.</li>
 <li>Also known as strong consistency<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>.</li>
 </ul>
@@ -232,7 +231,7 @@
 <div id="text-footnotes">
 
 <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
-Sometimes even sequential consistency is known as Strong consistency. -  <i>Consistency in Non-Transactional Distributed Storage Systems</i>. Paolo Viotti, and Marko Vukolić. 2016
+Sometimes even sequential consistency is known as Strong consistency. -  [1]
 </p></div></div>
 
 
