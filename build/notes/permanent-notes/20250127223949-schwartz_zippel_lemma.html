@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-27 Fri 00:23 -->
+<!-- 2026-03-27 Fri 13:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Schwartz-Zippel Lemma</title>
@@ -249,9 +249,62 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Schwartz-Zippel Lemma</h1>
+<div id="outline-container-org6802af4" class="outline-2">
+<h2 id="org6802af4">Summary</h2>
+<div class="outline-text-2" id="text-org6802af4">
 <p>
-The Schwartz-Zippel Lemma states that if we are given two polynomials \(p(x)\) and \(q(x)\) with degrees \(d_p\) and \(d_q\) respectively, and if \(p(x)\ne q(x)\), then the number of points where \(p(x)\) and \(q(x)\) intersect is less than or equal to \(\max(d_p,d_q)\).
+The Schwartz-Zippel Lemma bounds the probability that a nonzero multivariate polynomial evaluates to zero at a random point. It is a fundamental tool in randomized algorithms and cryptographic protocol design, where it underpins polynomial identity testing, interactive proofs, and zero-knowledge protocols.
 </p>
+
+<p>
+Discovered independently by Schwartz [<a href="#citeproc_bib_item_1">1</a>] and Zippel [<a href="#citeproc_bib_item_2">2</a>], with an earlier result by DeMillo and Lipton [<a href="#citeproc_bib_item_3">3</a>]. Sometimes called the DeMillo-Lipton-Schwartz-Zippel lemma.
+</p>
+</div>
+</div>
+<div id="outline-container-org44e08e6" class="outline-2">
+<h2 id="org44e08e6">Formal Statement</h2>
+<div class="outline-text-2" id="text-org44e08e6">
+<p>
+Let \(f(x_1, \ldots, x_n) \in \mathbb{F}[x_1, \ldots, x_n]\) be a nonzero polynomial of total degree \(d\) over a field \(\mathbb{F}\). Let \(S \subseteq \mathbb{F}\) be a finite set. If \(r_1, \ldots, r_n\) are chosen independently and uniformly at random from \(S\), then:
+</p>
+
+<p>
+\[\Pr[f(r_1, \ldots, r_n) = 0] \leq \frac{d}{|S|}\]
+</p>
+</div>
+<div id="outline-container-org6f33db3" class="outline-3">
+<h3 id="org6f33db3">Intuition</h3>
+<div class="outline-text-3" id="text-org6f33db3">
+<p>
+A nonzero univariate polynomial of degree \(d\) has at most \(d\) roots. So if you pick a random element from a set \(S\), the chance of hitting a root is at most \(d / |S|\). The Schwartz-Zippel lemma generalizes this to multivariate polynomials: even with many variables, the fraction of zeroes in \(S^n\) is still bounded by \(d / |S|\), regardless of the number of variables.
+</p>
+
+<p>
+The practical consequence: to test whether two polynomials \(p\) and \(q\) are identical, form \(f = p - q\) and evaluate at a random point. If \(f\) is nonzero (i.e., \(p \neq q\)), the test catches this with probability at least \(1 - d/|S|\). By choosing \(|S| \gg d\), the error probability becomes negligible.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb373879" class="outline-2">
+<h2 id="orgb373879">Notes</h2>
+<div class="outline-text-2" id="text-orgb373879">
+<ul class="org-ul">
+<li>The lemma is often applied in the following way: to check whether a polynomial identity \(p \equiv q\) holds, evaluate \(f = p - q\) at a random point. If \(p \neq q\), then \(f\) is nonzero and the check fails with probability at most \(d / |S|\).</li>
+<li>Applications include polynomial identity testing and verifiable computation.</li>
+<li>Used extensively in SNARKs, STARKs, and other proof systems where the prover commits to polynomials and the verifier checks evaluations at random points.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc579279" class="outline-2">
+<h2 id="orgc579279">References</h2>
+<div class="outline-text-2" id="text-orgc579279">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] J. T. Schwartz. 1980. “Fast Probabilistic Algorithms for Verification of Polynomial Identities.” <a href="https://dl.acm.org/doi/10.1145/322217.322225">https://dl.acm.org/doi/10.1145/322217.322225</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Richard Zippel. 1979. “Probabilistic algorithms for sparse polynomials.” <a href="http://link.springer.com/10.1007/3-540-09519-5_73">http://link.springer.com/10.1007/3-540-09519-5_73</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>[3] Richard A. Demillo, and Richard J. Lipton. 1977. “A Probabilistic Remark on Algebraic Program Testing.” <a href="https://apps.dtic.mil/sti/html/tr/ADA050745/">https://apps.dtic.mil/sti/html/tr/ADA050745/</a>.</div>
+</div>
+</div>
+</div>
 </div>
 </body>
 </html>
