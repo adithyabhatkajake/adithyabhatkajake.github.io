@@ -644,6 +644,59 @@ published URL under /notes/, and returns an HTML anchor tag."
 (let ((org-publish-use-timestamps-flag t))
   (org-publish-all nil))
 
+;; --- Post-processing: fix broken org-roam ID links in HTML output ---
+
+(defun build-id-to-url-map ()
+  "Build a hash table mapping org IDs to (url . title) pairs."
+  (let ((id-map (make-hash-table :test 'equal)))
+    (dolist (subdir-pair notes-subdirs)
+      (let* ((slug (car subdir-pair))
+             (dirname (cdr subdir-pair))
+             (src-dir (file-name-concat notes-base-dir dirname)))
+        (when (file-directory-p src-dir)
+          (dolist (f (directory-files src-dir t "\\.org$"))
+            (with-temp-buffer
+              (insert-file-contents f)
+              (let ((title (progn
+                             (goto-char (point-min))
+                             (when (re-search-forward
+                                    "^#\\+[Tt][Ii][Tt][Ll][Ee]:\\s-*\\(.*\\)" nil t)
+                               (string-trim (match-string 1))))))
+                (goto-char (point-min))
+                (while (re-search-forward ":ID:\\s-+\\([a-f0-9-]+\\)" nil t)
+                  (let* ((id (match-string 1))
+                         (base (file-name-base f))
+                         (url (format "/notes/%s/%s.html" slug base)))
+                    (puthash id (cons url (or title base)) id-map)))))))))
+    id-map))
+
+(defun fix-broken-id-links ()
+  "Replace [BROKEN LINK: uuid] in HTML files with proper anchor tags."
+  (let ((id-map (build-id-to-url-map))
+        (fixed-count 0))
+    (dolist (html-file (directory-files-recursively
+                        (expand-file-name publish-dir default-directory)
+                        "\\.html$"))
+      (with-temp-buffer
+        (insert-file-contents html-file)
+        (let ((modified nil))
+          (goto-char (point-min))
+          (while (re-search-forward "\\[BROKEN LINK: \\([a-f0-9-]+\\)\\]" nil t)
+            (let* ((id (match-string 1))
+                   (entry (gethash id id-map)))
+              (when entry
+                (replace-match
+                 (format "<a href=\"%s\">%s</a>" (car entry) (cdr entry))
+                 t t)
+                (setq modified t)
+                (cl-incf fixed-count))))
+          (when modified
+            (write-region (point-min) (point-max) html-file)))))
+    (message "Fixed %d broken ID links in HTML output" fixed-count)))
+
+(when (and notes-base-dir (file-directory-p notes-base-dir))
+  (fix-broken-id-links))
+
 ;; Save the new hash cache for next build
 (hash-cache-save)
 

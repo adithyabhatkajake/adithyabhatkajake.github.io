@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-26 Thu 23:13 -->
+<!-- 2026-03-27 Fri 00:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Weak Byzantine Generals</title>
@@ -196,6 +196,39 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -216,24 +249,87 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Weak Byzantine Generals</h1>
-<div id="outline-container-orgcda8b6b" class="outline-2">
-<h2 id="orgcda8b6b">Definition</h2>
-<div class="outline-text-2" id="text-orgcda8b6b">
+<div id="outline-container-org47042c3" class="outline-2">
+<h2 id="org47042c3">Summary</h2>
+<div class="outline-text-2" id="text-org47042c3">
 <p>
-A definition from [NO_ITEM_DATA:lamportByzantineGeneralsTransaction]
+The Weak Byzantine Generals (WBG) problem is a relaxation of the <a href="/notes/permanent-notes/20241223192732-byzantine_generals.html">Byzantine Generals</a> problem introduced by Lamport [<a href="#citeproc_bib_item_1">1</a>]. In the standard Byzantine Generals problem, if the broadcaster is honest, then all non-faulty processes must output the broadcaster's value (validity), and all non-faulty processes must agree (agreement). The weak variant relaxes validity: it only requires that if <i>all</i> processes are non-faulty, then they all output the broadcaster's value.
 </p>
-<div class="org-src-container">
-<pre class="src src-latex">A Weak Byzantine Generals protocol satisfies the following two conditions:
-<span class="org-keyword">\begin</span>{<span class="org-function-name">itemize</span>}
-  <span class="org-keyword">\item</span> If no process fails and all processes initially choose the same action, then that is the final action taken by all processes.
-  <span class="org-keyword">\item</span> Any two processes that do not fail take the same final action.
-<span class="org-keyword">\end</span>{<span class="org-function-name">itemize</span>}
-</pre>
 </div>
+<div id="outline-container-orgf511df5" class="outline-3">
+<h3 id="orgf511df5">Formal Definition</h3>
+<div class="outline-text-3" id="text-orgf511df5">
+<p>
+Consider \(n\) processes, at most \(t\) of which may be Byzantine faulty. A Weak Byzantine Generals protocol satisfies the following two conditions [<a href="#citeproc_bib_item_2">2</a>]:
+</p>
+
+<ol class="org-ol">
+<li><b>Agreement:</b> Any two non-faulty processes take the same final action.</li>
+<li><b>Weak Validity:</b> If no process is faulty and all processes initially choose the same action, then that is the final action taken by all processes.</li>
+</ol>
 
 <p>
-The original definition is here: [2]
+Compare this with the standard Byzantine Generals (broadcast) definition, which requires:
 </p>
+<ol class="org-ol">
+<li><b>Agreement:</b> All non-faulty processes agree on the same value.</li>
+<li><b>Validity:</b> If the broadcaster is non-faulty, then all non-faulty processes output the broadcaster's value.</li>
+</ol>
+
+<p>
+The key difference is in the validity condition: BG requires agreement with the broadcaster's value whenever the broadcaster is honest, whereas WBG only requires this when <i>every</i> process is honest.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgdc4b1b5" class="outline-2">
+<h2 id="orgdc4b1b5">Bounds</h2>
+<div class="outline-text-2" id="text-orgdc4b1b5">
+<ul class="org-ul">
+<li><b>Resilience:</b> WBG can be solved for any \(t < n\) [<a href="#citeproc_bib_item_1">1</a>]. This is in contrast to standard BG, which requires \(t < n/3\) without signatures.</li>
+<li><b>Round complexity:</b> Tolerating \(t\) faults requires at least \(t+1\) rounds [<a href="#citeproc_bib_item_3">3</a>].</li>
+<li><b>Unauthenticated setting:</b> Without digital signatures, the protocol for \(t < n\) may require an infinite number of messages (i.e., it does not guarantee termination) [<a href="#citeproc_bib_item_1">1</a>].</li>
+<li><b>Authenticated setting:</b> With digital signatures, WBG is subsumed by standard BG, which can be solved for any \(t < n\) with termination using protocols like <a href="/notes/permanent-notes/20250325142259-dolev_strong_broadcast_protocol.html">Dolev Strong Broadcast Protocol</a> (\(t+1\) rounds).</li>
+<li><b>Approximate agreement relaxation:</b> If processes are allowed to output values within some \(\varepsilon\) of each other (approximate agreement), then there exists a finite algorithm for any \(t < n\) even without signatures [<a href="#citeproc_bib_item_1">1</a>, <a href="#citeproc_bib_item_4">4</a>].</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org683fd1f" class="outline-2">
+<h2 id="org683fd1f">Relationship to Transaction Commit</h2>
+<div class="outline-text-2" id="text-org683fd1f">
+<p>
+The <a href="/notes/permanent-notes/20241223144536-commit_protocols.html">Commit Protocols</a> problem in distributed databases is an instance of WBG [<a href="#citeproc_bib_item_2">2</a>]. In transaction commit, \(n\) processes each start with a vote of either <i>commit</i> (1) or <i>abort</i> (0), and must agree on a final decision satisfying:
+</p>
+<ol class="org-ol">
+<li><b>Agreement:</b> No two processes decide differently.</li>
+<li><b>Validity:</b> If any process starts with 0, then 0 is the only possible decision. If all processes start with 1 and there are no failures, then 1 is the only possible decision.</li>
+</ol>
+
+<p>
+The validity condition here mirrors weak validity: the "good" outcome (commit) is only guaranteed when every process votes for it and none fail. This equivalence implies that the \(t+1\) round lower bound for tolerating \(t\) faults in WBG applies to commit protocols as well.
+</p>
+</div>
+</div>
+<div id="outline-container-orgdab7539" class="outline-2">
+<h2 id="orgdab7539">Notes</h2>
+<div class="outline-text-2" id="text-orgdab7539">
+<ul class="org-ul">
+<li>First introduced by Lamport [<a href="#citeproc_bib_item_1">1</a>].</li>
+<li>The original protocol assumes a synchronous network with no digital signatures (unauthenticated).</li>
+<li>Synchrony is inherent: even though validity is weakened, agreement must still hold when faults occur. FLP impossibility [<a href="#citeproc_bib_item_5">5</a>] therefore rules out deterministic asynchronous solutions.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgcc495fa" class="outline-2">
+<h2 id="orgcc495fa">References</h2>
+<div class="outline-text-2" id="text-orgcc495fa">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] L. Lamport. 1983. “The Weak Byzantine Generals Problem.” <a href="https://dl.acm.org/doi/10.1145/2402.322398">https://dl.acm.org/doi/10.1145/2402.322398</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Leslie Lamport, and Michael Fischer. 1982. “Byzantine Generals and Transaction Commit Protocols.” <a href="https://www.microsoft.com/en-us/research/uploads/prod/2016/12/Byzantine-Generals-and-Transaction-Commit-Protocols.pdf">https://www.microsoft.com/en-us/research/uploads/prod/2016/12/Byzantine-Generals-and-Transaction-Commit-Protocols.pdf</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>[3] J Fischer, and Nancy A Lynch. 1982. “A LOWER BOUND FOR THE TIME TO ASSURE INTERACTIVE CONSISTENCY.”</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_4"></a>[4] Danny Dolev, Nancy A. Lynch, Shlomit S. Pinter, Eugene W. Stark, and William E. Weihl. 1986. “Reaching approximate agreement in the presence of faults.” <a href="https://dl.acm.org/doi/10.1145/5925.5931">https://dl.acm.org/doi/10.1145/5925.5931</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_5"></a>[5] Michael J Fischer, Nancy A Lynch, and Michael S Paterson. 1985. “Impossibility of Distributed Consensus with One Faulty Process.” <a href="https://dl.acm.org/doi/10.1145/3149.214121">https://dl.acm.org/doi/10.1145/3149.214121</a>.</div>
+</div>
 </div>
 </div>
 </div>

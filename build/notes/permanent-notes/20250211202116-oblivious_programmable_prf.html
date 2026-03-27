@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-26 Thu 23:30 -->
+<!-- 2026-03-27 Fri 00:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Oblivious Programmable PRF</title>
@@ -286,7 +286,7 @@ If \(q_j = a_i\) for some \(i\), then \(F(k,q_j) = t_i\). Otherwise, \(F(k,q_j)\
 <h3 id="org0895587">Relationship to OKVS</h3>
 <div class="outline-text-3" id="text-org0895587">
 <p>
-An <a href="/notes/permanent-notes/20241016134037-oblivious_key_value_store.html">OKVS</a> can be viewed as a non-interactive version of an OPPRF that can also be sent in the clear [<a href="#citeproc_bib_item_1">1</a>]. While an OPPRF requires interaction between sender and receiver, an OKVS encodes programmed key-value pairs into a data structure \(S\) that the receiver can decode locally. A polynomial is the most compact form of an OKVS.
+An <a href="/notes/permanent-notes/20241016134037-oblivious_key_value_store.html">Oblivious Key Value Store</a> can be viewed as a non-interactive version of an OPPRF that can also be sent in the clear [<a href="#citeproc_bib_item_1">1</a>]. While an OPPRF requires interaction between sender and receiver, an OKVS encodes programmed key-value pairs into a data structure \(S\) that the receiver can decode locally. A polynomial is the most compact form of an OKVS.
 </p>
 </div>
 </div>
@@ -310,7 +310,7 @@ If \(y_j = a_i\) for some \(i\), then \(P(y_j) = t_i \oplus F(k, a_i)\), so \(\m
 </p>
 
 <p>
-The polynomial can be replaced by any <a href="/notes/permanent-notes/20241016134037-oblivious_key_value_store.html">OKVS</a> encoding, which is how modern constructions work: the sender encodes \(\{(a_i,\ t_i \oplus F(k, a_i))\}\) into an OKVS structure \(T\) instead of a polynomial, and the receiver decodes \(\mathsf{Decode}(T, y_j)\) in place of evaluating \(P(y_j)\).
+The polynomial can be replaced by any <a href="/notes/permanent-notes/20241016134037-oblivious_key_value_store.html">Oblivious Key Value Store</a> encoding, which is how modern constructions work: the sender encodes \(\{(a_i,\ t_i \oplus F(k, a_i))\}\) into an OKVS structure \(T\) instead of a polynomial, and the receiver decodes \(\mathsf{Decode}(T, y_j)\) in place of evaluating \(P(y_j)\).
 </p>
 </div>
 </div>
@@ -330,7 +330,7 @@ OPPRFs are primarily used in multi-party private set intersection (PSI) protocol
 <li>First introduced by [<a href="#citeproc_bib_item_2">2</a>] as part of their multi-party PSI protocol using symmetric-key techniques.</li>
 <li>The key difference from an OPRF is the programmability: the sender controls the output on specific points rather than the PRF being fully random.</li>
 <li>Server-aided variants exist (e.g., [<a href="#citeproc_bib_item_3">3</a>]) where a helper party assists in the protocol, allowing the OPPRF to be constructed using a non-shuffled server-aided OPRF combined with an OKVS encoding.</li>
-<li>In practice, interactive OPPRFs have been largely superseded by <a href="/notes/permanent-notes/20241016134037-oblivious_key_value_store.html">OKVS</a>-based constructions. The state of the art uses OKVS combined with subfield VOLE [<a href="#citeproc_bib_item_4">4</a>], though these approaches demand large bandwidths [<a href="#citeproc_bib_item_1">1</a>]. Near-optimal OKVS constructions are given by [<a href="#citeproc_bib_item_5">5</a>].</li>
+<li>In practice, interactive OPPRFs have been largely superseded by <a href="/notes/permanent-notes/20241016134037-oblivious_key_value_store.html">Oblivious Key Value Store</a>-based constructions. The state of the art uses OKVS combined with subfield VOLE [<a href="#citeproc_bib_item_4">4</a>], though these approaches demand large bandwidths [<a href="#citeproc_bib_item_1">1</a>]. Near-optimal OKVS constructions are given by [<a href="#citeproc_bib_item_5">5</a>].</li>
 </ul>
 </div>
 </div>
