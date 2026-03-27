@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-27 Fri 00:24 -->
+<!-- 2026-03-27 Fri 00:55 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Glossary of distributed systems</title>
@@ -229,7 +229,11 @@ This is an attempted index of terms used in distributed system protocols.
 <li>Client: A machine that uses the outputs of the protocol in discussion.</li>
 <li>User: A logical user (may consist of multiple clients) that uses the outputs of the protocol in discussion.</li>
 <li>Replica: This has origins in the literature for crash fault tolerant systems and the primary-backup paradigm of state machine replication. This is a server that can be replicated and take a place of a server just by assigning a new identifier.</li>
-<li>Validator: Originates from the blockchain literature. A validator is any node that validates the blockchain. E.g., a node that downloads the Bitcoin chain and verifies the proof of work. The (incorrect imho) usage in Proof of Stake systems is as the nodes that are a part of the SMR protocol.</li>
+<li>Leader: The designated node that drives progress in a protocol view or epoch. In classical protocols (e.g., Paxos, PBFT), the leader is stable across rounds within a view. Often conflated with proposer, but leader implies a persistent role.</li>
+<li>Proposer: A node selected to propose a value in a given round. In blockchain protocols, "proposer" or "block producer" implies per-round selection (e.g., via VRF or round-robin). Distinguished from leader in that the role is ephemeral.</li>
+<li>Learner: Originates from Paxos. A node that learns the decided value but does not participate in the agreement. In practice, often conflated with replicas or clients depending on context.</li>
+<li>Dealer: Originates from threshold cryptography and MPC. A (possibly trusted) node that distributes shares of a secret to participants. In DKG protocols, the dealer role is distributed among the participants themselves, making the term ambiguous.</li>
+<li>Validator: Originates from the blockchain literature. A validator is any node that validates the blockchain. E.g., a node that downloads the Bitcoin chain and verifies the proof of work. The (incorrect imho) usage in Proof of Stake systems is as the nodes that are a part of the SMR protocol. Further confusion: a "full node" verifies the chain but does not propose blocks, while a "validator" in PoS systems both verifies and participates in consensus, yet some systems use "validator" for both roles.</li>
 </ul>
 </div>
 </div>
@@ -248,12 +252,12 @@ This is an attempted index of terms used in distributed system protocols.
 <div class="outline-text-2" id="text-orgbf867a3">
 <ul class="org-ul">
 <li>Correct: A node is correct if it follows the protocol specification for a period under discussion. This node may be corrupted by the adversary but since it follows the protocol spec., it is deemed to be correct.</li>
-<li>Honest: A node that is under the influence of the adversary until the period under discussion.</li>
+<li>Honest: A node that is not under the influence of the adversary during the period under discussion.</li>
 <li>Faulty: Any node that deviates from the protocol specification.</li>
 <li>Non-faulty: All nodes that do not deviate from the protocol specification. Equivalent to <i>Correct</i> nodes.</li>
 <li>BFT: A qualifier for the system. Often abused to mean BFT-SMR.</li>
 <li>CFT: A qualifier for the system. Often abused to mean CFT-SMR or CFT-databases.</li>
-<li>Fail-stop: It is an abstraction of a fault that will stop executing and fail. Note, others can detect the failure. ([1] [NO_ITEM_DATA:schneiderFailStopProcessorApproach])</li>
+<li>Fail-stop: It is an abstraction of a fault that will stop executing and fail. Note, others can detect the failure. ([<a href="#citeproc_bib_item_1">1</a>] [<a href="#citeproc_bib_item_2">2</a>])</li>
 <li>Omission: A fault where some messages can be omitted (by the network or intentionally by the sender)</li>
 <li>Crash: A fault where the node fails irreversibly, i.e., once a node crashes, it cannot come back alive in a protocol.</li>
 <li>Commission: A fault where the node sends messages not specified by the protocol such as equivocating messages, invalid messages, and incorrect round messages.</li>
@@ -266,7 +270,10 @@ This is an attempted index of terms used in distributed system protocols.
 <ul class="org-ul">
 <li>Send: A primitive where a message is sent to a neighboring node with a specific name. Implicitly assumes that the sending node knows its neighbors. In a partially connected system, the name must be one of the neighbors, otherwise it is undefined.</li>
 <li>SendAll: A primitive where a message is sent to all neighbors. Implicitly assumes that the sending node knows its neighbors.</li>
-<li>Broadcast: This is a primitive that terminates, and ensures a consistent value is seen by all nodes in the protocol.</li>
+<li>Multicast: A primitive where a message is sent to a subset of nodes in the system. Distinguished from SendAll in that the recipient set is explicit and may not include all neighbors.</li>
+<li>Gossip/Epidemic Dissemination: A probabilistic messaging pattern where each node forwards a message to a random subset of peers. Convergence is probabilistic, not guaranteed per round. Often conflated with flooding, but gossip implies randomized fanout while flooding is deterministic.</li>
+<li>Broadcast: This is a primitive that terminates, and ensures a consistent value is seen by all nodes in the protocol. Note: this conflates several distinct abstractions. Best-effort broadcast provides no guarantees if the sender crashes. Reliable broadcast ensures all correct nodes deliver the message if any correct node does. Byzantine broadcast (e.g., Bracha broadcast) additionally tolerates Byzantine senders.</li>
+<li>Echo: A message pattern used in Byzantine broadcast protocols (e.g., Bracha). A node "echoes" a received value to amplify it, ensuring that enough correct nodes see it before delivering. Not a standalone primitive but frequently referenced as one.</li>
 </ul>
 </div>
 </div>
@@ -300,6 +307,15 @@ This is an attempted index of terms used in distributed system protocols.
 <li>Ittai Abraham</li>
 </ul></li>
 </ul>
+</div>
+</div>
+<div id="outline-container-orga2a189a" class="outline-2">
+<h2 id="orga2a189a">References</h2>
+<div class="outline-text-2" id="text-orga2a189a">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Richard D Schlichting. “Fail-Stop Processors: An Approach to Designing Computing Systems.”</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Fred B. Schneider. 1987. “The fail-stop processor approach.”</div>
+</div>
 </div>
 </div>
 </div>
