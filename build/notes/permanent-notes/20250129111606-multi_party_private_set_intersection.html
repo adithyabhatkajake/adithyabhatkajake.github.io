@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-27 Fri 00:23 -->
+<!-- 2026-03-27 Fri 13:10 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Multi-party Private Set Intersection</title>
@@ -196,6 +196,39 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -216,15 +249,62 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Multi-party Private Set Intersection</h1>
+<div id="outline-container-org2f4dea7" class="outline-2">
+<h2 id="org2f4dea7">Summary</h2>
+<div class="outline-text-2" id="text-org2f4dea7">
+</div>
+<div id="outline-container-orgbf849b5" class="outline-3">
+<h3 id="orgbf849b5">Problem Definition</h3>
+<div class="outline-text-3" id="text-orgbf849b5">
+<p>
+Given \(n\) parties \(P_1, P_2, \ldots, P_n\), where each party \(P_i\) holds a private set \(X_i\) over a common domain \(\mathcal{U}\), MPSI computes the intersection \(\bigcap_{i=1}^n X_i\) such that:
+</p>
+<ul class="org-ul">
+<li><b>Correctness:</b> The designated output party (typically \(P_1\)) learns exactly \(\bigcap_{i=1}^n X_i\).</li>
+<li><b>Privacy:</b> No party learns any information about elements in other parties' sets beyond what can be inferred from the intersection and their own input.</li>
+</ul>
+
+<p>
+The corruption model varies across protocols:
+</p>
+<ul class="org-ul">
+<li><b>Semi-honest:</b> Adversaries follow the protocol but try to extract additional information from the transcript.</li>
+<li><b>Malicious:</b> Adversaries may deviate arbitrarily from the protocol.</li>
+<li><b>Collusion resistance:</b> Security holds even if up to \(t\) parties collude (with or without an honest majority).</li>
+</ul>
+
+<p>
+The key challenges over two-party <a href="/notes/permanent-notes/20241125220049-private_set_intersection.html">PSI</a> are:
+</p>
+<ul class="org-ul">
+<li><b>Scalability:</b> Communication and computation tend to scale with the number of parties \(n\).</li>
+<li><b>Collusion:</b> In two-party PSI, security is binary: one party is honest, one may be corrupt. In MPSI, any subset of parties may collude and combine their protocol views to extract information about honest parties' sets. The protocol must be simulatable for every possible coalition, which is a combinatorially harder security requirement. This is why many MPSI protocols restrict the corruption threshold or require an honest majority.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org857942e" class="outline-3">
+<h3 id="org857942e">Taxonomy of Approaches</h3>
+<div class="outline-text-3" id="text-org857942e">
+<p>
+See [<a href="#citeproc_bib_item_1">1</a>] for a comprehensive classification. The main approaches are:
+</p>
+<ul class="org-ul">
+<li><b>Private homomorphic set representations</b> (polynomials, hash sets, sorted multisets). Encode each set into a representation that supports a homomorphic operation \(+\) such that \(\mathsf{Dec}(\mathsf{Enc}(X_1) + \cdots + \mathsf{Enc}(X_n))\) yields the intersection. For example, represent sets as polynomials with elements as roots and use the property that a random linear combination \(r_1 P_1 + r_2 P_2\) preserves common roots while randomizing the rest.</li>
+<li><b>Leaky homomorphic set representations</b> (Bloom filters, garbled Bloom filters). Same idea as above, but the encoding leaks some information (e.g., Bloom filters leak false positives through hash collisions).</li>
+<li><b>Aggregatable membership queries</b> (<a href="/notes/permanent-notes/20250211202116-oblivious_programmable_prf.html">OPPRF</a>, <a href="/notes/permanent-notes/20241016134037-oblivious_key_value_store.html">OKVS</a>, polynomial embeddings). Instead of combining set representations, test each candidate element for membership across all parties and aggregate the results. For example, using zero-sharing ([<a href="#citeproc_bib_item_2">2</a>]): each party \(P_i\) obtains a share \(s_i(x)\) for every element \(x\) such that \(\bigoplus_{i=1}^n s_i(x) = 0\). Each party then masks its set elements with its share via an <a href="/notes/permanent-notes/20250211202116-oblivious_programmable_prf.html">OPPRF</a>. For an element in the intersection, all parties hold it, so the shares XOR to zero and the element is recognizable. For non-intersection elements, at least one share is pseudorandom, making the XOR indistinguishable from random.</li>
+</ul>
+</div>
+</div>
+</div>
 <div id="outline-container-orgfcfe4be" class="outline-2">
 <h2 id="orgfcfe4be">Papers</h2>
 <div class="outline-text-2" id="text-orgfcfe4be">
 <ul class="org-ul">
-<li>[1]</li>
-<li>[2]</li>
-<li>[3]</li>
-<li>[4]</li>
-<li>[5]</li>
+<li>[<a href="#citeproc_bib_item_2">2</a>] First implemented MPSI protocol; introduces <a href="/notes/permanent-notes/20250211202116-oblivious_programmable_prf.html">OPPRF</a> to avoid public-key operations, achieving semi-honest security against any number of corrupted parties without an honest majority.</li>
+<li>[<a href="#citeproc_bib_item_3">3</a>] Combines Bloom filters with exponential ElGamal encryption in a star topology; achieves \(O(n \cdot m_{\max})\) communication and computation independent of \(n\) for non-designated parties.</li>
+<li>[<a href="#citeproc_bib_item_4">4</a>] Extends two-party garbled Bloom filters to the multi-party setting; concretely efficient with communication linear in \(n\) and set sizes, semi-honest model.</li>
+<li>[<a href="#citeproc_bib_item_5">5</a>] Uses <a href="/notes/permanent-notes/20250205152354-oblivious_linear_evaluation.html">OLE</a> to add polynomials while preserving roots; UC-secure against malicious adversaries with asymptotically optimal \(O((n^2 + nm)\kappa)\) communication, avoiding homomorphic threshold encryption and ZK proofs.</li>
+<li>[<a href="#citeproc_bib_item_6">6</a>] Extends two-party symmetric-key PSI to the multi-party setting using an untrusted third-party model with hardware tokens.</li>
 </ul>
 </div>
 </div>
@@ -232,12 +312,26 @@
 <h2 id="org9624e44">Applications</h2>
 <div class="outline-text-2" id="text-org9624e44">
 <ul class="org-ul">
-<li>Multiple Shop owners or digital services want to launch a collective promotion campaign. To do so, these shops must identify their mutual set of customers, without violating the privacy of the customers. ([BROKEN LINK: cite:@miyajiScalableMultipartyPrivate2015; @kolesnikovPracticalMultipartyPrivate2017])</li>
-<li>Multiple organizations come together to catch an intruder in a common network. The organizations keep a list of suspicious IPs and by computing the intersection they narrow them down. Since IP addresses contain personal information it is important to keep them private. ([1, 6 inbarEfficientScalableMultiparty2018])</li>
-<li>Detect botnets. ([4])</li>
-<li>An investigative agency needs to narrow down a list of suspects by cooperating with multiple other agencies. Since none of the agencies can share plain data with each other, they engage in an MPSI protocol to only consider relevant suspects. [5]</li>
-<li>More applications in [7]</li>
+<li>Multiple Shop owners or digital services want to launch a collective promotion campaign. To do so, these shops must identify their mutual set of customers, without violating the privacy of the customers. ([<a href="#citeproc_bib_item_3">3</a>] [<a href="#citeproc_bib_item_2">2</a>])</li>
+<li>Multiple organizations come together to catch an intruder in a common network. The organizations keep a list of suspicious IPs and by computing the intersection they narrow them down. Since IP addresses contain personal information it is important to keep them private. ([<a href="#citeproc_bib_item_2">2</a>, <a href="#citeproc_bib_item_4">4</a>, <a href="#citeproc_bib_item_7">7</a>])</li>
+<li>Detect botnets. ([<a href="#citeproc_bib_item_5">5</a>])</li>
+<li>An investigative agency needs to narrow down a list of suspects by cooperating with multiple other agencies. Since none of the agencies can share plain data with each other, they engage in an MPSI protocol to only consider relevant suspects. [<a href="#citeproc_bib_item_6">6</a>]</li>
+<li>More applications in [<a href="#citeproc_bib_item_1">1</a>]</li>
 </ul>
+</div>
+</div>
+<div id="outline-container-org29c1194" class="outline-2">
+<h2 id="org29c1194">References</h2>
+<div class="outline-text-2" id="text-org29c1194">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Jelle Vos, Mauro Conti, and Zekeriya Erkin. 2024. “SoK: Collusion-resistant Multi-party Private Set Intersections in the Semi-honest Model.” <a href="https://ieeexplore.ieee.org/abstract/document/10646669?casa_token=SC9GM3SMrZcAAAAA:GWpdE0SfvbK5E4vPnmP-wCRLV2udPyeerw8Xtuqv5KZMjhaPDKjIuVt0Ih03_U1kCiqb1sEtKd4v">https://ieeexplore.ieee.org/abstract/document/10646669?casa_token=SC9GM3SMrZcAAAAA:GWpdE0SfvbK5E4vPnmP-wCRLV2udPyeerw8Xtuqv5KZMjhaPDKjIuVt0Ih03_U1kCiqb1sEtKd4v</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Vladimir Kolesnikov, Naor Matania, Benny Pinkas, Mike Rosulek, and Ni Trieu. 2017. “Practical Multi-party Private Set Intersection from Symmetric-Key Techniques.” <a href="https://dl.acm.org/doi/10.1145/3133956.3134065">https://dl.acm.org/doi/10.1145/3133956.3134065</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>[3] Atsuko Miyaji, and Shohei Nishida. 2015. “A Scalable Multiparty Private Set Intersection.”</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_4"></a>[4] Roi Inbar, Eran Omri, and Benny Pinkas. 2018. “Efficient Scalable Multiparty Private Set-Intersection via Garbled Bloom Filters.”</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_5"></a>[5] Satrajit Ghosh, and Tobias Nilges. 2017. “An Algebraic Approach to Maliciously Secure Private Set Intersection.” <a href="https://eprint.iacr.org/2017/1064">https://eprint.iacr.org/2017/1064</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_6"></a>[6] Zhusheng Wang, Karim Banawan, and Sennur Ulukus. 2021. “Multi-Party Private Set Intersection: An Information-Theoretic Approach.” <a href="https://ieeexplore.ieee.org/document/9349622/">https://ieeexplore.ieee.org/document/9349622/</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_7"></a>[7] Lea Kissner, and Dawn Song. 2005. “Privacy-Preserving Set Operations.” <a href="http://link.springer.com/10.1007/11535218_15">http://link.springer.com/10.1007/11535218_15</a>.</div>
+</div>
 </div>
 </div>
 </div>
