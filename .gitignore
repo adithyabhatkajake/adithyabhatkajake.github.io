@@ -6,3 +6,4 @@ blogs/index.org
 blogs/page-*.org
 /notes/
 .build-hashes
+/CV.aux
