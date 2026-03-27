@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-25 Wed 14:43 -->
+<!-- 2026-03-26 Thu 18:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Switching Lemma</title>
+<title>PRP/PRF Switching Lemma</title>
 <meta name="author" content="Adithya Bhat" />
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
@@ -248,25 +248,220 @@
 </div>
 </div>
 <div id="content" class="content">
-<h1 class="title">Switching Lemma</h1>
+<h1 class="title">PRP/PRF Switching Lemma</h1>
+<div id="outline-container-orgc940037" class="outline-2">
+<h2 id="orgc940037">The Problem</h2>
+<div class="outline-text-2" id="text-orgc940037">
 <p>
-Consider \(Enc_{k}(m) = \langle r, F_k(r)\oplus m\rangle\) and \(Dec_{k}(\langle r,s\rangle)=F_{k}(r)\oplus s\)
+<b>When Can We Treat a Permutation as a Random Function?</b>
 </p>
+
+<p>
+Block ciphers like AES are <b>pseudorandom permutations</b> (PRPs): keyed bijections on
+\(\{0,1\}^n\). Many cryptographic constructions (e.g., counter mode encryption) are
+analysed assuming access to a <b>pseudorandom function</b> (PRF): a keyed map whose outputs
+are independent and uniform. The switching lemma bridges this gap.
+</p>
+</div>
+<div id="outline-container-org42deef7" class="outline-3">
+<h3 id="org42deef7">Definitions</h3>
+<div class="outline-text-3" id="text-org42deef7">
+<p>
+Let \(N = 2^n\) (the domain size, e.g., \(N = 2^{128}\) for AES).
+</p>
+
 <ul class="org-ul">
-<li><b>Real world</b>: Nonces \(r_1, \ldots, r_q\in \{0,1\}^\lambda\) picked randomly.
-<ul class="org-ul">
-<li><b>Equivalent view</b>: \(r_i=f(i)\) where \(f\) is a truly random function</li>
-</ul></li>
-<li><b>Ideal world</b>: \(r_{i}=f(i)\) where \(f\) is a truly random <span class="underline">permutation</span>
-<ul class="org-ul">
-<li><b>No nonce collisions in Ideal world</b></li>
-</ul></li>
-<li><b>Switching lemma states that an attacker can distinguish between real/ideal world (in both directions) with probability at most \(\frac{{q\choose 2}}{2^{\lambda}}\le \frac{q^{2}}{2^{\lambda+1}}\)</b>
-\(\vert Pr\mathcal{[A}^{P(\cdot)}=1] - Pr[\mathcal{A}^{F(\cdot)}=1]\vert \in O(q^{2}/N)\)</li>
-<li>In other words, an attacker can distinguish between truly random permutation and truly random function</li>
-<li>E.g., AES-GCM uses a PRP instead of PRF</li>
-<li>We can again apply Switching lemma to use AES-GCM as a PRF</li>
+<li><b>Random function</b> \(F\): for each input \(x \in [N]\), the output \(F(x)\) is drawn
+independently and uniformly from \([N]\).</li>
+
+<li><b>Random permutation</b> \(P\): a uniformly random bijection on \([N]\), so all outputs are
+distinct.</li>
 </ul>
+
+<p>
+An <b>adversary</b> \(\mathcal{A}\) makes \(q\) adaptive queries to an oracle \(\mathcal{O}\), then
+outputs a bit. The <b>distinguishing advantage</b> is:
+</p>
+
+<p>
+\[\mathsf{Adv}(\mathcal{A}) = \bigl\lvert \Pr[\mathcal{A}^{P(\cdot)} = 1] - \Pr[\mathcal{A}^{F(\cdot)} = 1] \bigr\rvert\]
+</p>
+</div>
+</div>
+<div id="outline-container-org31990e5" class="outline-3">
+<h3 id="org31990e5">The distinguishing game</h3>
+<div class="outline-text-3" id="text-org31990e5">
+
+<div id="org39bdb21" class="figure">
+<p><img src="data/switching_lemma_game.png" alt="switching_lemma_game.png" />
+</p>
+</div>
+
+<p>
+The adversary \(\mathcal{A}\) is placed in one of two worlds and must guess which:
+</p>
+
+<ul class="org-ul">
+<li><b>World 0</b>: the oracle is a uniformly random <b>permutation</b> \(P\) on \([N]\) (all outputs distinct).</li>
+<li><b>World 1</b>: the oracle is a uniformly random <b>function</b> \(F: [N] \to [N]\) (outputs i.i.d. uniform).</li>
+</ul>
+
+<p>
+The only observable difference is that \(P\) never produces a <b>collision</b> (\(y_i = y_j\) for
+\(i \neq j\)), while \(F\) may. The switching lemma says this difference is negligible when
+\(q \ll \sqrt{N}\).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgaede128" class="outline-2">
+<h2 id="orgaede128">Statement (PRP/PRF Switching Lemma)</h2>
+<div class="outline-text-2" id="text-orgaede128">
+<p>
+<b>Lemma</b> [<a href="#citeproc_bib_item_1">1</a>]: For any adversary \(\mathcal{A}\) making at most \(q\) queries,
+</p>
+
+<p>
+\[\bigl\lvert \Pr[\mathcal{A}^{P(\cdot)} = 1] - \Pr[\mathcal{A}^{F(\cdot)} = 1] \bigr\rvert \leq \frac{q(q-1)}{2N}\]
+</p>
+
+<p>
+where \(N\) is the domain size. Equivalently, \(\mathsf{Adv}(\mathcal{A}) \leq \binom{q}{2}/N\).
+</p>
+
+<p>
+This bound is <b>tight</b> and <b>information-theoretic</b>: it holds against computationally
+unbounded adversaries, and depends only on the number of queries \(q\) and the domain size
+\(N\).
+</p>
+</div>
+<div id="outline-container-org05a1c6c" class="outline-3">
+<h3 id="org05a1c6c">Why \(q(q-1)/2N\)? The birthday bound</h3>
+<div class="outline-text-3" id="text-org05a1c6c">
+
+<div id="orge8e526a" class="figure">
+<p><img src="data/switching_lemma_birthday.png" alt="switching_lemma_birthday.png" />
+</p>
+</div>
+
+<p>
+The bound \(q(q-1)/2N\) is exactly the probability that \(q\) uniform samples from \([N]\)
+include at least one collision (the <b>birthday problem</b>). This is not a coincidence:
+collisions are the <i>only</i> way to distinguish a random function from a random permutation.
+</p>
+
+<ul class="org-ul">
+<li>For \(q \ll \sqrt{N}\): the advantage is negligible (e.g., \(q = 2^{40}\) queries against
+AES-128 gives advantage \(\approx 2^{-49}\)).</li>
+<li>At \(q \approx \sqrt{N}\): the advantage becomes constant (\(\approx 1/2\)).</li>
+<li>For \(q \gg \sqrt{N}\): the adversary wins with high probability.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org34b1062" class="outline-2">
+<h2 id="org34b1062">Proof Sketch</h2>
+<div class="outline-text-2" id="text-org34b1062">
+<p>
+The proof uses a <b>coupling argument</b>. We construct a random function \(F\) and a random
+permutation \(P\) on the <i>same</i> probability space so that they agree unless a "bad event"
+occurs.
+</p>
+</div>
+<div id="outline-container-orgfb62303" class="outline-3">
+<h3 id="orgfb62303">Construction</h3>
+<div class="outline-text-3" id="text-orgfb62303">
+<p>
+Sample \(F\) as a truly random function. Define \(P\) by a lazy-sampling process:
+</p>
+
+<ol class="org-ol">
+<li>On query \(x_i\), first compute \(y_i = F(x_i)\).</li>
+<li>If \(y_i\) does not collide with any previous output of \(P\), set \(P(x_i) = y_i\).</li>
+<li>If \(y_i\) collides (i.e., \(y_i = P(x_j)\) for some \(j < i\)), resample \(P(x_i)\)
+uniformly from \([N] \setminus \{P(x_1), \ldots, P(x_{i-1})\}\).</li>
+</ol>
+
+<p>
+In step (2), the adversary sees identical responses from \(F\) and \(P\). The worlds diverge
+only in step (3), which requires \(F\) to produce a collision among its first \(q\) outputs.
+</p>
+</div>
+</div>
+<div id="outline-container-orgc20feaa" class="outline-3">
+<h3 id="orgc20feaa">Bounding the bad event</h3>
+<div class="outline-text-3" id="text-orgc20feaa">
+<p>
+At query \(i\), the probability that \(F(x_i)\) collides with one of the \(i-1\) previous
+(distinct) outputs is at most \((i-1)/N\). By a union bound over all \(q\) queries:
+</p>
+
+<p>
+\[\Pr[\text{bad}] \leq \sum_{i=1}^{q} \frac{i-1}{N} = \frac{q(q-1)}{2N}\]
+</p>
+
+<p>
+Since the adversary's views are identical unless bad occurs:
+</p>
+
+<p>
+\[\mathsf{Adv}(\mathcal{A}) \leq \Pr[\text{bad}] \leq \frac{q(q-1)}{2N}\]
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb5d8d25" class="outline-2">
+<h2 id="orgb5d8d25">Application: Using AES as a PRF</h2>
+<div class="outline-text-2" id="text-orgb5d8d25">
+
+<div id="org83ff7a8" class="figure">
+<p><img src="data/switching_lemma_application.png" alt="switching_lemma_application.png" />
+</p>
+</div>
+
+<p>
+AES is a PRP (keyed permutation), but many modes of operation (CTR, GCM) are proved
+secure assuming a PRF. The switching lemma closes this gap via a two-step argument:
+</p>
+
+<ol class="org-ol">
+<li><b>PRP security of AES</b>: \(\mathrm{AES}_K\) is indistinguishable from a truly random
+permutation \(P\), with advantage \(\leq \epsilon_{\mathrm{PRP}}\).</li>
+
+<li><b>Switching lemma</b>: a truly random permutation \(P\) is indistinguishable from a truly
+random function \(F\), with advantage \(\leq q(q-1)/2N\).</li>
+</ol>
+
+<p>
+By the triangle inequality, \(\mathrm{AES}_K\) is indistinguishable from a random function
+with total advantage \(\leq \epsilon_{\mathrm{PRP}} + q(q-1)/2N\).
+</p>
+
+<p>
+For AES-128 (\(N = 2^{128}\)), the switching lemma term is negligible up to about \(2^{64}\)
+queries — the <b>birthday bound</b>. This is why NIST recommends re-keying before \(2^{64}\)
+blocks in GCM.
+</p>
+</div>
+<div id="outline-container-orga824e82" class="outline-3">
+<h3 id="orga824e82">Connection to the streaming setting</h3>
+<div class="outline-text-3" id="text-orga824e82">
+<p>
+When the adversary is <b>space-bounded</b> (limited to \(S\) bits of memory), a stronger result
+holds: the [BROKEN LINK: c208d652-84b3-44e9-8c5f-fae8aefbb9ff] reduces the distinguishing advantage to
+\(O(\sqrt{Sq/N})\), which can be much smaller than \(q^2/N\) when \(S \ll q\).
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org27246d9" class="outline-2">
+<h2 id="org27246d9">References</h2>
+<div class="outline-text-2" id="text-org27246d9">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Mihir Bellare, and Phillip Rogaway. 2004. “Code-Based Game-Playing Proofs and the Security of Triple Encryption.” <a href="https://eprint.iacr.org/2004/331">https://eprint.iacr.org/2004/331</a>.</div>
+</div>
+</div>
+</div>
 </div>
 </body>
 </html>

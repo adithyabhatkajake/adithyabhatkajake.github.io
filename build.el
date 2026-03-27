@@ -468,6 +468,27 @@ Ensures LINK with DESC is properly resolved using INFO."
 (org-link-set-parameters "attachment"
                          :export #'fix-attachment-links)
 
+;; Resolve org-roam id: links to published HTML URLs
+(defun my-org-id-export (id desc _format)
+  "Resolve id: links to published HTML URLs.
+Looks up ID in org-id-locations, maps the source file path to its
+published URL under /notes/, and returns an HTML anchor tag."
+  (when (hash-table-p org-id-locations)
+    (let ((file (gethash id org-id-locations)))
+      (when file
+        (let* ((base (file-name-base file))
+               (url (cond
+                     ((string-prefix-p (file-name-concat notes-base-dir "literature notes") file)
+                      (format "/notes/literature-notes/%s.html" base))
+                     ((string-prefix-p (file-name-concat notes-base-dir "permanent notes") file)
+                      (format "/notes/permanent-notes/%s.html" base))
+                     ((string-prefix-p (file-name-concat notes-base-dir "protocols") file)
+                      (format "/notes/protocols/%s.html" base)))))
+          (when url
+            (format "<a href=\"%s\">%s</a>" url (or desc id))))))))
+
+(org-link-set-parameters "id" :export #'my-org-id-export)
+
 ;; Override MathJax template to enable $...$ inline math delimiters
 (setq org-html-mathjax-template
       "<script>
