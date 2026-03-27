@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-25 Wed 14:43 -->
+<!-- 2026-03-26 Thu 17:35 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Extension Field</title>
@@ -249,20 +249,106 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Extension Field</h1>
+<div id="outline-container-org325bfd4" class="outline-2">
+<h2 id="org325bfd4">Motivation</h2>
+<div class="outline-text-2" id="text-org325bfd4">
 <p>
-Just like how we create complex numbers from real numbers by adjoining a root of \(x^{2} + 1 = 0\) whose root we call as \(i\), we create extension fields by adjoining roots of irreducible polynomials who have no solutions in the base field.
+The real numbers \(\mathbb{R}\) have no solution to \(x^2 + 1 = 0\). Instead of giving up, we
+<i>adjoin</i> a root: declare \(i\) to be a symbol satisfying \(i^2 = -1\), then build the smallest field
+containing \(\mathbb{R}\) and \(i\). Every element takes the form \(a + bi\) with \(a, b \in \mathbb{R}\).
+This is \(\mathbb{C}\), an extension of \(\mathbb{R}\).
 </p>
 
 <p>
-Steps:
+Extension fields generalize exactly this idea to any base field \(F\) and any irreducible polynomial
+over \(F\).
 </p>
+</div>
+</div>
+<div id="outline-container-org286b7f6" class="outline-2">
+<h2 id="org286b7f6">Construction</h2>
+<div class="outline-text-2" id="text-org286b7f6">
+<p>
+Given a field \(F\) and an irreducible polynomial \(f(x)\) of degree \(n\) with coefficients in \(F\):
+</p>
+
 <ol class="org-ol">
-<li>Start with a base field \(F\)</li>
-<li>Find an irreducible polynomial \(f(x)\) over \(F\)</li>
-<li>Adjoin a root \(\alpha\) by declaring \(f(\alpha) = 0\)</li>
-<li>The extension field consists of all polynomials in \(\alpha\) with coefficients from \(F\) where \(f(\alpha) = 0\) is used to reduce the powers.</li>
-<li>The extension field has \(+\) and \(*\) operations where the coefficients modulo order of \(F\) and the polynomials module \(f(x)\)</li>
+<li>\(f(x)\) has no roots in \(F\), so we cannot factor it there.</li>
+<li>Introduce a formal symbol \(\alpha\) and declare it to be a root: \(f(\alpha) = 0\).</li>
+<li>The extension field \(K = F(\alpha)\) is the set of all polynomials in \(\alpha\) with coefficients
+in \(F\), where any power \(\alpha^k\) with \(k \ge n\) is replaced using the relation \(f(\alpha) = 0\).</li>
 </ol>
+
+<p>
+Every element of \(K\) looks like:
+\[a_0 + a_1 \alpha + a_2 \alpha^2 + \cdots + a_{n-1} \alpha^{n-1}, \quad a_i \in F\]
+</p>
+
+<p>
+\(K\) has \(|F|^n\) elements and the degree of the extension is \([K : F] = n\).
+</p>
+</div>
+</div>
+<div id="outline-container-orge32bdc8" class="outline-2">
+<h2 id="orge32bdc8">Arithmetic</h2>
+<div class="outline-text-2" id="text-orge32bdc8">
+<ul class="org-ul">
+<li><b>Addition:</b> add coefficient-wise using arithmetic in \(F\).</li>
+<li><b>Multiplication:</b> multiply polynomials normally, then reduce any power \(\alpha^k\) with \(k \ge n\)
+back into the basis \(\{1, \alpha, \ldots, \alpha^{n-1}\}\) using the relation \(f(\alpha) = 0\).</li>
+</ul>
+
+<p>
+The key reduction rule comes from rearranging \(f(\alpha) = 0\) to express \(\alpha^n\) in terms of
+lower powers.
+</p>
+</div>
+</div>
+<div id="outline-container-org32cb9c1" class="outline-2">
+<h2 id="org32cb9c1">Example: \(GF(4)\)</h2>
+<div class="outline-text-2" id="text-org32cb9c1">
+<p>
+Start with \(F = \mathbb{Z}_2 = \{0, 1\}\). The polynomial \(f(x) = x^2 + x + 1\) is irreducible over
+\(\mathbb{Z}_2\) since neither \(0\) nor \(1\) is a root.
+</p>
+
+<p>
+Adjoin a root \(\alpha\) satisfying \(\alpha^2 + \alpha + 1 = 0\). Rearranging: \(\alpha^2 = \alpha + 1\)
+(since \(-1 = 1\) in \(\mathbb{Z}_2\)). This is the reduction rule for any product that produces \(\alpha^2\).
+</p>
+
+<p>
+The four elements of \(GF(4)\) are: \(\{0,\ 1,\ \alpha,\ \alpha + 1\}\).
+</p>
+
+<p>
+Sample multiplication: \(\alpha \cdot (\alpha + 1) = \alpha^2 + \alpha = (\alpha + 1) + \alpha = 1\).
+</p>
+</div>
+</div>
+<div id="outline-container-org5468239" class="outline-2">
+<h2 id="org5468239">Galois Fields</h2>
+<div class="outline-text-2" id="text-org5468239">
+<p>
+\(GF(q)\), or the Galois Field of order \(q\) (named after Évariste Galois), is the unique finite field
+with \(q\) elements. A finite field of order \(q\) exists if and only if \(q = p^n\) for some prime \(p\)
+and positive integer \(n\).
+</p>
+
+<p>
+\(GF(p)\) is just \(\mathbb{Z}_p\) (integers mod \(p\)). \(GF(p^n)\) for \(n > 1\) is constructed as an
+extension of \(GF(p)\) by adjoining a root of an irreducible polynomial of degree \(n\) over \(GF(p)\).
+</p>
+
+<p>
+All such constructions yield the same field up to relabeling of elements, so \(GF(q)\) is unique.
+However, the choice of irreducible polynomial affects how elements are represented. For small cases
+like \(GF(4)\), there is only one irreducible polynomial of the required degree to choose from, so the
+representation is forced. For larger cases like \(GF(8) = GF(2^3)\), multiple irreducible polynomials
+of degree 3 exist over \(GF(2)\) (e.g. \(x^3 + x + 1\) and \(x^3 + x^2 + 1\)), and any of them works.
+</p>
+</div>
+</div>
 </div>
 </body>
 </html>
