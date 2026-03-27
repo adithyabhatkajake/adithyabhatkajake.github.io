@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-26 Thu 18:25 -->
+<!-- 2026-03-26 Thu 23:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Oblivious Programmable PRF</title>
@@ -196,6 +196,39 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -218,13 +251,99 @@
 <h1 class="title">Oblivious Programmable PRF</h1>
 <div id="outline-container-orga9c7e96" class="outline-2">
 <h2 id="orga9c7e96">Summary</h2>
+<div class="outline-text-2" id="text-orga9c7e96">
+<p>
+An Oblivious Programmable PRF (OPPRF) is an extension of an OPRF where the sender can "program" the PRF output on a set of chosen points. In a standard OPRF, the receiver learns \(F(k,q)\) for queries \(q\) without learning \(k\), and the sender learns nothing about \(q\). In an OPPRF, the sender additionally specifies a set of points \(\mathcal{P} = \{(a_i, t_i)\}\) such that \(F(k, a_i) = t_i\), while the PRF still outputs pseudorandom values on all non-programmed inputs.
+</p>
+</div>
+<div id="outline-container-org4467a83" class="outline-3">
+<h3 id="org4467a83">Formal Definition</h3>
+<div class="outline-text-3" id="text-org4467a83">
+<p>
+The OPPRF ideal functionality \(\mathcal{F}^{m_1,m_2}_{\mathsf{opprf}}\) is parameterized by:
+</p>
+<ul class="org-ul">
+<li>\(m_1\): upper bound on the number of programmable points</li>
+<li>\(m_2\): upper bound on the number of receiver queries</li>
+</ul>
+
+<p>
+The protocol proceeds as follows:
+</p>
+<ol class="org-ol">
+<li>Sender sends programmed points \(\mathcal{P} := \{(a_1,t_1), \ldots, (a_{m_1},t_{m_1})\}\) with distinct keys \(a_i\).</li>
+<li>Receiver sends \(m_2\) distinct queries \((q_1,\ldots,q_{m_2})\).</li>
+<li>The functionality runs \(k \leftarrow \mathsf{KeyGen}(\kappa, \mathcal{P})\).</li>
+<li>Output \(k\) to Sender, \(\{F(k,q_1), \ldots, F(k,q_{m_2})\}\) to Receiver.</li>
+</ol>
+
+<p>
+If \(q_j = a_i\) for some \(i\), then \(F(k,q_j) = t_i\). Otherwise, \(F(k,q_j)\) is pseudorandom.
+</p>
+</div>
+</div>
+<div id="outline-container-org0895587" class="outline-3">
+<h3 id="org0895587">Relationship to OKVS</h3>
+<div class="outline-text-3" id="text-org0895587">
+<p>
+An <a href="/notes/permanent-notes/20241016134037-oblivious_key_value_store.html">OKVS</a> can be viewed as a non-interactive version of an OPPRF that can also be sent in the clear [<a href="#citeproc_bib_item_1">1</a>]. While an OPPRF requires interaction between sender and receiver, an OKVS encodes programmed key-value pairs into a data structure \(S\) that the receiver can decode locally. A polynomial is the most compact form of an OKVS.
+</p>
+</div>
+</div>
+<div id="outline-container-orgbc0267e" class="outline-3">
+<h3 id="orgbc0267e">Construction from OPRF + Polynomial (Kolesnikov et al.)</h3>
+<div class="outline-text-3" id="text-orgbc0267e">
+<p>
+The original construction from [<a href="#citeproc_bib_item_2">2</a>] builds an OPPRF from an OPRF and polynomial interpolation:
+</p>
+
+<ol class="org-ol">
+<li>Sender holds programmed points \(\mathcal{P} = \{(a_i, t_i)\}_{i \in [m_1]}\). Receiver holds queries \(Y = \{y_j\}_{j \in [m_2]}\).</li>
+<li>Sender and receiver run an OPRF: the receiver obtains \(\{F(k, y_j)\}\) for each \(y_j \in Y\), and the sender obtains key \(k\).</li>
+<li>Sender interpolates a polynomial \(P\) of degree \(m_1 - 1\) over the points \(\{(a_i,\ t_i \oplus F(k, a_i))\}_{i \in [m_1]}\). That is, \(P(a_i) = t_i \oplus F(k, a_i)\) for all \(i\).</li>
+<li>Sender sends \(P\) to the receiver.</li>
+<li>Receiver computes \(\mathsf{out}_j = F(k, y_j) \oplus P(y_j)\) for each query \(y_j\).</li>
+</ol>
+
+<p>
+If \(y_j = a_i\) for some \(i\), then \(P(y_j) = t_i \oplus F(k, a_i)\), so \(\mathsf{out}_j = F(k, a_i) \oplus t_i \oplus F(k, a_i) = t_i\). Otherwise, \(P(y_j)\) is an unrelated field element and \(\mathsf{out}_j\) is pseudorandom (since \(F(k, y_j)\) is pseudorandom and independent of \(P(y_j)\)).
+</p>
+
+<p>
+The polynomial can be replaced by any <a href="/notes/permanent-notes/20241016134037-oblivious_key_value_store.html">OKVS</a> encoding, which is how modern constructions work: the sender encodes \(\{(a_i,\ t_i \oplus F(k, a_i))\}\) into an OKVS structure \(T\) instead of a polynomial, and the receiver decodes \(\mathsf{Decode}(T, y_j)\) in place of evaluating \(P(y_j)\).
+</p>
+</div>
+</div>
+<div id="outline-container-org12d5362" class="outline-3">
+<h3 id="org12d5362">Applications</h3>
+<div class="outline-text-3" id="text-org12d5362">
+<p>
+OPPRFs are primarily used in multi-party private set intersection (PSI) protocols. The sender programs the PRF on its set elements with specific values, and the receiver evaluates on its own set. Matching elements yield the programmed values, while non-matching elements produce pseudorandom outputs, enabling set intersection without revealing non-intersecting elements.
+</p>
+</div>
+</div>
 </div>
 <div id="outline-container-org414e6d4" class="outline-2">
 <h2 id="org414e6d4">Notes</h2>
 <div class="outline-text-2" id="text-org414e6d4">
 <ul class="org-ul">
-<li>Introduced by [1] (According to [2])</li>
+<li>First introduced by [<a href="#citeproc_bib_item_2">2</a>] as part of their multi-party PSI protocol using symmetric-key techniques.</li>
+<li>The key difference from an OPRF is the programmability: the sender controls the output on specific points rather than the PRF being fully random.</li>
+<li>Server-aided variants exist (e.g., [<a href="#citeproc_bib_item_3">3</a>]) where a helper party assists in the protocol, allowing the OPPRF to be constructed using a non-shuffled server-aided OPRF combined with an OKVS encoding.</li>
+<li>In practice, interactive OPPRFs have been largely superseded by <a href="/notes/permanent-notes/20241016134037-oblivious_key_value_store.html">OKVS</a>-based constructions. The state of the art uses OKVS combined with subfield VOLE [<a href="#citeproc_bib_item_4">4</a>], though these approaches demand large bandwidths [<a href="#citeproc_bib_item_1">1</a>]. Near-optimal OKVS constructions are given by [<a href="#citeproc_bib_item_5">5</a>].</li>
 </ul>
+</div>
+</div>
+<div id="outline-container-org1f26e66" class="outline-2">
+<h2 id="org1f26e66">References</h2>
+<div class="outline-text-2" id="text-org1f26e66">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Jelle Vos, Mauro Conti, and Zekeriya Erkin. 2024. “SoK: Collusion-resistant Multi-party Private Set Intersections in the Semi-honest Model.” <a href="https://ieeexplore.ieee.org/abstract/document/10646669?casa_token=SC9GM3SMrZcAAAAA:GWpdE0SfvbK5E4vPnmP-wCRLV2udPyeerw8Xtuqv5KZMjhaPDKjIuVt0Ih03_U1kCiqb1sEtKd4v">https://ieeexplore.ieee.org/abstract/document/10646669?casa_token=SC9GM3SMrZcAAAAA:GWpdE0SfvbK5E4vPnmP-wCRLV2udPyeerw8Xtuqv5KZMjhaPDKjIuVt0Ih03_U1kCiqb1sEtKd4v</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Vladimir Kolesnikov, Naor Matania, Benny Pinkas, Mike Rosulek, and Ni Trieu. 2017. “Practical Multi-party Private Set Intersection from Symmetric-Key Techniques.” <a href="https://dl.acm.org/doi/10.1145/3133956.3134065">https://dl.acm.org/doi/10.1145/3133956.3134065</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>[3] Jiahui Gao, Ni Trieu, and Avishay Yanai. 2024. “Multiparty Private Set Intersection Cardinality and Its Applications.” <a href="https://petsymposium.org/popets/2024/popets-2024-0041.php">https://petsymposium.org/popets/2024/popets-2024-0041.php</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_4"></a>[4] Srinivasan Raghuraman, and Peter Rindal. 2022. “Blazing Fast PSI from Improved OKVS and Subfield VOLE.” <a href="https://dl.acm.org/doi/10.1145/3548606.3560658">https://dl.acm.org/doi/10.1145/3548606.3560658</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_5"></a>[5] Alexander Bienstock, Sarvar Patel, Joon Young Seo, and Kevin Yeo. 2023. “Near-Optimal Oblivious Key-Value Stores for Efficient PSI, PSU and Volume-Hiding Multi-Maps.” <a href="https://eprint.iacr.org/2023/903">https://eprint.iacr.org/2023/903</a>.</div>
+</div>
 </div>
 </div>
 </div>
