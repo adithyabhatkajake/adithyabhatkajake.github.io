@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-26 Thu 18:24 -->
+<!-- 2026-03-26 Thu 23:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Dolev Strong Broadcast Protocol</title>
@@ -249,20 +249,426 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Dolev Strong Broadcast Protocol</h1>
-<div id="outline-container-orgc33ad40" class="outline-2">
-<h2 id="orgc33ad40">Summary</h2>
-<div class="outline-text-2" id="text-orgc33ad40">
 <p>
-A \(t<n\) Byzantine Broadcast protocol.
+Paper: [<a href="#citeproc_bib_item_1">1</a>]
 </p>
+<div id="outline-container-org71de2b1" class="outline-2">
+<h2 id="org71de2b1">System Model</h2>
+<div class="outline-text-2" id="text-org71de2b1">
+<ul class="org-ul">
+<li>\(n\) processors (parties) connected by a <b>completely connected, totally reliable</b> communication network.</li>
+<li>Communication proceeds in <b>synchronous phases</b> (rounds): all processors know the round structure and total number of rounds in advance.</li>
+<li>A designated <b>sender</b> holds an input value \(v \in V\).</li>
+<li>Up to \(t\) processors may be <b>Byzantine</b> (faulty): they can behave arbitrarily and collude.</li>
+<li>An <b>authentication</b> (digital signature) scheme (e.g., RSA) is available:
+<ul class="org-ul">
+<li>Any processor can sign messages and verify signatures.</li>
+<li>No processor can forge another's signature or alter a signed message undetectably.</li>
+</ul></li>
+<li><b>Byzantine agreement</b> (broadcast) is achieved when:
+<ol class="org-ol">
+<li><b>(Agreement)</b> All correct processors agree on the same value.</li>
+<li><b>(Validity)</b> If the sender is correct, then all correct processors agree on the sender's value.</li>
+</ol></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org23aa00e" class="outline-2">
+<h2 id="org23aa00e">Main Results</h2>
+<div class="outline-text-2" id="text-org23aa00e">
+</div>
+<div id="outline-container-org1bb4255" class="outline-3">
+<h3 id="org1bb4255">Lower bound on rounds (Theorem 2)</h3>
+<div class="outline-text-3" id="text-org1bb4255">
+</div>
+<div id="outline-container-org100076b" class="outline-4">
+<h4 id="org100076b">Theorem</h4>
+<div class="outline-text-4" id="text-org100076b">
+<p>
+<i>Byzantine agreement cannot be achieved for \(n\) processors with at most \(t\) faults within \(t\) or fewer phases, provided \(n > t + 1\).</i>
+</p>
+
+<p>
+In other words, any protocol tolerating \(t\) Byzantine faults, regardless of what kind of messages it uses (authenticated or not), needs at least \(t+1\) synchronous rounds.
+</p>
+</div>
+</div>
+<div id="outline-container-org67df8ec" class="outline-4">
+<h4 id="org67df8ec">Proof sketch (by example: \(n=4, t=2\))</h4>
+<div class="outline-text-4" id="text-org67df8ec">
+<p>
+We show 2 rounds are not enough. Suppose for contradiction some protocol achieves agreement in 2 rounds with 4 nodes \(\{1, 2, 3, 4\}\), tolerating \(t=2\) faults.
+</p>
+
+<p>
+A <i>configuration</i> is the complete communication pattern: which messages each node sends in each round. Each node has arrows to every other node per round.
+</p>
+</div>
+<ul class="org-ul">
+<li><a id="orged766d5"></a>Configuration \(C\): honest execution, sender has \(v=0\)<br />
+<div class="outline-text-5" id="text-orged766d5">
+<p>
+All nodes are honest. The sender (node 1) broadcasts \(v=0\). In each round, every node sends a message to every other node.
+</p>
+
+
+<div id="org39e921c" class="figure">
+<p><img src="data/dolev_strong_C.svg" alt="dolev_strong_C.svg" class="org-svg" />
+</p>
+</div>
+
+<p>
+By validity, all nodes output 0.
+</p>
+</div>
+</li>
+<li><a id="orga049cbd"></a>Configuration \(C_{1,1}\): remove one message from node 1 in round 2<br />
+<div class="outline-text-5" id="text-orga049cbd">
+<p>
+Node 1 is now faulty (1 fault used). We remove its message to node 2 in round 2. Only node 2 sees a difference; nodes 3 and 4 see the same messages as in \(C\).
+</p>
+
+
+<div id="orgc1133b3" class="figure">
+<p><img src="data/dolev_strong_C11.svg" alt="dolev_strong_C11.svg" class="org-svg" />
+</p>
+</div>
+
+<p>
+Nodes 3,4 have the same view as \(C\), so they output 0. Node 2 is the only node that sees a difference, but it must agree with 3,4, so it must also output 0.
+</p>
+</div>
+</li>
+<li><a id="org5edf616"></a>Configurations \(C_{1,2}, \ldots, C_{1,n}\): remove all of node 1's round-2 messages<br />
+<div class="outline-text-5" id="text-org5edf616">
+<p>
+Continue removing node 1's round-2 messages one at a time. At each step, only one new node sees a difference, and all others already must output 0, so that node must also output 0. After all are removed:
+</p>
+
+
+<div id="orgbd12ce2" class="figure">
+<p><img src="data/dolev_strong_C1n.svg" alt="dolev_strong_C1n.svg" class="org-svg" />
+</p>
+</div>
+
+<p>
+Node 1 is completely silent in round 2. All nodes still must output 0. Faults used: 1 (node 1).
+</p>
+</div>
+</li>
+<li><a id="org88906c4"></a>Configurations \(C_{2,1}, \ldots, C_{2,n}\): remove all of node 1's round-1 messages<br />
+<div class="outline-text-5" id="text-org88906c4">
+<p>
+Now remove node 1's round-1 messages one at a time using the same argument. After all are removed, node 1 is completely silent in both rounds:
+</p>
+
+
+<div id="orge92bc54" class="figure">
+<p><img src="data/dolev_strong_C2n.svg" alt="dolev_strong_C2n.svg" class="org-svg" />
+</p>
+</div>
+
+<p>
+Node 1 sent nothing in any round. It is fully hidden. All nodes still must output 0. Faults used: 1 (node 1).
+</p>
+</div>
+</li>
+<li><a id="org59a40af"></a>Configurations \(C_{3,1}, \ldots, C_{4,n}\): hide node 4 (use second fault)<br />
+<div class="outline-text-5" id="text-org59a40af">
+<p>
+Repeat the same process for node 4: remove its messages one at a time from round 2, then round 1. Each removal changes only one node's view, forcing the same output. After all are removed:
+</p>
+
+
+<div id="org677512d" class="figure">
+<p><img src="data/dolev_strong_C4n.svg" alt="dolev_strong_C4n.svg" class="org-svg" />
+</p>
+</div>
+
+<p>
+Both nodes 1 and 4 are completely silent. Faults used: 2 (= \(t\)). All nodes must still output 0.
+</p>
+</div>
+</li>
+<li><a id="org45a7f7b"></a>The contradiction<br />
+<div class="outline-text-5" id="text-org45a7f7b">
+<p>
+In \(C_{4,n}\), nodes 2 and 3 only hear from each other. They never received any information about \(v=0\). But the same stripping argument starting from an honest execution with \(v=1\) produces the <i>same</i> configuration, where nodes 2 and 3 must output 1.
+</p>
+
+
+<div id="orgff9646e" class="figure">
+<p><img src="data/dolev_strong_contradiction.svg" alt="dolev_strong_contradiction.svg" class="org-svg" />
+</p>
+</div>
+
+<p>
+Nodes 2 and 3 cannot distinguish these two configurations, yet they must output 0 in one and 1 in the other. Contradiction. \(\square\)
+</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="outline-container-org068fd21" class="outline-4">
+<h4 id="org068fd21">General argument</h4>
+<div class="outline-text-4" id="text-org068fd21">
+<p>
+This generalizes to any \(n > t+1\) with \(t\) rounds. We start from an honest execution with \(v=0\) and remove messages one at a time, peeling away entire nodes round by round from the last round backward. Each single removal changes only one receiver's view, so agreement forces the same output. After \(t\) nodes are fully hidden (\(t\) faults used), the remaining \(n - t > 1\) nodes hear nothing about \(v\), but the same stripping argument starting from \(v=1\) forces them to output 1. Since the silent configuration is the same in both cases, we have a contradiction.
+</p>
+
+<p>
+With \(t+1\) rounds this fails: you can only hide \(t\) nodes, but by round \(t+1\) every surviving value carries \(t+1\) signatures, guaranteeing at least one honest signer.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org625036a" class="outline-3">
+<h3 id="org625036a">Upper bound / protocol (Theorem 1 + Theorem 3)</h3>
+<div class="outline-text-3" id="text-org625036a">
+</div>
+<div id="outline-container-orged2acc6" class="outline-4">
+<h4 id="orged2acc6">Theorem</h4>
+<div class="outline-text-4" id="text-orged2acc6">
+<p>
+<i>Byzantine agreement with authentication can be achieved for \(n\) processors with at most \(t\) faults within \(t+1\) phases, using \(O(n^2)\) messages, assuming \(n > t+1\).</i>
+</p>
+
+<p>
+This matches the lower bound, so \(t+1\) rounds are tight.
+</p>
+</div>
+</div>
+<div id="outline-container-org2f3acc3" class="outline-4">
+<h4 id="org2f3acc3">Protocol (Dolev-Strong)</h4>
+<div class="outline-text-4" id="text-org2f3acc3">
+<p>
+Each processor maintains a set \(\text{extracted}\) of values it has seen with valid signature chains, initially empty. A message is <i>valid</i> at round \(i\) if it has the form \(\langle v \rangle_{S, p_1, \ldots, p_{i-1}}\) where all signers are distinct and the first is the sender \(S\).
+</p>
+
+<p>
+<b>Round 1:</b> The sender \(S\) signs its value \(v\) and sends \(\langle v \rangle_S\) to all processors.
+</p>
+
+<p>
+<b>Rounds \(i = 2, \ldots, t+1\):</b> Each processor \(p\):
+</p>
+<ol class="org-ol">
+<li>Receives all messages from the previous round.</li>
+<li>Discards any message that does not have \(i\) distinct valid signatures (including \(S\)'s).</li>
+<li>For each non-discarded message carrying value \(v\): if \(v \notin \text{extracted}\), add \(v\) to \(\text{extracted}\).</li>
+<li>Sign and relay: for each value just extracted (at most 2 total across all rounds), append \(p\)'s signature and forward to all processors whose signatures do not already appear on the message.</li>
+<li>Once \(p\) has relayed 2 distinct values total, it stops sending.</li>
+</ol>
+
+<p>
+<b>Decision (after round \(t+1\)):</b>
+</p>
+<ul class="org-ul">
+<li>If \(|\text{extracted}| = 1\), output the single extracted value.</li>
+<li>Otherwise, output \(\bot\) (including if \(\text{extracted} = \emptyset\), i.e., "sender fault").</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org97366ef" class="outline-4">
+<h4 id="org97366ef">Why it works</h4>
+<div class="outline-text-4" id="text-org97366ef">
+<p>
+<b>Validity:</b> If the sender is honest, it sends the same \(v\) to everyone in round 1. Authentication prevents faulty nodes from forging a message \(\langle v' \rangle_S\) for \(v' \neq v\). So every correct processor extracts only \(v\) and outputs \(v\).
+</p>
+
+<p>
+<b>Agreement:</b> Suppose some correct processor \(p\) extracts value \(v\) for the first time at round \(i \leq t+1\). The message carrying \(v\) has \(i\) distinct signatures including \(S\)'s. Processor \(p\) signs and relays to all processors not yet on the chain. By round \(i+1 \leq t+2\)&#x2026; but we only have \(t+1\) rounds. The key insight: if \(p\) extracts \(v\) at round \(t+1\), the message has \(t+1\) signatures. Since at most \(t\) processors are faulty, at least one signer is correct and must have relayed \(v\) earlier, so all correct processors already received \(v\) by round \(t\). In general, any value extracted by any correct processor will reach all correct processors by round \(t+1\).
+</p>
+
+<p>
+At the end, every correct processor has the same \(\text{extracted}\) set. If it contains exactly one value, they all output it. If it contains multiple values (equivocation detected), they all output \(\bot\).
+</p>
+</div>
+</div>
+<div id="outline-container-org7db616a" class="outline-4">
+<h4 id="org7db616a">Example: honest run (\(n=5, t=3\))</h4>
+<div class="outline-text-4" id="text-org7db616a">
+<p>
+The sender \(S\) has \(v=0\). The protocol runs for \(t+1=4\) rounds.
+</p>
+
+<ul class="org-ul">
+<li><b>Round 1:</b> \(S\) sends \(\langle 0 \rangle_S\) to nodes 2, 3, 4, 5. All extract \(\{0\}\).</li>
+<li><b>Round 2:</b> Each node signs and relays \(\langle 0 \rangle_{S,i}\) to the other 3 non-sender nodes.</li>
+<li><b>Rounds 3&#x2013;4:</b> No new values extracted, relay limit not triggered. No messages.</li>
+<li><b>Decision:</b> \(|\text{extracted}| = 1\), all output 0.</li>
+</ul>
+
+
+<div id="orgd591612" class="figure">
+<p><img src="data/dolev_strong_honest.svg" alt="dolev_strong_honest.svg" class="org-svg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org67af420" class="outline-4">
+<h4 id="org67af420">Example: faulty run (\(n=5, t=3\), sender equivocates)</h4>
+<div class="outline-text-4" id="text-org67af420">
+<p>
+The sender \(S\) is Byzantine. It sends \(\langle 0 \rangle_S\) to node 2, \(\langle 1 \rangle_S\) to node 3, and nothing to nodes 4, 5. Blue arrows carry value 0; orange arrows carry value 1; red dotted arrows are missing messages.
+</p>
+
+<ul class="org-ul">
+<li><b>Round 1:</b> Node 2 extracts \(\{0\}\). Node 3 extracts \(\{1\}\). Nodes 4, 5 receive nothing.</li>
+<li><b>Round 2:</b> Node 2 relays \(\langle 0 \rangle_{S,2}\) to 3, 4, 5. Node 3 relays \(\langle 1 \rangle_{S,3}\) to 2, 4, 5.
+<ul class="org-ul">
+<li>Now: node 2 has \(\{0, 1\}\), node 3 has \(\{1, 0\}\), nodes 4, 5 have \(\{0, 1\}\).</li>
+</ul></li>
+<li><b>Round 3:</b> Nodes relay the second value they extracted. Both values propagate further with additional signatures.</li>
+<li><b>Round 4:</b> All nodes already have both values. Relay limit reached.</li>
+<li><b>Decision:</b> \(|\text{extracted}| = 2\) for all correct nodes, all output \(\bot\). Agreement!</li>
+</ul>
+
+
+<div id="org7f22cb7" class="figure">
+<p><img src="data/dolev_strong_faulty.svg" alt="dolev_strong_faulty.svg" class="org-svg" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org0fa818c" class="outline-3">
+<h3 id="org0fa818c">Message complexity results</h3>
+<div class="outline-text-3" id="text-org0fa818c">
+</div>
+<div id="outline-container-orgd621a93" class="outline-4">
+<h4 id="orgd621a93">Theorem 3: \(O(n^2)\) messages in \(t+1\) rounds</h4>
+<div class="outline-text-4" id="text-orgd621a93">
+<p>
+<i>Byzantine agreement can be achieved for \(n\) processors with at most \(t\) faults within \(t+1\) phases using at most \(O(e) = O(n^2)\) messages.</i>
+</p>
+
+<p>
+This is the protocol described above. The key constraint: each correct processor relays at most 2 distinct values total across all rounds. Since a processor sends at most 2 messages per edge (one per value), and there are \(e = O(n^2)\) directed edges on a complete network, the total message count is \(O(n^2)\).
+</p>
+
+<p>
+The honest and faulty run diagrams above illustrate this protocol directly.
+</p>
+</div>
+</div>
+<div id="outline-container-org0e3a5ac" class="outline-4">
+<h4 id="org0e3a5ac">Theorem 4: \(O(nt)\) messages in \(t+2\) rounds</h4>
+<div class="outline-text-4" id="text-org0e3a5ac">
+<p>
+<i>Byzantine agreement can be achieved for \(n\) processors with at most \(t\) faults within \(t+2\) phases using at most \(O(nt)\) messages.</i>
+</p>
+
+<p>
+<b>Key idea:</b> Designate \(t+1\) nodes as <i>relay processors</i>. Non-relay (passive) processors only send messages to relay processors. This restricts the number of edges used: relay nodes communicate with everyone (\(O(nt)\) edges), passive nodes only reach relay nodes (\(O(nt)\) edges). Passive-to-passive communication is forbidden.
+</p>
+
+<p>
+<b>Why \(t+2\) rounds:</b> The extra round (compared to Theorem 3) compensates for the restricted topology. If a correct processor extracts a new value by round \(t+2\), some correct processor extracted it by round \(t\), so some correct relay processor extracted it by round \(t+1\), and all correct processors receive it by round \(t+2\).
+</p>
+
+<p>
+<b>Why it works:</b> The \(t+1\) relay processors act as a backbone. Since at most \(t\) are faulty, at least one relay processor is correct and will faithfully forward every value it sees.
+</p>
+
+
+<div id="org80dd1a5" class="figure">
+<p><img src="data/dolev_strong_thm4.svg" alt="dolev_strong_thm4.svg" class="org-svg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb1e5dda" class="outline-4">
+<h4 id="orgb1e5dda">Theorem 5: \(O(e)\) messages on general networks in \(t+d\) rounds</h4>
+<div class="outline-text-4" id="text-orgb1e5dda">
+<p>
+Let \(e\) be the number of directed edges in the communication network (on a complete graph, \(e = n(n-1) = O(n^2)\), but on sparser graphs \(e\) can be much smaller). The following three examples show how \(e\) varies with network density:
+</p>
+
+
+<div id="org7cfb3d3" class="figure">
+<p><img src="data/dolev_strong_thm5_examples.svg" alt="dolev_strong_thm5_examples.svg" class="org-svg" />
+</p>
+</div>
+
+<p>
+<i>If \(d\) is the $(t+1)$-diameter of a $(t+1)$-connected network of \(n\) processors with at most \(t\) faults, then Byzantine agreement can be achieved within \(t+d\) phases using at most \(O(e)\) messages.</i>
+</p>
+
+<p>
+<b>Key idea:</b> Theorems 1&#x2013;4 assume a complete network. Theorem 5 generalizes to any network with enough connectivity. Run the same protocol as Theorem 3, but processors can only send messages along edges that exist in the graph. Each edge carries at most 2 messages (one per extracted value), so the total is bounded by \(2e = O(e)\). The tradeoff: on a non-complete graph, values need more hops to reach all processors, adding \(d - 1\) extra rounds beyond the \(t+1\) minimum.
+</p>
+
+<p>
+<b>$(t+1)$-connectivity</b> means there exist \(t+1\) vertex-disjoint paths between every pair of nodes. This is necessary: if the adversary corrupts \(t\) nodes, it can block at most \(t\) of these paths, but at least one remains honest, ensuring eventual delivery.
+</p>
+
+<p>
+<b>$(t+1)$-diameter \(d\)</b> is the maximum, over all node pairs, of the length of the longest among the \(t+1\) shortest vertex-disjoint paths. Intuitively, \(d\) measures the worst-case number of hops a message needs to reach its destination even when \(t\) intermediate nodes are corrupted. This is why the protocol needs \(t + d\) rounds instead of \(t+1\): the extra \(d - 1\) rounds compensate for the longer paths.
+</p>
+</div>
+</div>
+<div id="outline-container-org889fc7c" class="outline-4">
+<h4 id="org889fc7c">Theorem 6 (best algorithm): \(O(nt)\) messages in \(t+1\) rounds</h4>
+<div class="outline-text-4" id="text-org889fc7c">
+<p>
+<i>Byzantine agreement can be achieved on a complete network in \(t+1\) phases with \(O(nt)\) messages, assuming \(n > 2t\).</i>
+</p>
+
+<p>
+<b>Key idea:</b> Split processors into \(2t+1\) <i>active</i> and \(n - 2t - 1\) <i>passive</i>. Active processors (including the sender) run the Theorem 3 protocol among themselves, ignoring messages signed by passive processors. Passive processors never send; they only observe messages from active processors.
+</p>
+
+<p>
+<b>Active processors</b> form a small clique of \(2t+1\) nodes. Running Theorem 3 among themselves costs \(O(t^2)\) messages. They also forward to passive nodes: \((2t+1)(n - 2t - 1) \cdot 2 = O(nt)\) messages. Total: \(O(t^2 + nt) = O(nt)\).
+</p>
+
+<p>
+<b>Passive processors</b> decide by counting: if \(\geq t+1\) active processors sent more than one message (equivocation detected), output \(\bot\). Otherwise, extract values from messages that carry \(t+1\) distinct active signatures (guaranteeing at least one honest active signer).
+</p>
+
+<p>
+<b>Why \(n > 2t\) is needed:</b> With \(2t+1\) active processors and at most \(t\) faulty, at least \(t+1\) active processors are correct. This majority among actives ensures passive processors can distinguish honest from faulty behavior.
+</p>
+
+<p>
+<b>No extra round needed</b> (unlike Theorem 4): active processors reach agreement among themselves in \(t+1\) rounds, and passive processors observe the same messages in real time.
+</p>
+
+
+<div id="orgf249785" class="figure">
+<p><img src="data/dolev_strong_thm6.svg" alt="dolev_strong_thm6.svg" class="org-svg" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org6fff738" class="outline-3">
+<h3 id="org6fff738">Key observations</h3>
+<div class="outline-text-3" id="text-org6fff738">
+<ul class="org-ul">
+<li>The \(t+1\) round lower bound holds for <b>any</b> message type or protocol (not just authentication-based ones), generalizing the Fischer-Lynch bound.</li>
+<li>Previous authenticated algorithms required \(O(n^{t})\) messages; these are the first polynomial-message algorithms.</li>
+<li>The number of bits exchanged by correct processors is also polynomial in \(n\) and \(t\).</li>
+</ul>
+</div>
 </div>
 </div>
 <div id="outline-container-org26d934f" class="outline-2">
 <h2 id="org26d934f">Notes</h2>
 <div class="outline-text-2" id="text-org26d934f">
 <ul class="org-ul">
-<li>[NO_ITEM_DATA:skoumiosBroadcastUnknownParticipants] Dolev Strong works for unknown # of parties.</li>
+<li>[<a href="#citeproc_bib_item_2">2</a>] Dolev Strong works for unknown # of parties.</li>
 </ul>
+</div>
+</div>
+<div id="outline-container-org8b6eabc" class="outline-2">
+<h2 id="org8b6eabc">References</h2>
+<div class="outline-text-2" id="text-org8b6eabc">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Danny Dolev, and H Raymond Strong. 1983. “Authenticated Algorithms for Byzantine Agreement.” <a href="http://epubs.siam.org/doi/10.1137/0212045">http://epubs.siam.org/doi/10.1137/0212045</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Skoumios. 2024. “Broadcast with Unknown Participants and any number of corruptions.” <a href="https://dspace.lib.ntua.gr/xmlui/bitstream/handle/123456789/61373/Skoumios_Diploma_Thesis.pdf?sequence=1">https://dspace.lib.ntua.gr/xmlui/bitstream/handle/123456789/61373/Skoumios_Diploma_Thesis.pdf?sequence=1</a>.</div>
+</div>
 </div>
 </div>
 </div>
