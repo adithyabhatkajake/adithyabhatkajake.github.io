@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-27 Fri 00:16 -->
+<!-- 2026-03-27 Fri 00:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>HS Protocol</title>
@@ -473,8 +473,8 @@ Let’s consider one process at a time:
 </ul>
 </div>
 </li>
-<li><a id="orgfe97a45"></a>P2(10):<br />
-<div class="outline-text-5" id="text-orgfe97a45">
+<li><a id="org9d592b6"></a>P2(10):<br />
+<div class="outline-text-5" id="text-org9d592b6">
 <ul class="org-ul">
 <li>P2 sent ID(10) to P1(5) and P3(2).</li>
 <li>Both neighbors have smaller IDs (5 and 2), so P2 sees no one larger within 1 hop.</li>
@@ -491,8 +491,8 @@ Let’s consider one process at a time:
 </ul>
 </div>
 </li>
-<li><a id="org82b4adb"></a>P4(9):<br />
-<div class="outline-text-5" id="text-org82b4adb">
+<li><a id="orgcff079c"></a>P4(9):<br />
+<div class="outline-text-5" id="text-orgcff079c">
 <ul class="org-ul">
 <li>Sent ID(9) to P3(2) and P5(8).</li>
 <li>P3(2) is smaller, P5(8) is smaller. No larger ID found.</li>
@@ -518,8 +518,8 @@ Let’s consider one process at a time:
 </ul>
 </div>
 </li>
-<li><a id="orgf10b01f"></a>P7(7):<br />
-<div class="outline-text-5" id="text-orgf10b01f">
+<li><a id="org4882470"></a>P7(7):<br />
+<div class="outline-text-5" id="text-org4882470">
 <ul class="org-ul">
 <li>Sent ID(7) to P6(4) and P0(3).</li>
 <li>Both 4 and 3 are smaller than 7, so P7 sees no larger ID within 1 hop.</li>
@@ -553,8 +553,8 @@ Consider each active node:
 </p>
 </div>
 <ul class="org-ul">
-<li><a id="org9d592b6"></a>P2(10):<br />
-<div class="outline-text-5" id="text-org9d592b6">
+<li><a id="org4859b32"></a>P2(10):<br />
+<div class="outline-text-5" id="text-org4859b32">
 <ul class="org-ul">
 <li>Two hops clockwise: P2 → P3 → P4.
 Encounters P3(2) and then P4(9). Among these, P4(9) is large but still smaller than 10.</li>
@@ -564,8 +564,8 @@ Encounters IDs 5 and 3, both smaller than 10.</li>
 </ul>
 </div>
 </li>
-<li><a id="orgcff079c"></a>P4(9):<br />
-<div class="outline-text-5" id="text-orgcff079c">
+<li><a id="org90780ab"></a>P4(9):<br />
+<div class="outline-text-5" id="text-org90780ab">
 <ul class="org-ul">
 <li>Two hops clockwise: P4 → P5 → P6.
 Encounters IDs 8 and 4, both smaller than 9.</li>
@@ -575,8 +575,8 @@ Encounters ID 2 and then ID 10. Uh-oh, P4 finds a larger ID (10) at P2.</li>
 </ul>
 </div>
 </li>
-<li><a id="org4882470"></a>P7(7):<br />
-<div class="outline-text-5" id="text-org4882470">
+<li><a id="orgd5724c8"></a>P7(7):<br />
+<div class="outline-text-5" id="text-orgd5724c8">
 <ul class="org-ul">
 <li>Two hops clockwise: P7 → P0 → P1.
 Encounters IDs 3 and 5, both smaller than 7.</li>

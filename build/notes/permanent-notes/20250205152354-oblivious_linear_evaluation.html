@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-27 Fri 00:16 -->
+<!-- 2026-03-27 Fri 00:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Oblivious Linear Evaluation</title>
@@ -253,17 +253,104 @@
 <h2 id="orgebd058c">Summary</h2>
 <div class="outline-text-2" id="text-orgebd058c">
 <p>
-We can view an oblivious transfer as a protocol that privately computes \(s_b = s_0 + (s_1 - s_0)b\) for \(b\in \mathbb{Z}_2\). In other words, it computes a linear function over \(b\), which is binary. Oblivious linear evaluations (OLEs) extend oblivious transfers to compute linear functions over elements from larger groups \(\mathbb{Z}_q\). More precisely, the sender holds values \(u\) and \(v\), and the receiver learns \(w=ux+v\) for
-some \(x\) of its choosing.
+Oblivious Linear Evaluation (OLE) is a two-party cryptographic primitive that computes a linear function over a finite field \(\mathbb{F}\) while keeping each party's inputs private. It is the natural arithmetic generalization of oblivious transfer (OT) from \(\mathbb{F}_2\) to arbitrary fields.
 </p>
+</div>
+<div id="outline-container-org6e18ffa" class="outline-3">
+<h3 id="org6e18ffa">Formal Definition</h3>
+<div class="outline-text-3" id="text-org6e18ffa">
+
+<div id="org21d58d5" class="figure">
+<p><img src="data/ole_protocol.svg" alt="ole_protocol.svg" class="org-svg" />
+</p>
+</div>
 
 <p>
-In some cases, a receiver might want to perform a large amount of OLEs with the same input \(x\). We call this special case as vector oblivious linear evaluations (VOLEs), which are cheaper to evaluate.
+The ideal functionality \(\mathcal{F}_{\mathsf{OLE}}\) over a finite field \(\mathbb{F}\) operates between a Sender \(S\) and a Receiver \(R\):
 </p>
+
+<ol class="org-ol">
+<li>Sender inputs \((a, b) \in \mathbb{F} \times \mathbb{F}\).</li>
+<li>Receiver inputs \(x \in \mathbb{F}\).</li>
+<li>The functionality computes \(y = ax + b\).</li>
+<li>Output \(y\) to the Receiver. Output nothing to the Sender.</li>
+</ol>
+
+<p>
+Security requires that the Sender learns nothing about \(x\), and the Receiver learns nothing about \(a\) or \(b\) individually beyond what is revealed by \(y\).
+</p>
+</div>
+</div>
+<div id="outline-container-org49663d3" class="outline-3">
+<h3 id="org49663d3">Relationship to Oblivious Transfer</h3>
+<div class="outline-text-3" id="text-org49663d3">
+
+<div id="org0433abd" class="figure">
+<p><img src="data/ole_ot_relationship.svg" alt="ole_ot_relationship.svg" class="org-svg" />
+</p>
+</div>
+
+<p>
+OT is OLE over \(\mathbb{F}_2\). A 1-out-of-2 OT with sender messages \(m_0, m_1 \in \mathbb{F}_2\) and receiver choice bit \(c\) can be expressed as OLE by setting \(a = m_0 \oplus m_1\), \(b = m_0\), and \(x = c\). Note that over \(\mathbb{F}_2\), addition and XOR are the same operation (\(\oplus = +\)), so \(a = m_0 + m_1\) and \(y = ax + b\) is computed mod 2. Then:
+</p>
+<ul class="org-ul">
+<li>If \(c = 0\): \(y = a \cdot 0 + b = m_0\).</li>
+<li>If \(c = 1\): \(y = (m_0 + m_1) + m_0 = m_1\).</li>
+</ul>
+
+<p>
+Just as OT is complete for secure computation of boolean circuits, OLE is complete for secure computation of arithmetic circuits over \(\mathbb{F}\).
+</p>
+
+
+<div id="orgc6b8701" class="figure">
+<p><img src="data/ole_hierarchy.svg" alt="ole_hierarchy.svg" class="org-svg" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orga30eebb" class="outline-3">
+<h3 id="orga30eebb">Vector OLE (VOLE)</h3>
+<div class="outline-text-3" id="text-orga30eebb">
+<p>
+Vector OLE generalizes OLE to vectors. The sender holds \((a, \mathbf{b})\) where \(a \in \mathbb{F}\) and \(\mathbf{b} \in \mathbb{F}^n\), and the receiver holds \(\mathbf{x} \in \mathbb{F}^n\). The receiver obtains \(\mathbf{y} = a \cdot \mathbf{x} + \mathbf{b}\) (component-wise). VOLE correlations are cheaper to generate and have become the practical workhorse for OLE-based protocols.
+</p>
+</div>
+</div>
+<div id="outline-container-orge142f73" class="outline-3">
+<h3 id="orge142f73">Random/Correlated OLE</h3>
+<div class="outline-text-3" id="text-orge142f73">
+<p>
+In many modern protocols, the variant used is a <i>random OLE</i> where the functionality samples \((a, b, x)\) at random and distributes the correlation: the sender gets \((a, b)\), the receiver gets \((x, y = ax + b)\). This is the "OLE correlation" used in pseudorandom correlation generator (PCG) constructions.
+</p>
+</div>
 </div>
 </div>
 <div id="outline-container-org42056d9" class="outline-2">
 <h2 id="org42056d9">Notes</h2>
+<div class="outline-text-2" id="text-org42056d9">
+<ul class="org-ul">
+<li>The "oblivious X evaluation" naming pattern refers to two-party protocols where one party holds a function \(f\) of type X (e.g., linear, polynomial, PRF) and the other party holds an input \(x\). The second party learns \(f(x)\) without learning \(f\), and the first party learns nothing about \(x\).</li>
+<li>OLE is the degree-1 special case of Oblivious Polynomial Evaluation (OPE), studied by Naor and Pinkas [<a href="#citeproc_bib_item_1">1</a>].</li>
+<li>The explicit treatment of OLE as a standalone primitive over arbitrary fields was formalized by Ghosh, Nielsen, and Nilges [<a href="#citeproc_bib_item_2">2</a>].</li>
+<li>The Boyle-Couteau-Gilboa-Ishai-Kohl-Scholl line of work on pseudorandom correlation generators (PCGs) [<a href="#citeproc_bib_item_3">3</a>] was transformative for practical VOLE: it enables "silent" generation of VOLE correlations from short correlated seeds with sublinear communication, based on variants of the Learning Parity with Noise (LPN) assumption.</li>
+<li>VOLE-based zero-knowledge proof systems (e.g., Wolverine [<a href="#citeproc_bib_item_4">4</a>], Mac'n'Cheese [<a href="#citeproc_bib_item_5">5</a>]) have emerged as a major application area.</li>
+<li>The "VOLE-in-the-head" paradigm [<a href="#citeproc_bib_item_6">6</a>] extends VOLE to post-quantum signature schemes, showing the reach of OLE/VOLE beyond MPC.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5aeb986" class="outline-2">
+<h2 id="org5aeb986">References</h2>
+<div class="outline-text-2" id="text-org5aeb986">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Moni Naor, and Benny Pinkas. 1999. “Oblivious transfer and polynomial evaluation.” <a href="https://dl.acm.org/doi/10.1145/301250.301312">https://dl.acm.org/doi/10.1145/301250.301312</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Satrajit Ghosh, and Tobias Nilges. 2017. “An Algebraic Approach to Maliciously Secure Private Set Intersection.” <a href="https://eprint.iacr.org/2017/1064">https://eprint.iacr.org/2017/1064</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>[3] Elette Boyle, Geoffroy Couteau, Niv Gilboa, Yuval Ishai, Lisa Kohl, and Peter Scholl. 2019. “Efficient Pseudorandom Correlation Generators: Silent OT Extension and More.” <a href="https://link.springer.com/10.1007/978-3-030-26954-8_16">https://link.springer.com/10.1007/978-3-030-26954-8_16</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_4"></a>[4] Chenkai Weng, Kang Yang, Jonathan Katz, and Xiao Wang. 2021. “Wolverine: Fast, Scalable, and Communication-Efficient Zero-Knowledge Proofs for Boolean and Arithmetic Circuits.” <a href="https://ieeexplore.ieee.org/document/9519498/">https://ieeexplore.ieee.org/document/9519498/</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_5"></a>[5] Carsten Baum, Alex J Malozemoff, Marc B Rosen, and Peter Scholl. “Mac’n’Cheese: Zero-Knowledge Proofs for Boolean and Arithmetic Circuits with Nested Disjunctions.”</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_6"></a>[6] Carsten Baum, Lennart Braun, Cyprien Delpech de Saint Guilhem, Michael Klooß, Emmanuela Orsini, Lawrence Roy, and Peter Scholl. 2023. “Publicly Verifiable Zero-Knowledge and Post-Quantum Signatures From VOLE-in-the-Head.” <a href="https://eprint.iacr.org/2023/996">https://eprint.iacr.org/2023/996</a>.</div>
+</div>
+</div>
 </div>
 </div>
 </body>

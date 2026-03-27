@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-27 Fri 00:15 -->
+<!-- 2026-03-27 Fri 00:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Dolev Strong Broadcast Protocol</title>
@@ -281,9 +281,9 @@ Paper: [<a href="#citeproc_bib_item_1">1</a>]
 <h3 id="org1bb4255">Lower bound on rounds (Theorem 2)</h3>
 <div class="outline-text-3" id="text-org1bb4255">
 </div>
-<div id="outline-container-org39cf8b0" class="outline-4">
-<h4 id="org39cf8b0">Theorem</h4>
-<div class="outline-text-4" id="text-org39cf8b0">
+<div id="outline-container-org613b292" class="outline-4">
+<h4 id="org613b292">Theorem</h4>
+<div class="outline-text-4" id="text-org613b292">
 <p>
 <i>Byzantine agreement cannot be achieved for \(n\) processors with at most \(t\) faults within \(t\) or fewer phases, provided \(n > t + 1\).</i>
 </p>
@@ -312,7 +312,7 @@ All nodes are honest. The sender (node 1) broadcasts \(v=0\). In each round, eve
 </p>
 
 
-<div id="orgeaabc3d" class="figure">
+<div id="org73c3118" class="figure">
 <p><img src="data/dolev_strong_C.svg" alt="dolev_strong_C.svg" class="org-svg" />
 </p>
 </div>
@@ -329,7 +329,7 @@ Node 1 is now faulty (1 fault used). We remove its message to node 2 in round 2.
 </p>
 
 
-<div id="org5674ffe" class="figure">
+<div id="org4fbf382" class="figure">
 <p><img src="data/dolev_strong_C11.svg" alt="dolev_strong_C11.svg" class="org-svg" />
 </p>
 </div>
@@ -346,7 +346,7 @@ Continue removing node 1's round-2 messages one at a time. At each step, only on
 </p>
 
 
-<div id="org846d74e" class="figure">
+<div id="org41b0ec3" class="figure">
 <p><img src="data/dolev_strong_C1n.svg" alt="dolev_strong_C1n.svg" class="org-svg" />
 </p>
 </div>
@@ -363,7 +363,7 @@ Now remove node 1's round-1 messages one at a time using the same argument. Afte
 </p>
 
 
-<div id="orgd0f9485" class="figure">
+<div id="org65d981e" class="figure">
 <p><img src="data/dolev_strong_C2n.svg" alt="dolev_strong_C2n.svg" class="org-svg" />
 </p>
 </div>
@@ -380,7 +380,7 @@ Repeat the same process for node 4: remove its messages one at a time from round
 </p>
 
 
-<div id="org20be8f0" class="figure">
+<div id="org9701680" class="figure">
 <p><img src="data/dolev_strong_C4n.svg" alt="dolev_strong_C4n.svg" class="org-svg" />
 </p>
 </div>
@@ -397,7 +397,7 @@ In \(C_{4,n}\), nodes 2 and 3 only hear from each other. They never received any
 </p>
 
 
-<div id="orgb88b479" class="figure">
+<div id="orgb5d7cbd" class="figure">
 <p><img src="data/dolev_strong_contradiction.svg" alt="dolev_strong_contradiction.svg" class="org-svg" />
 </p>
 </div>
@@ -426,9 +426,9 @@ With \(t+1\) rounds this fails: you can only hide \(t\) nodes, but by round \(t+
 <h3 id="org625036a">Upper bound / protocol (Theorem 1 + Theorem 3)</h3>
 <div class="outline-text-3" id="text-org625036a">
 </div>
-<div id="outline-container-org613b292" class="outline-4">
-<h4 id="org613b292">Theorem</h4>
-<div class="outline-text-4" id="text-org613b292">
+<div id="outline-container-org6f8817a" class="outline-4">
+<h4 id="org6f8817a">Theorem</h4>
+<div class="outline-text-4" id="text-org6f8817a">
 <p>
 <i>Byzantine agreement with authentication can be achieved for \(n\) processors with at most \(t\) faults within \(t+1\) phases, using \(O(n^2)\) messages, assuming \(n > t+1\).</i>
 </p>
@@ -500,7 +500,7 @@ The sender \(S\) has \(v=0\). The protocol runs for \(t+1=4\) rounds.
 </ul>
 
 
-<div id="org881fb50" class="figure">
+<div id="org2acdaaa" class="figure">
 <p><img src="data/dolev_strong_honest.svg" alt="dolev_strong_honest.svg" class="org-svg" />
 </p>
 </div>
@@ -525,7 +525,7 @@ The sender \(S\) is Byzantine. It sends \(\langle 0 \rangle_S\) to node 2, \(\la
 </ul>
 
 
-<div id="org999fcd9" class="figure">
+<div id="org2326de1" class="figure">
 <p><img src="data/dolev_strong_faulty.svg" alt="dolev_strong_faulty.svg" class="org-svg" />
 </p>
 </div>
@@ -572,7 +572,7 @@ The honest and faulty run diagrams above illustrate this protocol directly.
 </p>
 
 
-<div id="org5b9225e" class="figure">
+<div id="orgf0c5cb5" class="figure">
 <p><img src="data/dolev_strong_thm4.svg" alt="dolev_strong_thm4.svg" class="org-svg" />
 </p>
 </div>
@@ -586,7 +586,7 @@ Let \(e\) be the number of directed edges in the communication network (on a com
 </p>
 
 
-<div id="orge14085a" class="figure">
+<div id="orgb50296a" class="figure">
 <p><img src="data/dolev_strong_thm5_examples.svg" alt="dolev_strong_thm5_examples.svg" class="org-svg" />
 </p>
 </div>
@@ -636,7 +636,7 @@ Let \(e\) be the number of directed edges in the communication network (on a com
 </p>
 
 
-<div id="org78d17f7" class="figure">
+<div id="org8ba470c" class="figure">
 <p><img src="data/dolev_strong_thm6.svg" alt="dolev_strong_thm6.svg" class="org-svg" />
 </p>
 </div>
