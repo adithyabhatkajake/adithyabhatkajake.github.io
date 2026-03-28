@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-27 Fri 00:23 -->
+<!-- 2026-03-27 Fri 22:07 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Security Definitions</title>
+<title>Glossary of Security Definitions</title>
 <meta name="author" content="Adithya Bhat" />
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
@@ -248,11 +248,88 @@
 </div>
 </div>
 <div id="content" class="content">
-<h1 class="title">Security Definitions</h1>
+<h1 class="title">Glossary of Security Definitions</h1>
+<div id="outline-container-org86ffbab" class="outline-2">
+<h2 id="org86ffbab">Summary</h2>
+<div class="outline-text-2" id="text-org86ffbab">
+<p>
+Security definitions specify what guarantees a protocol provides. They fall into two categories: <b>safety</b> properties (bad things don't happen) and <b>liveness</b> properties (good things eventually happen). The strength of guarantees varies by adversary model and probability bounds.
+</p>
+</div>
+</div>
+<div id="outline-container-org6d0816e" class="outline-2">
+<h2 id="org6d0816e">Strength of Guarantees</h2>
+<div class="outline-text-2" id="text-org6d0816e">
 <ul class="org-ul">
-<li>Perfect security means \(0\) probability of failure.</li>
-<li>Unconditional security means almost \(0\) probability of failure. There may be a small \(\epsilon\) chance of error.</li>
+<li><b>Perfect security:</b> probability of failure is exactly 0. Holds against computationally unbounded adversaries.</li>
+<li><b>Unconditional security:</b> information-theoretic &#x2013; no computational assumptions needed. In practice, perfect and unconditional are used interchangeably.</li>
+<li><b>Statistical security:</b> probability of failure is at most some negligible \(\epsilon\). Holds against computationally unbounded adversaries, but with a small error probability.</li>
+<li><b>Computational security:</b> holds against any probabilistic polynomial-time (PPT) adversary, assuming some computational hardness (e.g., discrete log, factoring).</li>
+<li><b>Post-quantum security:</b> computational security where the underlying hardness assumptions are believed to hold against quantum adversaries (e.g., lattice-based, hash-based, code-based assumptions rather than discrete log or factoring).</li>
 </ul>
+
+<p>
+A protocol may achieve different strengths for different properties. For example, Cachin et al. [<a href="#citeproc_bib_item_1">1</a>] achieve computational correctness (relies on discrete log) but unconditional privacy (the adversary has no information about the secret).
+</p>
+</div>
+</div>
+<div id="outline-container-org07fed6f" class="outline-2">
+<h2 id="org07fed6f">Safety Properties</h2>
+<div class="outline-text-2" id="text-org07fed6f">
+<p>
+These state that something bad never happens (or happens with negligible probability).
+</p>
+
+<ul class="org-ul">
+<li><b>Agreement:</b> all honest parties produce the same output. Used in consensus, broadcast, secret sharing.</li>
+<li><b>Consistency:</b> if two honest parties both produce an output, the outputs are the same. Weaker than agreement &#x2013; does not require all parties to produce output.</li>
+<li><b>Correctness:</b> if all parties follow the protocol honestly, the output is the right value.</li>
+<li><b>Soundness:</b> incorrect/invalid statements or inputs are rejected.</li>
+<li><b>Validity:</b> the output is related to the inputs in a meaningful way. Common variants:
+<ul class="org-ul">
+<li><b>Strong validity:</b> the output is some honest party's input.</li>
+<li><b>Weak validity:</b> if all honest parties have the same input \(v\), the output is \(v\).</li>
+<li><b>External validity:</b> the output satisfies some externally defined predicate.</li>
+</ul></li>
+<li><b>Secrecy (privacy):</b> the adversary learns nothing about the secret/inputs beyond what is implied by the output. Formally: the adversary's view can be simulated given only the output and the adversary's own inputs.</li>
+<li><b>Integrity:</b> a message is delivered only if it was actually sent by the claimed sender. Prevents forgery. Generally, if a node follows the protocol, bad things will not happen to it.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgce76329" class="outline-2">
+<h2 id="orgce76329">Liveness Properties</h2>
+<div class="outline-text-2" id="text-orgce76329">
+<p>
+These state that something good eventually happens.
+</p>
+
+<ul class="org-ul">
+<li><b>Termination:</b> all honest parties eventually produce an output. May be deterministic or probabilistic (with probability 1).</li>
+<li><b>Completeness:</b> if the dealer/sender is honest, all honest parties eventually complete the protocol. Used in secret sharing, broadcast.</li>
+<li><b>Liveness:</b> the protocol makes progress &#x2013; honest parties are not stuck forever. Often used interchangeably with termination, but sometimes weaker (e.g., eventual progress without a bound on when).</li>
+<li><b>Fairness:</b> if any party learns the output, all honest parties learn it. Prevents an adversary from aborting after learning the result but before honest parties do.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6f5291e" class="outline-2">
+<h2 id="org6f5291e">Verifiability Properties</h2>
+<div class="outline-text-2" id="text-org6f5291e">
+<ul class="org-ul">
+<li><b>Verifiability:</b> parties can check that their shares/outputs are consistent with a valid dealing/computation. Prevents a corrupt dealer from distributing inconsistent data.</li>
+<li><b>Public verifiability:</b> anyone (not just protocol participants) can verify correctness. Used in PVSS, public-key encryption, blockchain.</li>
+<li><b>Robustness:</b> the protocol produces a correct output even if up to \(t\) parties behave maliciously. Stronger than just detecting faults &#x2013; the protocol tolerates them.</li>
+<li><b>Accountability:</b> if a party misbehaves, it can be identified and proven faulty to a third party.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org93a0dfa" class="outline-2">
+<h2 id="org93a0dfa">References</h2>
+<div class="outline-text-2" id="text-org93a0dfa">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Christian Cachin, Klaus Kursawe, Anna Lysyanskaya, and Reto Strobl. 2002. “Asynchronous verifiable secret sharing and proactive cryptosystems.” <a href="http://portal.acm.org/citation.cfm?doid=586110.586124">http://portal.acm.org/citation.cfm?doid=586110.586124</a>.</div>
+</div>
+</div>
+</div>
 </div>
 </body>
 </html>
