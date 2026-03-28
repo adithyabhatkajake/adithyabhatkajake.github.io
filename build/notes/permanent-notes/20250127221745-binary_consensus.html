@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-27 Fri 00:23 -->
+<!-- 2026-03-27 Fri 21:45 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Binary Consensus</title>
@@ -196,6 +196,39 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -216,14 +249,86 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Binary Consensus</h1>
+<div id="outline-container-org9644bda" class="outline-2">
+<h2 id="org9644bda">Summary</h2>
+<div class="outline-text-2" id="text-org9644bda">
+<p>
+Binary consensus (also called binary Byzantine agreement) is a distributed protocol where \(n\) parties, each holding an input \(v_i \in \{0, 1\}\), must agree on a common output bit. First solved by Ben-Or [<a href="#citeproc_bib_item_1">1</a>] in 1983 using randomization to circumvent the FLP impossibility result, which shows that no deterministic asynchronous protocol can solve consensus with even one crash fault.
+</p>
+</div>
+</div>
+<div id="outline-container-org37a3a26" class="outline-2">
+<h2 id="org37a3a26">Formal Definition</h2>
+<div class="outline-text-2" id="text-org37a3a26">
+<p>
+A protocol among \(n\) parties, of which at most \(t\) may be faulty, solves binary consensus if the following hold:
+</p>
+
 <ul class="org-ul">
-<li>First is [1]</li>
+<li><b>Agreement:</b> all honest parties output the same value \(v \in \{0, 1\}\).</li>
+<li><b>Validity:</b> if all honest parties have the same input \(v_i = v\), then the output must be \(v\).</li>
+<li><b>Termination:</b> all honest parties eventually output a value.</li>
 </ul>
-<div class="org-src-container">
-<pre class="src src-org">Each server starts with an initial value $v_{i}\in\{0,1\}$.
-- All correct servers output the same value $v$.
-- If for all correct servers $i$, $v_i=v$, then the output must be $v$.
-</pre>
+</div>
+</div>
+<div id="outline-container-orge68a35c" class="outline-2">
+<h2 id="orge68a35c">Bounds</h2>
+<div class="outline-text-2" id="text-orge68a35c">
+</div>
+<div id="outline-container-org17e9506" class="outline-3">
+<h3 id="org17e9506">Impossibility</h3>
+<div class="outline-text-3" id="text-org17e9506">
+<ul class="org-ul">
+<li>No deterministic protocol solves binary consensus in the asynchronous model with even \(t = 1\) crash fault (FLP impossibility).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3a6cd19" class="outline-3">
+<h3 id="org3a6cd19">Resilience</h3>
+<div class="outline-text-3" id="text-org3a6cd19">
+<ul class="org-ul">
+<li>Asynchronous, Byzantine: \(t < n/3\) is tight. Achieved by Bracha [<a href="#citeproc_bib_item_2">2</a>].</li>
+<li>Asynchronous, crash: \(t < n/2\).</li>
+<li>Synchronous, Byzantine: \(t < n/3\) without signatures, \(t < n\) with signatures.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge3d815b" class="outline-3">
+<h3 id="orge3d815b">Round complexity</h3>
+<div class="outline-text-3" id="text-orge3d815b">
+<ul class="org-ul">
+<li>Deterministic synchronous protocols require at least \(t + 1\) rounds.</li>
+<li>Randomized protocols circumvent this: Ben-Or [<a href="#citeproc_bib_item_1">1</a>] achieves constant expected rounds for \(t = O(\sqrt{n})\) in the synchronous setting.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgef98494" class="outline-3">
+<h3 id="orgef98494">Communication</h3>
+<div class="outline-text-3" id="text-orgef98494">
+<ul class="org-ul">
+<li>Mostefaoui et al. [<a href="#citeproc_bib_item_3">3</a>] achieve \(O(n^2)\) messages and \(O(1)\) expected time for asynchronous Byzantine with \(t < n/3\), signature-free.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org2ec1950" class="outline-2">
+<h2 id="org2ec1950">Notes</h2>
+<div class="outline-text-2" id="text-org2ec1950">
+<ul class="org-ul">
+<li>Ben-Or's original async Byzantine protocol tolerates \(t < n/5\) with exponential expected running time [<a href="#citeproc_bib_item_1">1</a>]. Bracha [<a href="#citeproc_bib_item_2">2</a>] improved the resilience to the optimal \(t < n/3\).</li>
+<li>Binary consensus is a fundamental building block for multi-valued consensus, validated Byzantine agreement, and asynchronous common coin protocols.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgbfc97f0" class="outline-2">
+<h2 id="orgbfc97f0">References</h2>
+<div class="outline-text-2" id="text-orgbfc97f0">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Michael Ben-Or. 1983. “Another advantage of free choice (Extended Abstract).” <a href="https://dl.acm.org/doi/abs/10.1145/800221.806707">https://dl.acm.org/doi/abs/10.1145/800221.806707</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Gabriel Bracha. 1984. “An asynchronous [(n - 1)/3]-resilient consensus protocol.” <a href="http://portal.acm.org/citation.cfm?doid=800222.806743">http://portal.acm.org/citation.cfm?doid=800222.806743</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>[3] Achour Mostéfaoui, Hamouma Moumen, and Michel Raynal. 2015. “Signature-Free Asynchronous Binary Byzantine Consensus with t $ n/3, O(n2) Messages, and O(1) Expected Time.” <a href="https://doi.org/10.1145/2785953">https://doi.org/10.1145/2785953</a>.</div>
+</div>
+</div>
 </div>
 </div>
 </body>
