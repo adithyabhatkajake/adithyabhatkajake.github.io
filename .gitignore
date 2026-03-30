@@ -7,3 +7,5 @@ blogs/page-*.org
 /notes/
 .build-hashes
 /CV.aux
+/CLAUDE.md
+/.org-id-locations

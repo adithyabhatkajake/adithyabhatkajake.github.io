@@ -671,9 +671,11 @@ published URL under /notes/, and returns an HTML anchor tag."
     id-map))
 
 (defun fix-broken-id-links ()
-  "Replace [BROKEN LINK: uuid] in HTML files with proper anchor tags."
+  "Replace [BROKEN LINK: uuid] in HTML files with proper anchor tags.
+Warn about any broken links that remain unresolved."
   (let ((id-map (build-id-to-url-map))
-        (fixed-count 0))
+        (fixed-count 0)
+        (unresolved nil))
     (dolist (html-file (directory-files-recursively
                         (expand-file-name publish-dir default-directory)
                         "\\.html$"))
@@ -684,15 +686,24 @@ published URL under /notes/, and returns an HTML anchor tag."
           (while (re-search-forward "\\[BROKEN LINK: \\([a-f0-9-]+\\)\\]" nil t)
             (let* ((id (match-string 1))
                    (entry (gethash id id-map)))
-              (when entry
-                (replace-match
-                 (format "<a href=\"%s\">%s</a>" (car entry) (cdr entry))
-                 t t)
-                (setq modified t)
-                (cl-incf fixed-count))))
+              (if entry
+                  (progn
+                    (replace-match
+                     (format "<a href=\"%s\">%s</a>" (car entry) (cdr entry))
+                     t t)
+                    (setq modified t)
+                    (cl-incf fixed-count))
+                (push (cons (file-relative-name html-file
+                              (expand-file-name publish-dir default-directory))
+                            id)
+                      unresolved))))
           (when modified
             (write-region (point-min) (point-max) html-file)))))
-    (message "Fixed %d broken ID links in HTML output" fixed-count)))
+    (message "Fixed %d broken ID links in HTML output" fixed-count)
+    (when unresolved
+      (message "WARNING: %d unresolved broken links remain:" (length unresolved))
+      (dolist (entry (nreverse unresolved))
+        (message "  %s: [BROKEN LINK: %s]" (car entry) (cdr entry))))))
 
 (when (and notes-base-dir (file-directory-p notes-base-dir))
   (fix-broken-id-links))

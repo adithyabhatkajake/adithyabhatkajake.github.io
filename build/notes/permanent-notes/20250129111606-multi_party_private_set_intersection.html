@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-27 Fri 13:10 -->
+<!-- 2026-03-29 Sun 14:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Multi-party Private Set Intersection</title>
@@ -274,7 +274,7 @@ The corruption model varies across protocols:
 </ul>
 
 <p>
-The key challenges over two-party <a href="/notes/permanent-notes/20241125220049-private_set_intersection.html">PSI</a> are:
+The key challenges over two-party <a href="/notes/permanent-notes/20241125220049-private_set_intersection.html">Private Set Intersection</a> are:
 </p>
 <ul class="org-ul">
 <li><b>Scalability:</b> Communication and computation tend to scale with the number of parties \(n\).</li>
@@ -291,7 +291,7 @@ See [<a href="#citeproc_bib_item_1">1</a>] for a comprehensive classification. T
 <ul class="org-ul">
 <li><b>Private homomorphic set representations</b> (polynomials, hash sets, sorted multisets). Encode each set into a representation that supports a homomorphic operation \(+\) such that \(\mathsf{Dec}(\mathsf{Enc}(X_1) + \cdots + \mathsf{Enc}(X_n))\) yields the intersection. For example, represent sets as polynomials with elements as roots and use the property that a random linear combination \(r_1 P_1 + r_2 P_2\) preserves common roots while randomizing the rest.</li>
 <li><b>Leaky homomorphic set representations</b> (Bloom filters, garbled Bloom filters). Same idea as above, but the encoding leaks some information (e.g., Bloom filters leak false positives through hash collisions).</li>
-<li><b>Aggregatable membership queries</b> (<a href="/notes/permanent-notes/20250211202116-oblivious_programmable_prf.html">OPPRF</a>, <a href="/notes/permanent-notes/20241016134037-oblivious_key_value_store.html">OKVS</a>, polynomial embeddings). Instead of combining set representations, test each candidate element for membership across all parties and aggregate the results. For example, using zero-sharing ([<a href="#citeproc_bib_item_2">2</a>]): each party \(P_i\) obtains a share \(s_i(x)\) for every element \(x\) such that \(\bigoplus_{i=1}^n s_i(x) = 0\). Each party then masks its set elements with its share via an <a href="/notes/permanent-notes/20250211202116-oblivious_programmable_prf.html">OPPRF</a>. For an element in the intersection, all parties hold it, so the shares XOR to zero and the element is recognizable. For non-intersection elements, at least one share is pseudorandom, making the XOR indistinguishable from random.</li>
+<li><b>Aggregatable membership queries</b> (<a href="/notes/permanent-notes/20250211202116-oblivious_programmable_prf.html">Oblivious Programmable PRF</a>, <a href="/notes/permanent-notes/20241016134037-oblivious_key_value_store.html">Oblivious Key Value Store</a>, polynomial embeddings). Instead of combining set representations, test each candidate element for membership across all parties and aggregate the results. For example, using zero-sharing ([<a href="#citeproc_bib_item_2">2</a>]): each party \(P_i\) obtains a share \(s_i(x)\) for every element \(x\) such that \(\bigoplus_{i=1}^n s_i(x) = 0\). Each party then masks its set elements with its share via an <a href="/notes/permanent-notes/20250211202116-oblivious_programmable_prf.html">Oblivious Programmable PRF</a>. For an element in the intersection, all parties hold it, so the shares XOR to zero and the element is recognizable. For non-intersection elements, at least one share is pseudorandom, making the XOR indistinguishable from random.</li>
 </ul>
 </div>
 </div>
@@ -300,10 +300,10 @@ See [<a href="#citeproc_bib_item_1">1</a>] for a comprehensive classification. T
 <h2 id="orgfcfe4be">Papers</h2>
 <div class="outline-text-2" id="text-orgfcfe4be">
 <ul class="org-ul">
-<li>[<a href="#citeproc_bib_item_2">2</a>] First implemented MPSI protocol; introduces <a href="/notes/permanent-notes/20250211202116-oblivious_programmable_prf.html">OPPRF</a> to avoid public-key operations, achieving semi-honest security against any number of corrupted parties without an honest majority.</li>
+<li>[<a href="#citeproc_bib_item_2">2</a>] First implemented MPSI protocol; introduces <a href="/notes/permanent-notes/20250211202116-oblivious_programmable_prf.html">Oblivious Programmable PRF</a> to avoid public-key operations, achieving semi-honest security against any number of corrupted parties without an honest majority.</li>
 <li>[<a href="#citeproc_bib_item_3">3</a>] Combines Bloom filters with exponential ElGamal encryption in a star topology; achieves \(O(n \cdot m_{\max})\) communication and computation independent of \(n\) for non-designated parties.</li>
 <li>[<a href="#citeproc_bib_item_4">4</a>] Extends two-party garbled Bloom filters to the multi-party setting; concretely efficient with communication linear in \(n\) and set sizes, semi-honest model.</li>
-<li>[<a href="#citeproc_bib_item_5">5</a>] Uses <a href="/notes/permanent-notes/20250205152354-oblivious_linear_evaluation.html">OLE</a> to add polynomials while preserving roots; UC-secure against malicious adversaries with asymptotically optimal \(O((n^2 + nm)\kappa)\) communication, avoiding homomorphic threshold encryption and ZK proofs.</li>
+<li>[<a href="#citeproc_bib_item_5">5</a>] Uses <a href="/notes/permanent-notes/20250205152354-oblivious_linear_evaluation.html">Oblivious Linear Evaluation</a> to add polynomials while preserving roots; UC-secure against malicious adversaries with asymptotically optimal \(O((n^2 + nm)\kappa)\) communication, avoiding homomorphic threshold encryption and ZK proofs.</li>
 <li>[<a href="#citeproc_bib_item_6">6</a>] Extends two-party symmetric-key PSI to the multi-party setting using an untrusted third-party model with hardware tokens.</li>
 </ul>
 </div>

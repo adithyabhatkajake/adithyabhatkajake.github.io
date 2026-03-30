@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-27 Fri 00:23 -->
+<!-- 2026-03-30 Mon 08:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Partial Synchrony</title>
@@ -196,6 +196,39 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -217,38 +250,64 @@
 <div id="content" class="content">
 <h1 class="title">Partial Synchrony</h1>
 <p>
-This is a network assumption.
+This is a network timing assumption introduced by Dwork, Lynch, and Stockmeyer [<a href="#citeproc_bib_item_1">1</a>]. It lies between full synchrony and full asynchrony. We say that the communication bound \(\Delta\) <i>holds</i> in an interval \(I\) for run \(R\) provided that, if message \(m\) is placed in \(p_j\)'s buffer by some \(\text{Send}(m, p_j)\) at a time \(s_1\) in \(I\), and if \(p_j\) executes a \(\text{Receive}(p_j)\) at a time \(s_2\) in \(I\) with \(s_2 \geq s_1 + \Delta\), then \(m\) must be delivered to \(p_j\) at time \(s_2\) or earlier. Communication is <i>partially synchronous</i> if either (2) or (3) below holds.
 </p>
 
+<p>
+In these definitions, \(\Delta\) denotes some particular positive integer:
+</p>
+
+<ol class="org-ol">
+<li><b>\(\Delta\) is known.</b> The communication bound \(\Delta\) holds in \([1, \infty)\) for every run \(R\). That is, \(\Delta\) is known and is a fixed bound for some fixed \(\Delta\). This is the usual definition of <i>synchronous communication</i>.</li>
+
+<li><b>\(\Delta\) is unknown.</b> For every run \(R\), there is a \(\Delta\) that holds in \([1, \infty)\). That is, a fixed upper bound on message delay exists, but its value is not known a priori. The protocol must work correctly regardless of the actual value of \(\Delta\).</li>
+
+<li><b>\(\Delta\) holds eventually (GST model).</b> For every run \(R\), there is a time \(T\), called the <i>Global Stabilization Time</i> (GST), unknown to the processors, such that \(\Delta\) holds in \([T, T + L]\), where \(L\) is an upper bound on the time after GST required by the protocol. Before GST, messages may be delayed arbitrarily; after \(T + L\), the network may become asynchronous again. The paper uses \([T, \infty)\) as a simplification in the formal definition, but notes that any correct protocol only needs \(\Delta\) to hold for this bounded window.</li>
+</ol>
+<div id="outline-container-org9deed2a" class="outline-3">
+<h3 id="org9deed2a">Modern definitions</h3>
+<div class="outline-text-3" id="text-org9deed2a">
+</div>
+<div id="outline-container-org74a1f57" class="outline-4">
+<h4 id="org74a1f57">Type I &#x2013; unknown \(\Delta\)</h4>
+<div class="outline-text-4" id="text-org74a1f57">
+<p>
+There exists a fixed but unknown upper bound \(\Delta\) on message delivery time. For every run, all messages sent between correct processors are delivered within \(\Delta\) time. The protocol does not know \(\Delta\) and must work correctly for any value of \(\Delta\).
+</p>
+
+
+<div id="orge58a52b" class="figure">
+<p><img src="data/partial_synchrony_visuals.svg" alt="partial_synchrony_visuals.svg" class="org-svg" width="800px" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgaa9d6fb" class="outline-4">
+<h4 id="orgaa9d6fb">Type II &#x2013; known \(\Delta\), unknown GST</h4>
+<div class="outline-text-4" id="text-orgaa9d6fb">
+<p>
+The message delay bound \(\Delta\) is known, but is only guaranteed to hold starting at some unknown time \(\text{GST}\) chosen by the adversary. Before \(\text{GST}\), the network is asynchronous and messages may be delayed arbitrarily. After \(\text{GST}\), all messages between correct processors are delivered within \(\Delta\). The protocol specifies a duration \(L\) such that it only requires \(\Delta\) to hold in the window \([\text{GST}, \text{GST} + L]\); after this window, the network may become asynchronous again.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org54dda9f" class="outline-3">
+<h3 id="org54dda9f">Notes</h3>
+<div class="outline-text-3" id="text-org54dda9f">
 <ul class="org-ul">
-<li><p>
-Definition 1
-</p>
-<div class="org-src-container">
-<pre class="src src-latex"><span class="org-keyword">\def</span>\<span class="org-function-name">gst</span>{<span class="org-keyword">\ensuremath</span>{GST}}
-<span class="org-keyword">\def</span>\<span class="org-function-name">gstduration</span>{<span class="org-keyword">\ensuremath</span>{L}}
-<span class="org-keyword">\def</span>\<span class="org-function-name">delay</span>{<span class="org-keyword">\ensuremath</span>{<span class="org-keyword">\Delta</span>}}
-A network is partially synchronous, if there exist times <span class="org-keyword">\gst</span>, unknown to the servers in the system, and <span class="org-keyword">\gstduration</span>{}, specified by the protocol, such that for all intervals of time period <span class="org-tex-math">$\gst+\gstduration$</span>, the network can delay messages arbitrarily until time <span class="org-keyword">\gst</span>, followed by a period of length <span class="org-keyword">\gstduration</span>{} where messages sent by honest servers are delivered by time <span class="org-keyword">\delay</span>.
-</pre>
-</div></li>
-
-<li><p>
-Definition 2
-</p>
-<div class="org-src-container">
-<pre class="src src-latex"><span class="org-keyword">\def</span>\<span class="org-function-name">gsttime</span>{<span class="org-keyword">\ensuremath</span>{GST}}
-<span class="org-keyword">\def</span>\<span class="org-function-name">gstduration</span>{<span class="org-keyword">\ensuremath</span>{L}}
-<span class="org-keyword">\def</span>\<span class="org-function-name">delay</span>{<span class="org-keyword">\ensuremath</span>{<span class="org-keyword">\Delta</span>}}
-In this network model, the network consists of the following parameters:
-<span class="org-keyword">\begin</span>{<span class="org-function-name">itemize</span>}
-<span class="org-keyword">\item</span> a public delay parameter <span class="org-keyword">\delay</span>{}
-<span class="org-keyword">\item</span> a global stabilization time <span class="org-keyword">\gsttime</span>{} chosen by the adversary
-<span class="org-keyword">\item</span> a period of synchrony <span class="org-keyword">\gstduration</span>{} provided by the protocol running in this network
-<span class="org-keyword">\end</span>{<span class="org-function-name">itemize</span>}
-such that for time periods of length <span class="org-tex-math">$\gsttime+\gstduration$</span>, the network is asynchronous for the first time period <span class="org-keyword">\gsttime</span>, and <span class="org-keyword">\delay</span>{}-bounded synchronous for the remaining time period of length <span class="org-keyword">\gstduration</span>{}.
-</pre>
-</div></li>
+<li>Safety properties must hold even during the asynchronous period before GST. Only termination (liveness) requires the synchrony guarantee.</li>
+<li><b>Partially synchronous processors:</b> By replacing \(\Delta\) by \(\Phi\) (the upper bound on relative processor speeds), conditions (2) and (3) analogously define two types of <i>partially synchronous processors</i>. Here \(\Phi\) holds in \(I\) for \(R\) means that in any contiguous subinterval of \(I\) containing \(\Phi\) real-time steps, every correct processor must take at least one step.</li>
 </ul>
+</div>
+</div>
+<div id="outline-container-orgcc52a66" class="outline-2">
+<h2 id="orgcc52a66">References</h2>
+<div class="outline-text-2" id="text-orgcc52a66">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Cynthia Dwork, Nancy Lynch, and Larry Stockmeyer. 1988. “Consensus in the presence of partial synchrony.” <a href="https://dl.acm.org/doi/10.1145/42282.42283">https://dl.acm.org/doi/10.1145/42282.42283</a>.</div>
+</div>
+</div>
+</div>
 </div>
 </body>
 </html>

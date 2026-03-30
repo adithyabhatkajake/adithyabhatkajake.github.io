@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-27 Fri 00:22 -->
+<!-- 2026-03-29 Sun 14:12 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Timestamps in Message-Passing Systems That Preserve the Partial Ordering</title>
@@ -269,7 +269,7 @@ An example algorithm rules to maintain a timestamp (Lamport Clock) for asynchron
 <li><p>
 Upon receiving a signal, a process sets the value of each entry in the timestamp array to be the maximum of the two corresponding values in the local array, and in the piggybacked array received. The value corresponding to the sender, however, is a special case and is set to be one greater than the value received (to allow for transit time), but only if the local value is not already greater than that received (to allow for signal "overtaking" as described below), i.e.,
 </p>
-<div class="algorithm" id="orgbc16d83">
+<div class="algorithm" id="orgd1f5db2">
 <p>
 q?other<sub>array</sub>; <i>* receive timestamp array from process q *</i>
 if local<sub>array</sub>[q] &le; other<sub>array</sub>[q] then
@@ -290,7 +290,7 @@ for i := 1 to n do
 The asynchronous timestamping does not work for the synchronous case.
 </p>
 
-<div id="orgef4d7b1" class="figure">
+<div id="org7585113" class="figure">
 <p><img src="images/_20250202_182524screenshot.png" alt="_20250202_182524screenshot.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>An example where Lamport Clock (the asynchronous timestamping algorithm) fails for the synchronous case. Technically event a occurred before b, but it looks like b occurred before a.</p>
@@ -301,7 +301,7 @@ So the solution is to add a bidirectional timestamp exchange.
 </p>
 
 
-<div id="org16e19c8" class="figure">
+<div id="orgf7800dd" class="figure">
 <p><img src="images/_20250202_182330screenshot.png" alt="_20250202_182330screenshot.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>The synchronous timestamping algorithm.</p>
@@ -317,7 +317,7 @@ An example algorithm rules to maintain a timestamp for synchronous processes:
 <li><p>
 During a communication event, the two processes involved exchange timestamp arrays and each element in the local array is set to be the maximum of its old value and the corresponding value in the array received, i.e.,
 </p>
-<div class="algorithm" id="orga7bab24">
+<div class="algorithm" id="orgbd945cc">
 <p>
 q?other<sub>array</sub>;
 for i := 1 to n do

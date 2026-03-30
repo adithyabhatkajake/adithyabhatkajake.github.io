@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-27 Fri 00:23 -->
+<!-- 2026-03-29 Sun 21:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Bounded Synchrony</title>
@@ -250,9 +250,77 @@
 <div id="content" class="content">
 <h1 class="title">Bounded Synchrony</h1>
 <p>
-This is a network assumption.
-In this model, there is a public delay parameter \(\Delta\) such that if an honest node \(p\) sends a message \(m\) to another honest node \(q\) at time \(t\), then \(q\) receives \(m\) by time \(t+\Delta\).
+This is a network assumption, also referred to as the synchronous model.
+In this model, there is a known fixed upper bound \(\Delta\) on message delivery time such that if an honest node \(p\) sends a message \(m\) to another honest node \(q\) at time \(t\), then \(q\) receives \(m\) by time \(t+\Delta\). Additionally, there is a known fixed upper bound \(\Phi\) on the relative speeds of different processors.
+</p>
+<div id="outline-container-orga2999be" class="outline-3">
+<h3 id="orga2999be">History</h3>
+<div class="outline-text-3" id="text-orga2999be">
+<p>
+The synchronous round-based model was first used prominently by [<a href="#citeproc_bib_item_1">1</a>] and the follow-up [<a href="#citeproc_bib_item_2">2</a>]. Their algorithms operated in explicit synchronous rounds of message exchange, but the model itself was more of an implicit assumption than a standalone formal definition. According to Lamport, "I think it also contains the first precise statement of the consensus problem." <sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>
 </p>
 </div>
+</div>
+<div id="outline-container-org18a8eab" class="outline-3">
+<h3 id="org18a8eab">Variants of Synchrony</h3>
+<div class="outline-text-3" id="text-org18a8eab">
+<p>
+Dolev, Dwork, and Stockmeyer [<a href="#citeproc_bib_item_4">4</a>] were the first to formally decompose synchrony into two independent axes:
+</p>
+
+<ol class="org-ol">
+<li><b>Processor synchrony</b> &#x2013; parameterized by \(\Phi\), bounding relative processor speeds. When \(\Phi = 1\), processors operate in lock-step rounds.</li>
+<li><b>Communication synchrony</b> &#x2013; parameterized by \(\Delta\), bounding message delivery time. When \(\Delta\) is bounded, communication is synchronous; when unbounded, it is asynchronous.</li>
+</ol>
+</div>
+<div id="outline-container-org3587407" class="outline-4">
+<h4 id="org3587407">Lock-step Synchrony</h4>
+<div class="outline-text-4" id="text-org3587407">
+<p>
+In lock-step synchrony, all processors advance through rounds in unison (\(\Phi = 1\)). A processor sends messages at the start of a round, receives all messages from that round, performs local computation, and then advances to the next round. Latency is expressed in terms of <i>rounds</i>. This is the model used by [<a href="#citeproc_bib_item_1">1</a>] and most classical <a href="/notes/permanent-notes/20250127221745-binary_consensus.html">consensus</a> protocols.
+</p>
+</div>
+</div>
+<div id="outline-container-org8a22db0" class="outline-4">
+<h4 id="org8a22db0">Non-lock-step (Bounded-delay) Synchrony</h4>
+<div class="outline-text-4" id="text-org8a22db0">
+<p>
+In non-lock-step synchrony, message delivery is bounded by \(\Delta\) but processors may run at different speeds (\(\Phi > 1\)). Latency is expressed in terms of \(\Delta\) rather than rounds. This is strictly weaker than lock-step synchrony &#x2013; one can obtain lock-step execution from bounded-delay synchrony by running a <a href="/notes/permanent-notes/20241004143125-clock_synchronization.html">clock synchronization</a> protocol (e.g., [<a href="#citeproc_bib_item_5">5</a>]), but the converse is immediate.
+</p>
+
+<p>
+Either form of synchrony alone suffices for Byzantine consensus with optimal \(t < n/3\) resilience [<a href="#citeproc_bib_item_4">4</a>]. Only when <i>both</i> axes are asynchronous does consensus become impossible [<a href="#citeproc_bib_item_6">6</a>].
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org746f6cb" class="outline-2">
+<h2 id="org746f6cb">References</h2>
+<div class="outline-text-2" id="text-org746f6cb">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Marshall Pease, Robert Shostak, and Leslie Lamport. 1980. “Reaching Agreement in the Presence of Faults.” <a href="https://dl.acm.org/doi/10.1145/322186.322188">https://dl.acm.org/doi/10.1145/322186.322188</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Leslie Lamport, Robert Shostak, and Marshall Pease. 1982. “The Byzantine Generals Problem.” <a href="https://dl.acm.org/doi/10.1145/357172.357176">https://dl.acm.org/doi/10.1145/357172.357176</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>[3] Cynthia Dwork, Nancy Lynch, and Larry Stockmeyer. 1988. “Consensus in the presence of partial synchrony.” <a href="https://dl.acm.org/doi/10.1145/42282.42283">https://dl.acm.org/doi/10.1145/42282.42283</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_4"></a>[4] Danny Dolev, Cynthia Dwork, and Larry Stockmeyer. 1987. “On the minimal synchronism needed for distributed consensus.” <a href="https://dl.acm.org/doi/10.1145/7531.7533">https://dl.acm.org/doi/10.1145/7531.7533</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_5"></a>[5] T. K. Srikanth, and Sam Toueg. 1987. “Optimal clock synchronization.” <a href="https://dl.acm.org/doi/10.1145/28869.28876">https://dl.acm.org/doi/10.1145/28869.28876</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_6"></a>[6] Michael J Fischer, Nancy A Lynch, and Michael S Paterson. 1985. “Impossibility of Distributed Consensus with One Faulty Process.” <a href="https://dl.acm.org/doi/10.1145/3149.214121">https://dl.acm.org/doi/10.1145/3149.214121</a>.</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Lamport's commentary on his publications, <a href="https://lamport.azurewebsites.net/pubs/pubs.html">https://lamport.azurewebsites.net/pubs/pubs.html</a>, entry [41].
+</p>
+
+<p class="footpara">
+The clean, explicit formalization of the synchronous model &#x2013; as one defined by a known fixed upper bound \(\Delta\) on message delivery time and a known fixed upper bound \(\Phi\) on relative processor speeds &#x2013; is most commonly attributed to [<a href="#citeproc_bib_item_3">3</a>]. The DLS paper needed a crisp definition of synchrony precisely so it could define <a href="/notes/permanent-notes/20250127220138-partial_synchrony.html">partial synchrony</a> as a relaxation of it, which gave the synchronous model its precise modern definition.
+</p></div></div>
+
+
+</div>
+</div></div>
 </body>
 </html>
