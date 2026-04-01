@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-29 Sun 14:11 -->
+<!-- 2026-04-01 Wed 13:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Setting Up Doom Emacs Emacs Configuration File</title>
@@ -718,6 +718,20 @@ Sweet font rendering for org buffers.
 </div>
 </div>
 </div>
+<div id="outline-container-org03b93a0" class="outline-4">
+<h4 id="org03b93a0">Setup priorities</h4>
+<div class="outline-text-4" id="text-org03b93a0">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">setq</span> org-priority-lowest ?D)
+(<span class="org-keyword">setq</span> org-priority-faces
+  '((?A . (<span class="org-builtin">:foreground</span> <span class="org-string">"red"</span> <span class="org-builtin">:weight</span> bold))        <span class="org-comment-delimiter">; </span><span class="org-comment">Q1 - Do First</span>
+    (?B . (<span class="org-builtin">:foreground</span> <span class="org-string">"orange"</span> <span class="org-builtin">:weight</span> bold))      <span class="org-comment-delimiter">; </span><span class="org-comment">Q2 - Schedule</span>
+    (?C . (<span class="org-builtin">:foreground</span> <span class="org-string">"yellow"</span>))                   <span class="org-comment-delimiter">; </span><span class="org-comment">Q3 - Delegate</span>
+    (?D . (<span class="org-builtin">:foreground</span> <span class="org-string">"gray"</span>))))                   <span class="org-comment-delimiter">; </span><span class="org-comment">Q4 - Low Priority</span>
+</pre>
+</div>
+</div>
+</div>
 <div id="outline-container-org1dfd041" class="outline-4">
 <h4 id="org1dfd041">Add ACM Latex classes to Org Export</h4>
 <div class="outline-text-4" id="text-org1dfd041">
@@ -1323,8 +1337,7 @@ Set up a dependency where completing the current task (Y) triggers another task 
          ((agenda nil
                   ((org-agenda-span 'day)
                    (org-agenda-skip-deadline-prewarning-if-scheduled 't)
-                   (org-agenda-overriding-header <span class="org-string">"Tasks for today"</span>)
-                   (org-agenda-time-grid nil)))
+                   (org-agenda-overriding-header <span class="org-string">"Tasks for today"</span>)))
           (agenda nil
                   ((org-agenda-span 7)
                    (org-deadline-warning-days 0)
@@ -1590,7 +1603,8 @@ That’s something you do in other ways, such as when reviewing completed tasks.
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span class="org-keyword">with-eval-after-load</span> 'org
   (<span class="org-keyword">setq</span> org-agenda-start-on-weekday nil)
-  (<span class="org-keyword">setq</span> org-agenda-start-day <span class="org-string">"-0d"</span>))
+  (<span class="org-keyword">setq</span> org-agenda-start-day <span class="org-string">"-0d"</span>)
+)
 </pre>
 </div>
 </div>

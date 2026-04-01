@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-29 Sun 14:13 -->
+<!-- 2026-04-01 Wed 15:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Random Beacons</title>
@@ -196,6 +196,39 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -216,14 +249,74 @@
 </div>
 <div id="content" class="content">
 <h1 class="title">Random Beacons</h1>
-<div id="outline-container-org95e3eb8" class="outline-2">
-<h2 id="org95e3eb8">Random Beacons in the wild</h2>
-<div class="outline-text-2" id="text-org95e3eb8">
+<p>
+A random beacon is a service that periodically produces fresh, publicly available random values.
+</p>
+<div id="outline-container-orgec82c66" class="outline-2">
+<h2 id="orgec82c66">Key Properties</h2>
+<div class="outline-text-2" id="text-orgec82c66">
+<p>
+A random beacon should satisfy:
+</p>
+
 <ul class="org-ul">
-<li>(Centralized) Lavarand: Randomness from lava [NO_ITEM_DATA:LavaRnd]</li>
-<li>(Distributed) DRand: Public Randomness project [2], [NO_ITEM_DATA:DistributedRandomnessBeacon]</li>
-<li>(Centralized) Randomness from atmospheric noise [4]</li>
-<li>(Centralized) NIST interoperable randomness beacon [5]</li>
+<li><b>Unpredictability:</b> No node can predict the output before it is published.</li>
+<li><b>Unbiasability:</b> No node can influence the distribution of the output. Strictly stronger than unpredictability, since an adversary may not predict the exact output but could still skew it.</li>
+<li><b>Public verifiability:</b> Any node can verify the output was correctly generated without trusting the operator.</li>
+<li><b>Availability (guaranteed output delivery):</b> The beacon produces output on schedule even if some nodes are faulty or adversarial.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org95e3eb8" class="outline-2">
+<h2 id="org95e3eb8">Random Beacons in the Wild</h2>
+<div class="outline-text-2" id="text-org95e3eb8">
+</div>
+<div id="outline-container-orge19f071" class="outline-3">
+<h3 id="orge19f071">Centralized</h3>
+<div class="outline-text-3" id="text-orge19f071">
+<ul class="org-ul">
+<li>Lavarand: Randomness from lava lamps [<a href="#citeproc_bib_item_1">1</a>]</li>
+<li>Randomness from atmospheric noise [<a href="#citeproc_bib_item_2">2</a>]</li>
+<li>NIST interoperable randomness beacon [<a href="#citeproc_bib_item_3">3</a>]</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9d18130" class="outline-3">
+<h3 id="org9d18130">Distributed</h3>
+<div class="outline-text-3" id="text-org9d18130">
+<ul class="org-ul">
+<li>DRand (League of Entropy): Threshold BLS signatures; output is deterministic once \(t+1\) of \(n\) participants contribute, preventing bias or withholding by any single party [<a href="#citeproc_bib_item_4">4</a>], [<a href="#citeproc_bib_item_5">5</a>]</li>
+<li>Ethereum RANDAO: Block proposers contribute BLS signatures; outputs are XORed. Vulnerable to last-revealer bias because a proposer can skip their slot to influence the result [<a href="#citeproc_bib_item_6">6</a>].</li>
+<li>Chainlink VRF: On-chain verifiable randomness for smart contracts via VRFs with proof verification [<a href="#citeproc_bib_item_7">7</a>].</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org8508f7f" class="outline-2">
+<h2 id="org8508f7f">Construction Techniques</h2>
+<div class="outline-text-2" id="text-org8508f7f">
+<p>
+For a comprehensive survey, see [<a href="#citeproc_bib_item_8">8</a>].
+</p>
+
+
+<ul class="org-ul">
+<li><b>Commit-reveal:</b> Participants commit to hash of secret, then reveal. Output derived from all reveals (e.g., XOR). Vulnerable to last-revealer attack and abort.</li>
+<li><b>Threshold cryptography:</b> (e.g., threshold BLS in DRand). Output is deterministic once \(t+1\) honest shares are contributed, preventing bias. Requires a DKG (distributed key generation) phase.</li>
+<li><b>VDFs (Verifiable Delay Functions):</b> Require prescribed sequential time to compute, fast to verify (e.g., repeated squaring in groups of unknown order [<a href="#citeproc_bib_item_9">9</a>], [<a href="#citeproc_bib_item_10">10</a>]). Used as post-processing on a biasable source so the output is fixed before any party can react.</li>
+<li><b>VRFs (Verifiable Random Functions):</b> Secret-key holder produces pseudorandom output with proof of correctness. Used in Algorand [<a href="#citeproc_bib_item_11">11</a>] and Ouroboros Praos [<a href="#citeproc_bib_item_12">12</a>] for private leader election. A building block, not a standalone beacon.</li>
+<li><b>PVSS (Publicly Verifiable Secret Sharing):</b> Allows recovery of a participant's contribution if they go offline. Used in SCRAPE [<a href="#citeproc_bib_item_13">13</a>], RandHerd [<a href="#citeproc_bib_item_14">14</a>], and DFINITY's beacon [<a href="#citeproc_bib_item_15">15</a>].</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2266a05" class="outline-2">
+<h2 id="org2266a05">Security Considerations</h2>
+<div class="outline-text-2" id="text-org2266a05">
+<ul class="org-ul">
+<li><b>Last-revealer attack:</b> In commit-reveal or XOR-based schemes (including RANDAO), the last party to reveal can choose to abort, gaining 1 bit of influence per abort. Motivates threshold and VDF-based designs.</li>
+<li><b>Grinding attacks:</b> Adversary tries many possible inputs to find a favorable output. Relevant to block-hash-based randomness. Ouroboros Praos mitigates this with VRFs.</li>
+<li><b>Liveness attacks:</b> Adversary refuses to participate to prevent output. Threshold schemes ($t$-of-\(n\)) tolerate up to \(n-t\) failures.</li>
+<li><b>Front-running:</b> If beacon output is visible before dependent transactions finalize, adversaries can act on it.</li>
 </ul>
 </div>
 </div>
@@ -231,10 +324,37 @@
 <h2 id="org3cccf87">Applications</h2>
 <div class="outline-text-2" id="text-org3cccf87">
 <ol class="org-ol">
-<li>According to [NO_ITEM_DATA:aguileraCorrectnessProofBenOrs], global coins can substitute a local coin and can speed up protocols.</li>
-<li>Asynchronous distributed protocols need randomness since no deterministic protocols exist due to [7]. So we can use the first application to speed up asynchronous protocols.</li>
+<li>According to [<a href="#citeproc_bib_item_16">16</a>], global coins can substitute a local coin and can speed up protocols.</li>
+<li>Asynchronous distributed protocols need randomness since no deterministic protocols exist due to [<a href="#citeproc_bib_item_17">17</a>]. So we can use the first application to speed up asynchronous protocols.</li>
 <li>The Ouroboros sequence of works, the only-known provably secure Proof-of-stake protocols, need randomness to ensure eventual consistency.</li>
+<li>Leader/committee election, e.g., Algorand uses VRFs for cryptographic sortition [<a href="#citeproc_bib_item_11">11</a>]</li>
+<li>Parameter generation - trusted setup ceremonies for zk-SNARKs use beacon outputs to ensure no party could have predicted the seed [<a href="#citeproc_bib_item_18">18</a>].</li>
 </ol>
+</div>
+</div>
+<div id="outline-container-orge7bb403" class="outline-2">
+<h2 id="orge7bb403">References</h2>
+<div class="outline-text-2" id="text-orge7bb403">
+<div class="csl-bib-body">
+  <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] 2025. “LavaRnd.” <a href="https://lavarand.org/">https://lavarand.org/</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Mads Haahr. 2012. “True Random Number Service.” <a href="https://www.random.org/">https://www.random.org/</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>[3] Information Technology Laboratory Computer Security Division. 2021. “Interoperable Randomness Beacons: CSRC.” <a href="https://csrc.nist.gov/projects/interoperable-randomness-beacons">https://csrc.nist.gov/projects/interoperable-randomness-beacons</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_4"></a>[4] Drand. 2021. “Drand - A Distributed Randomness Beacon Daemon.” <a href="https://github.com/drand/drand">https://github.com/drand/drand</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_5"></a>[5] 2022. “Distributed Randomness Beacon Cloudflare.” <a href="https://www.cloudflare.com/leagueofentropy/">https://www.cloudflare.com/leagueofentropy/</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_6"></a>[6] Kaya Alpturer, and S. Matthew Weinberg. 2024. “Optimal RANDAO Manipulation in Ethereum.” <a href="http://arxiv.org/abs/2409.19883">http://arxiv.org/abs/2409.19883</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_7"></a>[7] 2023. “Introduction to Chainlink VRF.” <a href="https://docs.chain.link/vrf/v2/introduction">https://docs.chain.link/vrf/v2/introduction</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_8"></a>[8] Kevin Choi, Aathira Manoj, and Joseph Bonneau. 2023. “SoK: Distributed Randomness Beacons.” <a href="https://eprint.iacr.org/2023/728">https://eprint.iacr.org/2023/728</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_9"></a>[9] Benjamin Wesolowski. 2018. “Efficient verifiable delay functions.” <a href="https://eprint.iacr.org/2018/623">https://eprint.iacr.org/2018/623</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_10"></a>[10] Krzysztof Pietrzak. 2018. “Simple Verifiable Delay Functions.” <a href="https://eprint.iacr.org/2018/627">https://eprint.iacr.org/2018/627</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_11"></a>[11] Yossi Gilad, Rotem Hemo, Silvio Micali, Georgios Vlachos, and Nickolai Zeldovich. 2017. “Algorand: Scaling Byzantine Agreements for Cryptocurrencies.”</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_12"></a>[12] Bernardo David, Peter Gaži, Aggelos Kiayias, and Alexander Russell. 2018. “Ouroboros praos: An adaptively-secure, semi-synchronous proof-of-stake blockchain.” <a href="https://link.springer.com/chapter/10.1007/978-3-319-78375-8_3">https://link.springer.com/chapter/10.1007/978-3-319-78375-8_3</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_13"></a>[13] Ignacio Cascudo, and Bernardo David. 2017. “SCRAPE: Scalable Randomness Attested by Public Entities.” <a href="http://link.springer.com/10.1007/978-3-319-61204-1_27">http://link.springer.com/10.1007/978-3-319-61204-1_27</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_14"></a>[14] Ewa Syta, Philipp Jovanovic, Eleftherios Kokoris Kogias, Nicolas Gailly, Linus Gasser, Ismail Khoffi, Michael J Fischer, and Bryan Ford. 2017. “Scalable Bias-Resistant Distributed Randomness.” <a href="http://ieeexplore.ieee.org/document/7958592/">http://ieeexplore.ieee.org/document/7958592/</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_15"></a>[15] Timo Hanke, Mahnush Movahedi, and Dominic Williams. 2018. “DFINITY Technology Overview Series, Consensus System.” <a href="http://arxiv.org/abs/1805.04548">http://arxiv.org/abs/1805.04548</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_16"></a>[16] Marcos Kawazoe Aguilera, and Sam Toueg. 1998. “Correctness proof of ben-or’s randomized consensus algorithm.” <a href="https://ecommons.cornell.edu/entities/technical%20report/78842dc1-8e85-41ae-a081-7f6086a3f107">https://ecommons.cornell.edu/entities/technical%20report/78842dc1-8e85-41ae-a081-7f6086a3f107</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_17"></a>[17] Michael J Fischer, Nancy A Lynch, and Michael S Paterson. 1985. “Impossibility of Distributed Consensus with One Faulty Process.” <a href="https://dl.acm.org/doi/10.1145/3149.214121">https://dl.acm.org/doi/10.1145/3149.214121</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_18"></a>[18] Sean Bowe, Ariel Gabizon, and Matthew D. Green. 2019. “A Multi-party Protocol for Constructing the Public Parameters of the Pinocchio zk-SNARK.” <a href="http://link.springer.com/10.1007/978-3-662-58820-8_5">http://link.springer.com/10.1007/978-3-662-58820-8_5</a>.</div>
+</div>
 </div>
 </div>
 </div>
