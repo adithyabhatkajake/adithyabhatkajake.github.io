@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-29 Sun 14:12 -->
+<!-- 2026-04-12 Sun 21:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Jolteon and Ditto: Network-Adaptive Efficient Consensus with Asynchronous Fallback</title>
@@ -196,6 +196,39 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -219,19 +252,243 @@
 <p>
 Paper: [<a href="#citeproc_bib_item_1">1</a>]
 </p>
+<div id="outline-container-org326c38f" class="outline-2">
+<h2 id="org326c38f">Summary</h2>
+<div class="outline-text-2" id="text-org326c38f">
+<ul class="org-ul">
+<li>It is an SMR Protocol.</li>
+<li>This paper has two SMR protocols:
+<ol class="org-ol">
+<li><code>Jolteon</code>: 2-chain variant of DiemBFT/HotStuff [<a href="#citeproc_bib_item_2">2</a>] with a quadratic view-change.</li>
+<li><code>Ditto</code>: Jolteon + asynchronous fallback via VABA [<a href="#citeproc_bib_item_3">3</a>].</li>
+</ol></li>
+<li>It uses the standard SMR definition (safety + liveness + external validity).</li>
+<li><code>Jolteon</code> is partially synchronous (eventually synchronous). <code>Ditto</code> is network-adaptive: partially synchronous happy path, asynchronous fallback.</li>
+<li>It is adaptively secure.</li>
+<li>\(n = 3f + 1\).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org8657c09" class="outline-2">
+<h2 id="org8657c09">Motivation</h2>
+<div class="outline-text-2" id="text-org8657c09">
+<ul class="org-ul">
+<li><b>Important</b>: this paper builds on DiemBFT (LibraBFT), <i>not</i> the original HotStuff paper. DiemBFT is a production instantiation of HotStuff with a concrete TC-based pacemaker. The paper uses "HotStuff" and "DiemBFT" interchangeably throughout (stated explicitly in Section 2). The original HotStuff paper [<a href="#citeproc_bib_item_2">2</a>] never specified a pacemaker.</li>
+<li>Existing linear protocols (DiemBFT) sacrifice liveness under asynchrony. Robust protocols (VABA) pay \(O(n^2)\) even in the happy path.</li>
+<li>Key observation: DiemBFT's <i>view synchronization</i> (forming a TC via all-to-all timeout message exchange) is already \(O(n^2)\). So the linear <i>view-change communication</i> (leader proposal after a bad round carries only \(qc_{high}\)) is a theoretical milestone but practically irrelevant — the system already pays quadratic for synchronization.</li>
+<li>Since view synchronization is already quadratic, making view-change communication quadratic (leader sends the full TC with \(2f+1\) \(qc_{high}\) values) does not change the asymptotic worst case, but enables a 2-chain commit rule, reducing block-commit latency by ~30%.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9e387dd" class="outline-2">
+<h2 id="org9e387dd">Jolteon</h2>
+<div class="outline-text-2" id="text-org9e387dd">
+</div>
+<div id="outline-container-orgbc07b3f" class="outline-3">
+<h3 id="orgbc07b3f">Core Insight</h3>
+<div class="outline-text-3" id="text-orgbc07b3f">
+<ul class="org-ul">
+<li>DiemBFT's 3-chain commit rule is <i>forced</i> by its linear view-change communication. After a bad round, the new leader's proposal carries only its own \(qc_{high}\), which is insufficient to prove safety with just 2 chains.</li>
+<li>With a quadratic view-change communication (proposal includes the TC containing \(2f+1\) validators' \(qc_{high}\) values), the new leader can prove that no higher QC exists among honest replicas. This makes 2 chains sufficient for safety.</li>
+<li>This is a <i>co-design</i> of the view-change mechanism with the commit rule.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd9c3eaa" class="outline-3">
+<h3 id="orgd9c3eaa">Protocol (Figure 2)</h3>
+<div class="outline-text-3" id="text-orgd9c3eaa">
+<ul class="org-ul">
+<li>Derived from DiemBFT (Figure 1) with changes in blue.</li>
+<li><b>Block format</b>: \(B = [id, qc, tc, r, v_{cur}, txn]\). The leader sets \(tc = tc_{r-1}\) if it entered round \(r\) via a TC, otherwise \(tc = \bot\).</li>
+<li><b>Propose</b>: Leader \(L_r\) multicasts \(B = [id, qc_{high}, tc, r, v_{cur}, txn]\).</li>
+<li><b>Vote</b>: Replica votes for the first valid proposal \(B\) in round \(r\) if \(r = r_{cur}\), \(v = v_{cur}\), \(r > r_{vote}\), and at least one of:
+<ol class="org-ol">
+<li>\(B.r = B.qc.r + 1\) (direct extension: block extends parent from previous round), or</li>
+<li>\(B.r = B.tc.r + 1\) and \(B.qc.r \geq \max\{qc_{high}.r \mid qc_{high} \in B.tc\}\) (view-change: block is in the round after a TC, and the QC it extends is at least as high as the highest QC in the TC).</li>
+</ol></li>
+<li><b>Lock (1-chain)</b>: On seeing a valid \(qc\), update \(qc_{high} \leftarrow \max(qc_{high}, qc)\).</li>
+<li><b>Commit (2-chain)</b>: Whenever two adjacent certified blocks \(B, B'\) exist in the chain with consecutive round numbers (\(B'.r = B.r + 1\)), commit \(B\) and all ancestors.</li>
+<li><b>Pacemaker</b>: Identical to DiemBFT. TC-based: on timeout, multicast \(\langle \{r_{cur}\}_i, qc_{high} \rangle_i\). Upon \(2f+1\) timeouts, form a TC. Quadratic cost.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgfdd81e8" class="outline-3">
+<h3 id="orgfdd81e8">Why 2-chain is safe with quadratic view-change</h3>
+<div class="outline-text-3" id="text-orgfdd81e8">
+<ul class="org-ul">
+<li>Safety after view change relies on the leader proving that the QC it extends is the highest among honest replicas.</li>
+<li>In HotStuff's linear view-change, the leader only sends its own \(qc_{high}\)—insufficient proof, requiring a 3rd chain so that \(f+1\) honest replicas lock before any commit.</li>
+<li>In Jolteon's TC, the \(2f+1\) \(qc_{high}\) values collectively prove no higher QC exists (by quorum intersection with any certified QC's voters). The second vote condition enforces this: \(B.qc.r \geq \max\{qc_{high}.r \mid qc_{high} \in B.tc\}\).</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3e72aeb" class="outline-3">
+<h3 id="org3e72aeb">Complexity comparison with DiemBFT</h3>
+<div class="outline-text-3" id="text-org3e72aeb">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Metric</th>
+<th scope="col" class="org-left">DiemBFT (3-chain)</th>
+<th scope="col" class="org-left">Jolteon (2-chain)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Steady-state comm.</td>
+<td class="org-left">\(O(n)\) (linear)</td>
+<td class="org-left">\(O(n)\) (linear)</td>
+</tr>
+
+<tr>
+<td class="org-left">View-change comm.</td>
+<td class="org-left">\(O(n)\) (linear)</td>
+<td class="org-left">\(O(n^2)\) (quadratic)</td>
+</tr>
+
+<tr>
+<td class="org-left">View synchronization</td>
+<td class="org-left">\(O(n^2)\) (quadratic)</td>
+<td class="org-left">\(O(n^2)\) (quadratic)</td>
+</tr>
+
+<tr>
+<td class="org-left">Block-commit latency</td>
+<td class="org-left">\(7\Delta\)</td>
+<td class="org-left">\(5\Delta\)</td>
+</tr>
+
+<tr>
+<td class="org-left">Rounds to commit</td>
+<td class="org-left">7 messages</td>
+<td class="org-left">5 messages</td>
+</tr>
+</tbody>
+</table>
+
+<ul class="org-ul">
+<li>The view-change cost increases from linear to quadratic because the proposal now includes the TC (\(2f+1\) \(qc_{high}\) values). But view synchronization (timeout message exchange) is already quadratic in both protocols, so this does not change the asymptotic worst case.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge1e0514" class="outline-3">
+<h3 id="orge1e0514">Limitations</h3>
+<div class="outline-text-3" id="text-orge1e0514">
+<ul class="org-ul">
+<li>No liveness under asynchrony or DDoS on leaders—same as HotStuff/DiemBFT. Throughput drops to 0.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgec319a6" class="outline-2">
+<h2 id="orgec319a6">Ditto</h2>
+<div class="outline-text-2" id="text-orgec319a6">
+</div>
+<div id="outline-container-orgd8c874f" class="outline-3">
+<h3 id="orgd8c874f">Design</h3>
+<div class="outline-text-3" id="text-orgd8c874f">
+<ul class="org-ul">
+<li>Combines Jolteon's synchronous fast path with an asynchronous fallback protocol at no extra asymptotic cost.</li>
+<li>Instead of synchronizing views that will fail anyway (timeout due to asynchrony or bad leader), fall back to an asynchronous protocol that robustly guarantees progress.</li>
+<li><code>Ditto</code> switches between sync and async paths seamlessly in the pipelined chaining fashion.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6158d8b" class="outline-3">
+<h3 id="org6158d8b">Steady State (Figure 4)</h3>
+<div class="outline-text-3" id="text-org6158d8b">
+<ul class="org-ul">
+<li>Identical to Jolteon except: the first block in a new view includes the \(qc_{coin}\) of the previous view (the coin-QC from the fallback leader election).</li>
+<li>Replica keeps a boolean <code>fallback-mode</code> (initialized <code>false</code>). Does not vote for regular blocks when in fallback.</li>
+<li>2-chain commit applies to both regular blocks and endorsed fallback-blocks.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgfc002ce" class="outline-3">
+<h3 id="orgfc002ce">Asynchronous Fallback (Figure 5)</h3>
+<div class="outline-text-3" id="text-orgfc002ce">
+<ul class="org-ul">
+<li>Triggered on timeout: enter fallback, set <code>fallback-mode = true</code>.</li>
+<li>Each replica acts as a leader and builds a <i>fallback-chain</i> (f-chain) of 2 f-blocks:
+<ol class="org-ol">
+<li>Height-1 f-block: extends \(qc_{high}\), contains transactions.</li>
+<li>Height-2 f-block: extends the f-QC of the height-1 block.</li>
+</ol></li>
+<li>When \(2f+1\) height-2 f-QCs are collected, <i>random leader election</i> via threshold signatures: each replica signs the hash of the view number. \(f+1\) valid coin shares form a \(qc_{coin}\) that elects a leader with probability \(1/n\).</li>
+<li>All replicas continue steady state from the elected leader's f-chain.</li>
+<li>Safety: 1-chain lock and 2-chain commit apply uniformly across regular blocks and endorsed f-blocks. Endorsed f-QCs are handled as regular QCs for lock/commit.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6df30ec" class="outline-3">
+<h3 id="org6df30ec">Complexity (Theorem 1)</h3>
+<div class="outline-text-3" id="text-org6df30ec">
+<ul class="org-ul">
+<li>Synchronous path (honest leaders): amortized \(O(n)\) per block decision, \(5\) rounds block-commit latency.</li>
+<li>Asynchronous fallback: expected \(O(n^2)\) per block decision, expected \(10.5\) rounds block-commit latency.</li>
+<li>Async latency breakdown: 1 round timeout exchange + \(2 \times 2 = 4\) rounds for height-1 and height-2 f-blocks + 1 round for f-QC exchange + 1 round for randomness shares. Total = 7 rounds per fallback, commit with probability 2/3, so expected \(7 \times 1.5 = 10.5\) rounds.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org43da920" class="outline-3">
+<h3 id="org43da920">2-chain VABA (by-product)</h3>
+<div class="outline-text-3" id="text-org43da920">
+<ul class="org-ul">
+<li>Disabling the synchronous path (setting timeout \(\tau = 0\)) yields an improved VABA with expected \(10.5\) rounds (down from \(16.5\) in [<a href="#citeproc_bib_item_3">3</a>]).</li>
+<li>Correctness follows from Ditto's safety and liveness proofs.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org1418b26" class="outline-3">
+<h3 id="org1418b26">Exponential Backoff</h3>
+<div class="outline-text-3" id="text-org1418b26">
+<ul class="org-ul">
+<li>Under prolonged asynchrony, replicas use exponential backoff for the fallback timer: execute \(x\) consecutive async fallbacks, then multiply \(x\) by a constant factor (5 in experiments).</li>
+<li>Under synchrony and honest leaders, \(x = 1\) always (single fallback then back to steady state).</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org0304b80" class="outline-2">
+<h2 id="org0304b80">Evaluation</h2>
+<div class="outline-text-2" id="text-org0304b80">
+<ul class="org-ul">
+<li>Deployed on AWS (m5.8xlarge) across 5 regions: Virginia, California, Sydney, Stockholm, Tokyo. WAN experiments with 10, 20, 50 replicas.</li>
+<li>Jolteon consistently outperforms 3-chain DiemBFT by 200–300ms latency (one round-trip across WAN). Both scale similarly.</li>
+<li>Under crash faults: Ditto performs better than Jolteon (which drops to 0 throughput), close to 2-chain VABA. 2-chain VABA is most robust.</li>
+<li>Under DDoS on leaders: DiemBFT and Jolteon drop to 0 throughput. Ditto and 2-chain VABA maintain liveness. Ditto's performance is close to 2-chain VABA.</li>
+<li>Under combined crash faults + DDoS: Ditto slightly outperforms crash-only case due to exponential backoff skipping timer waits.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgfd10265" class="outline-2">
+<h2 id="orgfd10265">Concurrent work</h2>
+<div class="outline-text-2" id="text-orgfd10265">
+<ul class="org-ul">
+<li>Two concurrent 2-chain HotStuff variants: [<a href="#citeproc_bib_item_4">4</a>] and Rambaud (ePrint 2020:1480).</li>
+<li>Rambaud relies on impractical cryptographic primitives to preserve linear view-change (still quadratic pacemaker). Fast-HotStuff does not provide implementation or evaluation.</li>
+<li>Neither protocol provides comprehensive evaluation to showcase that quadratic view-change costs are negligible in practice.</li>
+<li>"Most importantly, both protocols fail to realize the full power of 2-chain protocols missing the fact that the view-change can become robust and DDoS resilient" — this is what Ditto achieves.</li>
+</ul>
+</div>
+</div>
 <div id="outline-container-orga6ae2e5" class="outline-2">
 <h2 id="orga6ae2e5">Notes</h2>
 <div class="outline-text-2" id="text-orga6ae2e5">
 <ul class="org-ul">
-<li>It is an SMR Protocol.</li>
-<li>This paper has two SMR protocols
-<ol class="org-ol">
-<li><code>Jolteon</code></li>
-<li><code>Ditto</code></li>
-</ol></li>
-<li>It uses the standard SMR definition.</li>
-<li>It is a partially synchronous good case with asynchronous network model fallback (using VABA).</li>
-<li>It is adaptively secure.</li>
+<li>The key conceptual contribution is the <i>co-design</i> of view-change mechanism and commit rule: once you accept that view synchronization is already quadratic (in DiemBFT's TC-based pacemaker), making view-change communication quadratic too costs nothing asymptotically but enables 2-chain commit.</li>
+<li>This paper gives the clearest explanation of <i>why</i> DiemBFT (and by extension HotStuff) uses 3 chains: it is the price of a linear view-change communication. The 3rd chain ensures \(f+1\) honest replicas lock, compensating for the leader's inability to prove safety from collected evidence alone.</li>
+<li>Notation difference from HotStuff: rounds and views are separated. In DiemBFT and Jolteon, the view number is always 0 (no async fallback). In Ditto, the view number increments after each async fallback.</li>
+<li>The Ditto liveness proof (Appendix B, Theorem 5) is by induction on view numbers: in each view, honest replicas either commit in steady state or enter fallback and commit a new block with probability 2/3.</li>
 </ul>
 </div>
 </div>
@@ -240,6 +497,9 @@ Paper: [<a href="#citeproc_bib_item_1">1</a>]
 <div class="outline-text-2" id="text-orga414941">
 <div class="csl-bib-body">
   <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Rati Gelashvili, Lefteris Kokoris-Kogias, Alberto Sonnino, Alexander Spiegelman, and Zhuolun Xiang. 2021. “Jolteon and Ditto: Network-Adaptive Efficient Consensus with Asynchronous Fallback.” <a href="http://arxiv.org/abs/2106.10362">http://arxiv.org/abs/2106.10362</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Maofan Yin, Dahlia Malkhi, Michael K. Reiter, Guy Golan Gueta, and Ittai Abraham. 2019. “HotStuff: BFT Consensus with Linearity and Responsiveness.” <a href="https://doi.org/10.1145/3293611.3331591">https://doi.org/10.1145/3293611.3331591</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>[3] Ittai Abraham, Dahlia Malkhi, and Alexander Spiegelman. 2019. “Asymptotically optimal validated asynchronous byzantine agreement.”</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_4"></a>[4] Mohammad M. Jalalzai, Jianyu Niu, Chen Feng, and Fangyu Gai. 2021. “Fast-HotStuff: A Fast and Resilient HotStuff Protocol.” <a href="http://arxiv.org/abs/2010.11454">http://arxiv.org/abs/2010.11454</a>.</div>
 </div>
 </div>
 </div>

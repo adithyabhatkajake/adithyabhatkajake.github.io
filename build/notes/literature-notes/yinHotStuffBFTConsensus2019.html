@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-29 Sun 14:12 -->
+<!-- 2026-04-12 Sun 21:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>HotStuff: BFT Consensus with Linearity and Responsiveness</title>
@@ -196,6 +196,39 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -227,6 +260,93 @@ Paper: [<a href="#citeproc_bib_item_1">1</a>]
 <li>It uses the traditional SMR definition.</li>
 <li>It is in the partially synchronous network model.</li>
 <li>HotStuff is adaptively secure. [<a href="https://decentralizedthoughts.github.io/2023-01-05-player-replaceability-I/">https://decentralizedthoughts.github.io/2023-01-05-player-replaceability-I/</a>]</li>
+<li>\(n \geq 3f + 1\).</li>
+<li>Optimistic responsiveness: progress at network speed when leader is honest, not bound by \(\Delta\) timeouts.</li>
+<li>\(O(n)\) per-view communication via linear leader and threshold signatures.</li>
+<li>The \(O(n)\) claim is scoped to the per-view happy path; it excludes pacemaker costs.</li>
+<li><b>Basic HotStuff</b>: 4 phases within a single view: PREPARE \(\to\) PRE-COMMIT \(\to\) COMMIT \(\to\) DECIDE. Each phase collects a quorum certificate (QC) from \(n - f\) replicas.</li>
+<li><b>Chained HotStuff</b>: Pipelining optimization. Each view runs one phase; a proposal carries the QC from the previous view. A block commits when it reaches depth 3 in a chain of QCs (the 3-chain rule).</li>
+<li>The 3-chain solves the <i>force-locking problem</i> without PBFT's [<a href="#citeproc_bib_item_2">2</a>] heavy \(O(n^3)\) view change or Tendermint's [<a href="#citeproc_bib_item_3">3</a>] timeout-bound rounds. An extra round of voting ensures that if a leader is replaced, the new leader can always determine the highest committed or locked block from the QCs alone.</li>
+<li><b>\(O(n)\) view change</b> (a headline contribution vs PBFT's \(O(n^3)\)): in Basic HotStuff, the new leader collects NEW-VIEW messages from \(n - f\) replicas, each containing the sender's \(prepareQC\). The leader picks the highest \(prepareQC\) and proposes extending it. This is \(O(n)\) messages of \(O(1)\) size. The 3-chain commit rule ensures safety despite the leader only using the highest QC.</li>
+<li><p>
+Comparison:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Protocol</th>
+<th scope="col" class="org-left">Per-view comm.</th>
+<th scope="col" class="org-left">View change</th>
+<th scope="col" class="org-left">Responsive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">PBFT</td>
+<td class="org-left">\(O(n^2)\)</td>
+<td class="org-left">\(O(n^3)\)</td>
+<td class="org-left">Yes</td>
+</tr>
+
+<tr>
+<td class="org-left">Tendermint</td>
+<td class="org-left">\(O(n)\)</td>
+<td class="org-left">N/A</td>
+<td class="org-left">No</td>
+</tr>
+
+<tr>
+<td class="org-left">HotStuff</td>
+<td class="org-left">\(O(n)\)</td>
+<td class="org-left">\(O(n)\)</td>
+<td class="org-left">Yes</td>
+</tr>
+</tbody>
+</table></li>
+<li>The third QC is the price for achieving both linearity and responsiveness simultaneously.</li>
+<li>In chained HotStuff, consecutive views are effectively required via a structural parent-pointer equality check (\(b^*.parent = b''\)). When a view produces no proposal, a <i>dummy node</i> fills the gap. This mechanism was made explicit as a view-number arithmetic constraint by [<a href="#citeproc_bib_item_4">4</a>].</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgdc23b95" class="outline-2">
+<h2 id="orgdc23b95">Pacemaker</h2>
+<div class="outline-text-2" id="text-orgdc23b95">
+<ul class="org-ul">
+<li>The 2019 paper defines only <i>abstract properties</i> for the pacemaker (guaranteeing unique leaders per view, view advancement after GST), not a concrete protocol.</li>
+<li>This is a deliberate design choice: the protocol is modular, with the pacemaker treated as a replaceable subcomponent. But it means the end-to-end communication complexity is underspecified.</li>
+<li>Total end-to-end complexity depends on which pacemaker is plugged in. Matching the Dolev-Reischuk [<a href="#citeproc_bib_item_5">5</a>] \(O(n^2)\) worst-case lower bound took until 2022.</li>
+<li><b>Pacemaker lineage</b>:
+<ul class="org-ul">
+<li>[<a href="#citeproc_bib_item_6">6</a>]: first dedicated view synchronizer protocol</li>
+<li>DiemBFT (LibraBFT) v1–v4 (2019–2021): production instantiation of HotStuff with a concrete TC-based pacemaker. Published as a technical report, not peer-reviewed. Most widely deployed pacemaker in practice. Preserves HotStuff's linear view-change communication (proposal carries only \(qc_{high}\), not the full TC). [<a href="#citeproc_bib_item_4">4</a>] later showed this linear view-change forces 3-chain; making it quadratic enables 2-chain.</li>
+<li>[<a href="#citeproc_bib_item_7">7</a>]</li>
+<li>[<a href="#citeproc_bib_item_8">8</a>] (RareSync): first to match Dolev-Reischuk \(O(n^2)\) end-to-end in partial synchrony</li>
+<li>[<a href="#citeproc_bib_item_9">9</a>]: also matches Dolev-Reischuk</li>
+<li>[<a href="#citeproc_bib_item_10">10</a>] (Fever)</li>
+<li>[<a href="#citeproc_bib_item_11">11</a>] (Lumiere): current theoretical state-of-the-art</li>
+</ul></li>
+<li>There is no single canonical pacemaker. DiemBFT / [<a href="#citeproc_bib_item_4">4</a>]-style TCs are the practical standard; Lumiere is the theoretical frontier.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgb5d1098" class="outline-2">
+<h2 id="orgb5d1098">Notes</h2>
+<div class="outline-text-2" id="text-orgb5d1098">
+<ul class="org-ul">
+<li>[<a href="#citeproc_bib_item_4">4</a>] showed that HotStuff's underspecified pacemaker <i>forces</i> the 3-chain for liveness. With a concrete TC-based pacemaker, 2-chain suffices (Jolteon achieves this).</li>
+<li>[<a href="#citeproc_bib_item_12">12</a>] showed a liveness problem in chained HotStuff when views are not consecutive: the chain can stall if the parent-pointer equality check fails across a view gap. Their protocol eliminates the consecutive-view requirement entirely.</li>
+<li>The <i>force-locking attack</i> [<a href="#citeproc_bib_item_13">13</a>] targets Sync HotStuff [<a href="#citeproc_bib_item_14">14</a>] specifically, not the partially synchronous HotStuff in this paper.</li>
 </ul>
 </div>
 </div>
@@ -235,6 +355,19 @@ Paper: [<a href="#citeproc_bib_item_1">1</a>]
 <div class="outline-text-2" id="text-orga50055c">
 <div class="csl-bib-body">
   <div class="csl-entry"><a id="citeproc_bib_item_1"></a>[1] Maofan Yin, Dahlia Malkhi, Michael K. Reiter, Guy Golan Gueta, and Ittai Abraham. 2019. “HotStuff: BFT Consensus with Linearity and Responsiveness.” <a href="https://doi.org/10.1145/3293611.3331591">https://doi.org/10.1145/3293611.3331591</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_2"></a>[2] Miguel Castro, and Barbara Liskov. 2002. “Practical byzantine fault tolerance and proactive recovery.” <a href="https://doi.org/10.1145/571637.571640">https://doi.org/10.1145/571637.571640</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_3"></a>[3] Ethan Buchman, Jae Kwon, and Zarko Milosevic. 2019. “The latest gossip on BFT consensus.” <a href="http://arxiv.org/abs/1807.04938">http://arxiv.org/abs/1807.04938</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_4"></a>[4] Rati Gelashvili, Lefteris Kokoris-Kogias, Alberto Sonnino, Alexander Spiegelman, and Zhuolun Xiang. 2021. “Jolteon and Ditto: Network-Adaptive Efficient Consensus with Asynchronous Fallback.” <a href="http://arxiv.org/abs/2106.10362">http://arxiv.org/abs/2106.10362</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_5"></a>[5] Danny Dolev, and Rüdiger Reischuk. 1985. “Bounds on information exchange for Byzantine agreement.” <a href="https://dl.acm.org/doi/10.1145/2455.214112">https://dl.acm.org/doi/10.1145/2455.214112</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_6"></a>[6] Oded Naor, Mathieu Baudet, Dahlia Malkhi, and Alexander Spiegelman. 2021. “Cogsworth: Byzantine View Synchronization.” <a href="https://cryptoeconomicsystems.pubpub.org/pub/naor-cogsworth-synchronization/release/5">https://cryptoeconomicsystems.pubpub.org/pub/naor-cogsworth-synchronization/release/5</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_7"></a>[7] Manuel Bravo, Gregory Chockler, and Alexey Gotsman. 2020. “Making Byzantine Consensus Live (Extended Version).”</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_8"></a>[8] Pierre Civit, Muhammad Ayaz Dzulfikar, Seth Gilbert, Vincent Gramoli, Rachid Guerraoui, Jovan Komatovic, and Manuel Vidigueira. 2022. “Byzantine Consensus is Theta(n 2): The Dolev-Reischuk Bound is Tight even in Partial Synchrony! [Extended Version].” <a href="http://arxiv.org/abs/2208.09262">http://arxiv.org/abs/2208.09262</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_9"></a>[9] Andrew Lewis-Pye. 2022. “Quadratic worst-case message complexity for State Machine Replication in the partial synchrony model.” <a href="http://arxiv.org/abs/2201.01107">http://arxiv.org/abs/2201.01107</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_10"></a>[10] Andrew Lewis-Pye, and Ittai Abraham. 2023. “Fever: Optimal Responsive View Synchronisation.” <a href="http://arxiv.org/abs/2301.09881">http://arxiv.org/abs/2301.09881</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_11"></a>[11] Andrew Lewis-Pye, Dahlia Malkhi, Oded Naor, and Kartik Nayak. 2023. “Lumiere: Making Optimal BFT for Partial Synchrony Practical.” <a href="http://arxiv.org/abs/2311.08091">http://arxiv.org/abs/2311.08091</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_12"></a>[12] Neil Giridharan, Florian Suri-Payer, Matthew Ding, Heidi Howard, Ittai Abraham, and Natacha Crooks. 2023. “BeeGees: Stayin’ Alive in Chained BFT.” <a href="https://dl.acm.org/doi/10.1145/3583668.3594572">https://dl.acm.org/doi/10.1145/3583668.3594572</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_13"></a>[13] Atsuki Momose, and Jason Paul Cruz. 2019. “Force-Locking Attack on Sync Hotstuff.” <a href="https://eprint.iacr.org/2019/1484">https://eprint.iacr.org/2019/1484</a>.</div>
+  <div class="csl-entry"><a id="citeproc_bib_item_14"></a>[14] Ittai Abraham, Dahlia Malkhi, Kartik Nayak, Ling Ren, and Maofan Yin. 2020. “Sync HotStuff: Simple and Practical Synchronous State Machine Replication.” <a href="https://ieeexplore.ieee.org/document/9152792/">https://ieeexplore.ieee.org/document/9152792/</a>.</div>
 </div>
 </div>
 </div>

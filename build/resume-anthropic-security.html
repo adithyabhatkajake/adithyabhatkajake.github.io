@@ -6,8 +6,7 @@
 <!-- 2026-04-12 Sun 21:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog</title>
-<meta name="author" content="Adithya Bhat" />
+<title>Resume</title>
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
   #content { max-width: 60em; margin: auto; }
@@ -196,6 +195,39 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -215,11 +247,89 @@
 </div>
 </div>
 <div id="content" class="content">
-<h1 class="title">Blog</h1>
-<ul class="org-ul">
-<li><a href="setting-up-doom-emacs.html">Setting Up Doom Emacs</a> — <i>2023-06-10</i></li>
-<li><a href="rust-perf.html">Rust Performance Speed-up Tricks</a> — <i>2023-05-01</i></li>
-</ul>
+<div id="outline-container-org1c6f49d" class="outline-2">
+<h2 id="org1c6f49d">Summary</h2>
+<div class="outline-text-2" id="text-org1c6f49d">
+</div>
+</div>
+<div id="outline-container-orgf9724f2" class="outline-2">
+<h2 id="orgf9724f2">Technical Skills</h2>
+<div class="outline-text-2" id="text-orgf9724f2">
+</div>
+</div>
+<div id="outline-container-org51458ca" class="outline-2">
+<h2 id="org51458ca">Work Experience</h2>
+<div class="outline-text-2" id="text-org51458ca">
+<p>
+<b>Visa Research, Foster City</b> (Aug 2023 - Present)<br />
+<i>Staff Research Scientist</i>
+</p>
+<p>
+Designed and built cryptographic protocols for Visa's payments infrastructure, including an accountable decentralized anonymous payment system (US patent filed) ensuring transaction privacy while maintaining auditability.
+Led research on fully homomorphic encryption applied to smart contracts (SoK accepted at DeFi 2026), evaluating the security and feasibility of privacy-preserving computation on untrusted platforms.
+Developed FastSync, a secure blockchain synchronization protocol using compact cryptographic proofs to verify state integrity without replaying full transaction history. Filed US patent.
+Architected a sharding protocol with secure cross-shard transaction processing, addressing consistency and integrity guarantees in partitioned distributed systems.
+Co-authored research on private set intersection protocols, enabling privacy-preserving data matching across organizations without revealing underlying datasets.
+</p>
+<p>
+<b>VMware Research, Remote</b> (May 2021 - Aug 2021)<br />
+<i>Research Intern</i>
+</p>
+<p>
+Built a privacy-preserving anonymous token system (UTT) on VMware's Concord-BFT platform, enabling decentralized ecash with accountable privacy&#x2014;users transact anonymously while authorities can audit when needed.
+Designed Quick-Pay, a low-latency payment protocol with a lock-free sharding extension, eliminating coordination bottlenecks while maintaining security invariants in distributed transaction processing.
+</p>
+<p>
+<b>Purdue University, West Lafayette</b> (Aug 2018 - Aug 2023)<br />
+<i>Graduate Research Assistant &#x2013; Department of Computer Science</i>
+</p>
+<p>
+Designed and implemented secure distributed protocols (OptRand, RandPiper) for cryptographic randomness generation, providing verifiable, unpredictable, and bias-resistant random beacons for security-critical applications.
+Co-authored attack analysis and security improvements for the Tor directory protocol (IEEE S\&amp;P 2024), identifying vulnerabilities in a real-world anonymity system and proposing mitigations.
+Developed distributed key generation protocols without broadcast (Journal of Cryptology 2024), enabling secure key lifecycle management in settings where broadcast channels are untrusted or unavailable.
+Built \href{https://github.com/libdist-rs/libcrypto-rs}{libcrypto-rs} and \href{https://github.com/libdist-rs/libnet-rs}{libnet-rs}: open-source Rust libraries for cryptographic primitives and secure networking in distributed systems.
+Published 10 papers at top security venues including CCS (x4), IEEE S\&amp;P, NDSS, and Financial Cryptography. Served as PC member for CCS, USENIX Security, and FC.
+</p>
+</div>
+</div>
+<div id="outline-container-org3bb2ff5" class="outline-2">
+<h2 id="org3bb2ff5">Education</h2>
+<div class="outline-text-2" id="text-org3bb2ff5">
+<p>
+<b>Ph.D., Computer Science</b> &#x2013; Purdue University, West Lafayette <i>(2018-2023)</i><br />
+    Advisor: Aniket Kate. Focus: Byzantine fault-tolerant distributed systems and applied cryptography.
+</p>
+
+<p>
+<b>B.Tech., Information Technology</b> &#x2013; NIT Karnataka, Surathkal <i>(2014-2018)</i>
+</p>
+</div>
+</div>
+<div id="outline-container-org7f8b842" class="outline-2">
+<h2 id="org7f8b842">Selected Publications &amp; Patents</h2>
+<div class="outline-text-2" id="text-org7f8b842">
+<p>
+13 peer-reviewed publications at top security venues. 3 US patents. Selected highlights:
+</p>
+<p>
+<b>Attacking and Improving the Tor Directory Protocol</b> (IEEE S\&amp;P 2024). Identified vulnerabilities in Tor's directory system and proposed security improvements.
+<b>Synchronous DKG without Broadcasts</b> (Journal of Cryptology 2024). Secure distributed key generation without trusting broadcast channels.
+<b>HashRand &#x2013; Efficient Asynchronous Random Beacon without Threshold Cryptographic Setup</b> (CCS 2024). Secure randomness generation without trusted setup ceremonies.
+<b>Lite-PoT &#x2013; Practical Powers-of-Tau Setup Ceremony</b> (CCS 2025). Practical secure setup for cryptographic systems used in production.
+<b>Accountable Decentralized Anonymous Payments</b> &#x2013; US Patent 20240265373. Privacy-preserving payment system with auditability.
+</p>
+</div>
+</div>
+<div id="outline-container-orgc866406" class="outline-2">
+<h2 id="orgc866406">Open Source &amp; Software Artifacts</h2>
+<div class="outline-text-2" id="text-orgc866406">
+<p>
+<b>\href{https://github.com/libdist-rs/libcrypto-rs}{libcrypto-rs}</b> (Rust) &#x2013; Cryptographic primitives library with traits and wrappers for threshold signatures, key management, and secure protocol building blocks.
+<b>\href{https://github.com/libdist-rs/libnet-rs}{libnet-rs}</b> (Rust) &#x2013; Secure networking library for distributed systems. Powers multiple BFT protocol implementations.
+<b>\href{https://github.com/libdist-rs/libmempool-rs}{libmempool-rs}</b> (Rust) &#x2013; Transaction mempool with ordering and integrity guarantees for distributed systems.
+</p>
+</div>
+</div>
 </div>
 </body>
 </html>

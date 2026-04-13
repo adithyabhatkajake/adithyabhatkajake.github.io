@@ -6,8 +6,7 @@
 <!-- 2026-04-12 Sun 21:19 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blog</title>
-<meta name="author" content="Adithya Bhat" />
+<title>Resume</title>
 <meta name="generator" content="Org Mode" />
 <style type="text/css">
   #content { max-width: 60em; margin: auto; }
@@ -196,6 +195,39 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -215,11 +247,87 @@
 </div>
 </div>
 <div id="content" class="content">
-<h1 class="title">Blog</h1>
-<ul class="org-ul">
-<li><a href="setting-up-doom-emacs.html">Setting Up Doom Emacs</a> — <i>2023-06-10</i></li>
-<li><a href="rust-perf.html">Rust Performance Speed-up Tricks</a> — <i>2023-05-01</i></li>
-</ul>
+<div id="outline-container-org8f0bbf3" class="outline-2">
+<h2 id="org8f0bbf3">Summary</h2>
+<div class="outline-text-2" id="text-org8f0bbf3">
+</div>
+</div>
+<div id="outline-container-orgbc6f769" class="outline-2">
+<h2 id="orgbc6f769">Technical Skills</h2>
+<div class="outline-text-2" id="text-orgbc6f769">
+</div>
+</div>
+<div id="outline-container-org1691bba" class="outline-2">
+<h2 id="org1691bba">Work Experience</h2>
+<div class="outline-text-2" id="text-org1691bba">
+<p>
+<b>Visa Research, Foster City</b> (Aug 2023 - Present)<br />
+<i>Staff Research Scientist</i>
+</p>
+<p>
+Designed and built production-grade distributed systems for payments infrastructure, including an efficient transaction replay system (Ira) and a flexible payment protocol (FPS) for Visa's global network.
+Developed FastSync, a high-throughput data synchronization protocol that reduces sync time from hours to minutes, enabling rapid state recovery across distributed nodes. Filed US patent.
+Architected a partially synchronous sharding protocol and implemented Instachain, a scalable execution system that partitions workload across shards for parallel processing.
+Led research on security and privacy for distributed data systems, including homomorphic encryption for smart contracts and private set intersection protocols.
+</p>
+<p>
+<b>VMware Research, Remote</b> (May 2021 - Aug 2021)<br />
+<i>Research Intern</i>
+</p>
+<p>
+Built a prototype token system on VMware's Concord-BFT distributed platform, demonstrating privacy-preserving operations on production-grade distributed infrastructure.
+Designed Quick-Pay, a one-round-trip low-latency protocol optimized for throughput, and extended it into a lock-free sharding solution&#x2014;eliminating coordination bottlenecks in distributed transaction processing.
+</p>
+<p>
+<b>Purdue University, West Lafayette</b> (Aug 2018 - Aug 2023)<br />
+<i>Graduate Research Assistant &#x2013; Department of Computer Science</i>
+</p>
+<p>
+Designed and implemented multiple fault-tolerant distributed protocols (Apollo, Artemis, Leto, OptRand, RandPiper) handling Byzantine faults in synchronous and asynchronous network settings.
+Built \href{https://github.com/libdist-rs/libnet-rs}{libnet-rs}: a high-performance networking library in Rust for distributed system protocols, enabling rapid prototyping and benchmarking at scale.
+Built \href{https://github.com/libdist-rs/libstorage-rs}{libstorage-rs} (Rust) and \href{https://github.com/adithyabhatkajake/libe2c-cpp}{libe2c-cpp} (C++): pluggable storage and consensus frameworks for simulating and evaluating distributed protocols at scale.
+Developed mathematical models for protocol optimization, improving energy efficiency of state machine replication (Middleware 2023). Directly applicable to reducing infrastructure cost at scale.
+Published 10 papers at top-tier venues including CCS (x4), IEEE S\&amp;P, NDSS, and Financial Cryptography. Served on program committees for CCS, FC, and USENIX Security.
+</p>
+</div>
+</div>
+<div id="outline-container-org7e28264" class="outline-2">
+<h2 id="org7e28264">Education</h2>
+<div class="outline-text-2" id="text-org7e28264">
+<p>
+<b>Ph.D., Computer Science</b> &#x2013; Purdue University, West Lafayette <i>(2018-2023)</i><br />
+    Advisor: Aniket Kate. Focus: Byzantine fault-tolerant distributed systems and applied cryptography.
+</p>
+
+<p>
+<b>B.Tech., Information Technology</b> &#x2013; NIT Karnataka, Surathkal <i>(2014-2018)</i>
+</p>
+</div>
+</div>
+<div id="outline-container-org02e0072" class="outline-2">
+<h2 id="org02e0072">Selected Publications &amp; Patents</h2>
+<div class="outline-text-2" id="text-org02e0072">
+<p>
+13 peer-reviewed publications at CCS (x4), IEEE S&amp;P, DSN, ICDCS, NDSS, Middleware, FC, and Journal of Cryptology. 3 US patents. Selected highlights:
+</p>
+<p>
+<b>EESMR &#x2013; Energy Efficient State Machine Replication</b> (Middleware 2023). Optimization models to reduce resource consumption in replicated systems.
+<b>OptRand &#x2013; Optimistically Responsive Distributed Randomness</b> (NDSS 2023). Reconfigurable protocol with optimistic fast-path low-latency performance.
+<b>Synchronous DKG without Broadcasts</b> (Journal of Cryptology 2024). Efficient distributed coordination without expensive broadcast primitives.
+<b>Fast Sync Blockchain System and Method</b> &#x2013; US Patent WO2024026321A1. Efficient state synchronization protocol for distributed nodes.
+</p>
+</div>
+</div>
+<div id="outline-container-org2316655" class="outline-2">
+<h2 id="org2316655">Open Source &amp; Software Artifacts</h2>
+<div class="outline-text-2" id="text-org2316655">
+<p>
+<b>\href{https://github.com/libdist-rs/libnet-rs}{libnet-rs}</b> (Rust) &#x2013; Core networking library for distributed systems. Powers multiple BFT protocol implementations including Apollo and Sync HotStuff.
+<b>\href{https://github.com/libdist-rs/libstorage-rs}{libstorage-rs}</b> (Rust) &#x2013; Pluggable storage backend library for distributed protocol nodes.
+<b>\href{https://github.com/libdist-rs/libmempool-rs}{libmempool-rs}</b> (Rust) &#x2013; Transaction mempool for buffering, ordering, and managing pending operations in distributed systems.
+</p>
+</div>
+</div>
 </div>
 </body>
 </html>
