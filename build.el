@@ -47,6 +47,13 @@
 ;; Allow alphabetical list markers (a. b. c.) for nested sub-items
 (setq org-list-allow-alphabetical t)
 
+;; Enable babel evaluation for graphviz during export
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (dot . t)))
+(setq org-confirm-babel-evaluate nil)
+
 ;; Configure org-cite with bibliography from citar config (passed via build.sh)
 (setq org-cite-global-bibliography (list (getenv "BIBLIOGRAPHY")))
 (setq org-cite-export-processors
@@ -450,19 +457,29 @@ Changes to these files affect all outputs."
 ;; Configure attachment directories
 
 ;; Fix attachment links during export
-(defun fix-attachment-links (link desc info)
-  "Handle attachment links properly during export.
-Ensures LINK with DESC is properly resolved using INFO."
-  (let ((path (org-element-property :path link)))
-    (if (string-prefix-p "attachment:" (org-element-property :raw-link link))
-        (let ((filename (substring path (length "attachment:")))
-              (html-extension (plist-get info :html-extension))
-              (link-org-files-as-html-p (org-html-link-org-files-as-html-p info)))
-          (format "<a href=\"%s/%s\">%s</a>"
-                  attach-dir
-                  filename
-                  (or desc filename)))
-      nil)))
+(defun fix-attachment-links (path desc backend info)
+  "Export attachment: links for HTML backend.
+Resolves the attachment directory from the source file's :DIR: property
+and renders image attachments as <img> tags."
+  (when (eq backend 'html)
+    (let* ((input-file (plist-get info :input-file))
+           (input-dir (and input-file (file-name-directory input-file)))
+           (src-buf (and input-file
+                         (or (find-buffer-visiting input-file)
+                             (find-file-noselect input-file t))))
+           (attach-dir
+            (when src-buf
+              (with-current-buffer src-buf
+                (save-excursion
+                  (goto-char (point-min))
+                  (org-attach-dir)))))
+           (rel-path
+            (if (and attach-dir input-dir)
+                (file-name-concat (file-relative-name attach-dir input-dir) path)
+              path)))
+      (if (string-match-p "\\.\\(png\\|jpe?g\\|gif\\|svg\\|webp\\)$" path)
+          (format "<img src=\"%s\" alt=\"%s\" />" rel-path (or desc path))
+        (format "<a href=\"%s\">%s</a>" rel-path (or desc path))))))
 
 ;; Register the fix-attachment-links function
 (org-link-set-parameters "attachment"

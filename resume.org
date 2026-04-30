@@ -1,0 +1,129 @@
+#+title: Resume
+#+OPTIONS: toc:nil title:nil date:nil num:nil author:nil
+#+LATEX_CLASS: resume
+
+* Meta :noexport:
+# ============================================================
+# CUSTOMIZATION GUIDE
+# ============================================================
+# To tailor for a new role, update:
+# 1. The "Summary" section below (match keywords from the JD)
+# 2. Reorder/edit bullet points under "Work Experience"
+# 3. Adjust "Technical Skills" emphasis
+# 4. Pick relevant publications in "Selected Publications"
+#
+# Build with: M-x build-resume
+# Or from command line: emacs --batch -l build-resume.el
+# ============================================================
+
+* Summary
+#+begin_export latex
+\begin{list}{}{\leftmargin=0em \rightmargin=0em}
+\item[]
+Distributed systems engineer and researcher with 8+ years of experience
+designing, building, and evaluating fault-tolerant, high-performance
+distributed systems. Published 13 peer-reviewed papers at top-tier venues
+(CCS, IEEE S\&P, NDSS, FC) and hold 3 US patents. Deep expertise in consensus
+protocols, state machine replication, data synchronization, and distributed
+data infrastructure. Proficient in Go, Rust, C/C++, and Python.
+\end{list}
+#+end_export
+
+* Technical Skills
+#+begin_export latex
+\begin{tabular}{ @{} >{\bfseries}l @{\hspace{3ex}} l }
+Languages & Go, Rust, C/C++, Python, Java \\
+Distributed Systems & Consensus protocols (BFT/CFT), State Machine Replication, \\
+  & Sharding, Replication, Fault-tolerant systems, Async \& Sync protocols \\
+Data Infrastructure & Key-value stores, Distributed databases, Data synchronization, \\
+  & Cache-coherence, Protocol optimization, Multi-threading \& concurrency \\
+Tools \& Frameworks & libp2p, gRPC, Protobuf, Ethereum, Concord-BFT, Git, Linux, Docker \\
+\end{tabular}
+#+end_export
+
+* Work Experience
+
+*Visa Research, Foster City* @@latex: \hfill @@ (Aug 2023 - Present)\\
+/Staff Research Scientist/
+#+begin_export latex
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ Designed and built production-grade distributed systems for payments infrastructure, including an efficient transaction replay system (Ira) and a flexible payment protocol (FPS) for Visa's global network.
+@@latex: \item @@ Developed FastSync, a high-throughput blockchain synchronization protocol that reduces sync time from hours to minutes, enabling rapid state recovery across distributed nodes. Filed US patent.
+@@latex: \item @@ Architected a partially synchronous sharding protocol and implemented Instachain, a scalable blockchain execution system that partitions workload across shards for parallel processing.
+@@latex: \item @@ Led research on energy-efficient consensus and homomorphic encryption applied to smart contracts (SoK accepted at DeFi 2026), bridging cutting-edge cryptography with practical system design.
+@@latex: \item @@ Authored 5 technical reports and patent applications; presented at RWC 2025, Dagstuhl, and Espresso Systems.
+#+begin_export latex
+\end{list}
+\vspace{0.5em}
+#+end_export
+
+*VMware Research, Remote* @@latex: \hfill @@ (May 2021 - Aug 2021)\\
+/Research Intern/
+#+begin_export latex
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ Built a prototype anonymous token system on top of Concord-BFT, VMware's production Byzantine fault-tolerant distributed platform.
+@@latex: \item @@ Designed Quick-Pay, a one-round-trip low-latency payment protocol, and extended it into a two-phase lock-free sharding solution---eliminating coordination bottlenecks in distributed transaction processing.
+#+begin_export latex
+\end{list}
+\vspace{0.5em}
+#+end_export
+
+*Purdue University, West Lafayette* @@latex: \hfill @@ (Aug 2018 - Aug 2023)\\
+/Graduate Research Assistant -- Department of Computer Science/
+#+begin_export latex
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ Designed and implemented multiple fault-tolerant consensus protocols (Apollo, Artemis, Leto, OptRand, RandPiper) handling Byzantine faults in synchronous and asynchronous network settings.
+@@latex: \item @@ Built \href{https://github.com/libdist-rs/libnet-rs}{libnet-rs}: a high-performance networking library in Rust for state machine replication protocols, enabling rapid prototyping and benchmarking of distributed systems.
+@@latex: \item @@ Built \href{https://github.com/libdist-rs/libstorage-rs}{libstorage-rs} (Rust) and \href{https://github.com/adithyabhatkajake/libe2c-cpp}{libe2c-cpp} (C++): pluggable storage and consensus frameworks for simulating and evaluating distributed protocols at scale.
+@@latex: \item @@ Developed mathematical models for protocol optimization, improving energy efficiency of state machine replication (published at Middleware 2023). Directly applicable to reducing infrastructure cost at scale.
+@@latex: \item @@ Published 10 papers at top-tier venues including CCS (x4), IEEE S\&P, NDSS, and Financial Cryptography. Served on program committees for CCS, FC, and USENIX Security.
+#+begin_export latex
+\end{list}
+\vspace{0.5em}
+#+end_export
+
+* Education
+@@latex: \item @@ *Ph.D., Computer Science* -- Purdue University, West Lafayette @@latex: \hfill @@ /(2018-2023)/\\
+    Advisor: Aniket Kate. Focus: Byzantine fault-tolerant distributed systems and applied cryptography.
+
+@@latex: \item @@ *B.Tech., Information Technology* -- NIT Karnataka, Surathkal @@latex: \hfill @@ /(2014-2018)/
+
+* Selected Publications & Patents
+#+begin_export latex
+\vspace{0.5em}
+#+end_export
+13 peer-reviewed publications at CCS (x4), IEEE S&P, DSN, ICDCS, NDSS, Middleware, FC, and Journal of Cryptology. 3 US patents. Selected highlights:
+#+begin_export latex
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ *EESMR -- Energy Efficient State Machine Replication* (Middleware 2023). Optimization models to reduce resource consumption in replicated systems.
+@@latex: \item @@ *OptRand -- Optimistically Responsive Distributed Randomness* (NDSS 2023). Reconfigurable distributed protocol with optimistic fast-path performance.
+@@latex: \item @@ *The Unique Chain Rule and Its Applications* (FC 2023). Novel consistency primitive for partially synchronous distributed systems.
+@@latex: \item @@ *Synchronous DKG without Broadcasts* (Journal of Cryptology 2024). Efficient distributed coordination without expensive broadcast primitives.
+@@latex: \item @@ *Fast Sync Blockchain System and Method* -- US Patent WO2024026321A1. Efficient state synchronization protocol for distributed nodes.
+#+begin_export latex
+\end{list}
+\vspace{0.5em}
+#+end_export
+
+* Open Source & Software Artifacts
+#+begin_export latex
+\vspace{0.5em}
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ *\href{https://github.com/libdist-rs/libnet-rs}{libnet-rs}* (Rust) -- Core networking library for distributed systems. Powers multiple BFT protocol implementations including Apollo and Sync HotStuff.
+@@latex: \item @@ *\href{https://github.com/libdist-rs/libstorage-rs}{libstorage-rs}* (Rust) -- Pluggable storage backend library for distributed protocol nodes.
+@@latex: \item @@ *\href{https://github.com/libdist-rs/libmempool-rs}{libmempool-rs}* (Rust) -- Transaction mempool for buffering, ordering, and managing pending operations in distributed systems.
+@@latex: \item @@ *\href{https://github.com/libdist-rs/libcrypto-rs}{libcrypto-rs}* (Rust) -- Cryptographic primitives library with traits and wrappers used across the libdist-rs ecosystem.
+@@latex: \item @@ *\href{https://github.com/adithyabhatkajake/libe2c-cpp}{libe2c-cpp}* (C++) -- Implementation of energy-efficient consensus protocol (E2C).
+#+begin_export latex
+\end{list}
+#+end_export

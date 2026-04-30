@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-04-29 Wed 21:19 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Resume</title>
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
+<link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
+<link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="preamble" class="status">
+
+<div class="banner">
+   <a id="myname" href="/">Hermitsage</a>
+  <hr>
+<nav>
+    <p>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/CV.html">CV</a>
+        <a href="/notes/index.html">Notes</a>
+        <a href="/blogs/index.html">Blog</a>
+    </p>
+  </nav>
+</div>
+</div>
+<div id="content" class="content">
+<div id="outline-container-org18ed9a4" class="outline-2">
+<h2 id="org18ed9a4">Summary</h2>
+<div class="outline-text-2" id="text-org18ed9a4">
+</div>
+</div>
+<div id="outline-container-orga319b03" class="outline-2">
+<h2 id="orga319b03">Technical Skills</h2>
+<div class="outline-text-2" id="text-orga319b03">
+</div>
+</div>
+<div id="outline-container-org4e118a2" class="outline-2">
+<h2 id="org4e118a2">Work Experience</h2>
+<div class="outline-text-2" id="text-org4e118a2">
+<p>
+<b>Visa Research, Foster City</b> (Aug 2023 - Present)<br />
+<i>Staff Research Scientist</i>
+</p>
+<p>
+Led research on fault-tolerant distributed systems for payments infrastructure, spanning consensus, storage, primary-backup replication acceleration, and empirical scaling analysis.
+Invented hint-based replication acceleration: filed US patent on \emph{FastSync} (WO2024026321A1, Belady-optimal cache replacement via clairvoyant hints from already-synchronized nodes) and generalized it as \emph{Ira} (2026 tech report), a primary-backup replay framework delivering \textbf{$5.2\times-23.6\times$} backup speedup at \(\approx 11\%\) primary overhead across 24M Ethereum mainnet transactions (100k blocks).
+Authored \emph{Adhara} (2026, under submission), a year-scale empirical study of blockchain execution scaling over \textbf{42M} Ethereum transactions / 208K blocks: demonstrated that state sharding caps at \textbf{$1.37\times$} even under ideal offline partitioning due to hub-contract skew, while intra-block \emph{parallel execution via per-block conflict DAGs} achieves a \textbf{$13.68\times$} analytical parallelism bound with zero speculation and zero aborts.
+Designed and implemented \emph{FPS} (Flexible Payment Systems tech report, 2025): a BFT payment protocol with 15k LOC Rust implementation across 16 crates on a self-designed networking/crypto/storage substrate, with reproducible multi-VM benchmarks.
+</p>
+<p>
+<b>VMware Research, Remote</b> (May 2021 - Aug 2021)<br />
+<i>Research Intern</i>
+</p>
+<p>
+Built a prototype anonymous token system on top of Concord-BFT, VMware's production Byzantine fault-tolerant distributed platform.
+Designed \emph{Quick-Pay}, a one-round-trip low-latency payment protocol, and extended it into a lock-free sharding solution&#x2014;eliminating coordination bottlenecks in distributed transaction processing.
+</p>
+<p>
+<b>Purdue University, West Lafayette</b> (Aug 2018 - Aug 2023)<br />
+<i>Graduate Research Assistant &#x2013; Department of Computer Science</i>
+</p>
+<p>
+Implemented and benchmarked baseline consensus protocols (Sync HotStuff, Opt Sync, OptRand) alongside own-designed protocols across synchronous and partially synchronous network models; 10 peer-reviewed papers at CCS, NDSS, FC, and Middleware.
+Built \href{https://github.com/libdist-rs/libnet-rs}{libnet-rs}: a high-performance async networking library in Rust with writev-based I/O, TLS/TCP reliable transports, and a reproducible multi-VM benchmarking harness. Powers multiple BFT protocol implementations.
+First-authored \emph{EESMR} (Middleware 2023) and implemented \href{https://github.com/adithyabhatkajake/libe2c-cpp}{libe2c-cpp} in C++: an energy-efficient BFT-SMR protocol that avoids quorum-certificate construction during steady-state via \emph{voting-in-the-head}, delivering \textbf{2.8$\times$} energy efficiency over Sync HotStuff in failure-free runs.
+First-authored the \emph{Unique Chain Rule} (FC 2023): a consensus primitive where hash-chain extensions act as implicit votes, enabling \textbf{linear} communication complexity in failure-free synchronous BFT SMR (vs \(O(n^2)\) in the state of the art) and \(2\times\) theoretical block-production rate over Opt Sync.
+Optimized the Leto consensus hot path, delivering 6\(\times\) throughput improvement through a combination of lock-free data structures, buffer contiguity, and async I/O restructuring.
+</p>
+</div>
+</div>
+<div id="outline-container-org3714c4c" class="outline-2">
+<h2 id="org3714c4c">Education</h2>
+<div class="outline-text-2" id="text-org3714c4c">
+<p>
+<b>Ph.D., Computer Science</b> &#x2013; Purdue University, West Lafayette <i>(2018-2023)</i><br />
+    Advisor: Aniket Kate. Focus: Byzantine fault-tolerant distributed systems and applied cryptography.
+</p>
+
+<p>
+<b>B.Tech., Information Technology</b> &#x2013; NIT Karnataka, Surathkal <i>(2014-2018)</i>
+</p>
+</div>
+</div>
+<div id="outline-container-orgcc1f27c" class="outline-2">
+<h2 id="orgcc1f27c">Selected Publications &amp; Patents</h2>
+<div class="outline-text-2" id="text-orgcc1f27c">
+<p>
+13 peer-reviewed publications at CCS (x4), IEEE S&amp;P, DSN, ICDCS, NDSS, Middleware, FC, and Journal of Cryptology. 3 US patents. Selected:
+</p>
+<p>
+<b>EESMR &#x2013; Energy Efficient BFT-SMR for the Masses</b> (Middleware 2023). Leader-based SMR that avoids quorum-certificate construction during steady-state via <i>voting-in-the-head</i>; \(2.8\times\) more energy-efficient than Sync HotStuff in failure-free runs.
+<b>The Unique Chain Rule and Its Applications</b> (FC 2023). Consensus primitive where hash-chain extensions serve as implicit votes; enables linear communication complexity in failure-free synchronous BFT SMR and \(2\times\) block-production rate over Opt Sync.
+<b>Ira: Efficient Transaction Replay for Distributed Systems</b> (Tech report, 2026). Hint-based replay framework for primary-backup replication; \(5.2\times-23.6\times\) backup replay speedup on 24M Ethereum mainnet transactions at \(\approx11\%\) primary overhead.
+<b>Attacking and Improving the Tor Directory Protocol</b> (IEEE S\&amp;P 2024). Identified vulnerabilities in Tor's distributed directory-consensus protocol and designed remediations; co-author.
+</p>
+</div>
+</div>
+<div id="outline-container-orge991256" class="outline-2">
+<h2 id="orge991256">Open Source &amp; Software Artifacts</h2>
+<div class="outline-text-2" id="text-orge991256">
+<p>
+<b>\href{https://github.com/libdist-rs/libapollo-rs}{libapollo-rs}</b> (Rust) &#x2013; BFT consensus testbed: reference implementations of Apollo, Artemis, Sync HotStuff, and Opt Sync with reproducible multi-VM AWS benchmarking.
+<b>\href{https://github.com/libdist-rs/libnet-rs}{libnet-rs}</b> (Rust) &#x2013; High-performance async networking library: TCP/TLS/UDP reliable transports, writev-based I/O, multi-threaded senders, stress-test harness with published baseline throughput numbers.
+<b>\href{https://github.com/adithyabhatkajake/libe2c-cpp}{libe2c-cpp}</b> (C++) &#x2013; Reference implementation of EESMR (Middleware 2023): steady-state SMR without quorum certificates; 2.8\(\times\) more energy-efficient than Sync HotStuff.
+</p>
+</div>
+</div>
+</div>
+</body>
+</html>

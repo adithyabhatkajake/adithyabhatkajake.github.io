@@ -1,0 +1,124 @@
+#+title: Resume
+#+OPTIONS: toc:nil title:nil date:nil num:nil author:nil
+#+LATEX_CLASS: resume
+
+* Meta :noexport:
+# Tuned for: Google - Senior Software Engineer, Infrastructure, Infra Spanner (Sunnyvale, Mid-level/L5)
+# Comp: $174K-$252K base + equity + bonus
+# Key JD keywords: C++, distributed systems, concurrency, multi-threading,
+# synchronization, performance analysis, debugging, optimization,
+# distributed database, database internals, high-availability, disaster
+# recovery, Paxos/consensus (implicit -- Spanner is Paxos-based), globally
+# replicated, SQL-aware, availability, scalability
+# Positioning: consensus + replication specialist with C++ artifacts (libe2c-cpp),
+# networking substrate (libnet-rs), and production payment systems (libflexpay-rs, FPS).
+# PhD in distributed systems directly matches "Preferred: PhD in CS".
+
+* Summary
+#+begin_export latex
+\begin{list}{}{\leftmargin=0em \rightmargin=0em}
+\item[]
+Distributed systems engineer with a Ph.D. and 8+ years designing, building, and
+evaluating fault-tolerant, high-performance distributed systems. Deep expertise
+in consensus protocols (Paxos, BFT, state machine replication), replication,
+and multi-threaded concurrent systems. Author of 13 peer-reviewed publications
+at CCS, IEEE S\&P, NDSS, FC, and Middleware; 3 US patents. Proficient in
+C/C++, Rust, Go, and Python, with hands-on performance engineering
+across networking, storage, and consensus hot paths.
+\end{list}
+#+end_export
+
+* Technical Skills
+#+begin_export latex
+\begin{tabular}{ @{} >{\bfseries}l @{\hspace{3ex}} l }
+Languages & C/C++, Rust, Go, Python \\
+Distributed Systems & Consensus (Paxos, BFT, CFT), State Machine Replication, \\
+  & Replication, Sharding, High-Availability, Fault-tolerance \\
+Performance \& Concurrency & Multi-threading, async I/O, lock-free data structures, \\
+  & Performance analysis, benchmarking, profiling, hot-path optimization \\
+Systems \& Infra & Linux, TCP/TLS networking, RocksDB, gRPC, AWS, Docker, Git \\
+\end{tabular}
+#+end_export
+
+* Work Experience
+
+*Visa Research, Foster City* @@latex: \hfill @@ (Aug 2023 - Present)\\
+/Staff Research Scientist/
+#+begin_export latex
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ Led research on fault-tolerant distributed systems for payments infrastructure, spanning consensus, storage, primary-backup replication acceleration, and empirical scaling analysis.
+@@latex: \item @@ Invented hint-based replication acceleration: filed US patent on \emph{FastSync} (WO2024026321A1, Belady-optimal cache replacement via clairvoyant hints from already-synchronized nodes) and generalized it as \emph{Ira} (2026 tech report), a primary-backup replay framework delivering \textbf{$5.2\times-23.6\times$} backup speedup at $\approx 11\%$ primary overhead across 24M Ethereum mainnet transactions (100k blocks).
+@@latex: \item @@ Authored \emph{Adhara} (2026, under submission), a year-scale empirical study of blockchain execution scaling over \textbf{42M} Ethereum transactions / 208K blocks: demonstrated that state sharding caps at \textbf{$1.37\times$} even under ideal offline partitioning due to hub-contract skew, while intra-block \emph{parallel execution via per-block conflict DAGs} achieves a \textbf{$13.68\times$} analytical parallelism bound with zero speculation and zero aborts.
+@@latex: \item @@ Designed and implemented \emph{FPS} (Flexible Payment Systems tech report, 2025): a BFT payment protocol with 15k LOC Rust implementation across 16 crates on a self-designed networking/crypto/storage substrate, with reproducible multi-VM benchmarks.
+#+begin_export latex
+\end{list}
+\vspace{0.5em}
+#+end_export
+
+*VMware Research, Remote* @@latex: \hfill @@ (May 2021 - Aug 2021)\\
+/Research Intern/
+#+begin_export latex
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ Built a prototype anonymous token system on top of Concord-BFT, VMware's production Byzantine fault-tolerant distributed platform.
+@@latex: \item @@ Designed \emph{Quick-Pay}, a one-round-trip low-latency payment protocol, and extended it into a lock-free sharding solution---eliminating coordination bottlenecks in distributed transaction processing.
+#+begin_export latex
+\end{list}
+\vspace{0.5em}
+#+end_export
+
+*Purdue University, West Lafayette* @@latex: \hfill @@ (Aug 2018 - Aug 2023)\\
+/Graduate Research Assistant -- Department of Computer Science/
+#+begin_export latex
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ Implemented and benchmarked baseline consensus protocols (Sync HotStuff, Opt Sync, OptRand) alongside own-designed protocols across synchronous and partially synchronous network models; 10 peer-reviewed papers at CCS, NDSS, FC, and Middleware.
+@@latex: \item @@ Built \href{https://github.com/libdist-rs/libnet-rs}{libnet-rs}: a high-performance async networking library in Rust with writev-based I/O, TLS/TCP reliable transports, and a reproducible multi-VM benchmarking harness. Powers multiple BFT protocol implementations.
+@@latex: \item @@ First-authored \emph{EESMR} (Middleware 2023) and implemented \href{https://github.com/adithyabhatkajake/libe2c-cpp}{libe2c-cpp} in C++: an energy-efficient BFT-SMR protocol that avoids quorum-certificate construction during steady-state via \emph{voting-in-the-head}, delivering \textbf{2.8$\times$} energy efficiency over Sync HotStuff in failure-free runs.
+@@latex: \item @@ First-authored the \emph{Unique Chain Rule} (FC 2023): a consensus primitive where hash-chain extensions act as implicit votes, enabling \textbf{linear} communication complexity in failure-free synchronous BFT SMR (vs $O(n^2)$ in the state of the art) and $2\times$ theoretical block-production rate over Opt Sync.
+@@latex: \item @@ Optimized the Leto consensus hot path, delivering 6$\times$ throughput improvement through a combination of lock-free data structures, buffer contiguity, and async I/O restructuring.
+#+begin_export latex
+\end{list}
+\vspace{0.5em}
+#+end_export
+
+* Education
+@@latex: \item @@ *Ph.D., Computer Science* -- Purdue University, West Lafayette @@latex: \hfill @@ /(2018-2023)/\\
+    Advisor: Aniket Kate. Focus: Byzantine fault-tolerant distributed systems and applied cryptography.
+
+@@latex: \item @@ *B.Tech., Information Technology* -- NIT Karnataka, Surathkal @@latex: \hfill @@ /(2014-2018)/
+
+* Selected Publications & Patents
+#+begin_export latex
+\vspace{0.5em}
+#+end_export
+13 peer-reviewed publications at CCS (x4), IEEE S&P, DSN, ICDCS, NDSS, Middleware, FC, and Journal of Cryptology. 3 US patents. Selected:
+#+begin_export latex
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ *EESMR -- Energy Efficient BFT-SMR for the Masses* (Middleware 2023). Leader-based SMR that avoids quorum-certificate construction during steady-state via /voting-in-the-head/; $2.8\times$ more energy-efficient than Sync HotStuff in failure-free runs.
+@@latex: \item @@ *The Unique Chain Rule and Its Applications* (FC 2023). Consensus primitive where hash-chain extensions serve as implicit votes; enables linear communication complexity in failure-free synchronous BFT SMR and $2\times$ block-production rate over Opt Sync.
+@@latex: \item @@ *Ira: Efficient Transaction Replay for Distributed Systems* (Tech report, 2026). Hint-based replay framework for primary-backup replication; $5.2\times-23.6\times$ backup replay speedup on 24M Ethereum mainnet transactions at $\approx11\%$ primary overhead.
+@@latex: \item @@ *Attacking and Improving the Tor Directory Protocol* (IEEE S\&P 2024). Identified vulnerabilities in Tor's distributed directory-consensus protocol and designed remediations; co-author.
+#+begin_export latex
+\end{list}
+\vspace{0.5em}
+#+end_export
+
+* Open Source & Software Artifacts
+#+begin_export latex
+\vspace{0.5em}
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ *\href{https://github.com/libdist-rs/libapollo-rs}{libapollo-rs}* (Rust) -- BFT consensus testbed: reference implementations of Apollo, Artemis, Sync HotStuff, and Opt Sync with reproducible multi-VM AWS benchmarking.
+@@latex: \item @@ *\href{https://github.com/libdist-rs/libnet-rs}{libnet-rs}* (Rust) -- High-performance async networking library: TCP/TLS/UDP reliable transports, writev-based I/O, multi-threaded senders, stress-test harness with published baseline throughput numbers.
+@@latex: \item @@ *\href{https://github.com/adithyabhatkajake/libe2c-cpp}{libe2c-cpp}* (C++) -- Reference implementation of EESMR (Middleware 2023): steady-state SMR without quorum certificates; 2.8$\times$ more energy-efficient than Sync HotStuff.
+#+begin_export latex
+\end{list}
+#+end_export

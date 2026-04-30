@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-29 Sun 14:12 -->
+<!-- 2026-04-29 Wed 21:20 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Upright Cluster Services</title>
@@ -260,7 +260,7 @@ Paper: [<a href="#citeproc_bib_item_1">1</a>]
 <h3 id="org485f1d9">Failure Model</h3>
 <div class="outline-text-3" id="text-org485f1d9">
 
-<div id="org081f26a" class="figure">
+<div id="org47090f1" class="figure">
 <p><img src="images/_20230309_214322screenshot.png" alt="_20230309_214322screenshot.png" width="500px" />
 </p>
 </div>
@@ -306,7 +306,7 @@ If more than \(r\) commission faults exist, then the system is still live, but n
 <h4 id="org1cb14d1">Architecture</h4>
 <div class="outline-text-4" id="text-org1cb14d1">
 
-<div id="orga0feb5a" class="figure">
+<div id="org42f29c6" class="figure">
 <p><img src="images/SCR-20230313-gnp.png" alt="SCR-20230313-gnp.png" width="500px" />
 </p>
 <p><span class="figure-number">Figure 1: </span>UpRight Library Architecture</p>
@@ -401,7 +401,7 @@ Applications can be modified so that their key data structures are treated as co
 <li>The execution module embodies the application’s server, which executes requests from the ordered batches and produces replies</li>
 </ul>
 
-<div id="org06afd04" class="figure">
+<div id="org5854cf5" class="figure">
 <p><img src="images/_20230313_131958screenshot.png" alt="_20230313_131958screenshot.png" width="700px" />
 </p>
 </div>
@@ -566,7 +566,7 @@ Clients issue \(1\) byte or \(1\) KB null requests that produce \(1\) byte or \(
 The system is configured with \(u=1\) and \(r=1\)
 </p>
 
-<div id="orgf10e360" class="figure">
+<div id="org54448ef" class="figure">
 <p><img src="images/_20230313_190643screenshot.png" alt="_20230313_190643screenshot.png" width="700px" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Latency vs. throughput for J-Zyzzyvark and JS-Zyzzyvark.</p>
@@ -579,7 +579,7 @@ The system is configured with \(u=1\) and \(r=1\)
 The system is configured with arbitrary \(u\) and \(r\)
 </p>
 
-<div id="org28ac7d0" class="figure">
+<div id="orgd39dd8b" class="figure">
 <p><img src="images/_20230313_191101screenshot.png" alt="_20230313_191101screenshot.png" width="700px" />
 </p>
 <p><span class="figure-number">Figure 3: </span>Latency vs. throughput for J-Zyzzyvark and JS-Zyzzyvark for various values of \(r\) and \(u\)</p>
@@ -589,7 +589,7 @@ The system is configured with arbitrary \(u\) and \(r\)
 <li><a id="org69ae418"></a>Co-located RQ, Order and Execution<br />
 <div class="outline-text-5" id="text-org69ae418">
 
-<div id="org98264cb" class="figure">
+<div id="orgb675444" class="figure">
 <p><img src="images/_20230313_191246screenshot.png" alt="_20230313_191246screenshot.png" width="700px" />
 </p>
 <p><span class="figure-number">Figure 4: </span>Latency vs. throughput for JS-Zyzzyvark configured for various values of \(r\) and \(u\) with RQ, Order, and Execution nodes colocated</p>
@@ -609,7 +609,7 @@ No RQ means we skip Request Quorum
 No auth RQ means that we turn of auth checks
 </p>
 
-<div id="orgabd4974" class="figure">
+<div id="orga016f51" class="figure">
 <p><img src="images/_20230313_191547screenshot.png" alt="_20230313_191547screenshot.png" width="700px" />
 </p>
 <p><span class="figure-number">Figure 5: </span>JS-Zyzzyvark performance when using the RQ node and matrix signatures, standard signatures, and MAC authenticators. ($1$B requests)</p>
@@ -620,7 +620,7 @@ No auth RQ means that we turn of auth checks
 <h4 id="orgca1f8b8">Request digests</h4>
 <div class="outline-text-4" id="text-orgca1f8b8">
 
-<div id="org45b345e" class="figure">
+<div id="orgad5227e" class="figure">
 <p><img src="images/_20230313_192026screenshot.png" alt="_20230313_192026screenshot.png" width="700px" />
 </p>
 <p><span class="figure-number">Figure 6: </span>JS-Zyzzyvark performance for $1$B, $1$KB, and $10$KB requests, and for $1$KB and $10$KB requests where full requests, rather than digests, are routed through Order nodes</p>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-29 Sun 14:12 -->
+<!-- 2026-04-30 Thu 15:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Impossibility of Distributed Consensus with One Faulty Process</title>
@@ -196,6 +196,39 @@
 <link rel="stylesheet" type="text/css" href="/assets/tufte-css/tufte.css" />
 <link rel="stylesheet" href="/assets/tufte-css/ox-tufte.css" type="text/css" />
 <link rel="stylesheet" href="/assets/syntax.css" type="text/css" />
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em',
+      inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="preamble" class="status">
@@ -225,6 +258,541 @@ Original paper: [<a href="#citeproc_bib_item_1">1</a>]
 <ul class="org-ul">
 <li>This paper shows that it is impossible for a deterministic algorithm to terminate while tolerating a single fault in an asynchronous network.</li>
 </ul>
+</div>
+</div>
+<div id="outline-container-org6d88dbd" class="outline-2">
+<h2 id="org6d88dbd">Proof</h2>
+<div class="outline-text-2" id="text-org6d88dbd">
+</div>
+<div id="outline-container-orgf394d6b" class="outline-3">
+<h3 id="orgf394d6b">System</h3>
+<div class="outline-text-3" id="text-orgf394d6b">
+<ol class="org-ol">
+<li><p>
+<b>System model.</b> A consensus protocol \(P\) is an asynchronous system of \(N\) processes \((N \ge 2)\). Each process \(p\) has:
+</p>
+<ul class="org-ul">
+<li>one-bit input register \(x_{p}\)</li>
+<li>an output register \(y_{p}\) with values in \(\{b, 0, 1\}\)</li>
+<li>an unbounded amount of internal storage</li>
+</ul>
+<p>
+The output register is <i>write-once</i>.
+</p></li>
+<li><b>Internal state.</b> The internal state consists of:
+<ul class="org-ul">
+<li>Input, output register</li>
+<li>Program counter</li>
+<li>Internal storage</li>
+</ul></li>
+<li><b>Initial state.</b> This prescribes the initial values for all the internal states <b>except for the input register</b>.</li>
+<li><b>Decision states.</b> These are states where the <b>output register</b> has values \(0\) or \(1\).</li>
+<li><b>Transition function.</b> The consensus protocol \(P\) is specified by the transition functions associated with each process and the initial values of the input registers.</li>
+<li><b>Message.</b> A message is a pair \((p,m)\), where \(p\) is the name of the destination process and \(m\) is a message value from a fixed universe \(M\).</li>
+<li><b>Message system.</b> The message system maintains a multiset, called the message buffer of messages that have been sent but not yet delivered. It supports two abstract operations:
+<ul class="org-ul">
+<li><i>\(send(p,m)\)</i>: Places \((p,m)\) in the message buffer</li>
+<li><i>\(receive(p)\)</i>: Deletes some message \((p,m)\) from the buffer and returns \(m\), in which case we say \((p,m)\) is delivered, or returns the special null marker \(\phi\) and leaves the buffer unchanged.</li>
+</ul></li>
+<li><p>
+<b>Configuration.</b> A configuration consists of internal state of each process and the message buffer.
+</p>
+
+<p>
+An <i>initial configuration</i> is one in which each process starts at an initial state and the message buffer is empty.
+</p></li>
+<li><b>Step.</b> A step takes one configuration to another and consists of a primitive step by a single process \(p\). For a configuration \(C\), a step occurs in two phases.
+<ol class="org-ol">
+<li>\(receive(p)\) is performed on the message buffer in \(C\) to obtain a value \(m\in M \cup \phi\).</li>
+<li>Depending on \(p\)'s internal state in \(C\) and on \(m\), \(p\) enters a new internal state and sends a finite set of messages to other processes.</li>
+</ol></li>
+<li><b>Event.</b> Since the processes are deterministic, a step from configuration \(C\) to \(C'\) is completely determined by the pair \(e = (p,m)\), which we call an <i>event</i>. We define \(C' = e(C)\) and say that \(e\) was applied to \(C\).</li>
+<li><b>Schedule.</b> A schedule from a configuration \(C\) is a finite or infinite sequence \(\sigma\) of events that can be applied in turn, starting from \(C\).</li>
+<li><b>Run.</b> Let \(\sigma\) be a schedule (sequence of events) from configuration \(C\). The corresponding sequence of steps is called as a run.</li>
+<li><b>Reachability.</b> For a finite schedule \(\sigma\) from a configuration \(C\), let \(\sigma(C)\) denote the resulting configuration. We say \(\sigma(C)\) is reachable from \(C\).</li>
+<li><b>Accessible configurations.</b> If a configuration \(C\) can be reached from some initial configuration, then we say that \(C\) is accessible.</li>
+<li><b>Adjacent initial configurations.</b> We say that initial configurations \(C\) and \(C'\) are adjacent if they differ only in the initial value \(x_{p}\) of a single proces \(p\).</li>
+<li><b>Non-faulty.</b> A process \(p\) is non-faulty in a run provided that it takes infinitely many steps, i.e, does not crash. Otherwise, it is faulty.</li>
+<li><b>Admissible runs.</b> A run is admissible provided that at most one process is faulty and that all messages sent to non-faulty processes are eventually delivered.</li>
+<li><b>Decidable runs.</b> A run is a deciding run provided that some process reaches a decision state in that run.</li>
+<li><b>Decision value.</b> A configuration \(C\) has decision value \(v\) if some process \(p\) is in a decision state with \(y_{p} = v\).</li>
+<li><b>Value set.</b> Let \(C\) be a configuration. The set of decision values of configurations reachable from \(C\) is the value set \(V\).</li>
+<li><b>Valence.</b> Let \(C\) be a configuration. We say that \(C\) is bi-valent, if the value set \(V\) of \(C\) has size \(2\), i.e., \(|V| = 2\). We say that \(C\) is univalent, $0$-valent, and $1$-valent respectively, if \(|V|=1\), \(V=\{0\}\) and \(V=\{1\}\).</li>
+<li><b>Partially correct.</b> We say that a consensus protocol \(P\) is partially correct if:
+<ol class="org-ol">
+<li>no accessible configuration has more than one decision value, and</li>
+<li>for each \(v\in \{0,1\}\), some accessible configuration has decision value \(v\).</li>
+</ol></li>
+<li><b>Correct protocol.</b> A consensus protocol \(P\) is totally correct in spite of one fault if it is partially correct, and every admissible run is a deciding run.</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="outline-container-org3232669" class="outline-2">
+<h2 id="org3232669">Commutativity of schedules</h2>
+<div class="outline-text-2" id="text-org3232669">
+<p>
+<b>Lemma 1.</b> Suppose that from some configuration \(C\), the schedules \(\sigma_{1}\), \(\sigma_{2}\) lead to configurations \(C_{1}\), \(C_{2}\), respectively. If the sets of processes taking steps in \(\sigma_{1}\) and \(\sigma_{2}\) are disjoint, then \(\sigma_{2}\) can be applied to \(C_{1}\) and \(\sigma_{1}\) can be applied to \(C_{2}\), and both lead to the same configuration \(C_{3}\).
+</p>
+
+
+<div id="orga5e4fc8" class="figure">
+<p><img src="images/commutativity.png" alt="commutativity.png" />
+</p>
+</div>
+
+<p>
+<b>Why does this hold?</b> Consider what \(\sigma_{1}\) and \(\sigma_{2}\) each touch:
+</p>
+<ul class="org-ul">
+<li>The internal state of the processes in their respective sets</li>
+<li>The messages in the buffer (sending and receiving)</li>
+</ul>
+
+<p>
+Since the process sets are disjoint:
+</p>
+<ol class="org-ol">
+<li><b>Internal states are independent.</b> \(\sigma_{1}\) only reads and writes the internal states of its processes. \(\sigma_{2}\) only reads and writes the internal states of its processes. Neither interferes with the other.</li>
+<li><b>Message buffer operations commute.</b> \(send\) adds messages to a <i>multiset</i>; order of addition doesn't matter. \(receive\) by a process \(p\) only removes messages addressed to \(p\). Since the process sets are disjoint, \(\sigma_{1}\)'s receives never compete with \(\sigma_{2}\)'s receives for the same messages.</li>
+<li><b>Determinism closes the argument.</b> Since processes are deterministic, each event \(e = (p, m)\) produces the same result regardless of what the other group did. So \(\sigma_{1}\) applied after \(\sigma_{2}\) sees the same internal states for its processes and the same messages available, producing the same transitions.</li>
+</ol>
+
+<p>
+Therefore, starting from \(C\), doing \(\sigma_{1}\) then \(\sigma_{2}\) lands at the same configuration as doing \(\sigma_{2}\) then \(\sigma_{1}\).
+</p>
+
+<p>
+<b>What this means.</b> If two groups of processes are working independently (no process appears in both schedules), it doesn't matter which group goes first, the system ends up in the same place. This is the formal basis for arguing that events by different processes can be reordered without changing the outcome.
+</p>
+</div>
+</div>
+<div id="outline-container-orgb79eb63" class="outline-2">
+<h2 id="orgb79eb63">Existence of bivalent configurations</h2>
+<div class="outline-text-2" id="text-orgb79eb63">
+<p>
+<b>Lemma 2.</b> \(P\) has a bivalent initial configuration.
+</p>
+
+<p>
+<b>Proof.</b> Assume for contradiction that every initial configuration is univalent. We derive a contradiction.
+</p>
+</div>
+<div id="outline-container-orgd2c49ca" class="outline-3">
+<h3 id="orgd2c49ca">Step 1: Both valences exist</h3>
+<div class="outline-text-3" id="text-orgd2c49ca">
+<p>
+By partial correctness, both decision values \(0\) and \(1\) are reachable from some accessible configuration. So there exist both $0$-valent and $1$-valent initial configurations.
+</p>
+</div>
+</div>
+<div id="outline-container-orgfdcc1a9" class="outline-3">
+<h3 id="orgfdcc1a9">Step 2: Adjacent pair with opposite valence</h3>
+<div class="outline-text-3" id="text-orgfdcc1a9">
+<p>
+There are \(2^{N}\) initial configurations in total (one per input vector in \(\{0,1\}^{N}\)). These form a hypercube where adjacent configurations (differing in one bit) are connected by edges:
+</p>
+
+
+<div id="orgb556c2f" class="figure">
+<p><img src="images/hypercube.png" alt="hypercube.png" />
+</p>
+</div>
+
+<p>
+Green \((000)\) is $0$-valent by validity; red \((111)\) is $1$-valent by validity. The other \(2^{N} - 2\) nodes are each either $0$-valent or $1$-valent (by our assumption that none is bivalent). Under this assumption, the valence must switch somewhere &#x2013; but we don't know where.
+</p>
+
+<p>
+The proof does not search all \(2^{N}\) configurations. It picks <i>one</i> path of \(N + 1\) adjacent configurations from all-\(0\) to all-\(1\), flipping one bit at a time:
+</p>
+
+
+<div id="org90bae8a" class="figure">
+<p><img src="images/adjacent-chain.png" alt="adjacent-chain.png" />
+</p>
+</div>
+
+<p>
+This chain starts $0$-valent and ends $1$-valent. Each \(C_{k}\) is univalent (by assumption), so the valence is a sequence of $0$s and $1$s starting at \(0\) and ending at \(1\). There must exist some index \(k\) where \(C_{k}\) is $0$-valent and \(C_{k+1}\) is $1$-valent. This is guaranteed within the \(N + 1\) elements of the chain.
+</p>
+
+<p>
+The critical adjacent pair:
+</p>
+
+
+<div id="org2f3be06" class="figure">
+<p><img src="images/adjacent-pair.png" alt="adjacent-pair.png" />
+</p>
+</div>
+
+<p>
+These differ only in the input of process \(p\) (the process whose bit was flipped at step \(k\)).
+</p>
+</div>
+</div>
+<div id="outline-container-org8f89bbd" class="outline-3">
+<h3 id="org8f89bbd">Step 3: Crash \(p\) to get a contradiction</h3>
+<div class="outline-text-3" id="text-org8f89bbd">
+<p>
+Now consider an admissible deciding run from \(C_{k}\) in which process \(p\) takes no steps (i.e., \(p\) is faulty by crashing immediately). Let \(\sigma\) be the associated schedule. Since \(\sigma\) involves no steps by \(p\), it can also be applied to \(C_{k+1}\) (by Lemma 1, \(p\)'s state is irrelevant to the other processes). The two runs are identical except for \(p\)'s internal state:
+</p>
+
+
+<div id="org6ebc913" class="figure">
+<p><img src="images/bivalence-contradiction.png" alt="bivalence-contradiction.png" />
+</p>
+</div>
+
+<p>
+Since \(p\) takes no steps in either run, the other \(N - 1\) processes see <i>exactly the same</i> sequence of events and states. Both runs must reach the same decision value \(v\). But:
+</p>
+<ul class="org-ul">
+<li>If \(v = 1\), then \(C_{k}\) can reach decision \(1\), so \(C_{k}\) is not $0$-valent. Contradiction (or \(C_{k}\) is bivalent).</li>
+<li>If \(v = 0\), then \(C_{k+1}\) can reach decision \(0\), so \(C_{k+1}\) is not $1$-valent. Contradiction (or \(C_{k+1}\) is bivalent).</li>
+</ul>
+
+<p>
+Either way, one of them is bivalent, contradicting our assumption that all initial configurations are univalent. \(\square\)
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb1ae415" class="outline-2">
+<h2 id="orgb1ae415">Preservation of Bi-valence</h2>
+<div class="outline-text-2" id="text-orgb1ae415">
+<p>
+<b>Lemma 3.</b> Let \(C\) be a bivalent configuration of \(P\), and let \(e = (p, m)\) be an event that is applicable to \(C\). Let \(C^{-e}\) be the set of configurations reachable from \(C\) without applying \(e\), and let \(e(C^{-e}) = \{e(E) \mid E \in C^{-e} \text{ and } e \text{ is applicable to } E\}\). Then \(e(C^{-e})\) contains a bivalent configuration.
+</p>
+</div>
+<div id="outline-container-org03240a5" class="outline-3">
+<h3 id="org03240a5">Understanding the sets</h3>
+<div class="outline-text-3" id="text-org03240a5">
+<p>
+\(C\) is bivalent and \(e = (p, m)\) is a pending event (a message \(m\) waiting for process \(p\)). Since messages can be delayed arbitrarily, we can do many other things before \(e\) fires.
+</p>
+
+<ul class="org-ul">
+<li><b>\(C^{-e}\)</b>: Everything reachable from \(C\) while keeping \(e\) pending. Other processes take steps, other messages get delivered, but \(e\) stays in the buffer. Note that \(C \in C^{-e}\).</li>
+<li><b>\(e(C^{-e})\)</b>: Apply \(e\) to each configuration in \(C^{-e}\). This is the set of configurations you land in immediately after \(e\) finally fires.</li>
+</ul>
+
+
+<div id="org4de0464" class="figure">
+<p><img src="images/sets-C-D.png" alt="sets-C-D.png" />
+</p>
+</div>
+
+<p>
+The blue region is \(C^{-e}\): we explore freely while \(e\) stays pending. Each red arrow is \(e\) firing, mapping a configuration in \(C^{-e}\) to one in \(e(C^{-e})\).
+</p>
+
+<p>
+<b>Why is \(e\) applicable to every \(E \in C^{-e}\)?</b> Because \(e = (p, m)\) means "process \(p\) receives message \(m\)." Since we never applied \(e\), the message \(m\) is still in the buffer at every configuration in \(C^{-e}\).
+</p>
+</div>
+</div>
+<div id="outline-container-orgc274dc3" class="outline-3">
+<h3 id="orgc274dc3">Proof (by contradiction)</h3>
+<div class="outline-text-3" id="text-orgc274dc3">
+<p>
+Assume for contradiction that \(e(C^{-e})\) contains no bivalent configurations, i.e., every \(D \in e(C^{-e})\) is univalent.
+</p>
+</div>
+</div>
+<div id="outline-container-org7ee582a" class="outline-3">
+<h3 id="org7ee582a">Part 1: Both valences exist in \(e(C^{-e})\)</h3>
+<div class="outline-text-3" id="text-org7ee582a">
+<p>
+Since \(C\) is bivalent, there exist $i$-valent configurations \(E_{i}\) reachable from \(C\), for \(i = \{0,1\}\). We need to show that \(e(C^{-e})\) also contains both valences. Let \(\sigma_{i}\) be a finite schedule from \(C\) to \(E_{i}\). Either \(\sigma_{i}\) includes \(e\) or it does not:
+</p>
+</div>
+<div id="outline-container-orgaedaced" class="outline-4">
+<h4 id="orgaedaced">Sub-case A: \(\sigma_{i}\) does not include \(e\)</h4>
+<div class="outline-text-4" id="text-orgaedaced">
+<p>
+Then \(E_{i} \in C^{-e}\), so we can apply \(e\) to get \(F_{i} = e(E_{i}) \in e(C^{-e})\). Since \(E_{i}\) is $i$-valent, every configuration reachable from \(E_{i}\) is also $i$-valent &#x2013; including \(F_{i}\). So \(F_{i}\) is $i$-valent.
+</p>
+
+
+<div id="org827213c" class="figure">
+<p><img src="images/both-valences-caseA.png" alt="both-valences-caseA.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgfb447d9" class="outline-4">
+<h4 id="orgfb447d9">Sub-case B: \(\sigma_{i}\) does include \(e\)</h4>
+<div class="outline-text-4" id="text-orgfb447d9">
+<p>
+Say \(\sigma_{i} = (e_{1}, \ldots, e_{k-1}, e, e_{k+1}, \ldots)\) where \(e\) appears at position \(k\). The path of configurations is:
+</p>
+
+<p>
+\(C \xrightarrow{e_{1}} \cdots \xrightarrow{e_{k-1}} G \xrightarrow{e} F_{i} \xrightarrow{e_{k+1}} \cdots \rightarrow E_{i}\)
+</p>
+
+<ol class="org-ol">
+<li>\(G \in C^{-e}\): the events \(e_{1}, \ldots, e_{k-1}\) were all applied before \(e\), so \(G\) was reached from \(C\) without applying \(e\). That is exactly the definition of \(C^{-e}\).</li>
+<li>\(F_{i} = e(G) \in e(C^{-e})\): since \(G \in C^{-e}\) and we apply \(e\) to it, \(F_{i}\) is in \(e(C^{-e})\) by definition.</li>
+<li>\(F_{i}\) is $i$-valent:
+<ul class="org-ul">
+<li>\(F_{i}\) is univalent (not bivalent) &#x2013; this is our contradiction assumption that <i>every</i> element of \(e(C^{-e})\) is univalent.</li>
+<li>\(E_{i}\) is reachable from \(F_{i}\) (via the remaining events \(e_{k+1}, \ldots\)), and \(E_{i}\) is $i$-valent.</li>
+<li>If \(F_{i}\) were $j$-valent with \(j \neq i\), then every configuration reachable from \(F_{i}\) would also be $j$-valent &#x2013; but \(E_{i}\) is $i$-valent. Contradiction. So \(F_{i}\) must be $i$-valent.</li>
+</ul></li>
+</ol>
+
+
+<div id="orgf5ea1e6" class="figure">
+<p><img src="images/both-valences-caseB.png" alt="both-valences-caseB.png" />
+</p>
+</div>
+
+<p>
+In either sub-case, we find an $i$-valent configuration \(F_{i}\) inside \(e(C^{-e})\). Doing this for both \(i = 0\) and \(i = 1\), we conclude that \(e(C^{-e})\) contains both $0$-valent and $1$-valent configurations.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgee0a157" class="outline-3">
+<h3 id="orgee0a157">Part 2: Find neighbors with opposite valence</h3>
+<div class="outline-text-3" id="text-orgee0a157">
+<blockquote>
+<p>
+<b>Where we are.</b> We are inside a proof by contradiction with two active assumptions:
+</p>
+<ol class="org-ol">
+<li>\(C\) is bivalent and \(e = (p, m)\) is pending.</li>
+<li><b>(Contradiction assumption)</b> Every configuration in \(e(C^{-e})\) is univalent (either $0$-valent or $1$-valent, never bivalent).</li>
+</ol>
+
+<p>
+From Part 1, we know \(e(C^{-e})\) contains both a $0$-valent and a $1$-valent configuration.
+</p>
+</blockquote>
+
+<p>
+<b>Goal:</b> Find two configurations in \(C^{-e}\) that are exactly one step apart and whose images under \(e\) have opposite valence.
+</p>
+
+<p>
+<b>Step 1: Find a path where the valence of \(e(\cdot)\) changes.</b> From Part 1, there exist \(C_{a}, C_{b} \in C^{-e}\) such that \(e(C_{a})\) is $0$-valent and \(e(C_{b})\) is $1$-valent. Now \(C\) itself is in \(C^{-e}\), and \(e(C)\) is either $0$-valent or $1$-valent (by assumption 2). Pick whichever of \(C_{a}, C_{b}\) gives the opposite valence from \(e(C)\); call it \(C^{*}\):
+</p>
+<ul class="org-ul">
+<li>If \(e(C)\) is $0$-valent, set \(C^{*} = C_{b}\) (so \(e(C^{*})\) is $1$-valent).</li>
+<li>If \(e(C)\) is $1$-valent, set \(C^{*} = C_{a}\) (so \(e(C^{*})\) is $0$-valent).</li>
+</ul>
+
+<p>
+Either way: \(e(C)\) and \(e(C^{*})\) have opposite valence.
+</p>
+
+<p>
+<b>Step 2: Walk the path and find the switch.</b> Since \(C^{*} \in C^{-e}\), it is reachable from \(C\) without applying \(e\). Let the witnessing path be:
+</p>
+
+<p>
+\(C = G_{0} \xrightarrow{e_{1}} G_{1} \xrightarrow{e_{2}} \cdots \xrightarrow{e_{n}} G_{n} = C^{*}\)
+</p>
+
+<p>
+Every \(G_{j}\) is in \(C^{-e}\) (because no event in this path is \(e\) &#x2013; that is what "reachable without applying \(e\)" means). So \(e(G_{j}) \in e(C^{-e})\), and by assumption 2, each \(e(G_{j})\) is univalent &#x2013; either $0$-valent or $1$-valent.
+</p>
+
+<p>
+Now consider the sequence of valences: the valence of \(e(G_{0})\), the valence of \(e(G_{1})\), &#x2026;, the valence of \(e(G_{n})\). This is a sequence of $0$s and $1$s where:
+</p>
+<ul class="org-ul">
+<li>The first entry and the last entry are different (by our choice of \(C^{*}\)).</li>
+</ul>
+
+<p>
+Therefore there exists an index \(j\) where the valence of \(e(G_{j})\) differs from the valence of \(e(G_{j+1})\).
+</p>
+
+
+<div id="org4c89e31" class="figure">
+<p><img src="images/valence-path.png" alt="valence-path.png" />
+</p>
+</div>
+
+<p>
+In this example: \(e(G_{0}), e(G_{1}), e(G_{2})\) are all $0$-valent (green) and \(e(G_{3}), e(G_{4})\) are $1$-valent (red). The switch happens between \(G_{2}\) and \(G_{3}\) (bold red edge \(e_{3}\)). We set \(C_{0} = G_{2}\), \(C_{1} = G_{3}\), and \(e' = e_{3} = (p', m')\).
+</p>
+
+<p>
+<b>Result of Part 2:</b> We have neighbors \(C_{0}\) and \(C_{1} = e'(C_{0})\) in \(C^{-e}\), where:
+</p>
+<ul class="org-ul">
+<li>\(D_{0} = e(C_{0})\) is $0$-valent</li>
+<li>\(D_{1} = e(C_{1})\) is $1$-valent</li>
+</ul>
+<p>
+(If the switch went \(1 \to 0\) instead, just swap the labels.)
+</p>
+</div>
+</div>
+<div id="outline-container-org6ff498b" class="outline-3">
+<h3 id="org6ff498b">Part 3: Derive a contradiction</h3>
+<div class="outline-text-3" id="text-org6ff498b">
+<blockquote>
+<p>
+<b>Where we are.</b> We have neighbors \(C_{0}, C_{1} = e'(C_{0}) \in C^{-e}\), where \(e' = (p', m')\), such that:
+</p>
+<ul class="org-ul">
+<li>\(D_{0} = e(C_{0})\) is $0$-valent</li>
+<li>\(D_{1} = e(C_{1})\) is $1$-valent</li>
+</ul>
+
+<p>
+We now show this is impossible, by considering two cases based on whether \(e = (p, m)\) and \(e' = (p', m')\) involve the same process or not.
+</p>
+</blockquote>
+</div>
+<div id="outline-container-org3a8ba61" class="outline-4">
+<h4 id="org3a8ba61">Case 1: \(p' \neq p\) (different processes)</h4>
+<div class="outline-text-4" id="text-org3a8ba61">
+<p>
+The event \(e = (p, m)\) and the neighboring step \(e' = (p', m')\) involve different processes. By Lemma 1 (commutativity), they commute. This gives us a diamond:
+</p>
+
+
+<div id="orgbd98d61" class="figure">
+<p><img src="images/case1.png" alt="case1.png" />
+</p>
+</div>
+
+<p>
+By commutativity: \(D_{1} = e(C_{1}) = e(e'(C_{0})) = e'(e(C_{0})) = e'(D_{0})\).
+</p>
+
+<p>
+So \(D_{1}\) is a successor of \(D_{0}\). But \(D_{0}\) is $0$-valent, meaning <i>every</i> configuration reachable from \(D_{0}\) leads to decision \(0\). Yet \(D_{1} = e'(D_{0})\) is $1$-valent. <b>Contradiction.</b> \(\square\)
+</p>
+</div>
+</div>
+<div id="outline-container-org931b49a" class="outline-4">
+<h4 id="org931b49a">Case 2: \(p' = p\) (same process)</h4>
+<div class="outline-text-4" id="text-org931b49a">
+<p>
+Both \(e = (p, m)\) and \(e' = (p, m')\) involve process \(p\). We cannot use commutativity directly (same process). Instead, we crash \(p\) and use Lemma 1 indirectly.
+</p>
+
+<p>
+<b>Step 1: Construct \(\sigma\) (a schedule where \(p\) crashes).</b>
+</p>
+
+<p>
+\(P\) is totally correct in spite of one fault. So if \(p\) crashes at \(C_{0}\), the remaining \(N - 1\) processes must still reach a decision in every admissible run. Therefore there exists a finite schedule \(\sigma\) from \(C_{0}\) such that:
+</p>
+<ul class="org-ul">
+<li>\(\sigma\) involves only processes <i>other than</i> \(p\) (since \(p\) has crashed).</li>
+<li>\(\sigma\) reaches a deciding configuration.</li>
+</ul>
+
+<p>
+Let \(A = \sigma(C_{0})\). The run from \(C_{0}\) via \(\sigma\) is a deciding run, so some process \(q \neq p\) has written a value to its output register by the time we reach \(A\). Since the output register is write-once, this decision is irrevocable: every configuration reachable from \(A\) still has \(q\) decided on that value. Therefore \(A\) is univalent.
+</p>
+
+<p>
+<b>Step 2: Why \(\sigma\) commutes with \(e\) and \(e'\).</b>
+</p>
+
+<p>
+\(\sigma\) involves no steps by \(p\). Both \(e = (p, m)\) and \(e' = (p, m')\) involve only process \(p\). The set of processes in \(\sigma\) and the process in \(e\) (or \(e'\)) are disjoint. By Lemma 1 (commutativity of disjoint schedules):
+</p>
+
+<ul class="org-ul">
+<li>\(\sigma(e(X)) = e(\sigma(X))\) for any configuration \(X\) where both are applicable.</li>
+<li>\(\sigma(e'(e(X))) = e'(e(\sigma(X)))\) similarly.</li>
+</ul>
+
+<p>
+In words: it doesn't matter whether we do \(\sigma\) first and then \(e\), or \(e\) first and then \(\sigma\) &#x2013; we reach the same configuration. This is because \(\sigma\) and \(e\) touch different processes.
+</p>
+
+<p>
+<b>Step 3: Trace the equalities.</b>
+</p>
+
+
+<div id="org8652acc" class="figure">
+<p><img src="images/case2.png" alt="case2.png" />
+</p>
+</div>
+
+<p>
+Reading the diagram:
+</p>
+<ul class="org-ul">
+<li><b>Gray dashed arrows (\(\sigma\)):</b> schedule where \(p\) takes no steps (crashed).</li>
+<li><b>Red arrows (\(e\)):</b> event \(e = (p, m)\).</li>
+<li><b>Blue arrows (\(e'\)):</b> event \(e' = (p, m')\).</li>
+</ul>
+
+<p>
+Now we trace two paths to show that both decisions are reachable from \(A\):
+</p>
+
+<p>
+<b>Path to $0$-valent:</b>
+</p>
+<ol class="org-ol">
+<li>Start at \(C_{0}\). Apply \(e\) to get \(D_{0}\) ($0$-valent). \hspace{1em} [red arrow down-left]</li>
+<li>Apply \(\sigma\) to \(D_{0}\) to get \(E_{0} = \sigma(D_{0})\). \hspace{1em} [gray dashed arrow]</li>
+<li>\(E_{0}\) is $0$-valent (since \(D_{0}\) is $0$-valent and everything reachable from a $0$-valent configuration is $0$-valent).</li>
+<li>By commutativity: \(E_{0} = \sigma(e(C_{0})) = e(\sigma(C_{0})) = e(A)\). \hspace{1em} [so the red arrow from \(A\) reaches \(E_{0}\)]</li>
+</ol>
+
+<p>
+<b>Path to $1$-valent:</b>
+</p>
+<ol class="org-ol">
+<li>Start at \(C_{0}\). Apply \(e'\) to get \(C_{1}\). Apply \(e\) to get \(D_{1}\) ($1$-valent). \hspace{1em} [blue then red]</li>
+<li>Apply \(\sigma\) to \(D_{1}\) to get \(E_{1} = \sigma(D_{1})\). \hspace{1em} [gray dashed arrow]</li>
+<li>\(E_{1}\) is $1$-valent (since \(D_{1}\) is $1$-valent and everything reachable from a $1$-valent configuration is $1$-valent).</li>
+<li>By commutativity: \(E_{1} = \sigma(e(e'(C_{0}))) = e'(e(\sigma(C_{0}))) = e'(e(A)) = e'(E_{0})\). \hspace{1em} [so the blue arrow from \(E_{0}\) reaches \(E_{1}\)]</li>
+</ol>
+
+<p>
+<b>Step 4: The contradiction.</b>
+</p>
+
+<p>
+From \(A\):
+</p>
+<ul class="org-ul">
+<li>Applying \(e\) reaches \(E_{0}\), which is $0$-valent.</li>
+<li>Applying \(e\) then \(e'\) reaches \(E_{1}\), which is $1$-valent.</li>
+</ul>
+
+<p>
+Both decisions are reachable from \(A\), so \(A\) is <b>bivalent</b>.
+</p>
+
+<p>
+But in Step 1 we established that \(A\) is the result of a deciding run from \(C_{0}\) &#x2013; some process has already decided, so \(A\) must be univalent.
+</p>
+
+<p>
+\(A\) cannot be both bivalent and univalent. <b>Contradiction.</b> \(\square\)
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org284b4b5" class="outline-3">
+<h3 id="org284b4b5">Conclusion of Lemma 3</h3>
+<div class="outline-text-3" id="text-org284b4b5">
+<p>
+Both cases yield a contradiction. Therefore \(e(C^{-e})\) must contain a bivalent configuration. \(\square\)
+</p>
+
+<p>
+<b>What this means.</b> No single event can force the system out of bivalence. The adversary (scheduler) can always find a way to keep the system undecided: delay \(e\) long enough to reach the right configuration in \(C^{-e}\), then let \(e\) fire, landing in a bivalent configuration in \(e(C^{-e})\).
+</p>
+</div>
 </div>
 </div>
 <div id="outline-container-org9a5a783" class="outline-2">

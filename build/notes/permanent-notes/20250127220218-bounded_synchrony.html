@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-03-29 Sun 21:48 -->
+<!-- 2026-04-29 Wed 21:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Bounded Synchrony</title>
@@ -277,7 +277,7 @@ Dolev, Dwork, and Stockmeyer [<a href="#citeproc_bib_item_4">4</a>] were the fir
 <h4 id="org3587407">Lock-step Synchrony</h4>
 <div class="outline-text-4" id="text-org3587407">
 <p>
-In lock-step synchrony, all processors advance through rounds in unison (\(\Phi = 1\)). A processor sends messages at the start of a round, receives all messages from that round, performs local computation, and then advances to the next round. Latency is expressed in terms of <i>rounds</i>. This is the model used by [<a href="#citeproc_bib_item_1">1</a>] and most classical <a href="/notes/permanent-notes/20250127221745-binary_consensus.html">consensus</a> protocols.
+In lock-step synchrony, all processors advance through rounds in unison (\(\Phi = 1\)). A processor sends messages at the start of a round, receives all messages from that round, performs local computation, and then advances to the next round. Latency is expressed in terms of <i>rounds</i>. This is the model used by [<a href="#citeproc_bib_item_1">1</a>] and most classical <a href="/notes/permanent-notes/20250127221745-binary_consensus.html">Binary Consensus</a> protocols.
 </p>
 </div>
 </div>
@@ -285,7 +285,7 @@ In lock-step synchrony, all processors advance through rounds in unison (\(\Phi 
 <h4 id="org8a22db0">Non-lock-step (Bounded-delay) Synchrony</h4>
 <div class="outline-text-4" id="text-org8a22db0">
 <p>
-In non-lock-step synchrony, message delivery is bounded by \(\Delta\) but processors may run at different speeds (\(\Phi > 1\)). Latency is expressed in terms of \(\Delta\) rather than rounds. This is strictly weaker than lock-step synchrony &#x2013; one can obtain lock-step execution from bounded-delay synchrony by running a <a href="/notes/permanent-notes/20241004143125-clock_synchronization.html">clock synchronization</a> protocol (e.g., [<a href="#citeproc_bib_item_5">5</a>]), but the converse is immediate.
+In non-lock-step synchrony, message delivery is bounded by \(\Delta\) but processors may run at different speeds (\(\Phi > 1\)). Latency is expressed in terms of \(\Delta\) rather than rounds. This is strictly weaker than lock-step synchrony &#x2013; one can obtain lock-step execution from bounded-delay synchrony by running a <a href="/notes/permanent-notes/20241004143125-clock_synchronization.html">Clock Synchronization</a> protocol (e.g., [<a href="#citeproc_bib_item_5">5</a>]), but the converse is immediate.
 </p>
 
 <p>
@@ -316,7 +316,7 @@ Lamport's commentary on his publications, <a href="https://lamport.azurewebsites
 </p>
 
 <p class="footpara">
-The clean, explicit formalization of the synchronous model &#x2013; as one defined by a known fixed upper bound \(\Delta\) on message delivery time and a known fixed upper bound \(\Phi\) on relative processor speeds &#x2013; is most commonly attributed to [<a href="#citeproc_bib_item_3">3</a>]. The DLS paper needed a crisp definition of synchrony precisely so it could define <a href="/notes/permanent-notes/20250127220138-partial_synchrony.html">partial synchrony</a> as a relaxation of it, which gave the synchronous model its precise modern definition.
+The clean, explicit formalization of the synchronous model &#x2013; as one defined by a known fixed upper bound \(\Delta\) on message delivery time and a known fixed upper bound \(\Phi\) on relative processor speeds &#x2013; is most commonly attributed to [<a href="#citeproc_bib_item_3">3</a>]. The DLS paper needed a crisp definition of synchrony precisely so it could define <a href="/notes/permanent-notes/20250127220138-partial_synchrony.html">Partial Synchrony</a> as a relaxation of it, which gave the synchronous model its precise modern definition.
 </p></div></div>
 
 

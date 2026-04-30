@@ -1,0 +1,12 @@
+Dear Hiring Team,
+
+I'm applying for the Senior Software Engineer role on the Infra Spanner team because my research has targeted problems in replication performance consensus throughput and concurrency control over the last three years. These are the problems Spanner solves at scale. My recent Ira tech report (2026) attacks primary-backup replay head-on: by having the primary ship compact access-set hints alongside each batch, backups prefetch the working set before replay and achieve 5.2x–23.6x speedup on 24 million Ethereum mainnet transactions at ~11% primary overhead. That class of insight is what draws me to a globally-replicated SQL system.
+
+Two research threads connect closely to what the Spanner team builds. First, Ira's replay technique generalizes naturally to any primary-backup system with state-heavy apply; I'd be curious whether Spanner's replica-follower pipeline could benefit from similar access-set hinting, particularly for long-range catch-up. Second, my in-submission paper Adhara (2026) measures horizontal vs. vertical scaling on a year of Ethereum data (42 million transactions, 208K blocks). It shows that state sharding caps at 1.37x even under ideal offline partitioning due to hub-contract skew, and proposes a conflict-DAG parallel executor that achieves a 13.68x analytical parallelism bound with zero speculation and zero aborts. Conflict-DAG scheduling where we extract parallelism from per-transaction read/write sets, maps directly to the concurrency-control work Spanner has historically invested in.
+
+My background is research-track (PhD under Aniket Kate at Purdue; Staff Research Scientist at Visa Research) but my output has always been implementation-first: libnet-rs (async networking substrate in Rust), libe2c-cpp (C++ reference implementation of EESMR, Middleware 2023), libapollo-rs (BFT consensus testbed), and a 15k-LOC internal Rust BFT payment protocol built on those substrates with reproducible multi-VM benchmarks. The gap between distributed-systems research and production infrastructure is where I want to spend the next decade, and Spanner is where that trajectory lands.
+
+I'd welcome the chance to discuss how this research threads into Infra Spanner's roadmap.
+
+Best regards,
+Adithya Bhat

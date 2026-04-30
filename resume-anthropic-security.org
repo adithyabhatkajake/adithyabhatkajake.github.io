@@ -1,0 +1,120 @@
+#+title: Resume
+#+OPTIONS: toc:nil title:nil date:nil num:nil author:nil
+#+LATEX_CLASS: resume
+
+* Meta :noexport:
+# Tuned for: Anthropic - Senior Software Engineer, Security (SF)
+# Key JD keywords: security platforms, cryptographic key management,
+# supply chain security, infrastructure hardening, auth/authz,
+# threat modeling, Python/Go/Rust, cloud-native (AWS/GCP/K8s),
+# AI/ML security, privacy-enhancing technologies, open-source security research
+
+* Summary
+#+begin_export latex
+\begin{list}{}{\leftmargin=0em \rightmargin=0em}
+\item[]
+Security-focused systems engineer and researcher with 8+ years of experience
+building secure, fault-tolerant distributed systems and cryptographic protocols.
+Published 13 peer-reviewed papers at top security venues (IEEE S\&P, CCS, NDSS)
+and hold 3 US patents. Deep expertise in applied cryptography, secure protocol
+design, threat modeling, and privacy-enhancing technologies. Experienced in
+Go, Rust, C/C++, and Python across production systems and research prototypes.
+\end{list}
+#+end_export
+
+* Technical Skills
+#+begin_export latex
+\begin{tabular}{ @{} >{\bfseries}l @{\hspace{3ex}} l }
+Languages & Python, Go, Rust, C/C++, TypeScript \\
+Security \& Crypto & Cryptographic protocol design, Key lifecycle management, \\
+  & Threat modeling, Secure MPC, PVSS, Threshold signatures, PKI \\
+Systems \& Infra & Fault-tolerant distributed systems, Supply chain security, \\
+  & Secure infrastructure design, Authentication/Authorization \\
+Tools \& Platforms & Docker, Git, Linux, gRPC, Protobuf, Ethereum, libp2p \\
+\end{tabular}
+#+end_export
+
+* Work Experience
+
+*Visa Research, Foster City* @@latex: \hfill @@ (Aug 2023 - Present)\\
+/Staff Research Scientist/
+#+begin_export latex
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ Designed and built cryptographic protocols for Visa's payments infrastructure, including an accountable decentralized anonymous payment system (US patent filed) ensuring transaction privacy while maintaining auditability.
+@@latex: \item @@ Led research on fully homomorphic encryption applied to smart contracts (SoK accepted at DeFi 2026), evaluating the security and feasibility of privacy-preserving computation on untrusted platforms.
+@@latex: \item @@ Developed FastSync, a secure blockchain synchronization protocol using compact cryptographic proofs to verify state integrity without replaying full transaction history. Filed US patent.
+@@latex: \item @@ Architected a sharding protocol with secure cross-shard transaction processing, addressing consistency and integrity guarantees in partitioned distributed systems.
+@@latex: \item @@ Co-authored research on private set intersection protocols, enabling privacy-preserving data matching across organizations without revealing underlying datasets.
+#+begin_export latex
+\end{list}
+\vspace{0.5em}
+#+end_export
+
+*VMware Research, Remote* @@latex: \hfill @@ (May 2021 - Aug 2021)\\
+/Research Intern/
+#+begin_export latex
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ Built a privacy-preserving anonymous token system (UTT) on VMware's Concord-BFT platform, enabling decentralized ecash with accountable privacy---users transact anonymously while authorities can audit when needed.
+@@latex: \item @@ Designed Quick-Pay, a low-latency payment protocol with a lock-free sharding extension, eliminating coordination bottlenecks while maintaining security invariants in distributed transaction processing.
+#+begin_export latex
+\end{list}
+\vspace{0.5em}
+#+end_export
+
+*Purdue University, West Lafayette* @@latex: \hfill @@ (Aug 2018 - Aug 2023)\\
+/Graduate Research Assistant -- Department of Computer Science/
+#+begin_export latex
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ Designed and implemented secure distributed protocols (OptRand, RandPiper) for cryptographic randomness generation, providing verifiable, unpredictable, and bias-resistant random beacons for security-critical applications.
+@@latex: \item @@ Co-authored attack analysis and security improvements for the Tor directory protocol (IEEE S\&P 2024), identifying vulnerabilities in a real-world anonymity system and proposing mitigations.
+@@latex: \item @@ Developed distributed key generation protocols without broadcast (Journal of Cryptology 2024), enabling secure key lifecycle management in settings where broadcast channels are untrusted or unavailable.
+@@latex: \item @@ Built \href{https://github.com/libdist-rs/libcrypto-rs}{libcrypto-rs} and \href{https://github.com/libdist-rs/libnet-rs}{libnet-rs}: open-source Rust libraries for cryptographic primitives and secure networking in distributed systems.
+@@latex: \item @@ Published 10 papers at top security venues including CCS (x4), IEEE S\&P, NDSS, and Financial Cryptography. Served as PC member for CCS, USENIX Security, and FC.
+#+begin_export latex
+\end{list}
+\vspace{0.5em}
+#+end_export
+
+* Education
+@@latex: \item @@ *Ph.D., Computer Science* -- Purdue University, West Lafayette @@latex: \hfill @@ /(2018-2023)/\\
+    Advisor: Aniket Kate. Focus: Byzantine fault-tolerant distributed systems and applied cryptography.
+
+@@latex: \item @@ *B.Tech., Information Technology* -- NIT Karnataka, Surathkal @@latex: \hfill @@ /(2014-2018)/
+
+* Selected Publications & Patents
+#+begin_export latex
+\vspace{0.5em}
+#+end_export
+13 peer-reviewed publications at top security venues. 3 US patents. Selected highlights:
+#+begin_export latex
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ *Attacking and Improving the Tor Directory Protocol* (IEEE S\&P 2024). Identified vulnerabilities in Tor's directory system and proposed security improvements.
+@@latex: \item @@ *Synchronous DKG without Broadcasts* (Journal of Cryptology 2024). Secure distributed key generation without trusting broadcast channels.
+@@latex: \item @@ *HashRand -- Efficient Asynchronous Random Beacon without Threshold Cryptographic Setup* (CCS 2024). Secure randomness generation without trusted setup ceremonies.
+@@latex: \item @@ *Lite-PoT -- Practical Powers-of-Tau Setup Ceremony* (CCS 2025). Practical secure setup for cryptographic systems used in production.
+@@latex: \item @@ *Accountable Decentralized Anonymous Payments* -- US Patent 20240265373. Privacy-preserving payment system with auditability.
+#+begin_export latex
+\end{list}
+\vspace{0.5em}
+#+end_export
+
+* Open Source & Software Artifacts
+#+begin_export latex
+\vspace{0.5em}
+\begin{list}{$\cdot$}{\leftmargin=0em}
+\itemsep -0.5em \vspace{-0.5em}
+#+end_export
+@@latex: \item @@ *\href{https://github.com/libdist-rs/libcrypto-rs}{libcrypto-rs}* (Rust) -- Cryptographic primitives library with traits and wrappers for threshold signatures, key management, and secure protocol building blocks.
+@@latex: \item @@ *\href{https://github.com/libdist-rs/libnet-rs}{libnet-rs}* (Rust) -- Secure networking library for distributed systems. Powers multiple BFT protocol implementations.
+@@latex: \item @@ *\href{https://github.com/libdist-rs/libmempool-rs}{libmempool-rs}* (Rust) -- Transaction mempool with ordering and integrity guarantees for distributed systems.
+#+begin_export latex
+\end{list}
+#+end_export
