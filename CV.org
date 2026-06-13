@@ -109,54 +109,58 @@ My current research focuses on energy-efficient consensus protocols in network s
 #+begin_export latex
 \vspace{0.5em}
 #+end_export
-1. <<lite-pot>> /Lite-PoT: Practical Powers-of-Tau Setup Ceremony./
+1. <<ira>> Ira: Efficient Transaction Replay for Distributed Systems.  
+   *USENIX Security 2026.*
+   *Adithya Bhat*, Harshal B Shah, Mohsen Minaei.
+   [[https://arxiv.org/abs/2601.21286][eprint]]
+2. <<lite-pot>> /Lite-PoT: Practical Powers-of-Tau Setup Ceremony./
    *CCS 2025.*
    Lucien K. L. Ng, Pedro Moreno-Sanchez, Mohsen Minaei, Panagiotis Chatzigiannis, *Adithya Bhat*, Duc V. Le.
    [[https://arxiv.org/pdf/2503.04549][eprint]]
-2. <<SyncDKG>> /Synchronous Distributed Key Generation without Broadcasts./
+3. <<SyncDKG>> /Synchronous Distributed Key Generation without Broadcasts./
    *Journal of Cryptology 2024*.
    Nibesh Shrestha, *Adithya Bhat*, Kartik Nayak, Aniket Kate.
    [[https://doi.org/10.62056/ayfhsgvtw][journal]] [[https://eprint.iacr.org/2021/1635][eprint]]
-3. <<SensorBFT>> /SensorBFT: Fault-Tolerant Target Localization using Voronoi Diagrams and Approximate Agreement./
+4. <<SensorBFT>> /SensorBFT: Fault-Tolerant Target Localization using Voronoi Diagrams and Approximate Agreement./
    *ICDCS 2024*.
    Akhil Bandarupalli, *Adithya Bhat*, Somali Chaterji, Michael K. Reiter, Aniket Kate, Saurabh Bagchi.
    [[https://www.computer.org/csdl/proceedings-article/icdcs/2024/860500a186/1ZCgEXQYbZe][conference]] [[https://reitermk.github.io/papers/2024/ICDCS.pdf][eprint]]
-4. <<Delphi>> /Delphi: Efficient Asynchronous Approximate Agreement for Distributed Oracles./
+5. <<Delphi>> /Delphi: Efficient Asynchronous Approximate Agreement for Distributed Oracles./
    *DSN 2024*.
    Akhil Bandarupalli, *Adithya Bhat*, Saurabh Bagchi, Aniket Kate, Chen-Da Liu-Zhang, and Michael K. Reiter.
    [[https://ieeexplore.ieee.org/abstract/document/10647006][conference]] [[https://arxiv.org/pdf/2405.02431][eprint]]
-5. <<HashRand>> /HashRand: Efficient Asynchronous Random Beacon without Threshold Cryptographic Setup./
+6. <<HashRand>> /HashRand: Efficient Asynchronous Random Beacon without Threshold Cryptographic Setup./
    *CCS 2024*.
    Akhil Bandarupalli, *Adithya Bhat*, Saurabh Bagchi, Aniket Kate, and Michael Reiter.
    [[https://dl.acm.org/doi/abs/10.1145/3658644.3670326][conference]] [[https://eprint.iacr.org/2023/1755.pdf][eprint]]
-6. <<Tor>> /Attacking and Improving the Tor Directory Protocol./
+7. <<Tor>> /Attacking and Improving the Tor Directory Protocol./
    *IEEE S&P 2024*.
    Zhongtang Luo, *Adithya Bhat*, Kartik Nayak, and Aniket Kate.
    [[https://ieeexplore.ieee.org/abstract/document/10646693][conference]] [[https://zhtluo.com/paper/Attacking_and_Improving_the_Tor_Directory_Protocol.pdf][eprint]]
-7. <<E2C>> /EESMR - Energy Efficient State Machine Replication./
+8. <<E2C>> /EESMR - Energy Efficient State Machine Replication./
    *Middleware 2023*.
    *Adithya Bhat*, Akhil Bandarupalli, Manish Nagaraj, Saurabh Bagchi, Aniket Kate, Michael Reiter. [[https://dl.acm.org/doi/10.1145/3590140.3592848][conference]] [[https://arxiv.org/abs/2304.04998][eprint]]
-8. <<Apollo>><<Artemis>> /The unique chain rule and its applications./
+9. <<Apollo>><<Artemis>> /The unique chain rule and its applications./
    *Financial Cryptography 2023*.
    *Adithya Bhat*, Akhil Bandarupalli, Saurabh Bagchi, Aniket Kate, Michael Reiter.
    [[https://fc23.ifca.ai/preproceedings/138.pdf][pre-conference]] [[https://doi.org/10.1007/978-3-031-47754-6_3][conference]] [[https://eprint.iacr.org/2021/180][eprint]] [[https://github.com/adithyabhatkajake/libchatter-rs][code]]
-9. <<OptRand>> /OptRand - Optimistically Responsive Reconfigurable Distributed Randomness./
-   *NDSS 2023*.
-   *Adithya Bhat*, Nibesh Shrestha, Aniket Kate, Kartik Nayak.
-   [[https://www.ndss-symposium.org/ndss-paper/optrand-optimistically-responsive-reconfigurable-distributed-randomness/][conference]] [[https://eprint.iacr.org/2022/193][eprint]] [[https://github.com/nibeshrestha/optrand][protocol code]] [[https://github.com/libdist-rs/optrand-rs][crypto code]] [[https://www.youtube.com/watch?v=6DH2bGXP3-4][video]]
-10. <<OpenSquare>> /OpenSquare: Decentralized Repeated Modular Squaring Service./
+10. <<OptRand>> /OptRand - Optimistically Responsive Reconfigurable Distributed Randomness./
+    *NDSS 2023*.
+    *Adithya Bhat*, Nibesh Shrestha, Aniket Kate, Kartik Nayak.
+    [[https://www.ndss-symposium.org/ndss-paper/optrand-optimistically-responsive-reconfigurable-distributed-randomness/][conference]] [[https://eprint.iacr.org/2022/193][eprint]] [[https://github.com/nibeshrestha/optrand][protocol code]] [[https://github.com/libdist-rs/optrand-rs][crypto code]] [[https://www.youtube.com/watch?v=6DH2bGXP3-4][video]]
+11. <<OpenSquare>> /OpenSquare: Decentralized Repeated Modular Squaring Service./
     *CCS 2021*.
     Sri Aravinda Krishnan Thyagarajan, Tiantian Gong, *Adithya Bhat*, Aniket Kate, Dominique Schroder.
     [[https://dl.acm.org/doi/10.1145/3460120.3484809][conference]] [[https://eprint.iacr.org/2021/1273][eprint]] [[https://github.com/verifiable-timed-signatures/OpenSquare][code]]
-11. <<RandPiper>> /RandPiper – Reconfiguration Friendly Random Beacons with Quadratic Communication./
+12. <<RandPiper>> /RandPiper – Reconfiguration Friendly Random Beacons with Quadratic Communication./
     *CCS 2021*.
     *Adithya Bhat*, Nibesh Shrestha, Aniket Kate, Kartik Nayak.
     [[https://dl.acm.org/doi/abs/10.1145/3460120.3484574][conference]] [[https://eprint.iacr.org/2020/1590.pdf][eprint]] [[https://github.com/zhtluo/randpiper-rs][code]]
-12. <<Reparo>> /Reparo - Publicly Verifiable Repair Layer for any Blockchain./
+13. <<Reparo>> /Reparo - Publicly Verifiable Repair Layer for any Blockchain./
     *FC 2021*.
     Sri Aravinda Krishnan Thyagarajan, Adithya Bhat, Bernardo Magri, Daniel Tschudi, Aniket Kate.
     [[https://fc21.ifca.ai/papers/119.pdf][conference]] [[https://arxiv.org/abs/2001.00486][eprint]]
-13. <<VTS>> /Verifiable Timed Signatures for Blockchains./
+14. <<VTS>> /Verifiable Timed Signatures for Blockchains./
     *CCS 2020*.
     Sri Aravinda Krishnan Thyagarajan, Adithya Bhat, Guilio Malavolta, Nico Dottling, Aniket Kate, Dominique Schroder.
     [[https://dl.acm.org/doi/10.1145/3372297.3417263][conference]] [[https://eprint.iacr.org/2020/1563.pdf][eprint]] [[https://github.com/verifiable-timed-signatures/liblhtlp][code]]
@@ -169,9 +173,6 @@ My current research focuses on energy-efficient consensus protocols in network s
 2. /Fast sync blockchain system and method./ United States Patent Application WO2024026321A1. [[https://patents.google.com/patent/WO2024026321A1/en][patent]].
 3. /A system for partially synchronous scalable blockchains./ United States Patent Application WO2024233453A1. [[https://patentimages.storage.googleapis.com/06/d1/cc/9b924b543965ac/WO2024233453A1.pdf][patent]]
 * Tech Reports
-1. <<ira>> Ira: Efficient Transaction Replay for Distributed Systems.
-   *Adithya Bhat*, Harshal B Shah, Mohsen Minaei.
-   [[https://arxiv.org/abs/2601.21286][eprint]]
 1. <<fps>> FPS: Flexible Payment Systems.
    *Adithya Bhat*, Srinivasan Raghuraman, Panagiotis Chatzigiannis, Duc V Le, Mohsen Minaei.
    [[https://eprint.iacr.org/2025/2095][eprint]]
@@ -222,6 +223,7 @@ My current research focuses on energy-efficient consensus protocols in network s
 14. Transitive network - A tokenless IOU-based Credit Network. Cryptocurrency Implementers Workshop. @@latex: \hfill @@ /(FC 2019)/
 * Academic Service
 - Program Committee:
+  - 2027: USENIX Security
   - 2026: FC, CCS, ACNS, Usenix Security
   - 2025: FC, CCS, CVC
   - 2024: CCS
@@ -237,21 +239,9 @@ My current research focuses on energy-efficient consensus protocols in network s
   - 2020: Usenix Security, IEEE S & P
   - 2019: NDSS
 * 02-CV Tasks :noexport:
-** DONE 📝 Usenix Security PC
-CLOSED: [2025-09-02 Tue 22:54]
-Created: [2025-08-12 Tue]
-** DONE 📝 Lite-PoT CCS Acceptance
-CLOSED: [2025-09-02 Tue 22:54]
-Created: [2025-08-12 Tue]
 ** TODO 📝 Add Defi 26 acceptance of SoK on homomorphic smart contracts
 Created: [2026-01-20 Tue]
-** TODO 📝 Add FastSync Eprint
-SCHEDULED: <2026-01-29 Thu 20:00>
-Created: [2026-01-29 Thu]
 ** TODO 📝 Defi 2026 Acceptance
 Created: [2026-02-02 Mon]
 ** TODO 📝 WTSC 2026 Acceptance
 Created: [2026-02-02 Mon]
-** TODO 📝 Add FastSync Eprint
-Created: [2026-02-02 Mon]
-https://arxiv.org/abs/2601.21286
