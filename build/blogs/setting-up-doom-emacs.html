@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-04-29 Wed 21:19 -->
+<!-- 2026-06-12 Fri 22:31 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Setting Up Doom Emacs Emacs Configuration File</title>
@@ -677,6 +677,57 @@ Resources
 </div>
 </div>
 </div>
+<div id="outline-container-org743fd2c" class="outline-2">
+<h2 id="org743fd2c">Terminal</h2>
+<div class="outline-text-2" id="text-org743fd2c">
+</div>
+<div id="outline-container-org89a84ef" class="outline-3">
+<h3 id="org89a84ef">vterm</h3>
+<div class="outline-text-3" id="text-org89a84ef">
+<p>
+To replicate the behavior of VS Code where file paths are clickable in the terminal:
+</p>
+<ul class="org-ul">
+<li>We enable <code>compilation-shell-minor-mode</code> to highlight and make clickable paths like <code>file:line</code>.</li>
+<li>We enable <code>goto-address-mode</code> for clickable URLs.</li>
+<li>We bind <code>Cmd+Click</code> (<code>s-mouse-1</code>) to open the file at point using <code>ffap-at-mouse</code>.</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(after! vterm
+  (add-hook 'vterm-mode-hook #'compilation-shell-minor-mode)
+  (add-hook 'vterm-mode-hook #'goto-address-mode)
+  (map! <span class="org-builtin">:map</span> vterm-mode-map
+        [s-mouse-1] #'ffap-at-mouse))
+</pre>
+</div>
+
+<p>
+A dedicated vterm popup rooted in the Doom config directory (<code>doom-user-dir</code>),
+bound to <code>C-c o l</code>. It toggles its own buffer, separate from the project-aware
+<code>C-c o t</code> (<code>+vterm/toggle</code>).
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my/vterm-doom-config-toggle</span> ()
+  <span class="org-doc">"Toggle a dedicated vterm popup rooted in the Doom config directory."</span>
+  (<span class="org-keyword">interactive</span>)
+  (<span class="org-keyword">require</span> '<span class="org-constant">vterm</span>)
+  (<span class="org-keyword">let</span> ((buffer-name <span class="org-string">"*doom:vterm-config*"</span>)
+        (default-directory doom-user-dir))
+    (<span class="org-keyword">if-let*</span> ((win (get-buffer-window buffer-name)))
+        (delete-window win)
+      (<span class="org-keyword">let</span> ((buffer (get-buffer-create buffer-name)))
+        (<span class="org-keyword">with-current-buffer</span> buffer
+          (<span class="org-keyword">unless</span> (eq major-mode 'vterm-mode)
+            (vterm-mode)))
+        (pop-to-buffer buffer)))))
+
+(map! <span class="org-builtin">:leader</span> <span class="org-builtin">:desc</span> <span class="org-string">"Toggle vterm in Doom config"</span> <span class="org-string">"o l"</span> #'my/vterm-doom-config-toggle)
+</pre>
+</div>
+</div>
+</div>
+</div>
 <div id="outline-container-orge1adbb2" class="outline-2">
 <h2 id="orge1adbb2">Lang</h2>
 <div class="outline-text-2" id="text-orge1adbb2">
@@ -872,7 +923,7 @@ Get <code>org-edna</code> for advanced TODO dependencies (replaces org-depend)
            <span class="org-string">"* SOMEDAY &#128104;&#127995;&#8205;&#128187; %?\nCreated: %u\n"</span>)
           (<span class="org-string">"t"</span> <span class="org-string">"Task"</span> entry
            (file+headline +org-capture-todo-file <span class="org-string">"00-Inbox"</span>) <span class="org-comment-delimiter">;; </span><span class="org-comment">personal.org</span>
-           <span class="org-string">"* TODO &#128203; %?\nSCHEDULED: &lt;%&lt;%Y-%m-%d %a&gt;&gt;\nCreated: %u\n%a\n%i"</span> <span class="org-builtin">:prepend</span> t)
+           <span class="org-string">"* TODO &#128229; %?\nSCHEDULED: &lt;%&lt;%Y-%m-%d %a&gt;&gt;\nCreated: %u\n%a\n%i"</span> <span class="org-builtin">:prepend</span> t)
           (<span class="org-string">"x"</span> <span class="org-string">"Project Task"</span> entry
            (<span class="org-keyword">function</span> my/org-capture-to-chosen-file)
            <span class="org-string">"* TODO &#128203; %?\nSCHEDULED: &lt;%&lt;%Y-%m-%d %a&gt;&gt;\nCreated: %u\n%a\n%i"</span> <span class="org-builtin">:empty-lines</span> 1)
@@ -922,6 +973,306 @@ Get <code>org-edna</code> for advanced TODO dependencies (replaces org-depend)
            <span class="org-string">"* %U %?\n%a\n%i"</span> <span class="org-builtin">:prepend</span> t))))
 </pre>
 </div>
+<p>
+ SCHEDULED: &lt;%&lt;%Y-%m-%d %a&gt;&gt;
+Created: %u
+%a
+%i |
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">c</td>
+<td class="org-left">CV Todo</td>
+<td class="org-left">entry</td>
+<td class="org-left">(file+headline ~/Github/personal-website/CV.org 02-CV Tasks)</td>
+<td class="org-left">* TODO 📝 %?</td>
+</tr>
+</tbody>
+</table>
+<p>
+Created: %u
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">e</td>
+<td class="org-left">Emacs Todo</td>
+<td class="org-left">entry</td>
+<td class="org-left">(file+headline personal.org 💻 Emacs)</td>
+<td class="org-left">* SOMEDAY 👨🏻‍💻 %?</td>
+</tr>
+</tbody>
+</table>
+<p>
+Created: %u
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">t</td>
+<td class="org-left">Task</td>
+<td class="org-left">entry</td>
+<td class="org-left">(file+headline +org-capture-todo-file 00-Inbox)</td>
+<td class="org-left">* TODO 📥 %?</td>
+</tr>
+</tbody>
+</table>
+<p>
+SCHEDULED: &lt;%&lt;%Y-%m-%d %a&gt;&gt;
+Created: %u
+%a
+%i |:prepend |t |
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">x</td>
+<td class="org-left">Project Task</td>
+<td class="org-left">entry</td>
+<td class="org-left">#'my/org-capture-to-chosen-file</td>
+<td class="org-left">* TODO 📋 %?</td>
+</tr>
+</tbody>
+</table>
+<p>
+SCHEDULED: &lt;%&lt;%Y-%m-%d %a&gt;&gt;
+Created: %u
+%a
+%i |:empty-lines |1 |
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">n</td>
+<td class="org-left">Capture Notes</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">nd</td>
+<td class="org-left">Dist. Sys. Protocol</td>
+<td class="org-left">plain</td>
+<td class="org-left">(file denote-last-path)</td>
+<td class="org-left">#'(lambda nil (let ((denote-use-directory (expand-file-name protocols denote-directory)) (denote-prompts '(title keywords))) (denote-org-capture)))</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">nf</td>
+<td class="org-left">Fleeting notes</td>
+<td class="org-left">plain</td>
+<td class="org-left">(file denote-last-path)</td>
+<td class="org-left">#'(lambda nil (let ((denote-use-directory (expand-file-name temporary notes denote-directory)) (denote-prompts '(title))) (denote-org-capture)))</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">ng</td>
+<td class="org-left">General notes</td>
+<td class="org-left">plain</td>
+<td class="org-left">(file denote-last-path)</td>
+<td class="org-left">#'(lambda nil (let ((denote-use-directory (expand-file-name general notes denote-directory)) (denote-prompts '(title keywords))) (denote-org-capture)))</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">nm</td>
+<td class="org-left">Meta notes</td>
+<td class="org-left">plain</td>
+<td class="org-left">(file denote-last-path)</td>
+<td class="org-left">#'(lambda nil (let ((denote-use-directory (expand-file-name meta notes denote-directory)) (denote-prompts '(title keywords))) (denote-org-capture)))</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">nn</td>
+<td class="org-left">New project</td>
+<td class="org-left">plain</td>
+<td class="org-left">(file denote-last-path)</td>
+<td class="org-left">#'(lambda nil (let ((denote-use-directory (expand-file-name project notes denote-directory)) (denote-prompts '(title keywords))) (denote-org-capture)))</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">np</td>
+<td class="org-left">Project Notes</td>
+<td class="org-left">entry</td>
+<td class="org-left">#'my/org-capture-to-chosen-file</td>
+<td class="org-left">* %U %?</td>
+<td class="org-left">:empty-lines</td>
+<td class="org-left">1</td>
+</tr>
+
+<tr>
+<td class="org-left">p</td>
+<td class="org-left">Templates for projects</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">pt</td>
+<td class="org-left">Project-local todo</td>
+<td class="org-left">entry</td>
+<td class="org-left">(file+headline +org-capture-project-todo-file Inbox)</td>
+<td class="org-left">* TODO %?</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+<p>
+%a
+Created: %u
+%i
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">:prepend</td>
+<td class="org-left">t</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">pn</td>
+<td class="org-left">Project-local notes</td>
+<td class="org-left">entry</td>
+<td class="org-left">(file+headline +org-capture-project-notes-file Notes)</td>
+<td class="org-left">* %?</td>
+</tr>
+</tbody>
+</table>
+<p>
+%a
+%i
+Created: %u |:prepend |t |
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">pc</td>
+<td class="org-left">Project-local changelog</td>
+<td class="org-left">entry</td>
+<td class="org-left">(file+headline +org-capture-project-changelog-file Unreleased)</td>
+<td class="org-left">* %U %?</td>
+</tr>
+</tbody>
+</table>
+<p>
+%a
+%i |:prepend |t |
+</p>
 </div>
 </div>
 <div id="outline-container-org93f6366" class="outline-4">
@@ -1164,48 +1515,77 @@ Set up a dependency where completing the current task (Y) triggers another task 
 (<span class="org-keyword">defun</span> <span class="org-function-name">my-create-paper-review</span> ()
   <span class="org-doc">"Create a paper review file and corresponding inbox task.</span>
 
-<span class="org-doc">This function will create a review file in the =Reviews= folder and trigger an org-capture-template to record the review task"</span>
+<span class="org-doc">Prompts for conference year, name, paper number, an optional review</span>
+<span class="org-doc">cycle, and an optional paper file. Creates the review =.org= file in</span>
+<span class="org-doc">the =Reviews= folder, moves the paper file alongside it (if provided),</span>
+<span class="org-doc">and triggers an org-capture-template to record the review task."</span>
   (<span class="org-keyword">interactive</span>)
-  (<span class="org-keyword">let*</span> ((year (read-string <span class="org-string">"Conference Year: "</span>))
-         (conference (completing-read <span class="org-string">"Conference name: "</span> my-conference-names))
-         (paper-num (read-string <span class="org-string">"Paper number: "</span>))
-         <span class="org-comment-delimiter">;; </span><span class="org-comment">Build the directory path</span>
-         (review-dir (expand-file-name 
-                      (format <span class="org-string">"Reviews/%s/%s"</span> year conference)
-                      org-directory))
-         <span class="org-comment-delimiter">;; </span><span class="org-comment">Build the file path</span>
-         (review-file (expand-file-name 
-                       (format <span class="org-string">"%s.org"</span> paper-num)
-                       review-dir)))
+  (<span class="org-keyword">let</span> ((year (string-trim (read-string <span class="org-string">"Conference Year: "</span>)))
+        (conference (completing-read <span class="org-string">"Conference name: "</span> my-conference-names nil t))
+        (paper-num (string-trim (read-string <span class="org-string">"Paper number: "</span>)))
+        (cycle (string-trim (read-string <span class="org-string">"Review cycle (leave empty for none): "</span>)))
+        (paper-src (<span class="org-keyword">let</span> ((f (read-file-name <span class="org-string">"Paper file (RET to skip): "</span>
+                                            (expand-file-name <span class="org-string">"~/Downloads/"</span>)
+                                            <span class="org-string">""</span> nil)))
+                     (<span class="org-keyword">and</span> (not (string-empty-p f))
+                          (file-regular-p f)
+                          (expand-file-name f)))))
+    (<span class="org-keyword">when</span> (string-empty-p year) (<span class="org-warning">user-error</span> <span class="org-string">"Conference year is required"</span>))
+    (<span class="org-keyword">unless</span> (string-match-p <span class="org-string">"\\`[0-9]+\\'"</span> year)
+      (<span class="org-warning">user-error</span> <span class="org-string">"Conference year must be numeric: %s"</span> year))
+    (<span class="org-keyword">when</span> (string-empty-p conference) (<span class="org-warning">user-error</span> <span class="org-string">"Conference name is required"</span>))
+    (<span class="org-keyword">when</span> (string-empty-p paper-num) (<span class="org-warning">user-error</span> <span class="org-string">"Paper number is required"</span>))
+    (<span class="org-keyword">let*</span> ((has-cycle (not (string-empty-p cycle)))
+           (suffix (<span class="org-keyword">if</span> has-cycle (format <span class="org-string">" Cycle %s"</span> cycle) <span class="org-string">""</span>))
+           (file-suffix (<span class="org-keyword">if</span> has-cycle (format <span class="org-string">"-cycle%s"</span> cycle) <span class="org-string">""</span>))
+           (review-dir (expand-file-name
+                        (format <span class="org-string">"Reviews/%s/%s"</span> year conference)
+                        org-directory))
+           (review-file (expand-file-name
+                         (format <span class="org-string">"%s%s.org"</span> paper-num file-suffix)
+                         review-dir)))
 
-    <span class="org-comment-delimiter">;; </span><span class="org-comment">Create directory if it doesn't exist</span>
-    (<span class="org-keyword">unless</span> (file-exists-p review-dir)
-      (make-directory review-dir t))
+      (make-directory review-dir t)
 
-    <span class="org-comment-delimiter">;; </span><span class="org-comment">Create the review file</span>
-    (find-file review-file)
-    (<span class="org-keyword">when</span> (= (buffer-size) 0)  <span class="org-comment-delimiter">; </span><span class="org-comment">Only insert if file is new</span>
-      (insert (format <span class="org-string">"#+TITLE: Review - %s Paper %s\n"</span> conference paper-num))
-      (insert (format <span class="org-string">"#+DATE: %s\n"</span> (format-time-string <span class="org-string">"%Y-%m-%d"</span>)))
-      (insert (format <span class="org-string">"#+CONFERENCE: %s\n"</span> conference))
-      (insert (format <span class="org-string">"#+PAPER: %s\n\n"</span> paper-num))
-      (save-buffer))
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Move paper file alongside the review, renamed to match</span>
+      (<span class="org-keyword">when</span> paper-src
+        (<span class="org-keyword">let*</span> ((ext (file-name-extension paper-src))
+               (paper-dest (expand-file-name
+                            (format <span class="org-string">"%s%s%s"</span> paper-num file-suffix
+                                    (<span class="org-keyword">if</span> ext (concat <span class="org-string">"."</span> ext) <span class="org-string">""</span>))
+                            review-dir)))
+          (rename-file paper-src paper-dest 1)
+          (message <span class="org-string">"Moved %s to %s"</span> paper-src paper-dest)))
 
-    <span class="org-comment-delimiter">;; </span><span class="org-comment">Store a link to this review file</span>
-    (org-store-link nil)
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Create the review file</span>
+      (find-file review-file)
+      (<span class="org-keyword">when</span> (= (buffer-size) 0)  <span class="org-comment-delimiter">; </span><span class="org-comment">Only insert if file is new</span>
+        (insert (format <span class="org-string">"#+TITLE: Review - %s Paper %s%s\n"</span> conference paper-num suffix))
+        (insert (format <span class="org-string">"#+DATE: %s\n"</span> (format-time-string <span class="org-string">"%Y-%m-%d"</span>)))
+        (insert (format <span class="org-string">"#+CONFERENCE: %s\n"</span> conference))
+        (insert (format <span class="org-string">"#+PAPER: %s\n"</span> paper-num))
+        (<span class="org-keyword">when</span> has-cycle
+          (insert (format <span class="org-string">"#+CYCLE: %s\n"</span> cycle)))
+        (insert <span class="org-string">"\n"</span>)
+        (save-buffer))
 
-    <span class="org-comment-delimiter">;; </span><span class="org-comment">Trigger the ?t capture template</span>
-    <span class="org-comment-delimiter">;; </span><span class="org-comment">Create inbox task</span>
-    (<span class="org-keyword">let*</span> ((link (org-link-make-string
-                  (concat <span class="org-string">"file:"</span> review-file)
-                  (format <span class="org-string">"Review - %s Paper %s"</span> conference paper-num)))
-           (org-capture-initial (format <span class="org-string">"Review Paper %s\n - %s"</span> paper-num link)))
+      <span class="org-comment-delimiter">;; </span><span class="org-comment">Create inbox task with link to the review file</span>
+      (<span class="org-keyword">let*</span> ((link (org-link-make-string
+                    (concat <span class="org-string">"file:"</span> review-file)
+                    (format <span class="org-string">"Review - %s Paper %s%s"</span> conference paper-num suffix)))
+             (template (concat
+                        (format <span class="org-string">"* TODO &#128203; Review Paper %s%%?\n"</span> paper-num)
+                        <span class="org-string">"SCHEDULED: &lt;%&lt;%Y-%m-%d %a&gt;&gt;\n"</span>
+                        <span class="org-string">"Created: %u\n"</span>
+                        <span class="org-string">" - "</span> link))
+             (org-capture-templates
+              `((<span class="org-string">"t"</span> <span class="org-string">"Paper Review Task"</span> entry
+                 (file+headline ,+org-capture-todo-file <span class="org-string">"00-Inbox"</span>)
+                 ,template
+                 <span class="org-builtin">:prepend</span> t))))
+        (org-capture nil <span class="org-string">"t"</span>))
 
-      <span class="org-comment-delimiter">;;</span>
-      (org-capture nil <span class="org-string">"t"</span>))
-
-
-    (message <span class="org-string">"Created review file and inbox task for Paper %s"</span> paper-num)))
+      (message <span class="org-string">"Created review file and inbox task for Paper %s%s"</span> paper-num suffix))))
 </pre>
 </div>
 </div>
@@ -1344,7 +1724,7 @@ Set up a dependency where completing the current task (Y) triggers another task 
                    (org-agenda-overriding-header <span class="org-string">"Work Tasks for today"</span>))))
          ((org-agenda-category-filter-preset '(<span class="org-string">"+Work"</span>))))
         (<span class="org-string">".b"</span> <span class="org-string">"Weekly Review"</span>
-         ((todo <span class="org-string">"CURRENT"</span>
+         ((todo <span class="org-string">"ACTV"</span>
                 ((org-agenda-overriding-header <span class="org-string">"Current Projects"</span>)))
 
           (todo <span class="org-string">"PROJ"</span>
@@ -1361,7 +1741,7 @@ Set up a dependency where completing the current task (Y) triggers another task 
         (<span class="org-string">".c"</span> <span class="org-string">"Weekly Planning"</span>
          ((tags <span class="org-string">"WEEK_PROJECT=\"t\""</span>
                 ((org-agenda-overriding-header <span class="org-string">"Focus this week"</span>)))
-          (todo <span class="org-string">"CURRENT"</span>
+          (todo <span class="org-string">"ACTV"</span>
                 ((org-agenda-overriding-header <span class="org-string">"Current Projects"</span>)))
           (todo <span class="org-string">"READ|READING"</span>
                 ((org-agenda-overriding-header <span class="org-string">"Reading Projects"</span>)))
@@ -1370,7 +1750,7 @@ Set up a dependency where completing the current task (Y) triggers another task 
           (todo <span class="org-string">"DRAFT"</span>
                 ((org-agenda-overriding-header <span class="org-string">"Writing Projects"</span>)))))
         (<span class="org-string">".d"</span> <span class="org-string">"Open Loops"</span>
-         ((todo <span class="org-string">"CURRENT"</span>
+         ((todo <span class="org-string">"ACTV"</span>
                 ((org-agenda-overriding-header <span class="org-string">"Open Loops"</span>)))))
         (<span class="org-string">".s"</span> <span class="org-string">"Schedule"</span>
          ((agenda nil
@@ -1887,6 +2267,30 @@ A function to initialize a LaTeX paper project with clean build configuration.
 <div class="outline-text-3" id="text-orgd964db5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(map! <span class="org-string">"M-/"</span> #'comment-or-uncomment-region)
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb0abab6" class="outline-3">
+<h3 id="orgb0abab6">Capitalize first letter only</h3>
+<div class="outline-text-3" id="text-orgb0abab6">
+<p>
+Rebind <code>M-u</code> so it only uppercases the initial letter of the word(s) ahead of
+point, leaving the remaining letters untouched (unlike the default <code>upcase-word</code>,
+which uppercases the whole word).
+</p>
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span class="org-keyword">defun</span> <span class="org-function-name">my/upcase-initials-word</span> (arg)
+  <span class="org-doc">"Capitalize the initial letter of the next ARG words, leaving the rest unchanged.</span>
+<span class="org-doc">Like `</span><span class="org-doc"><span class="org-constant">upcase-word</span></span><span class="org-doc">' in the range it acts on (point to end of word, honoring the</span>
+<span class="org-doc">prefix ARG), but like `</span><span class="org-doc"><span class="org-constant">upcase-initials-region</span></span><span class="org-doc">' in that only the first letter of</span>
+<span class="org-doc">each word is uppercased; all other letters keep their existing case."</span>
+  (<span class="org-keyword">interactive</span> <span class="org-string">"p"</span>)
+  (<span class="org-keyword">let</span> ((beg (point)))
+    (forward-word arg)
+    (upcase-initials-region beg (point))))
+
+(map! <span class="org-string">"M-u"</span> #'my/upcase-initials-word)
 </pre>
 </div>
 </div>
@@ -2526,7 +2930,11 @@ I find the default resolution pixelated.
   <span class="org-comment-delimiter">;; </span><span class="org-comment">Bind to link</span>
   (map! <span class="org-builtin">:map</span> pdf-view-mode-map
         <span class="org-string">"C-."</span> #'pdf-links-isearch-link
-        <span class="org-string">"c"</span> #'pdf-view-center-in-window))
+        <span class="org-string">"c"</span> #'pdf-view-center-in-window
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">Doom binds Cmd-C (s-c) to `</span><span class="org-comment"><span class="org-constant">copy-region-as-kill</span></span><span class="org-comment">' in global-map, which</span>
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">copies the Emacs region but not pdf-view's text selection. Point it</span>
+        <span class="org-comment-delimiter">;; </span><span class="org-comment">at `</span><span class="org-comment"><span class="org-constant">pdf-view-kill-ring-save</span></span><span class="org-comment">' like C-w/M-w already are.</span>
+        <span class="org-string">"s-c"</span> #'pdf-view-kill-ring-save))
 </pre>
 </div>
 </div>
